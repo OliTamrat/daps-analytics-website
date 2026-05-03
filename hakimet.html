@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html class="dark" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Hakimet — DAPS Analytics</title>
+<meta name="description" content="Hakimet Telehealth: enterprise healthcare connectivity for East Africa. HIPAA-aligned, EMR-integrated, multi-language."/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;900&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<script>
+  tailwind.config = {
+    darkMode: "class",
+    theme: {
+      extend: {
+        colors: {
+          "secondary-container": "#694700","error": "#ffb4ab","tertiary-container": "#c6c8ca",
+          "surface-tint": "#00dfc6","on-tertiary-fixed": "#191c1e","primary-fixed-dim": "#00dfc6",
+          "on-primary-fixed": "#00201b","inverse-surface": "#dee2ed","on-primary-container": "#005e53",
+          "primary-fixed": "#47fce2","on-tertiary-container": "#515455","on-secondary-fixed": "#281900",
+          "surface": "#0e141b","tertiary": "#e3e4e6","surface-bright": "#343942","secondary": "#efbf71",
+          "on-primary": "#003730","surface-container-low": "#171c24","inverse-primary": "#006b5e",
+          "on-secondary-container": "#e7b76a","on-background": "#dee2ed","background": "#0e141b",
+          "tertiary-fixed-dim": "#c5c6c8","primary": "#49fde3","surface-container-high": "#252a32",
+          "secondary-fixed": "#ffdead","on-error-container": "#ffdad6","on-surface": "#dee2ed",
+          "primary-container": "#00e0c7","on-tertiary": "#2e3132","error-container": "#93000a",
+          "surface-container-lowest": "#090e16","on-surface-variant": "#bacac5","tertiary-fixed": "#e1e2e4",
+          "surface-dim": "#0e141b","surface-container": "#1b2028","inverse-on-surface": "#2b3139",
+          "outline-variant": "#3b4a46","surface-variant": "#30353d","secondary-fixed-dim": "#efbf71",
+          "on-tertiary-fixed-variant": "#444749","surface-container-highest": "#30353d",
+          "on-secondary-fixed-variant": "#604100","outline": "#849490","on-primary-fixed-variant": "#005046",
+          "on-secondary": "#432c00","on-error": "#690005"
+        },
+        borderRadius: { DEFAULT: "0.25rem", lg:"0.5rem", xl: "0.75rem", full: "9999px" },
+        spacing: { lg:"4rem", xl: "8rem", xs: "0.5rem", md: "2rem", "2xl": "12rem", gutter: "24px", margin: "64px", unit: "4px", sm: "1rem" },
+        fontFamily: { "display-lg": ["Inter"], "label-caps": ["Inter"], "headline-md": ["Inter"], "display-2xl": ["Inter"], "body-md": ["Inter"], "display-xl": ["Inter"], "body-lg": ["Inter"] },
+        fontSize: {
+          "display-lg": ["56px", { lineHeight: "115%", letterSpacing: "-0.02em", fontWeight: "400" }],
+          "label-caps": ["12px", { lineHeight: "100%", letterSpacing: "0.1em", fontWeight: "600" }],
+          "headline-md": ["32px", { lineHeight: "130%", letterSpacing: "-0.01em", fontWeight: "400" }],
+          "display-2xl": ["128px", { lineHeight: "110%", letterSpacing: "-0.04em", fontWeight: "300" }],
+          "body-md": ["16px", { lineHeight: "160%", letterSpacing: "0em", fontWeight: "400" }],
+          "display-xl": ["96px", { lineHeight: "110%", letterSpacing: "-0.03em", fontWeight: "300" }],
+          "body-lg": ["18px", { lineHeight: "160%", letterSpacing: "0em", fontWeight: "400" }]
+        }
+      }
+    }
+  }
+</script>
+<style>
+  body { background-color: #0e141b; color: #dee2ed; }
+  .glass-panel { background-color: #1b2028; border: 1px solid #3b4a46; }
+  .text-glow { text-shadow: 0 0 20px rgba(73,253,227,0.3); }
+  @keyframes slowZoom { from { transform: scale(1); } to { transform: scale(1.08); } }
+  .hero-zoom { animation: slowZoom 30s ease-in-out infinite alternate; }
+  .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.7s cubic-bezier(0.4,0,0.2,1), transform 0.7s cubic-bezier(0.4,0,0.2,1); }
+  .reveal.revealed { opacity: 1; transform: translateY(0); }
+  .reveal-delay-1 { transition-delay: 0.15s; }
+  .reveal-delay-2 { transition-delay: 0.3s; }
+</style>
+</head>
+<body class="antialiased min-h-screen flex flex-col selection:bg-primary/20 selection:text-primary">
+
+<main class="flex-grow">
+
+  <!-- Hero -->
+  <section class="relative min-h-[795px] flex items-center justify-center overflow-hidden border-b border-outline-variant">
+    <div class="absolute inset-0 z-0 overflow-hidden">
+      <img class="w-full h-full object-cover object-center opacity-40 mix-blend-luminosity hero-zoom"
+           src="https://lh3.googleusercontent.com/aida-public/AB6AXuC6FAlxSMoGpWjhLUSfPuJTLXHLvJ3JiOJtnV4w8g4mTEJ3F95xjJaSmX-Gj8HxbSLLy2h_n1Fy2Kxif8fCDOmh40EJqy_7t8ZJwS1UGNA24z6hvTrB4CWCUCf-gZBhSUBFkn7tYqibsFZlU6JYzSJTvCobzh1kxdC5IXIoatJfK0nHqRfNbQa6rEX52lGQ6G1VIKfyPEFlbpVEVLhJr4TBi2qBnrJh_H5EMBzx_EEVPh6LnJuU1HjPe9kygBbZ4XJpqtS11cN5bT"
+           alt="Hakimet Telehealth hero background"/>
+      <div class="absolute inset-0 bg-gradient-to-t from-background via-background/80 to-transparent"></div>
+    </div>
+    <div class="relative z-10 max-w-[1440px] mx-auto px-6 md:px-12 flex flex-col items-center text-center">
+      <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-primary/30 bg-primary/10 backdrop-blur-md mb-8 reveal">
+        <span class="w-2 h-2 rounded-full bg-primary animate-pulse"></span>
+        <span class="font-label-caps text-label-caps text-primary tracking-widest">Live — East Africa</span>
+      </div>
+      <h1 class="font-display-2xl text-on-surface mb-6 tracking-tighter text-glow reveal" style="font-size: clamp(44px, 5.5vw, 80px);">Hakimet</h1>
+      <p class="font-headline-md text-headline-md text-on-surface-variant max-w-3xl mb-12 font-light reveal">
+        Enterprise telehealth infrastructure for African healthcare systems. Connecting patients, clinicians, and administrators through a secure, low-bandwidth-optimized platform.
+      </p>
+      <div class="flex flex-wrap justify-center gap-4 reveal">
+        <a href="https://www.hakimet.com" target="_blank" rel="noopener"
+           class="inline-flex items-center gap-2 font-label-caps text-label-caps bg-primary text-on-primary px-10 py-4 hover:bg-primary-container transition-colors duration-400 tracking-widest uppercase shadow-[0_0_20px_rgba(73,253,227,0.2)] hover:shadow-[0_0_30px_rgba(73,253,227,0.35)]">
+          Open Platform <span class="material-symbols-outlined text-[16px]">open_in_new</span>
+        </a>
+        <a href="contact.html"
+           class="inline-flex items-center gap-2 font-label-caps text-label-caps border border-white/30 text-white px-10 py-4 hover:border-primary hover:text-primary transition-colors duration-400 tracking-widest uppercase">
+          Request Demo
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Stats Bar -->
+  <section class="border-b border-outline-variant bg-surface-container-lowest py-12">
+    <div class="max-w-[1440px] mx-auto px-6 md:px-12">
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+        <div class="reveal">
+          <div class="font-display-lg text-display-lg text-primary mb-2" style="font-size: clamp(28px, 3.5vw, 48px);">HIPAA</div>
+          <div class="font-label-caps text-label-caps text-on-surface-variant">Aligned Security</div>
+        </div>
+        <div class="reveal reveal-delay-1">
+          <div class="font-display-lg text-display-lg text-primary mb-2" style="font-size: clamp(28px, 3.5vw, 48px);">EMR</div>
+          <div class="font-label-caps text-label-caps text-on-surface-variant">Integrated</div>
+        </div>
+        <div class="reveal">
+          <div class="font-display-lg text-display-lg text-primary mb-2" style="font-size: clamp(28px, 3.5vw, 48px);">Multi</div>
+          <div class="font-label-caps text-label-caps text-on-surface-variant">Language Support</div>
+        </div>
+        <div class="reveal reveal-delay-1">
+          <div class="font-display-lg text-display-lg text-primary mb-2" style="font-size: clamp(28px, 3.5vw, 48px);">Low-BW</div>
+          <div class="font-label-caps text-label-caps text-on-surface-variant">Optimized</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Problem Statement -->
+  <section class="py-32 px-6 md:px-12 max-w-[1440px] mx-auto grid grid-cols-1 md:grid-cols-12 gap-12 items-center border-b border-outline-variant">
+    <div class="md:col-span-5 reveal">
+      <h2 class="font-display-lg text-display-lg text-on-surface leading-tight" style="font-size: clamp(32px, 4vw, 56px);">Healthcare in Africa deserves enterprise-grade infrastructure.</h2>
+    </div>
+    <div class="md:col-span-7 md:col-start-6 reveal">
+      <p class="font-body-lg text-body-lg text-on-surface-variant">
+        Healthcare delivery in East Africa faces a fundamental connectivity gap — clinicians are isolated from specialists, patients lack access to diagnostic resources, and administrative systems remain paper-bound. Hakimet bridges this gap with telehealth infrastructure purpose-built for African healthcare realities: low-bandwidth optimized for 2G/3G networks, natively multi-language in Amharic, Afaan Oromoo, and Tigrinya, fully EMR-integrated, and HIPAA-aligned for the clinical workflows that actually exist in Ethiopian and East African hospitals.
+      </p>
+    </div>
+  </section>
+
+  <!-- How It Works -->
+  <section class="py-32 bg-surface-container-low border-b border-outline-variant">
+    <div class="max-w-[1440px] mx-auto px-6 md:px-12">
+      <h3 class="font-label-caps text-label-caps text-primary tracking-widest uppercase mb-16 text-center reveal">Connect, Document, Analyze</h3>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+
+        <div class="glass-panel p-10 flex flex-col items-center text-center group hover:border-primary/50 transition-colors duration-400 reveal">
+          <div class="w-16 h-16 rounded-full bg-surface-container-highest border border-outline flex items-center justify-center mb-8 group-hover:shadow-[0_0_15px_rgba(73,253,227,0.2)] transition-shadow">
+            <span class="font-label-caps text-label-caps text-on-surface">01</span>
+          </div>
+          <h4 class="font-body-lg text-body-lg font-bold text-on-surface mb-4">Connect</h4>
+          <p class="font-body-md text-body-md text-on-surface-variant">End-to-end encrypted video and audio consultations connecting patients, clinicians, and specialists across any distance — optimized for low-bandwidth environments.</p>
+        </div>
+
+        <div class="glass-panel p-10 flex flex-col items-center text-center group hover:border-primary/50 transition-colors duration-400 reveal reveal-delay-1">
+          <div class="w-16 h-16 rounded-full bg-surface-container-highest border border-outline flex items-center justify-center mb-8 group-hover:shadow-[0_0_15px_rgba(73,253,227,0.2)] transition-shadow">
+            <span class="font-label-caps text-label-caps text-on-surface">02</span>
+          </div>
+          <h4 class="font-body-lg text-body-lg font-bold text-on-surface mb-4">Document</h4>
+          <p class="font-body-md text-body-md text-on-surface-variant">Integrated EMR data capture with automated clinical note generation, prescription management, and patient record synchronization across facilities.</p>
+        </div>
+
+        <div class="glass-panel p-10 flex flex-col items-center text-center group hover:border-primary/50 transition-colors duration-400 reveal reveal-delay-2">
+          <div class="w-16 h-16 rounded-full bg-primary/10 border border-primary/50 flex items-center justify-center mb-8 shadow-[0_0_20px_rgba(73,253,227,0.15)]">
+            <span class="font-label-caps text-label-caps text-primary">03</span>
+          </div>
+          <h4 class="font-body-lg text-body-lg font-bold text-on-surface mb-4">Analyze</h4>
+          <p class="font-body-md text-body-md text-on-surface-variant">Clinical analytics dashboards providing patient outcome tracking, provider utilization metrics, appointment efficiency, and population health insights for administrators.</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Features Grid -->
+  <section class="py-32 px-6 md:px-12 max-w-[1440px] mx-auto border-b border-outline-variant">
+    <h2 class="font-headline-md text-headline-md text-on-surface mb-16 reveal">Platform Capabilities</h2>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      <div class="border-t border-white/10 pt-8 reveal">
+        <span class="material-symbols-outlined text-primary text-3xl mb-4 block" style="font-variation-settings: 'FILL' 1;">video_call</span>
+        <h3 class="font-body-lg text-body-lg text-white font-semibold mb-3">Secure Video Consultations</h3>
+        <p class="font-body-md text-body-md text-on-surface-variant">End-to-end encrypted video and audio with screen sharing, file transfer, and session recording — adaptive bitrate for reliable quality on 2G/3G connections.</p>
+      </div>
+      <div class="border-t border-white/10 pt-8 reveal reveal-delay-1">
+        <span class="material-symbols-outlined text-secondary text-3xl mb-4 block" style="font-variation-settings: 'FILL' 1;">medical_information</span>
+        <h3 class="font-body-lg text-body-lg text-white font-semibold mb-3">EMR Integration</h3>
+        <p class="font-body-md text-body-md text-on-surface-variant">Bidirectional synchronization with major EMR platforms — patient records, prescriptions, lab results, diagnostic images, and referral management in one workflow.</p>
+      </div>
+      <div class="border-t border-white/10 pt-8 reveal reveal-delay-2">
+        <span class="material-symbols-outlined text-white text-3xl mb-4 block" style="font-variation-settings: 'FILL' 1;">translate</span>
+        <h3 class="font-body-lg text-body-lg text-white font-semibold mb-3">Multi-Language Clinical Interface</h3>
+        <p class="font-body-md text-body-md text-on-surface-variant">Full Amharic, Afaan Oromoo, and Tigrinya support — clinical terminology natively localized, not machine-translated, for East African healthcare context.</p>
+      </div>
+      <div class="border-t border-white/10 pt-8 reveal">
+        <span class="material-symbols-outlined text-primary text-3xl mb-4 block" style="font-variation-settings: 'FILL' 1;">wifi_off</span>
+        <h3 class="font-body-lg text-body-lg text-white font-semibold mb-3">Low Bandwidth Optimization</h3>
+        <p class="font-body-md text-body-md text-on-surface-variant">Intelligent compression and adaptive streaming ensure reliable consultation quality even on unstable 2G connections — built for Africa's infrastructure reality.</p>
+      </div>
+      <div class="border-t border-white/10 pt-8 reveal reveal-delay-1">
+        <span class="material-symbols-outlined text-secondary text-3xl mb-4 block" style="font-variation-settings: 'FILL' 1;">event_available</span>
+        <h3 class="font-body-lg text-body-lg text-white font-semibold mb-3">Appointment Management</h3>
+        <p class="font-body-md text-body-md text-on-surface-variant">Intelligent scheduling with provider availability management, automated patient reminders, triage prioritization, and no-show tracking.</p>
+      </div>
+      <div class="border-t border-white/10 pt-8 reveal reveal-delay-2">
+        <span class="material-symbols-outlined text-white text-3xl mb-4 block" style="font-variation-settings: 'FILL' 1;">bar_chart</span>
+        <h3 class="font-body-lg text-body-lg text-white font-semibold mb-3">Clinical Analytics</h3>
+        <p class="font-body-md text-body-md text-on-surface-variant">Population health dashboards, provider utilization metrics, outcome tracking, and regulatory reporting tools for clinic administrators and health authorities.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="py-2xl px-6 md:px-12 max-w-[1440px] mx-auto text-center">
+    <div class="relative overflow-hidden border border-white/10 rounded-lg p-12 md:p-20">
+      <div class="absolute -top-20 left-1/2 -translate-x-1/2 w-[500px] h-[500px] bg-primary/6 rounded-full blur-3xl pointer-events-none"></div>
+      <div class="relative z-10">
+        <p class="font-label-caps text-label-caps text-primary mb-6 reveal">Ready to Deploy</p>
+        <h2 class="font-display-lg text-display-lg text-on-surface mb-8 reveal" style="font-size: clamp(32px, 4vw, 56px);">Deploy Hakimet in your healthcare environment.</h2>
+        <p class="font-body-lg text-body-lg text-on-surface-variant max-w-xl mx-auto mb-12 reveal">Our team handles full implementation, clinical staff training, and ongoing platform optimization. Contact us to discuss deployment in your healthcare system or institution.</p>
+        <div class="flex flex-wrap justify-center gap-4 reveal">
+          <a href="https://www.hakimet.com" target="_blank" rel="noopener"
+             class="inline-flex items-center gap-2 bg-primary text-on-primary px-10 py-4 font-label-caps text-label-caps hover:bg-primary-container transition-colors duration-400 shadow-[0_0_20px_rgba(73,253,227,0.2)]">
+            Open Platform <span class="material-symbols-outlined text-[16px]">open_in_new</span>
+          </a>
+          <a href="contact.html" class="border border-white/20 text-on-surface px-10 py-4 font-label-caps text-label-caps hover:border-primary hover:text-primary transition-colors duration-400">Request Demo</a>
+          <a href="products.html" class="border border-white/10 text-on-surface/70 px-10 py-4 font-label-caps text-label-caps hover:border-white/30 hover:text-on-surface transition-colors duration-400">All Products</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer style="background:#050709;border-top:1px solid rgba(255,255,255,0.05);">
+  <div class="max-w-[1440px] mx-auto px-6 md:px-12 py-20">
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-12 mb-14">
+      <div class="md:col-span-2">
+        <a href="index.html" class="block mb-4"><img src="assets/images/daps-logo-full.svg" alt="DAPS Analytics" style="height:60px;width:auto;"/></a>
+        <p style="font-size:13px;line-height:1.7;color:#3b4a46;max-width:300px;">High-fidelity data solutions engineered for clarity, speed, and uncompromising accuracy.</p>
+      </div>
+      <div>
+        <h4 style="font-size:10px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:#dee2ed;margin-bottom:20px;">Platform</h4>
+        <ul class="space-y-3" style="font-size:13px;">
+          <li><a href="products.html" style="color:#49fde3;">Products</a></li>
+          <li><a href="services.html" style="color:#3b4a46;" class="hover:text-teal-400 transition-colors">Services</a></li>
+          <li><a href="industries.html" style="color:#3b4a46;" class="hover:text-teal-400 transition-colors">Industries</a></li>
+          <li><a href="insights.html" style="color:#3b4a46;" class="hover:text-teal-400 transition-colors">Insights</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 style="font-size:10px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:#dee2ed;margin-bottom:20px;">Company</h4>
+        <ul class="space-y-3" style="font-size:13px;">
+          <li><a href="company.html" style="color:#3b4a46;" class="hover:text-teal-400 transition-colors">About Us</a></li>
+          <li><a href="contact.html" style="color:#3b4a46;" class="hover:text-teal-400 transition-colors">Contact</a></li>
+          <li><a href="insights.html" style="color:#3b4a46;" class="hover:text-teal-400 transition-colors">Resources</a></li>
+        </ul>
+      </div>
+    </div>
+    <div style="border-top:1px solid rgba(255,255,255,0.04);padding-top:28px;">
+      <p style="font-size:12px;color:#1e2a26;">© 2025 DAPS Analytics. All rights reserved.</p>
+    </div>
+  </div>
+</footer>
+
+<script src="assets/navbar.js"></script>
+<script src="assets/daps.js"></script>
+</body>
+</html>

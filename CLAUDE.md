@@ -221,6 +221,46 @@ After pulling changes or editing files, do a **hard refresh** (`Ctrl+Shift+R`) �
 
 ---
 
+## Pre-Launch Checklist & Next Phase Tasks
+
+### Critical — Must complete before public launch
+
+| Task | Detail | Effort |
+|------|--------|--------|
+| **Wire contact form** | Sign up at Formspree.io → get form ID → change `<form>` action to `https://formspree.io/f/YOUR_ID` in `contact.html` | 10 min |
+| **Connect Calendly** | Create Calendly account → set availability → replace `alert(...)` in "Load Availability" button with `window.open('https://calendly.com/YOUR_LINK', '_blank')` | 10 min |
+| **Set up hello@dapsanalytics.com** | Google Workspace ($6/mo) or Zoho Mail (free). Emails will bounce without this. | 1 hr |
+| **Add WhatsApp link** | Replace `href="#"` on Secure WhatsApp in `contact.html` with `href="https://wa.me/1YOURNUMBER"` | 2 min |
+| **Founder photos** | 7 "Add Photo" placeholders on `company.html` — replace gradient divs with `<img>` tags | Per photo |
+| **Custom domain** | Buy `dapsanalytics.com` or similar on Namecheap (~$12/yr) → add to Vercel → update all internal URLs | 1 hr |
+| **Privacy Policy page** | Legally required when collecting form data. Create `privacy.html`. Use a generator (termly.io, iubenda) or draft manually. | 2 hrs |
+
+### Medium priority — Before marketing push
+
+| Task | Detail |
+|------|--------|
+| **Favicon** | Add `<link rel="icon">` pointing to a 32×32 SVG/PNG of the DAPS mark |
+| **Open Graph meta tags** | Add `og:title`, `og:description`, `og:image`, `og:url` to all pages so LinkedIn/WhatsApp shares look good |
+| **Real trust logos** | Homepage trust bar uses placeholder CDN images — replace with real partner/client logos |
+| **Sitemap.xml** | Create `/sitemap.xml` listing all 13 pages for Google indexing |
+| **robots.txt** | Create `/robots.txt` with `User-agent: * / Allow: /` |
+| **Google Analytics** | Add GA4 tracking script to all pages |
+
+### Marketing — Post-launch
+
+- LinkedIn Company Page for DAPS Analytics
+- Google Business Profile (Bethesda MD address)
+- Product Hunt launch post
+- Cross-post the 12 existing articles from `insights.html` to LinkedIn
+- Professional email signatures for all 7 founders
+
+### Pages completed (as of 2026-05-03)
+- `index.html`, `products.html`, `services.html`, `industries.html`, `company.html`
+- `insights.html`, `article.html`, `projects.html`, `contact.html`, `onekof-pm.html`
+- `udc-wqis.html`, `hakimet.html`, `olink-fleet.html` ← new product detail pages
+
+---
+
 ## IP Notice
 
 This website is proprietary to **DAPS Analytics** and **Olink Technologies Inc.**  
