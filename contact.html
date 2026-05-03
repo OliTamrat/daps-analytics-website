@@ -62,24 +62,31 @@
   /* Form field base */
   .f-label { display:block;font-size:10px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:#849490;margin-bottom:8px; }
   .f-input, .f-select, .f-textarea {
-    background: transparent;
-    border: none;
-    border-bottom: 1px solid rgba(132,148,144,0.35);
-    border-radius: 0;
-    color: #dee2ed;
+    background: transparent !important;
+    background-color: transparent !important;
+    border: none !important;
+    border-bottom: 1px solid rgba(132,148,144,0.35) !important;
+    border-radius: 0 !important;
+    color: #dee2ed !important;
     font-size: 15px;
     font-family: 'Inter', sans-serif;
     font-weight: 400;
     padding: 10px 0;
     width: 100%;
-    outline: none;
-    box-shadow: none;
+    outline: none !important;
+    box-shadow: none !important;
     transition: border-color 0.3s ease;
     -webkit-appearance: none;
     appearance: none;
   }
   .f-input::placeholder, .f-textarea::placeholder { color: rgba(186,202,197,0.3); font-size:15px; }
-  .f-input:focus, .f-select:focus, .f-textarea:focus { border-bottom-color: #49fde3; }
+  .f-input:focus, .f-select:focus, .f-textarea:focus { border-bottom-color: #49fde3 !important; }
+  /* Override browser autofill yellow background */
+  .f-input:-webkit-autofill, .f-input:-webkit-autofill:hover, .f-input:-webkit-autofill:focus {
+    -webkit-box-shadow: 0 0 0 1000px #0d1117 inset !important;
+    -webkit-text-fill-color: #dee2ed !important;
+    caret-color: #dee2ed;
+  }
   .f-select { cursor: pointer; }
   .f-select option { background: #1b2028; color: #dee2ed; }
 
