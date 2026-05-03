@@ -7,10 +7,7 @@
 
   /* ── CSS ─────────────────────────────────────────────────────── */
   var CSS = [
-    /* Reserve space for fixed nav + reset any conflicting top padding */
-    'body{padding-top:70px !important;}',
-    'body>*:not(#daps-nav){margin-top:0 !important;}',
-    '#daps-nav{position:fixed;top:0;left:0;right:0;z-index:1000;background:rgba(5,7,9,0.9);backdrop-filter:blur(28px);-webkit-backdrop-filter:blur(28px);border-bottom:1px solid rgba(255,255,255,0.07);}',
+    '#daps-nav{position:fixed;top:0;left:0;right:0;z-index:1000;background:rgba(5,7,9,0.92);backdrop-filter:blur(28px);-webkit-backdrop-filter:blur(28px);border-bottom:1px solid rgba(255,255,255,0.07);}',
     '#daps-nav .ni{display:flex;justify-content:space-between;align-items:center;max-width:1440px;margin:0 auto;padding:0 48px;height:70px;}',
     '@media(max-width:768px){#daps-nav .ni{padding:0 20px;}}',
 
@@ -270,6 +267,26 @@
     nav.id = 'daps-nav';
     nav.innerHTML = NAV;
     document.body.insertAdjacentElement('afterbegin', nav);
+
+    /* ── Page offset logic ────────────────────────────────────────
+       Hero pages  → first section is min/h-screen, background fills
+                     BEHIND the fixed nav (y=0). Content inside the
+                     section already has pt-28 (112px) so text sits
+                     below the 70px nav. No extra padding needed.
+       Content pages → main has no hero, needs 70px top padding so
+                       the first heading isn't hidden under the nav.
+    ──────────────────────────────────────────────────────────────── */
+    var mainEl = document.querySelector('main');
+    if (mainEl) {
+      var firstEl = mainEl.firstElementChild;
+      var isHero = firstEl && (
+        firstEl.className.indexOf('min-h-screen') !== -1 ||
+        firstEl.className.indexOf('h-screen') !== -1
+      );
+      if (!isHero) {
+        mainEl.style.paddingTop = '70px';
+      }
+    }
 
     /* Set active page */
     var page = window.location.pathname.split('/').pop() || 'index.html';

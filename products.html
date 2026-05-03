@@ -8,7 +8,6 @@
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;900&display=swap" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
-<script src="https://unpkg.com/three@0.160.1/build/three.min.js"></script>
 <script>
   tailwind.config = {
     darkMode: "class",
@@ -68,14 +67,30 @@
 <main class="flex-grow">
 
   <!-- Hero -->
-  <section class="h-screen w-full relative flex items-center justify-center overflow-hidden" style="background:#060a0e;">
-    <!-- Three.js orbital product animation -->
-    <canvas id="products-hero-canvas" style="position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:0;"></canvas>
-    <div class="absolute inset-x-0 bottom-0 h-1/3 hero-gradient" style="z-index:1;"></div>
-    <div class="relative z-10 text-center max-w-4xl px-6">
-      <p class="font-label-caps text-label-caps text-primary mb-6 reveal">DAPS Analytics Platform</p>
-      <h1 class="font-display-2xl text-display-2xl text-on-background mb-6 tracking-tighter text-glow reveal reveal-delay-1" style="font-size: clamp(44px, 5.5vw, 80px);">Products</h1>
-      <p class="font-headline-md text-headline-md text-on-surface-variant max-w-2xl mx-auto reveal reveal-delay-2">High-fidelity tools for the data-driven enterprise. Precision engineering meets cinematic clarity.</p>
+  <section class="h-screen w-full relative flex items-center overflow-hidden" style="background:#060a0e;">
+    <!-- Data network canvas — right side only -->
+    <canvas id="products-hero-canvas" style="position:absolute;right:0;top:0;width:62%;height:100%;pointer-events:none;z-index:0;"></canvas>
+    <!-- Left-to-right dark fade so text stays legible -->
+    <div style="position:absolute;inset:0;z-index:1;pointer-events:none;background:linear-gradient(90deg,#060a0e 0%,#060a0e 32%,rgba(6,10,14,0.82) 52%,rgba(6,10,14,0.3) 72%,transparent 100%);"></div>
+    <!-- Bottom fade -->
+    <div style="position:absolute;inset-x-0;bottom:0;height:160px;z-index:1;pointer-events:none;background:linear-gradient(to top,#0e141b,transparent);"></div>
+
+    <!-- Text — left column -->
+    <div class="relative z-10 max-w-[1440px] mx-auto w-full px-6 md:px-12">
+      <div style="max-width:520px;">
+        <p class="font-label-caps text-label-caps text-primary mb-5 reveal" style="font-size:11px;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;">DAPS Analytics Platform</p>
+        <h1 class="text-on-surface mb-5 reveal" style="font-size:clamp(36px,4.5vw,64px);line-height:1.1;letter-spacing:-0.02em;font-weight:300;">
+          Four tools.<br/>One intelligence<br/>platform.
+        </h1>
+        <p class="text-on-surface-variant mb-10 reveal" style="font-size:17px;line-height:1.7;max-width:440px;">
+          Precision data products engineered for Africa's most demanding environments — project management, water quality, telehealth, and fleet intelligence.
+        </p>
+        <div class="flex flex-wrap gap-4 reveal">
+          <a href="#onekof" class="inline-flex items-center gap-2 bg-primary text-on-primary px-8 py-3 rounded-full hover:bg-primary-container transition-colors duration-300" style="font-size:11px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;">
+            Explore Products <span class="material-symbols-outlined" style="font-size:15px;">arrow_downward</span>
+          </a>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -268,205 +283,116 @@
 <script src="assets/navbar.js"></script>
 <script src="assets/daps.js"></script>
 
-<!-- ── Products Hero: Orbital Product Showcase ─────────────────────── -->
+<!-- ── Products Hero: Data Network Visualization ────────────────────── -->
 <script>
 (function(){
-  'use strict';
-  function boot(){ if(typeof THREE==='undefined'){setTimeout(boot,80);return;} init(); }
+  var canvas=document.getElementById('products-hero-canvas');
+  if(!canvas) return;
+  var ctx=canvas.getContext('2d');
+  var W,H,dpr=Math.min(window.devicePixelRatio||1,2);
 
-  function init(){
-    var canvas=document.getElementById('products-hero-canvas');
-    if(!canvas) return;
-    var par=canvas.parentElement;
-    var W=par.clientWidth||window.innerWidth, H=par.clientHeight||window.innerHeight;
-
-    var renderer=new THREE.WebGLRenderer({canvas:canvas,antialias:true,alpha:true,powerPreference:'high-performance'});
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio,2));
-    renderer.setSize(W,H);
-    renderer.setClearColor(0x000000,0);
-
-    var scene=new THREE.Scene();
-    var camera=new THREE.PerspectiveCamera(52,W/H,0.1,500);
-    camera.position.set(0,3.8,9.5);
-    camera.lookAt(0,0,0);
-
-    /* Lights */
-    scene.add(new THREE.AmbientLight(0x001a15,1.8));
-    var keyL=new THREE.PointLight(0x49fde3,5,28); keyL.position.set(4,6,5); scene.add(keyL);
-    var fillL=new THREE.PointLight(0xefbf71,2,28); fillL.position.set(-6,-3,-6); scene.add(fillL);
-
-    /* Products */
-    var PRODS=[
-      {color:0x49fde3, r:2.2, spd:0.38, tilt:0.18, sz:0.19, phase:0,             label:'Onekof PM'},
-      {color:0xefbf71, r:3.3, spd:0.24, tilt:-0.13, sz:0.16, phase:Math.PI*.5,   label:'UDC-WQIS'},
-      {color:0x49fde3, r:4.2, spd:0.16, tilt:0.09,  sz:0.15, phase:Math.PI,      label:'Hakimet'},
-      {color:0xefbf71, r:5.1, spd:0.10, tilt:-0.07, sz:0.13, phase:Math.PI*1.5,  label:'Olink Fleet'},
-    ];
-
-    /* Central DAPS core */
-    var core=new THREE.Mesh(
-      new THREE.SphereGeometry(0.38,32,32),
-      new THREE.MeshPhongMaterial({color:0x050a10,emissive:0x49fde3,emissiveIntensity:0.4,shininess:25,transparent:true,opacity:0.97})
-    );
-    scene.add(core);
-
-    /* Core glow shell */
-    scene.add(new THREE.Mesh(
-      new THREE.SphereGeometry(0.6,32,32),
-      new THREE.ShaderMaterial({
-        vertexShader:'varying vec3 vN;void main(){vN=normalize(normalMatrix*normal);gl_Position=projectionMatrix*modelViewMatrix*vec4(position,1.);}',
-        fragmentShader:'varying vec3 vN;void main(){float i=pow(max(0.,0.72-dot(vN,vec3(0,0,1))),2.5);gl_FragColor=vec4(0.286,0.992,0.890,i*.85);}',
-        blending:THREE.AdditiveBlending,side:THREE.BackSide,transparent:true,depthWrite:false
-      })
-    ));
-
-    /* Orbit path helper */
-    function orbitPts(r,tilt,segs){
-      var pts=[];
-      for(var i=0;i<=segs;i++){var a=(i/segs)*Math.PI*2; pts.push(new THREE.Vector3(Math.cos(a)*r,Math.sin(a)*tilt*r*.55,Math.sin(a)*r));}
-      return pts;
-    }
-
-    /* Build nodes */
-    var TRAIL=55;
-    var nodes=PRODS.map(function(p){
-      /* orbit ring */
-      var ring=new THREE.Line(new THREE.BufferGeometry().setFromPoints(orbitPts(p.r,p.tilt,130)),
-        new THREE.LineBasicMaterial({color:p.color,transparent:true,opacity:0.1,blending:THREE.AdditiveBlending,depthWrite:false}));
-      scene.add(ring);
-
-      /* node sphere */
-      var node=new THREE.Mesh(new THREE.SphereGeometry(p.sz,16,16),
-        new THREE.MeshPhongMaterial({color:p.color,emissive:p.color,emissiveIntensity:0.55,shininess:18}));
-      scene.add(node);
-
-      /* node outer glow */
-      node.add(new THREE.Mesh(new THREE.SphereGeometry(p.sz*3,16,16),
-        new THREE.MeshBasicMaterial({color:p.color,transparent:true,opacity:0.06,blending:THREE.AdditiveBlending,depthWrite:false})));
-
-      /* trail */
-      var tp=new Float32Array(TRAIL*3);
-      var tg=new THREE.BufferGeometry();
-      tg.setAttribute('position',new THREE.BufferAttribute(tp,3));
-      var trail=new THREE.Points(tg,new THREE.PointsMaterial({color:p.color,size:0.045,transparent:true,opacity:0.55,blending:THREE.AdditiveBlending,depthWrite:false,sizeAttenuation:true}));
-      scene.add(trail);
-
-      /* core→node line */
-      var lp=new Float32Array(6);
-      var lg=new THREE.BufferGeometry();
-      lg.setAttribute('position',new THREE.BufferAttribute(lp,3));
-      var line=new THREE.Line(lg,new THREE.LineBasicMaterial({color:p.color,transparent:true,opacity:0.2,blending:THREE.AdditiveBlending,depthWrite:false}));
-      scene.add(line);
-
-      /* flow dot */
-      var dg=new THREE.BufferGeometry();
-      dg.setAttribute('position',new THREE.Float32BufferAttribute([0,0,0],3));
-      var dot=new THREE.Points(dg,new THREE.PointsMaterial({color:p.color,size:0.11,transparent:true,opacity:0.95,blending:THREE.AdditiveBlending,depthWrite:false,sizeAttenuation:true}));
-      scene.add(dot);
-
-      /* highlight ring around node */
-      var hr=new THREE.Mesh(new THREE.RingGeometry(p.sz*1.6,p.sz*1.8,24),
-        new THREE.MeshBasicMaterial({color:p.color,transparent:true,opacity:0.35,blending:THREE.AdditiveBlending,depthWrite:false,side:THREE.DoubleSide}));
-      hr.rotation.x=Math.PI/2;
-      node.add(hr);
-
-      return {def:p,node:node,trail:trail,tp:tp,tg:tg,line:line,lp:lp,lg:lg,dot:dot,flowT:Math.random()};
-    });
-
-    /* Cross-connection lines between product nodes */
-    var crossLines=[];
-    for(var i=0;i<PRODS.length;i++){
-      for(var j=i+1;j<PRODS.length;j++){
-        var clp=new Float32Array(6);
-        var clg=new THREE.BufferGeometry();
-        clg.setAttribute('position',new THREE.BufferAttribute(clp,3));
-        var cl=new THREE.Line(clg,new THREE.LineBasicMaterial({
-          color:0x49fde3,transparent:true,opacity:0.06,blending:THREE.AdditiveBlending,depthWrite:false
-        }));
-        scene.add(cl);
-        crossLines.push({line:cl,lp:clp,lg:clg,ia:i,ib:j});
-      }
-    }
-
-    /* Stars */
-    var sp=[];
-    for(var s=0;s<2800;s++){var r2=60+Math.random()*130,phi=Math.acos(2*Math.random()-1),th=Math.random()*Math.PI*2;sp.push(r2*Math.sin(phi)*Math.cos(th),r2*Math.cos(phi),r2*Math.sin(phi)*Math.sin(th));}
-    var sg=new THREE.BufferGeometry();sg.setAttribute('position',new THREE.Float32BufferAttribute(sp,3));
-    scene.add(new THREE.Points(sg,new THREE.PointsMaterial({color:0xffffff,size:0.18,transparent:true,opacity:0.22,blending:THREE.AdditiveBlending,depthWrite:false,sizeAttenuation:true})));
-
-    /* Subtle grid floor */
-    var gv=[];
-    for(var gx=-14;gx<=14;gx+=2){gv.push(gx,-1.8,-14,gx,-1.8,14);}
-    for(var gz=-14;gz<=14;gz+=2){gv.push(-14,-1.8,gz,14,-1.8,gz);}
-    var gg=new THREE.BufferGeometry();gg.setAttribute('position',new THREE.Float32BufferAttribute(gv,3));
-    scene.add(new THREE.LineSegments(gg,new THREE.LineBasicMaterial({color:0x49fde3,transparent:true,opacity:0.04,blending:THREE.AdditiveBlending})));
-
-    /* Animation */
-    var t=0, camT=0;
-    var posCache=new Array(PRODS.length);
-
-    function tick(){
-      requestAnimationFrame(tick);
-      t+=0.010; camT+=0.0007;
-
-      /* Camera slow cinematic orbit */
-      camera.position.x=Math.sin(camT)*2.0;
-      camera.position.y=3.8+Math.sin(camT*0.6)*0.6;
-      camera.position.z=9.5+Math.sin(camT*0.4)*0.8;
-      camera.lookAt(0,0,0);
-
-      /* Core */
-      core.rotation.y+=0.013;
-      var pulse=1+0.04*Math.sin(t*2.8);
-      core.scale.setScalar(pulse);
-
-      /* Light orbit */
-      keyL.position.x=Math.cos(t*.22)*8;keyL.position.z=Math.sin(t*.22)*8;
-
-      /* Nodes */
-      nodes.forEach(function(n,i){
-        var p=n.def;
-        var angle=p.phase+t*p.spd;
-        var x=Math.cos(angle)*p.r;
-        var y=Math.sin(angle)*p.tilt*p.r*0.55;
-        var z=Math.sin(angle)*p.r;
-        n.node.position.set(x,y,z);
-        n.node.rotation.y+=0.02;
-        posCache[i]={x:x,y:y,z:z};
-
-        /* Shift trail back */
-        for(var j=TRAIL-1;j>0;j--){n.tp[j*3]=n.tp[(j-1)*3];n.tp[j*3+1]=n.tp[(j-1)*3+1];n.tp[j*3+2]=n.tp[(j-1)*3+2];}
-        n.tp[0]=x;n.tp[1]=y;n.tp[2]=z;
-        n.tg.attributes.position.needsUpdate=true;
-
-        /* Core→node line */
-        n.lp[0]=0;n.lp[1]=0;n.lp[2]=0;n.lp[3]=x;n.lp[4]=y;n.lp[5]=z;
-        n.lg.attributes.position.needsUpdate=true;
-
-        /* Flow dot */
-        n.flowT=(n.flowT+0.020)%1;
-        n.dot.geometry.attributes.position.setXYZ(0,x*n.flowT,y*n.flowT,z*n.flowT);
-        n.dot.geometry.attributes.position.needsUpdate=true;
-      });
-
-      /* Cross connections */
-      crossLines.forEach(function(cl){
-        var a=posCache[cl.ia],b=posCache[cl.ib];
-        if(a&&b){cl.lp[0]=a.x;cl.lp[1]=a.y;cl.lp[2]=a.z;cl.lp[3]=b.x;cl.lp[4]=b.y;cl.lp[5]=b.z;cl.lg.attributes.position.needsUpdate=true;}
-      });
-
-      renderer.render(scene,camera);
-    }
-    tick();
-
-    window.addEventListener('resize',function(){
-      W=par.clientWidth||window.innerWidth;H=par.clientHeight||window.innerHeight;
-      camera.aspect=W/H;camera.updateProjectionMatrix();renderer.setSize(W,H);
-    });
+  function resize(){
+    W=canvas.offsetWidth; H=canvas.offsetHeight;
+    canvas.width=W*dpr; canvas.height=H*dpr;
+    ctx.scale(dpr,dpr);
   }
 
-  if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded',function(){setTimeout(boot,50);});}
-  else{setTimeout(boot,50);}
+  var TEAL='73,253,227';
+  var AMBER='239,191,113';
+  var N=32, MAX_D=155;
+  var nodes=[], packets=[];
+
+  function initNodes(){
+    nodes=[];
+    for(var i=0;i<N;i++){
+      nodes.push({
+        x:Math.random()*W, y:Math.random()*H,
+        vx:(Math.random()-0.5)*0.28, vy:(Math.random()-0.5)*0.28,
+        r:1.8+Math.random()*3.2,
+        col:Math.random()>0.62?AMBER:TEAL,
+        ph:Math.random()*Math.PI*2,
+        ps:0.018+Math.random()*0.025
+      });
+    }
+    packets=[];
+    for(var j=0;j<18;j++){
+      packets.push({fi:Math.floor(Math.random()*N),ti:Math.floor(Math.random()*N),t:Math.random(),spd:0.004+Math.random()*0.005});
+    }
+  }
+
+  function draw(){
+    ctx.clearRect(0,0,W,H);
+
+    /* Move nodes */
+    nodes.forEach(function(n){
+      n.x+=n.vx; n.y+=n.vy;
+      if(n.x<0||n.x>W) n.vx*=-1;
+      if(n.y<0||n.y>H) n.vy*=-1;
+      n.ph+=n.ps;
+    });
+
+    /* Connections */
+    for(var i=0;i<nodes.length;i++){
+      for(var j=i+1;j<nodes.length;j++){
+        var dx=nodes[j].x-nodes[i].x, dy=nodes[j].y-nodes[i].y;
+        var d=Math.sqrt(dx*dx+dy*dy);
+        if(d<MAX_D){
+          ctx.globalAlpha=(1-d/MAX_D)*0.18;
+          ctx.strokeStyle='rgba('+TEAL+',1)';
+          ctx.lineWidth=0.6;
+          ctx.beginPath();
+          ctx.moveTo(nodes[i].x,nodes[i].y);
+          ctx.lineTo(nodes[j].x,nodes[j].y);
+          ctx.stroke();
+        }
+      }
+    }
+    ctx.globalAlpha=1;
+
+    /* Data packets along connections */
+    packets.forEach(function(p){
+      p.t+=p.spd;
+      if(p.t>=1){p.t=0;p.fi=p.ti;p.ti=Math.floor(Math.random()*N);}
+      var a=nodes[p.fi],b=nodes[p.ti];
+      var dx=b.x-a.x,dy=b.y-a.y,d=Math.sqrt(dx*dx+dy*dy);
+      if(d<MAX_D*1.8){
+        var px=a.x+dx*p.t, py=a.y+dy*p.t;
+        /* glow halo */
+        var g=ctx.createRadialGradient(px,py,0,px,py,9);
+        g.addColorStop(0,'rgba('+TEAL+',0.28)');
+        g.addColorStop(1,'rgba('+TEAL+',0)');
+        ctx.fillStyle=g; ctx.beginPath(); ctx.arc(px,py,9,0,Math.PI*2); ctx.fill();
+        /* core dot */
+        ctx.fillStyle='rgba('+TEAL+',0.95)';
+        ctx.beginPath(); ctx.arc(px,py,2.2,0,Math.PI*2); ctx.fill();
+      }
+    });
+
+    /* Nodes */
+    nodes.forEach(function(n){
+      var r=n.r*(1+0.28*Math.sin(n.ph));
+      /* outer glow */
+      var g=ctx.createRadialGradient(n.x,n.y,0,n.x,n.y,r*5);
+      g.addColorStop(0,'rgba('+n.col+',0.18)');
+      g.addColorStop(1,'rgba('+n.col+',0)');
+      ctx.fillStyle=g; ctx.beginPath(); ctx.arc(n.x,n.y,r*5,0,Math.PI*2); ctx.fill();
+      /* core */
+      ctx.fillStyle='rgba('+n.col+',0.88)';
+      ctx.beginPath(); ctx.arc(n.x,n.y,r,0,Math.PI*2); ctx.fill();
+    });
+
+    requestAnimationFrame(draw);
+  }
+
+  function start(){
+    resize();
+    initNodes();
+    draw();
+  }
+
+  window.addEventListener('resize',function(){resize();initNodes();});
+  if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded',start);}
+  else{start();}
 })();
 </script>
 </body>
