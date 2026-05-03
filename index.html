@@ -34,7 +34,7 @@
           "on-secondary":"#432c00","on-error":"#690005"
         },
         borderRadius:{DEFAULT:"0.25rem",lg:"0.5rem",xl:"0.75rem",full:"9999px"},
-        spacing:{lg:"4rem",xl:"8rem",xs:"0.5rem",md:"2rem","2xl":"12rem",gutter:"24px",margin:"64px",unit:"4px",sm:"1rem"},
+        spacing:{lg:"4rem",xl:"8rem",xs:"0.5rem","2rem","2xl":"12rem",gutter:"24px",margin:"64px",unit:"4px",sm:"1rem"},
         fontFamily:{"display-lg":["Inter"],"label-caps":["Inter"],"headline-md":["Inter"],"display-2xl":["Inter"],"body-md":["Inter"],"display-xl":["Inter"],"body-lg":["Inter"]},
         fontSize:{
           "display-lg":["56px",{lineHeight:"115%",letterSpacing:"-0.02em",fontWeight:"400"}],
@@ -81,7 +81,7 @@
   .eyebrow::before { content: ''; display: block; width: 32px; height: 1px; background: #49fde3; flex-shrink: 0; }
 
   /* ── Metric number ──────────────────────────────────────────── */
-  .metric-num { font-size: clamp(28px, 3.5vw, 48px); font-weight: 300; letter-spacing: -0.03em; color: #dee2ed; line-height: 1; }
+  .metric-num { font-size: clamp(18px, 2vw, 30px); font-weight: 300; letter-spacing: -0.03em; color: #dee2ed; line-height: 1; }
   .metric-label { font-size: 11px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: #849490; margin-top: 6px; }
 
   /* ── Product card ───────────────────────────────────────────── */
@@ -149,11 +149,11 @@
        style="background: linear-gradient(to top, #0e141b, transparent);"></div>
 
   <!-- Hero content -->
-  <div class="relative z-20 max-w-[1440px] mx-auto w-full px-6 md:px-12 pt-28 pb-20 grid grid-cols-12 gap-6">
+  <div class="relative z-20 max-w-[1440px] mx-auto w-full px-6 md:px-12 pt-16 pb-8 grid grid-cols-12 gap-6">
     <div class="col-span-12 md:col-span-7 lg:col-span-6 flex flex-col justify-center">
 
       <!-- Eyebrow -->
-      <div class="flex items-center gap-3 mb-8 hero-animate-1">
+      <div class="flex items-center gap-3 mb-4 hero-animate-1">
         <div class="relative flex items-center justify-center">
           <span class="w-2 h-2 rounded-full bg-primary z-10 relative"></span>
           <span class="ring-pulse absolute w-5 h-5 rounded-full border border-primary/40"></span>
@@ -164,14 +164,14 @@
       </div>
 
       <!-- Headline -->
-      <h1 class="hero-animate-2 font-display-xl text-display-xl text-on-surface mb-8"
-          style="font-size: clamp(42px, 6.5vw, 96px);">
+      <h1 class="hero-animate-2 font-display-xl text-display-xl text-on-surface mb-5"
+          style="font-size: clamp(32px, 3.5vw, 56px); line-height: 1.12;">
         The intelligence<br/>
         layer for African &amp;<br/>global enterprises.
       </h1>
 
       <!-- Sub -->
-      <p class="hero-animate-3 mb-10 max-w-[480px]"
+      <p class="hero-animate-3 mb-6 max-w-[480px]"
          style="font-size:18px;line-height:1.7;color:#bacac5;">
         Precision analytics, predictive modeling, and high-fidelity data infrastructure — engineered for clarity in complex environments.
       </p>
@@ -192,7 +192,7 @@
       </div>
 
       <!-- Micro stats -->
-      <div class="hero-animate-4 flex gap-10 mt-14 pt-8 border-t border-white/[0.08]">
+      <div class="hero-animate-4 flex gap-10 mt-8 pt-5 border-t border-white/[0.08]">
         <div>
           <div class="metric-num" style="color:#dee2ed;">4</div>
           <div class="metric-label">Live Products</div>
