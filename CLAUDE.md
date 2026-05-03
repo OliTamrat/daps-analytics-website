@@ -9,6 +9,9 @@ Full-stack frontend website for **DAPS Analytics** (Data Analytics Processing So
 **Built with:** Pure HTML + Tailwind CSS (CDN) + Vanilla JavaScript  
 **No build step required** — open any `.html` file directly or serve with `python -m http.server 3030`
 
+**GitHub:** https://github.com/OliTamrat/daps-analytics-website  
+**Vercel (live):** https://dapsanalytics.vercel.app
+
 ---
 
 ## Architecture
@@ -17,15 +20,16 @@ Full-stack frontend website for **DAPS Analytics** (Data Analytics Processing So
 - **Markup:** HTML5 semantic
 - **Styling:** Tailwind CSS v3 via CDN + inline `<style>` blocks
 - **Interactivity:** Vanilla JavaScript (ES5-compatible)
-- **3D Animation:** Three.js r0.160.1 via CDN (homepage globe, products orbital animation)
+- **3D Animation:** Three.js r0.160.1 via CDN — **homepage globe ONLY**
+- **2D Animation:** Vanilla Canvas 2D API — products page data network
 - **Icons:** Material Symbols Outlined (Google Fonts)
 - **Typography:** Inter (Google Fonts) — weights 300, 400, 600, 700, 900
 
 ### File Structure
 ```
 /
-├── index.html              # Homepage (WebGL globe hero)
-├── products.html           # Products (orbital animation hero)
+├── index.html              # Homepage (Three.js WebGL globe hero)
+├── products.html           # Products (Canvas 2D data-network hero)
 ├── services.html           # Services (bento grid)
 ├── industries.html         # Industries (hover-reveal cards)
 ├── company.html            # Company (founder story, timeline, team)
@@ -73,6 +77,21 @@ Full-stack frontend website for **DAPS Analytics** (Data Analytics Processing So
 | body-md | 16px | 400 | 0 |
 | label-caps | 12px | 600 | +0.1em (uppercase) |
 
+### Hero Title Font Size Rules (calibrated 2026-05-02)
+**h-screen / min-h-screen heroes** — content must fit in one viewport, use reduced sizes:
+| Page | Clamp value | Max at 1440px |
+|------|-------------|---------------|
+| `index.html` | `clamp(32px, 3.5vw, 56px)` | 56px |
+| `products.html` | `clamp(36px, 4.5vw, 64px)` | 65px |
+| `onekof-pm.html` | `clamp(44px, 5.5vw, 80px)` | 80px |
+
+**Scrollable heroes** — no viewport constraint, larger sizes are appropriate:
+| Page | Clamp value | Max at 1440px |
+|------|-------------|---------------|
+| `projects.html` | `clamp(44px, 6vw, 84px)` | 84px |
+| `services.html` | `clamp(36px, 4.5vw, 68px)` | 68px |
+| `company.html` | `clamp(36px, 5vw, 56px)` | 56px |
+
 ### Spacing Scale
 ```
 xs: 0.5rem | sm: 1rem | md: 2rem | lg: 4rem | xl: 8rem | 2xl: 12rem
@@ -85,17 +104,20 @@ gutter: 24px | margin: 64px
 
 ### 1. Homepage (`index.html`)
 - **Three.js WebGL Globe** — rotating sphere with 420 node particles, 75 animated arcs with traveling data-flow dots, atmosphere shader (GLSL), 2,800 background stars, orbiting key light, cinematic camera drift
+- Hero: `min-h-screen flex items-center` — split layout (text left, globe right)
+- Hero content wrapper: `pt-16 pb-8`, h1 `clamp(32px,3.5vw,56px)`, metric-num `clamp(18px,2vw,30px)`
 - Product suite 4-card grid (Onekof, UDC-WQIS, Hakimet, Olink Fleet)
-- Services preview (4 cards)
-- Industries preview (6 icon tiles)
-- CTA section with radial glow
+- Services preview (4 cards), Industries preview (6 icon tiles), CTA section
 
 ### 2. Products Page (`products.html`)
-- **Three.js Orbital Showcase** — 4 product nodes orbiting a central DAPS core at different radii/speeds; particle trails, highlight rings, cross-connection network lines, data-flow dots, subtle grid floor
+- **Vanilla Canvas 2D data-network animation** — 32 floating nodes connected by lines with 18 flowing data packets; teal + amber color palette; replaces previous Three.js orbital planet animation (removed as irrelevant to analytics)
+- Hero: `h-screen flex items-center` — split layout (text left col, canvas right 62%)
+- No Three.js dependency — canvas-only, lighter and on-brand
 - Full-screen cinematic sections for each of 4 products
 - All "Open Platform" buttons link to live platforms
 
-### 3. Projects Page (`projects.html`) — NEW
+### 3. Projects Page (`projects.html`)
+- Hero: scrollable section, `background:#0e141b` (matches body — prevents gap), `pt-2` (section internal padding only; `main` gets `70px` from navbar.js)
 - **TDT × MINT Ethiopia** featured prominently as flagship initiative
 - 3-phase delivery timeline
 - 6-project portfolio grid (4 live + 2 in development)
@@ -113,16 +135,29 @@ gutter: 24px | margin: 64px
 - Reading progress bar (teal, top of viewport)
 - Full article body from `assets/articles-data.js`
 - Related articles sidebar (same-category filtering)
-- 12 full articles written (400–600 words each), covering: TDT/MINT, UDC-WQIS, Onekof PM 2025, Hakimet Year One, agricultural forecasting, supply chain routing, federated learning, market connectivity
+- 12 full articles (400–600 words each)
 
 ### 6. Navbar (`assets/navbar.js`) — Shared Component
 - **Lucid-inspired hover dropdowns** for all 6 nav items
 - Dropdowns show icon + title + description per item; live badges for active products
-- Inter 14px medium weight (NOT uppercase, replacing old 10px uppercase)
+- Inter 14px medium weight, not uppercase
 - Language selector with 6 languages (toast for non-English)
 - Responsive mobile panel with sectioned mobile menu
 - Active page highlighting via URL detection
-- Injected dynamically — one file updates all 10 pages
+- Injected dynamically — one file updates all pages
+
+#### Navbar Gap Logic (CRITICAL — do not change)
+```javascript
+// Hero pages (min-h-screen / h-screen): section background covers behind nav.
+// Content inside the section has enough top padding, so NO main paddingTop needed.
+// Scrollable pages: main gets paddingTop=70px so content clears the fixed nav.
+var isHero = firstEl && (
+  firstEl.className.indexOf('min-h-screen') !== -1 ||
+  firstEl.className.indexOf('h-screen') !== -1
+);
+if (!isHero) { mainEl.style.paddingTop = '70px'; }
+```
+**Gap rule:** Scrollable page sections MUST use `background:#0e141b` (same as body) so the `70px` main padding is invisible. If a section uses a different/darker background, a visible band appears between the nav and the section.
 
 ---
 
@@ -159,12 +194,20 @@ cd stitch_daps_analytics_cinematic_web_experience
 python -m http.server 3030
 # open http://localhost:3030
 ```
+After pulling changes or editing files, do a **hard refresh** (`Ctrl+Shift+R`) — browsers cache static HTML aggressively.
+
+### Deployment
+- Push to `master` branch on GitHub → Vercel auto-deploys in ~60 seconds
+- Vercel URL: https://dapsanalytics.vercel.app
+- After deploy, hard refresh Vercel URL too (`Ctrl+Shift+R`)
 
 ### Adding a New Page
 1. Copy any existing page
-2. Remove the `<nav>` block (navbar.js injects it automatically)
+2. Remove any existing `<nav>` block (navbar.js injects it)
 3. Ensure `<script src="assets/navbar.js"></script>` is before `</body>`
 4. Ensure `<script src="assets/daps.js"></script>` is after navbar.js
+5. If hero is `h-screen`/`min-h-screen`: no extra padding needed on main or section top
+6. If hero is scrollable: section background must be `#0e141b` to hide the 70px main gap
 
 ### Adding a New Article
 1. Add an entry to `assets/articles-data.js` (follow existing structure)
@@ -187,4 +230,4 @@ Do not redistribute without authorization.
 
 ---
 
-*Built in collaboration with Claude Code (Anthropic) — May 2025*
+*Last updated: 2026-05-03*
