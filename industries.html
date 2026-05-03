@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html class="dark" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Industries — DAPS Analytics</title>
+<meta name="description" content="Data intelligence across Banking, Government, Telecom, Healthcare, Agriculture, Logistics, and NGOs."/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;900&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<script>
+  tailwind.config = {
+    darkMode: "class",
+    theme: {
+      extend: {
+        colors: {
+          "secondary-container": "#694700","error": "#ffb4ab","tertiary-container": "#c6c8ca",
+          "surface-tint": "#00dfc6","on-tertiary-fixed": "#191c1e","primary-fixed-dim": "#00dfc6",
+          "on-primary-fixed": "#00201b","inverse-surface": "#dee2ed","on-primary-container": "#005e53",
+          "primary-fixed": "#47fce2","on-tertiary-container": "#515455","on-secondary-fixed": "#281900",
+          "surface": "#0e141b","tertiary": "#e3e4e6","surface-bright": "#343942","secondary": "#efbf71",
+          "on-primary": "#003730","surface-container-low": "#171c24","inverse-primary": "#006b5e",
+          "on-secondary-container": "#e7b76a","on-background": "#dee2ed","background": "#0e141b",
+          "tertiary-fixed-dim": "#c5c6c8","primary": "#49fde3","surface-container-high": "#252a32",
+          "secondary-fixed": "#ffdead","on-error-container": "#ffdad6","on-surface": "#dee2ed",
+          "primary-container": "#00e0c7","on-tertiary": "#2e3132","error-container": "#93000a",
+          "surface-container-lowest": "#090e16","on-surface-variant": "#bacac5","tertiary-fixed": "#e1e2e4",
+          "surface-dim": "#0e141b","surface-container": "#1b2028","inverse-on-surface": "#2b3139",
+          "outline-variant": "#3b4a46","surface-variant": "#30353d","secondary-fixed-dim": "#efbf71",
+          "on-tertiary-fixed-variant": "#444749","surface-container-highest": "#30353d",
+          "on-secondary-fixed-variant": "#604100","outline": "#849490","on-primary-fixed-variant": "#005046",
+          "on-secondary": "#432c00","on-error": "#690005"
+        },
+        borderRadius: { DEFAULT: "0.25rem", lg: "0.5rem", xl: "0.75rem", full: "9999px" },
+        spacing: { lg: "4rem", xl: "8rem", xs: "0.5rem", md: "2rem", "2xl": "12rem", gutter: "24px", margin: "64px", unit: "4px", sm: "1rem" },
+        fontFamily: { "display-lg": ["Inter"], "label-caps": ["Inter"], "headline-md": ["Inter"], "display-2xl": ["Inter"], "body-md": ["Inter"], "display-xl": ["Inter"], "body-lg": ["Inter"] },
+        fontSize: {
+          "display-lg": ["56px", { lineHeight: "115%", letterSpacing: "-0.02em", fontWeight: "400" }],
+          "label-caps": ["12px", { lineHeight: "100%", letterSpacing: "0.1em", fontWeight: "600" }],
+          "headline-md": ["32px", { lineHeight: "130%", letterSpacing: "-0.01em", fontWeight: "400" }],
+          "display-2xl": ["128px", { lineHeight: "110%", letterSpacing: "-0.04em", fontWeight: "300" }],
+          "body-md": ["16px", { lineHeight: "160%", letterSpacing: "0em", fontWeight: "400" }],
+          "display-xl": ["96px", { lineHeight: "110%", letterSpacing: "-0.03em", fontWeight: "300" }],
+          "body-lg": ["18px", { lineHeight: "160%", letterSpacing: "0em", fontWeight: "400" }]
+        }
+      }
+    }
+  }
+</script>
+<style>
+  body { background-color: #0e141b; color: #dee2ed; }
+  .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.7s cubic-bezier(0.4,0,0.2,1), transform 0.7s cubic-bezier(0.4,0,0.2,1); }
+  .reveal.revealed { opacity: 1; transform: translateY(0); }
+</style>
+</head>
+<body class="antialiased selection:bg-primary/20 selection:text-primary min-h-screen flex flex-col">
+
+
+
+<main class="flex-grow pt-24 md:pt-32 pb-xl px-6 md:px-12 max-w-[1440px] mx-auto w-full">
+
+  <!-- Header -->
+  <header class="mb-xl md:mb-2xl max-w-3xl reveal">
+    <p class="font-label-caps text-label-caps text-primary mb-4">Sector Intelligence</p>
+    <h1 class="font-display-lg text-display-lg text-white mb-md" style="font-size: clamp(36px, 5vw, 56px);">High-Fidelity Intelligence Across Sectors</h1>
+    <p class="font-body-lg text-body-lg text-on-surface-variant">We engineer bespoke data environments that transform complex industry challenges into clear, actionable, and secure operational advantages.</p>
+  </header>
+
+  <!-- Industries Grid -->
+  <section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-gutter mb-xl">
+
+    <!-- Banking & Fintech -->
+    <article class="relative h-[400px] md:h-[500px] rounded group overflow-hidden border border-white/10 bg-surface-container-low transition-all duration-400 hover:border-primary/50 reveal">
+      <div class="absolute inset-0 bg-cover bg-center opacity-40 group-hover:opacity-60 group-hover:scale-105 transition-all duration-700"
+           style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAwZd-MVHE0nD8HlKeZ7Bm6ylw5XXFcxIeRLokIfN1lod1PFOBZ70ELjDLXup-XtH-5cv2k4e0KUoHXnfD6vJDr6jw1HMqG4O7TEpMaCDpfA9QMcjVMhy8ze42o7JQ6EZclDpbCxBvhGyY8dZt4MT4xg0P7QH27EUATPbun5BovEIGPRZ9z_sGeFSpmVzDXv9zNJx1UO1uXu4F2OERnBeyhqRc2auGCxOgYFJ7pvpg4dog0ca0HNGvDW2GleiZCa6s1_YrhVmjFim1n');">
+      </div>
+      <div class="absolute inset-0 bg-gradient-to-t from-[#090e16] via-[#090e16]/80 to-transparent"></div>
+      <div class="absolute bottom-0 left-0 p-8 w-full">
+        <h2 class="font-headline-md text-headline-md text-white mb-4">Banking &amp; Fintech</h2>
+        <p class="font-body-md text-body-md text-on-surface-variant mb-6 opacity-0 group-hover:opacity-100 transition-opacity duration-400 translate-y-4 group-hover:translate-y-0">Risk mitigation algorithms and predictive market modeling tailored for high-volume, secure environments.</p>
+        <a href="contact.html" class="font-label-caps text-label-caps text-primary flex items-center gap-2 group/link">
+          Explore Solutions <span class="material-symbols-outlined text-[16px] group-hover/link:translate-x-1 transition-transform">arrow_forward</span>
+        </a>
+      </div>
+    </article>
+
+    <!-- Government -->
+    <article class="relative h-[400px] md:h-[500px] rounded group overflow-hidden border border-white/10 bg-surface-container-low transition-all duration-400 hover:border-primary/50 reveal">
+      <div class="absolute inset-0 bg-cover bg-center opacity-40 group-hover:opacity-60 group-hover:scale-105 transition-all duration-700"
+           style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBz6NpXqUHKSWH46WwmIS-cDUA2bjCSsEfxEHzarU8JL9XcIQmnGW8HsK7MUCb0nRX8PqU3Y6KVl6ff3N5Ac9zpFWQdoL-_gl4aa2WH9xCWRibYlz2Zp1aNypD9o798lxkDcQndZ1k2EybVLqQZdxfo5LKtA9BnLL0QAUorl9ofibehg9UJvn49HLWmyq9H-W5YRiVBUDEF99Zhny6w-xl8rA5IthWaChErurr-9T96GbVwUgA1kfb43fZyNgE6H7NkKac1q8XpiXHz');">
+      </div>
+      <div class="absolute inset-0 bg-gradient-to-t from-[#090e16] via-[#090e16]/80 to-transparent"></div>
+      <div class="absolute bottom-0 left-0 p-8 w-full">
+        <h2 class="font-headline-md text-headline-md text-white mb-4">Government</h2>
+        <p class="font-body-md text-body-md text-on-surface-variant mb-6 opacity-0 group-hover:opacity-100 transition-opacity duration-400 translate-y-4 group-hover:translate-y-0">Secure infrastructure mapping and citizen-centric data frameworks designed for compliance and transparency.</p>
+        <a href="contact.html" class="font-label-caps text-label-caps text-primary flex items-center gap-2 group/link">
+          Explore Solutions <span class="material-symbols-outlined text-[16px] group-hover/link:translate-x-1 transition-transform">arrow_forward</span>
+        </a>
+      </div>
+    </article>
+
+    <!-- Telecom -->
+    <article class="relative h-[400px] md:h-[500px] rounded group overflow-hidden border border-white/10 bg-surface-container-low transition-all duration-400 hover:border-primary/50 reveal">
+      <div class="absolute inset-0 bg-cover bg-center opacity-40 group-hover:opacity-60 group-hover:scale-105 transition-all duration-700"
+           style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAgVkCdjBYaF2x9Nv4nbdrqByKryYxQ9Y0JkJYFFSUmIju4MSqY1kt5evYsgXJRwrSELA4mNEmv7U_9ndQ4F4m846rrR4iGi6lF3RVfqiIpGMst0DwEWCG1L0qRV5EPtzJ5ntYRdhXcyPPe084ngdabzDKxCvWjqUyDwLQg7FQ2tcOYvxmKXBvYQd9BDIjFD_z3mNe_-KAr_UiHxqudytpasnItjLWIlm0QTbLR9AyzZKQFcQT5PoNxEWw619ZoLvMXzn3g7-qFFvDW');">
+      </div>
+      <div class="absolute inset-0 bg-gradient-to-t from-[#090e16] via-[#090e16]/80 to-transparent"></div>
+      <div class="absolute bottom-0 left-0 p-8 w-full">
+        <h2 class="font-headline-md text-headline-md text-white mb-4">Telecom</h2>
+        <p class="font-body-md text-body-md text-on-surface-variant mb-6 opacity-0 group-hover:opacity-100 transition-opacity duration-400 translate-y-4 group-hover:translate-y-0">Network optimization models and real-time load balancing analytics for global communication matrices.</p>
+        <a href="contact.html" class="font-label-caps text-label-caps text-primary flex items-center gap-2 group/link">
+          Explore Solutions <span class="material-symbols-outlined text-[16px] group-hover/link:translate-x-1 transition-transform">arrow_forward</span>
+        </a>
+      </div>
+    </article>
+
+    <!-- Healthcare -->
+    <article class="relative h-[400px] md:h-[500px] md:col-span-2 lg:col-span-1 rounded group overflow-hidden border border-white/10 bg-surface-container-low transition-all duration-400 hover:border-primary/50 reveal">
+      <div class="absolute inset-0 bg-cover bg-center opacity-40 group-hover:opacity-60 group-hover:scale-105 transition-all duration-700"
+           style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDhYV0Tl0gk6LPT_00bfwtBVxhFaGjbxC0eTYtyySlCHGO6_kFkVDJ2uBOXMFVfvZZxPVZqFlihPennphi0wzUEqiwkUGq1R3aI5wNL1EnS5CeigwfDr4TH95Jl2VjQFN96FwnQZvV0cWk-O0fNrCjgFkGBXCGOul5AfExfx3rrhiWB02XnqKnRFpxWsTMwltmgI1cqWOeXwz4WGWHCwSHA7g5CDC5Grg3ittXI3AVfwhoUuh3YVKxRRZ_pDPFSIe4orjs2KlWZE4CY');">
+      </div>
+      <div class="absolute inset-0 bg-gradient-to-t from-[#090e16] via-[#090e16]/80 to-transparent"></div>
+      <div class="absolute bottom-0 left-0 p-8 w-full">
+        <h2 class="font-headline-md text-headline-md text-white mb-4">Healthcare</h2>
+        <p class="font-body-md text-body-md text-on-surface-variant mb-6 opacity-0 group-hover:opacity-100 transition-opacity duration-400 translate-y-4 group-hover:translate-y-0">Patient data synthesis and epidemiological forecasting engines prioritizing absolute privacy and rapid insight generation.</p>
+        <a href="contact.html" class="font-label-caps text-label-caps text-primary flex items-center gap-2 group/link">
+          Explore Solutions <span class="material-symbols-outlined text-[16px] group-hover/link:translate-x-1 transition-transform">arrow_forward</span>
+        </a>
+      </div>
+    </article>
+
+    <!-- Agriculture -->
+    <article class="relative h-[400px] md:h-[500px] lg:col-span-2 rounded group overflow-hidden border border-white/10 bg-surface-container-low transition-all duration-400 hover:border-primary/50 reveal">
+      <div class="absolute inset-0 bg-cover bg-center opacity-40 group-hover:opacity-60 group-hover:scale-105 transition-all duration-700"
+           style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDCyBEp9Ahur52tarC3zNph128GNVs_ryIIiOgXbXSiYUysyM-2KC6MjfOcQ0id7fiU9-K-WM2y9dNDSH8yGjDmZjFlP4QeLY1yN4zSwXpWB_9xGdFxBn1UMZ5KNArVc7maVGC0ta4NY39eJ8x7-JTCrkNvY-A59H5VegqfkUV1mtdEJJTbSDi_63OWlQmXsWNrMapzhAFzwr0saGlsqJ_RoHKwRigz4Xj0YDLKtxUw4aDiNFtU57mII6nSk5L1KtJzum4AEAhKW5go');">
+      </div>
+      <div class="absolute inset-0 bg-gradient-to-t from-[#090e16] via-[#090e16]/80 to-transparent"></div>
+      <div class="absolute bottom-0 left-0 p-8 w-full max-w-2xl">
+        <h2 class="font-headline-md text-headline-md text-white mb-4">Agriculture</h2>
+        <p class="font-body-md text-body-md text-on-surface-variant mb-6 opacity-0 group-hover:opacity-100 transition-opacity duration-400 translate-y-4 group-hover:translate-y-0">Satellite-driven yield prediction and supply chain resource optimization for massive-scale farming conglomerates.</p>
+        <a href="contact.html" class="font-label-caps text-label-caps text-primary flex items-center gap-2 group/link">
+          Explore Solutions <span class="material-symbols-outlined text-[16px] group-hover/link:translate-x-1 transition-transform">arrow_forward</span>
+        </a>
+      </div>
+    </article>
+
+    <!-- Logistics -->
+    <article class="relative h-[400px] md:h-[500px] rounded group overflow-hidden border border-white/10 bg-surface-container-low transition-all duration-400 hover:border-primary/50 reveal">
+      <div class="absolute inset-0 bg-cover bg-center opacity-40 group-hover:opacity-60 group-hover:scale-105 transition-all duration-700"
+           style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuB61Srd9yx3ib2wUKOXWS-_9KtQLsongHTEg6enek_-UJTh7jVnHQrMcO9Vl-PKjQZbgHpiH4a1kpyMlLCZ7C4wF7HE97zvDYHJ8oGXvUpTfE03xzd0G8tIyWukDgg8JKRvc81sTkjFqY3Llbdw0kuodEw-v-vGVArVoqu8H0rcehQa0xnh-PzIUNEN1LKvWDKK-KuYa-rACEoJFZ__cuir5y5IJMlqEh01at-zX3YH1loFo0PJhqZ1Bc5ZMKOVu_1XKFLIRLHagFm_');">
+      </div>
+      <div class="absolute inset-0 bg-gradient-to-t from-[#090e16] via-[#090e16]/80 to-transparent"></div>
+      <div class="absolute bottom-0 left-0 p-8 w-full">
+        <h2 class="font-headline-md text-headline-md text-white mb-4">Logistics</h2>
+        <p class="font-body-md text-body-md text-on-surface-variant mb-6 opacity-0 group-hover:opacity-100 transition-opacity duration-400 translate-y-4 group-hover:translate-y-0">Algorithmic routing and dynamic inventory forecasting to eliminate friction in global supply chains.</p>
+        <a href="contact.html" class="font-label-caps text-label-caps text-primary flex items-center gap-2 group/link">
+          Explore Solutions <span class="material-symbols-outlined text-[16px] group-hover/link:translate-x-1 transition-transform">arrow_forward</span>
+        </a>
+      </div>
+    </article>
+
+    <!-- NGOs -->
+    <article class="relative h-[400px] md:h-[500px] md:col-span-2 rounded group overflow-hidden border border-white/10 bg-surface-container-low transition-all duration-400 hover:border-primary/50 reveal">
+      <div class="absolute inset-0 bg-cover bg-center opacity-40 group-hover:opacity-60 group-hover:scale-105 transition-all duration-700"
+           style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCUhw6uukIsKFWdVJNtl3J9hXBqRfUsO3PIHDq9umcBeH2CEwXM7BZpg61KwabdwE_oPyuQ2FCwCtt9dz5bt7-7JqpfBY07o7RB44yD7R3vCSjTKVcdrWn-Cced7LOYeVCeEaV5U3M9qA_4hQR-4PynSdJTf9-eqyML5jhuk2WUAv5JOK_mIKfqSrpWM4GVvLddthn59qsf51PyZ0itXehFJhX5Bs8rS7saNq23bgRrRpTXhqQRyPZw8nERv5qL_FXaVocPEwfGHCN-');">
+      </div>
+      <div class="absolute inset-0 bg-gradient-to-t from-[#090e16] via-[#090e16]/80 to-transparent"></div>
+      <div class="absolute bottom-0 left-0 p-8 w-full max-w-2xl">
+        <h2 class="font-headline-md text-headline-md text-white mb-4">NGOs &amp; Non-Profits</h2>
+        <p class="font-body-md text-body-md text-on-surface-variant mb-6 opacity-0 group-hover:opacity-100 transition-opacity duration-400 translate-y-4 group-hover:translate-y-0">Impact tracking architectures and transparent resource allocation dashboards designed for maximum accountability.</p>
+        <a href="contact.html" class="font-label-caps text-label-caps text-primary flex items-center gap-2 group/link">
+          Explore Solutions <span class="material-symbols-outlined text-[16px] group-hover/link:translate-x-1 transition-transform">arrow_forward</span>
+        </a>
+      </div>
+    </article>
+
+  </section>
+
+</main>
+
+<!-- Footer -->
+<footer class="w-full border-t border-white/5 py-20 bg-zinc-950">
+  <div class="max-w-[1440px] mx-auto px-6 md:px-12">
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
+      <div class="md:col-span-2">
+        <a href="index.html" class="block mb-4"><img src="assets/images/daps-logo-full.svg" alt="DAPS Analytics" style="height:60px;width:auto;"/></a>
+        <p class="text-sm text-zinc-500 max-w-sm mt-2">High-fidelity data solutions engineered for clarity, speed, and uncompromising accuracy.</p>
+      </div>
+      <div>
+        <h4 class="font-label-caps text-label-caps text-white mb-6">Platform</h4>
+        <ul class="space-y-3 text-sm">
+          <li><a href="products.html" class="text-zinc-500 hover:text-teal-400 transition-colors duration-400">Products</a></li>
+          <li><a href="services.html" class="text-zinc-500 hover:text-teal-400 transition-colors duration-400">Services</a></li>
+          <li><a href="industries.html" class="text-teal-400">Industries</a></li>
+          <li><a href="insights.html" class="text-zinc-500 hover:text-teal-400 transition-colors duration-400">Insights</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 class="font-label-caps text-label-caps text-white mb-6">Company</h4>
+        <ul class="space-y-3 text-sm">
+          <li><a href="company.html" class="text-zinc-500 hover:text-teal-400 transition-colors duration-400">About Us</a></li>
+          <li><a href="contact.html" class="text-zinc-500 hover:text-teal-400 transition-colors duration-400">Contact</a></li>
+          <li><a href="insights.html" class="text-zinc-500 hover:text-teal-400 transition-colors duration-400">Resources</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="border-t border-white/5 pt-8">
+      <p class="text-sm text-zinc-600">© 2025 DAPS Analytics. All rights reserved.</p>
+    </div>
+  </div>
+</footer>
+
+<script src="assets/navbar.js"></script>
+<script src="assets/daps.js"></script>
+</body>
+</html>

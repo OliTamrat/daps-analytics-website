@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>DAPS Analytics - Home</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "secondary-container": "#694700",
+                        "error": "#ffb4ab",
+                        "tertiary-container": "#c6c8ca",
+                        "surface-tint": "#00dfc6",
+                        "on-tertiary-fixed": "#191c1e",
+                        "primary-fixed-dim": "#00dfc6",
+                        "on-primary-fixed": "#00201b",
+                        "inverse-surface": "#dee2ed",
+                        "on-primary-container": "#005e53",
+                        "primary-fixed": "#47fce2",
+                        "on-tertiary-container": "#515455",
+                        "on-secondary-fixed": "#281900",
+                        "surface": "#0e141b",
+                        "tertiary": "#e3e4e6",
+                        "surface-bright": "#343942",
+                        "secondary": "#efbf71",
+                        "on-primary": "#003730",
+                        "surface-container-low": "#171c24",
+                        "inverse-primary": "#006b5e",
+                        "on-secondary-container": "#e7b76a",
+                        "on-background": "#dee2ed",
+                        "background": "#0e141b",
+                        "tertiary-fixed-dim": "#c5c6c8",
+                        "primary": "#49fde3",
+                        "surface-container-high": "#252a32",
+                        "secondary-fixed": "#ffdead",
+                        "on-error-container": "#ffdad6",
+                        "on-surface": "#dee2ed",
+                        "primary-container": "#00e0c7",
+                        "on-tertiary": "#2e3132",
+                        "error-container": "#93000a",
+                        "surface-container-lowest": "#090e16",
+                        "on-surface-variant": "#bacac5",
+                        "tertiary-fixed": "#e1e2e4",
+                        "surface-dim": "#0e141b",
+                        "surface-container": "#1b2028",
+                        "inverse-on-surface": "#2b3139",
+                        "outline-variant": "#3b4a46",
+                        "surface-variant": "#30353d",
+                        "secondary-fixed-dim": "#efbf71",
+                        "on-tertiary-fixed-variant": "#444749",
+                        "surface-container-highest": "#30353d",
+                        "on-secondary-fixed-variant": "#604100",
+                        "outline": "#849490",
+                        "on-primary-fixed-variant": "#005046",
+                        "on-secondary": "#432c00",
+                        "on-error": "#690005"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "lg": "4rem",
+                        "xl": "8rem",
+                        "xs": "0.5rem",
+                        "md": "2rem",
+                        "2xl": "12rem",
+                        "gutter": "24px",
+                        "margin": "64px",
+                        "unit": "4px",
+                        "sm": "1rem"
+                    },
+                    "fontFamily": {
+                        "display-lg": ["Inter"],
+                        "label-caps": ["Inter"],
+                        "headline-md": ["Inter"],
+                        "display-2xl": ["Inter"],
+                        "body-md": ["Inter"],
+                        "display-xl": ["Inter"],
+                        "body-lg": ["Inter"]
+                    },
+                    "fontSize": {
+                        "display-lg": ["56px", { "lineHeight": "115%", "letterSpacing": "-0.02em", "fontWeight": "400" }],
+                        "label-caps": ["12px", { "lineHeight": "100%", "letterSpacing": "0.1em", "fontWeight": "600" }],
+                        "headline-md": ["32px", { "lineHeight": "130%", "letterSpacing": "-0.01em", "fontWeight": "400" }],
+                        "display-2xl": ["128px", { "lineHeight": "110%", "letterSpacing": "-0.04em", "fontWeight": "300" }],
+                        "body-md": ["16px", { "lineHeight": "160%", "letterSpacing": "0em", "fontWeight": "400" }],
+                        "display-xl": ["96px", { "lineHeight": "110%", "letterSpacing": "-0.03em", "fontWeight": "300" }],
+                        "body-lg": ["18px", { "lineHeight": "160%", "letterSpacing": "0em", "fontWeight": "400" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body { background-color: theme('colors.background'); color: theme('colors.on-background'); }
+        .glass-panel {
+            background-color: theme('colors.surface-container-low');
+            border: 1px solid theme('colors.surface-variant');
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="antialiased overflow-x-hidden">
+<!-- Top Navigation (Mobile Version) -->
+<nav class="fixed top-0 w-full z-50 bg-transparent dark:bg-black/80 backdrop-blur-2xl shadow-none">
+<div class="flex justify-between items-center w-full px-6 py-4 md:px-12 md:py-6 max-w-[1440px] mx-auto border-b border-white/10">
+<div class="text-2xl font-black tracking-tighter text-white">DAPS Analytics</div>
+<!-- Mobile Menu Icon (Hidden on Desktop per instruction, but this is a mobile requested layout primarily, adapting to responsive) -->
+<button class="md:hidden text-white">
+<span class="material-symbols-outlined">menu</span>
+</button>
+<!-- Desktop Nav Cluster (Hidden on Mobile) -->
+<div class="hidden md:flex items-center space-x-8">
+<div class="flex space-x-6 font-inter tracking-[0.2em] uppercase text-[10px] font-bold">
+<a class="text-teal-400 border-b border-teal-400 pb-1 hover:text-teal-400 transition-all duration-400 cubic-bezier(0.4,0,0.2,1)" href="#">Services</a>
+<a class="text-white/70 hover:text-white hover:text-teal-400 transition-all duration-400 cubic-bezier(0.4,0,0.2,1)" href="#">Products</a>
+<a class="text-white/70 hover:text-white hover:text-teal-400 transition-all duration-400 cubic-bezier(0.4,0,0.2,1)" href="#">Solutions</a>
+<a class="text-white/70 hover:text-white hover:text-teal-400 transition-all duration-400 cubic-bezier(0.4,0,0.2,1)" href="#">Industries</a>
+<a class="text-white/70 hover:text-white hover:text-teal-400 transition-all duration-400 cubic-bezier(0.4,0,0.2,1)" href="#">Insights</a>
+<a class="text-white/70 hover:text-white hover:text-teal-400 transition-all duration-400 cubic-bezier(0.4,0,0.2,1)" href="#">Company</a>
+</div>
+<div class="flex items-center space-x-4">
+<button class="flex items-center text-white/70 hover:text-white transition-colors duration-400">
+<span class="material-symbols-outlined text-sm mr-1">language</span>
+<span class="font-inter tracking-[0.2em] uppercase text-[10px] font-bold">Global</span>
+</button>
+<button class="bg-primary text-on-primary px-4 py-2 rounded-full font-label-caps text-label-caps scale-95 active:scale-100 transition-transform">
+                        Book a Call
+                    </button>
+</div>
+</div>
+</div>
+</nav>
+<main>
+<!-- Hero Section -->
+<section class="relative min-h-[884px] flex flex-col justify-end pb-16 px-6 md:px-12 md:pb-32 overflow-hidden">
+<div class="absolute inset-0 z-0">
+<img alt="3D Data Globe" class="w-full h-full object-cover opacity-30 object-center" data-alt="A cinematic, high-contrast digital rendering of a glowing 3D data globe floating in an ultra-minimalist, deep space-like void. The globe emits a calm, authoritative electric teal light, illuminating sophisticated data points and complex network lines connecting continents, emphasizing high-fidelity data visualization. The overall aesthetic is one of quiet luxury, with deep blacks and subtle cyan accents creating a premium, forward-looking atmosphere suitable for high-level decision makers." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAJ_Nag-EgUYBpsgb5qwWexACx4Md5Ec8lebLW5OJoPtjVIGpIa2m-dt4IaWp8Hvva5DmmXlZHBAdT0m3xWHbsvmuHpmIOfkDpTsnbJaS5HvAt3dcjp4NaLAwgz5oZjNuFVy57waiF893Oq7PIxlRKsPxyF9DhrhLswTOXnIDoRYAcEBmAOtlbnquxbPmBNoCR541fKBV88fFQsRN3v5ZO6Q2N6SKqoEqlhb2YYnaZcmFAUyt1hpc68ezgQNgwTzPbb1Hgls9L1mVAd"/>
+<div class="absolute inset-0 bg-gradient-to-t from-background via-background/80 to-transparent"></div>
+</div>
+<div class="relative z-10 max-w-[1440px] mx-auto w-full flex flex-col gap-8 md:gap-12">
+<h1 class="font-display-lg text-display-lg text-white max-w-4xl tracking-tight leading-tight">
+                    The intelligence layer for the next generation of African and global enterprises.
+                </h1>
+<div class="flex flex-col sm:flex-row gap-4">
+<button class="bg-primary text-on-primary px-8 py-4 rounded-full font-label-caps text-label-caps uppercase border border-primary hover:bg-primary-container transition-colors duration-400 text-center">
+                        Book a Call
+                    </button>
+<button class="bg-transparent text-primary px-8 py-4 rounded-full font-label-caps text-label-caps uppercase border border-primary hover:bg-primary/10 transition-colors duration-400 text-center">
+                        Explore Solutions
+                    </button>
+</div>
+</div>
+</section>
+<!-- Trust Bar -->
+<section class="py-12 border-t border-surface-variant/50 bg-surface-container-lowest">
+<div class="max-w-[1440px] mx-auto px-6 md:px-12 flex flex-wrap justify-between items-center gap-8 opacity-60 grayscale">
+<span class="font-label-caps text-label-caps text-on-surface-variant uppercase tracking-widest w-full text-center md:w-auto md:text-left">Trusted By</span>
+<!-- Abstract representations of logos -->
+<div class="h-8 w-24 bg-surface-variant rounded"></div>
+<div class="h-8 w-32 bg-surface-variant rounded"></div>
+<div class="h-8 w-20 bg-surface-variant rounded"></div>
+<div class="h-8 w-28 bg-surface-variant rounded"></div>
+</div>
+</section>
+<!-- Footer -->
+<footer class="w-full border-t border-white/5 py-20 bg-zinc-950">
+<div class="grid grid-cols-1 md:grid-cols-4 gap-12 px-6 md:px-12 max-w-[1440px] mx-auto">
+<div class="col-span-1 md:col-span-2">
+<div class="text-xl font-bold text-white tracking-widest mb-4">DAPS Analytics</div>
+<p class="font-inter text-sm tracking-tight text-zinc-500">© 2024 DAPS Analytics. High-fidelity data solutions.</p>
+</div>
+<div class="col-span-1 flex flex-col space-y-4">
+<a class="font-inter text-sm tracking-tight text-zinc-500 hover:text-teal-400 transition-colors duration-400" href="#">Products</a>
+<a class="font-inter text-sm tracking-tight text-zinc-500 hover:text-teal-400 transition-colors duration-400" href="#">Services</a>
+</div>
+<div class="col-span-1 flex flex-col space-y-4">
+<a class="font-inter text-sm tracking-tight text-zinc-500 hover:text-teal-400 transition-colors duration-400" href="#">Company</a>
+<a class="font-inter text-sm tracking-tight text-zinc-500 hover:text-teal-400 transition-colors duration-400" href="#">Resources</a>
+</div>
+</div>
+</footer>
+</main>
+</body></html>

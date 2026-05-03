@@ -1,0 +1,800 @@
+<!DOCTYPE html>
+<html class="dark" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>DAPS Analytics — High-Fidelity Data Solutions</title>
+<meta name="description" content="DAPS Analytics delivers high-fidelity predictive analytics, data infrastructure, and visual intelligence for the next generation of African and global enterprises."/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;900&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<!-- Three.js for WebGL globe -->
+<script src="https://unpkg.com/three@0.160.1/build/three.min.js"></script>
+<script>
+  tailwind.config = {
+    darkMode: "class",
+    theme: {
+      extend: {
+        colors: {
+          "secondary-container":"#694700","error":"#ffb4ab","tertiary-container":"#c6c8ca",
+          "surface-tint":"#00dfc6","on-tertiary-fixed":"#191c1e","primary-fixed-dim":"#00dfc6",
+          "on-primary-fixed":"#00201b","inverse-surface":"#dee2ed","on-primary-container":"#005e53",
+          "primary-fixed":"#47fce2","on-tertiary-container":"#515455","on-secondary-fixed":"#281900",
+          "surface":"#0e141b","tertiary":"#e3e4e6","surface-bright":"#343942","secondary":"#efbf71",
+          "on-primary":"#003730","surface-container-low":"#171c24","inverse-primary":"#006b5e",
+          "on-secondary-container":"#e7b76a","on-background":"#dee2ed","background":"#0e141b",
+          "tertiary-fixed-dim":"#c5c6c8","primary":"#49fde3","surface-container-high":"#252a32",
+          "secondary-fixed":"#ffdead","on-error-container":"#ffdad6","on-surface":"#dee2ed",
+          "primary-container":"#00e0c7","on-tertiary":"#2e3132","error-container":"#93000a",
+          "surface-container-lowest":"#090e16","on-surface-variant":"#bacac5","tertiary-fixed":"#e1e2e4",
+          "surface-dim":"#0e141b","surface-container":"#1b2028","inverse-on-surface":"#2b3139",
+          "outline-variant":"#3b4a46","surface-variant":"#30353d","secondary-fixed-dim":"#efbf71",
+          "on-tertiary-fixed-variant":"#444749","surface-container-highest":"#30353d",
+          "on-secondary-fixed-variant":"#604100","outline":"#849490","on-primary-fixed-variant":"#005046",
+          "on-secondary":"#432c00","on-error":"#690005"
+        },
+        borderRadius:{DEFAULT:"0.25rem",lg:"0.5rem",xl:"0.75rem",full:"9999px"},
+        spacing:{lg:"4rem",xl:"8rem",xs:"0.5rem",md:"2rem","2xl":"12rem",gutter:"24px",margin:"64px",unit:"4px",sm:"1rem"},
+        fontFamily:{"display-lg":["Inter"],"label-caps":["Inter"],"headline-md":["Inter"],"display-2xl":["Inter"],"body-md":["Inter"],"display-xl":["Inter"],"body-lg":["Inter"]},
+        fontSize:{
+          "display-lg":["56px",{lineHeight:"115%",letterSpacing:"-0.02em",fontWeight:"400"}],
+          "label-caps":["12px",{lineHeight:"100%",letterSpacing:"0.1em",fontWeight:"600"}],
+          "headline-md":["32px",{lineHeight:"130%",letterSpacing:"-0.01em",fontWeight:"400"}],
+          "display-2xl":["128px",{lineHeight:"110%",letterSpacing:"-0.04em",fontWeight:"300"}],
+          "body-md":["16px",{lineHeight:"160%",letterSpacing:"0em",fontWeight:"400"}],
+          "display-xl":["96px",{lineHeight:"110%",letterSpacing:"-0.03em",fontWeight:"300"}],
+          "body-lg":["18px",{lineHeight:"160%",letterSpacing:"0em",fontWeight:"400"}]
+        }
+      }
+    }
+  }
+</script>
+<style>
+  *, *::before, *::after { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { background-color: #0e141b; color: #dee2ed; margin: 0; }
+
+  /* ── Globe canvas ───────────────────────────────────────────── */
+  #globe-canvas {
+    position: absolute;
+    top: 0; right: 0;
+    width: 100%; height: 100%;
+    pointer-events: none;
+  }
+
+  /* ── Glow utilities ─────────────────────────────────────────── */
+  .glow-teal  { box-shadow: 0 0 20px rgba(73,253,227,0.22), 0 0 60px rgba(73,253,227,0.08); }
+  .glow-teal:hover { box-shadow: 0 0 35px rgba(73,253,227,0.4), 0 0 80px rgba(73,253,227,0.15); }
+  .text-glow  { text-shadow: 0 0 40px rgba(73,253,227,0.4); }
+  .card-glow:hover { box-shadow: 0 0 40px rgba(73,253,227,0.07), 0 1px 0 rgba(73,253,227,0.15) inset; }
+
+  /* ── Scroll reveal ──────────────────────────────────────────── */
+  .reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.8s cubic-bezier(0.4,0,0.2,1), transform 0.8s cubic-bezier(0.4,0,0.2,1); }
+  .reveal.revealed { opacity: 1; transform: translateY(0); }
+  .reveal-delay-1 { transition-delay: 0.12s; }
+  .reveal-delay-2 { transition-delay: 0.24s; }
+  .reveal-delay-3 { transition-delay: 0.36s; }
+  .reveal-delay-4 { transition-delay: 0.48s; }
+
+  /* ── Section eyebrow ────────────────────────────────────────── */
+  .eyebrow { display: flex; align-items: center; gap: 12px; font-size: 11px; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; color: #49fde3; margin-bottom: 20px; }
+  .eyebrow::before { content: ''; display: block; width: 32px; height: 1px; background: #49fde3; flex-shrink: 0; }
+
+  /* ── Metric number ──────────────────────────────────────────── */
+  .metric-num { font-size: clamp(28px, 3.5vw, 48px); font-weight: 300; letter-spacing: -0.03em; color: #dee2ed; line-height: 1; }
+  .metric-label { font-size: 11px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: #849490; margin-top: 6px; }
+
+  /* ── Product card ───────────────────────────────────────────── */
+  .product-card { background: #111418; border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; padding: 40px; display: flex; flex-direction: column; transition: border-color 0.4s ease, box-shadow 0.4s ease; position: relative; overflow: hidden; }
+  .product-card::after { content: ''; position: absolute; inset: 0; border-radius: 12px; background: radial-gradient(ellipse at 30% 0%, rgba(73,253,227,0.04) 0%, transparent 60%); pointer-events: none; opacity: 0; transition: opacity 0.4s ease; }
+  .product-card:hover::after { opacity: 1; }
+  .product-card.teal:hover  { border-color: rgba(73,253,227,0.35); box-shadow: 0 0 0 1px rgba(73,253,227,0.1) inset, 0 8px 32px rgba(0,0,0,0.4); }
+  .product-card.amber:hover { border-color: rgba(239,191,113,0.35); box-shadow: 0 0 0 1px rgba(239,191,113,0.1) inset, 0 8px 32px rgba(0,0,0,0.4); }
+  .product-card.amber::after { background: radial-gradient(ellipse at 30% 0%, rgba(239,191,113,0.04) 0%, transparent 60%); }
+
+  /* ── Service card ───────────────────────────────────────────── */
+  .service-card { background: #0d1117; border: 1px solid rgba(255,255,255,0.07); border-radius: 8px; padding: 32px; transition: border-color 0.4s ease; }
+  .service-card:hover { border-color: rgba(73,253,227,0.3); }
+
+  /* ── Trust logo filter ──────────────────────────────────────── */
+  .trust-logo { filter: grayscale(1) brightness(0.5); transition: filter 0.4s ease; }
+  .trust-logo:hover { filter: grayscale(0) brightness(0.8); }
+
+  /* ── Noise texture overlay ──────────────────────────────────── */
+  .noise-overlay { position: relative; }
+  .noise-overlay::after { content: ''; position: absolute; inset: 0; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E"); opacity: 0.025; pointer-events: none; mix-blend-mode: overlay; }
+
+  /* ── Animated underline link ────────────────────────────────── */
+  .link-underline { position: relative; display: inline-flex; align-items: center; gap: 6px; }
+  .link-underline::after { content: ''; position: absolute; bottom: -2px; left: 0; width: 0; height: 1px; background: currentColor; transition: width 0.35s ease; }
+  .link-underline:hover::after { width: 100%; }
+
+  /* ── Fade in hero text ──────────────────────────────────────── */
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(32px); } to { opacity: 1; transform: translateY(0); } }
+  .hero-animate-1 { animation: fadeUp 0.9s cubic-bezier(0.4,0,0.2,1) 0.2s both; }
+  .hero-animate-2 { animation: fadeUp 0.9s cubic-bezier(0.4,0,0.2,1) 0.4s both; }
+  .hero-animate-3 { animation: fadeUp 0.9s cubic-bezier(0.4,0,0.2,1) 0.6s both; }
+  .hero-animate-4 { animation: fadeUp 0.9s cubic-bezier(0.4,0,0.2,1) 0.8s both; }
+
+  /* ── Pulsing ring ───────────────────────────────────────────── */
+  @keyframes ringPulse { 0%,100% { transform: scale(1); opacity: 0.6; } 50% { transform: scale(1.12); opacity: 0; } }
+  .ring-pulse { animation: ringPulse 2.5s ease-in-out infinite; }
+
+  /* ── CTA section bg ─────────────────────────────────────────── */
+  .cta-bg { background: radial-gradient(ellipse 80% 60% at 50% 100%, rgba(73,253,227,0.06) 0%, transparent 70%), #0e141b; }
+
+  /* ── Scrollbar ──────────────────────────────────────────────── */
+  ::-webkit-scrollbar { width: 6px; } ::-webkit-scrollbar-track { background: #090e16; } ::-webkit-scrollbar-thumb { background: #3b4a46; border-radius: 3px; }
+  .bg-secondary-surface { background-color: #111418; }
+</style>
+</head>
+<body class="antialiased selection:bg-primary/20 selection:text-primary flex flex-col min-h-screen">
+
+<!-- ══ Navigation ═══════════════════════════════════════════════════ -->
+<nav class="fixed top-0 w-full z-50 bg-black/75 backdrop-blur-2xl border-b border-white/[0.08]">
+  <div class="flex justify-between items-center w-full px-6 md:px-12 py-5 max-w-[1440px] mx-auto">
+    <a href="index.html" class="flex items-center flex-shrink-0">
+      <img src="assets/images/daps-logo-nav.svg" alt="DAPS Analytics" style="height:36px;width:auto;"/>
+    </a>
+    <ul class="hidden md:flex gap-8 items-center font-inter tracking-[0.18em] uppercase text-[10px] font-bold">
+      <li><a data-nav-page="services.html"   href="services.html"   class="text-white/60 hover:text-teal-400 transition-colors duration-300">Services</a></li>
+      <li><a data-nav-page="products.html"   href="products.html"   class="text-white/60 hover:text-teal-400 transition-colors duration-300">Products</a></li>
+      <li><a data-nav-page="projects.html" href="projects.html" class="text-white/60 hover:text-teal-400 transition-colors duration-300">Projects</a></li>
+      <li><a data-nav-page="industries.html" href="industries.html" class="text-white/60 hover:text-teal-400 transition-colors duration-300">Industries</a></li>
+      <li><a data-nav-page="insights.html"   href="insights.html"   class="text-white/60 hover:text-teal-400 transition-colors duration-300">Insights</a></li>
+      <li><a data-nav-page="company.html"    href="company.html"    class="text-white/60 hover:text-teal-400 transition-colors duration-300">Company</a></li>
+    </ul>
+    <div class="hidden md:flex items-center gap-5">
+      <button class="flex items-center gap-2 text-white/50 hover:text-teal-400 transition-colors text-[11px] font-bold tracking-widest uppercase">
+        <span class="material-symbols-outlined text-[16px]">language</span> Global
+      </button>
+      <a href="contact.html" class="px-6 py-2.5 border border-primary text-primary font-label-caps text-label-caps hover:bg-primary hover:text-on-primary transition-all duration-300 glow-teal">Book a Call</a>
+    </div>
+    <button id="mobile-menu-btn" class="md:hidden text-white p-2"><span class="material-symbols-outlined">menu</span></button>
+  </div>
+  <div id="mobile-menu" class="hidden md:hidden bg-black/95 backdrop-blur-2xl border-t border-white/10 px-6 py-8">
+    <ul class="flex flex-col gap-6 font-inter tracking-[0.2em] uppercase text-[11px] font-bold mb-8">
+      <li><a href="services.html"   class="text-white/70 hover:text-teal-400 transition-colors">Services</a></li>
+      <li><a href="products.html"   class="text-white/70 hover:text-teal-400 transition-colors">Products</a></li>
+      <li><a href="industries.html" class="text-white/70 hover:text-teal-400 transition-colors">Industries</a></li>
+      <li><a href="insights.html"   class="text-white/70 hover:text-teal-400 transition-colors">Insights</a></li>
+      <li><a href="company.html"    class="text-white/70 hover:text-teal-400 transition-colors">Company</a></li>
+    </ul>
+    <a href="contact.html" class="block w-full py-4 border border-primary text-primary text-center font-label-caps text-label-caps hover:bg-primary/10 transition-colors">Book a Call</a>
+  </div>
+</nav>
+
+<main class="flex-grow">
+
+<!-- ══ Hero ═════════════════════════════════════════════════════════ -->
+<section class="relative min-h-screen flex items-center overflow-hidden" style="background:#080c11;">
+
+  <!-- WebGL Globe (fills the right ~60% visually via camera offset) -->
+  <canvas id="globe-canvas"></canvas>
+
+  <!-- Left gradient so text stays legible -->
+  <div class="absolute inset-0 z-10 pointer-events-none"
+       style="background: linear-gradient(90deg, #080c11 0%, #080c11 38%, rgba(8,12,17,0.85) 58%, rgba(8,12,17,0.2) 75%, transparent 100%);"></div>
+  <!-- Bottom fade -->
+  <div class="absolute inset-x-0 bottom-0 h-40 z-10 pointer-events-none"
+       style="background: linear-gradient(to top, #0e141b, transparent);"></div>
+
+  <!-- Hero content -->
+  <div class="relative z-20 max-w-[1440px] mx-auto w-full px-6 md:px-12 pt-28 pb-20 grid grid-cols-12 gap-6">
+    <div class="col-span-12 md:col-span-7 lg:col-span-6 flex flex-col justify-center">
+
+      <!-- Eyebrow -->
+      <div class="flex items-center gap-3 mb-8 hero-animate-1">
+        <div class="relative flex items-center justify-center">
+          <span class="w-2 h-2 rounded-full bg-primary z-10 relative"></span>
+          <span class="ring-pulse absolute w-5 h-5 rounded-full border border-primary/40"></span>
+        </div>
+        <span style="font-size:11px;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;color:#49fde3;">
+          Data Intelligence Platform
+        </span>
+      </div>
+
+      <!-- Headline -->
+      <h1 class="hero-animate-2 font-display-xl text-display-xl text-on-surface mb-8"
+          style="font-size: clamp(42px, 6.5vw, 96px);">
+        The intelligence<br/>
+        layer for African &amp;<br/>global enterprises.
+      </h1>
+
+      <!-- Sub -->
+      <p class="hero-animate-3 mb-10 max-w-[480px]"
+         style="font-size:18px;line-height:1.7;color:#bacac5;">
+        Precision analytics, predictive modeling, and high-fidelity data infrastructure — engineered for clarity in complex environments.
+      </p>
+
+      <!-- CTAs -->
+      <div class="hero-animate-4 flex flex-wrap gap-4 items-center">
+        <a href="products.html"
+           class="inline-flex items-center gap-2 bg-primary text-on-primary px-8 py-4 font-label-caps text-label-caps hover:bg-primary-container transition-all duration-300 rounded-full glow-teal"
+           style="font-size:11px;font-weight:700;letter-spacing:0.12em;">
+          Explore Platform
+          <span class="material-symbols-outlined text-[15px]">arrow_forward</span>
+        </a>
+        <a href="company.html"
+           class="inline-flex items-center gap-2 border border-white/20 text-white/80 px-8 py-4 font-label-caps text-label-caps hover:border-white/50 hover:text-white transition-all duration-300 rounded-full"
+           style="font-size:11px;font-weight:700;letter-spacing:0.12em;">
+          Our Story
+        </a>
+      </div>
+
+      <!-- Micro stats -->
+      <div class="hero-animate-4 flex gap-10 mt-14 pt-8 border-t border-white/[0.08]">
+        <div>
+          <div class="metric-num" style="color:#dee2ed;">4</div>
+          <div class="metric-label">Live Products</div>
+        </div>
+        <div>
+          <div class="metric-num">12+</div>
+          <div class="metric-label">Active Sectors</div>
+        </div>
+        <div>
+          <div class="metric-num">99.9<span style="font-size:0.5em;vertical-align:middle;opacity:0.6">%</span></div>
+          <div class="metric-label">Uptime SLA</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scroll hint -->
+  <div class="absolute bottom-8 left-1/2 -translate-x-1/2 z-20 flex flex-col items-center gap-2 opacity-40">
+    <span style="font-size:10px;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;color:#849490;">Scroll</span>
+    <div style="width:1px;height:40px;background:linear-gradient(to bottom,#849490,transparent);"></div>
+  </div>
+</section>
+
+<!-- ══ Trust Bar ═════════════════════════════════════════════════════ -->
+<section style="background:#090e16;border-top:1px solid rgba(255,255,255,0.05);border-bottom:1px solid rgba(255,255,255,0.05);">
+  <div class="max-w-[1440px] mx-auto px-6 md:px-12 py-10">
+    <p style="font-size:10px;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;color:#3b4a46;text-align:center;margin-bottom:28px;">
+      Trusted by Visionary Organizations
+    </p>
+    <div class="flex justify-center md:justify-between items-center gap-8 flex-wrap">
+      <img class="trust-logo h-7 object-contain" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBW-S37RL2oeY7EADoTHd82YuZavjYCefV4kMn7mutCmajxM8SHptnZT2MqgJg6Mfb9yGgTMG4ery_FAZk5g_5PtfNiQ4x5--zHX0Ffur3-2PCr8SmUAiuvLUi5SMrkuQBcIYj36Y8RCC9u4JCdonCsrVbjnVGeSv4cpkQGoCjyzBS5fKtGtNsvKa0uJaDhEQmYe4ul78zXoOBR-R3thwYlN0Yn0eTl9FB5xSnaGhqDdO-jbXjlLiPiUQfzU9hEulh3qoYO8n2EPNt2" alt="Partner"/>
+      <img class="trust-logo h-7 object-contain" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDgvinUIbsdp9LtC3mJITq8yQloZUDiMEr1pAdLCJ_xR8gZchCr9PsCkG6NOmljBTDFrZixVR7wBexkWbcxB6egJo9qVbZW0RzyrzeGaIvK2OsF4OydzTDy0td6xksIvs-K4OsUzAgUHHg0_xiSJP0kHmkrsZlxByeReZRtMS8tT-jHPmAPdN2Cl7AUud2I1Cy7MiaOrw4UFaR85BEqc5CEPzM4EC-u6OBXo7koaSHViHZxqnXGLE0WSQlyn7H3nOOVYRPJAqyAYjiF" alt="Partner"/>
+      <img class="trust-logo h-7 object-contain" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCmXyw8hUj8na1tg7DKPEYf4r9CXvER0C-6sfEmLSRQ4b2_fO6_K_e0lp0TW5AjBqzF8YJDf-0mQIQ0_AdHXE_XYAUOnJc4VLWTwuWDCQUvYIFeMMx6D5Glpee2baYg5QSBcwldXVFIxIMcde5T55iEAG6nlrkwrHCwCbcmMDpi-eylGPgkjzx0TojczKr3YYuolW4CMbYHxMk3cn19_SgnN8O4SAHYtMtT8Wgmu3KWczB5OR2QvXtNPbr6kb-kdkCield7Cs336yMe" alt="Partner"/>
+      <img class="trust-logo h-7 object-contain" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDnW-VWX-XL2mwIS1KAJMfEsuoC0si5SLwJk2B-Sb-RXo63yIo-83BiKVlk5hv4KGMJMhXT8cweSyFEaY1Hvd8RuMqRNYxqzg4r7vlij5H_bH9iZ6eyeH3VxrUdYES3wTXOJTjluOmhE_N2ylpYwdnttLp0hfShlYT5mMIg42nRJ1v3WXMIS0mVaPQrW4q8ReeizbHbdw6QMoOT4KgktlxY3muF23RPqE-D3jLULxXWejgQokHZRZKkllzSskZzc9eGppc9NmsuNvhp" alt="Partner"/>
+      <img class="trust-logo h-7 object-contain" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDKi_6kcIg5Uyt8NglbYUhP34ALBWmivIOqfFqN0c55LaUegC18Gry5c1FSwtKQiiOya7yUF6fqnT7nuMRCcmqJeWX5Yx2KoJ-G_x7J3L8L2rZxvvMjprGUVmiZBgaZJ1Nu04lhYETssN_YnzIlPmsn4cuC2-SSij8AIwS26j0Q0-N-Z3jqlhJJ_5lC9Ii3NrkdvR9KKCTfILP6JgJXlV3kNnNYI_jNmpsk26345ifjb1GKjqiQKv1pzRLDaP-Q7y5443uSmpbxwA2_" alt="Partner"/>
+    </div>
+  </div>
+</section>
+
+<!-- ══ Products ══════════════════════════════════════════════════════ -->
+<section style="background:#0a0d12;padding:128px 0;">
+  <div class="max-w-[1440px] mx-auto px-6 md:px-12">
+
+    <div class="mb-20 reveal">
+      <div class="eyebrow">The DAPS Product Suite</div>
+      <h2 class="font-display-lg text-display-lg text-on-surface mb-5">
+        Purpose-built platforms.<br/>Live in the real world.
+      </h2>
+      <p style="font-size:18px;line-height:1.7;color:#bacac5;max-width:560px;">
+        Four production-grade products — each engineered for a specific domain, each in active deployment.
+      </p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+
+      <!-- Onekof PM -->
+      <div class="product-card teal card-glow reveal">
+        <div class="flex items-start justify-between mb-7">
+          <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-teal-400/30" style="background:rgba(73,253,227,0.06);">
+            <span class="w-1.5 h-1.5 rounded-full bg-primary" style="animation:pulse 2s infinite;"></span>
+            <span style="font-size:10px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:#49fde3;">Live in Ethiopia</span>
+          </div>
+          <span style="font-size:10px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:#3b4a46;">Project Management</span>
+        </div>
+        <h3 class="font-display-lg text-display-lg text-on-surface mb-4" style="font-size:clamp(28px,3vw,48px);">Onekof PM</h3>
+        <p style="font-size:15px;line-height:1.7;color:#bacac5;flex:1;margin-bottom:28px;">
+          The #1 project management platform built for Ethiopia. Native 13-month Ethiopian calendar, Amharic/Oromoo/Tigrinya support, ETB budget tracking, and AI-powered document processing.
+        </p>
+        <div class="flex gap-8 mb-8 pl-5" style="border-left:1px solid rgba(255,255,255,0.08);">
+          <div><div class="metric-num" style="color:#49fde3;">99.9%</div><div class="metric-label">Uptime</div></div>
+          <div><div class="metric-num" style="color:#49fde3;">4</div><div class="metric-label">Native Languages</div></div>
+          <div><div class="metric-num" style="color:#49fde3;">13</div><div class="metric-label">Month Calendar</div></div>
+        </div>
+        <div class="flex flex-wrap gap-3">
+          <a href="https://onekof.com" target="_blank" rel="noopener"
+             class="inline-flex items-center gap-2 bg-primary text-on-primary px-6 py-3 font-label-caps text-label-caps hover:bg-primary-container transition-all duration-300 glow-teal"
+             style="font-size:11px;font-weight:700;letter-spacing:0.1em;">
+            Open Platform <span class="material-symbols-outlined text-[14px]">open_in_new</span>
+          </a>
+          <a href="onekof-pm.html" class="inline-flex items-center gap-2 border border-white/15 text-white/70 px-6 py-3 font-label-caps text-label-caps hover:border-primary/50 hover:text-primary transition-all duration-300" style="font-size:11px;font-weight:700;letter-spacing:0.1em;">
+            Details <span class="material-symbols-outlined text-[14px]">arrow_forward</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- UDC-WQIS -->
+      <div class="product-card amber card-glow reveal reveal-delay-1">
+        <div class="flex items-start justify-between mb-7">
+          <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border" style="border-color:rgba(239,191,113,0.3);background:rgba(239,191,113,0.06);">
+            <span class="w-1.5 h-1.5 rounded-full" style="background:#efbf71;"></span>
+            <span style="font-size:10px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:#efbf71;">Live — Washington DC</span>
+          </div>
+          <span style="font-size:10px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:#3b4a46;">Environmental Analytics</span>
+        </div>
+        <h3 class="font-display-lg text-display-lg text-on-surface mb-4" style="font-size:clamp(28px,3vw,48px);">UDC-WQIS</h3>
+        <p style="font-size:15px;line-height:1.7;color:#bacac5;flex:1;margin-bottom:28px;">
+          Unified Data Collection – Water Quality Information System. Real-time USGS sensor integration across 12 Anacostia watershed stations — environmental intelligence for DC stakeholders.
+        </p>
+        <div class="flex gap-8 mb-8 pl-5" style="border-left:1px solid rgba(255,255,255,0.08);">
+          <div><div class="metric-num" style="color:#efbf71;">12</div><div class="metric-label">Stations</div></div>
+          <div><div class="metric-num" style="color:#efbf71;">78%</div><div class="metric-label">Water Quality</div></div>
+          <div><div class="metric-num" style="color:#efbf71;">Live</div><div class="metric-label">EPA Data</div></div>
+        </div>
+        <div class="flex flex-wrap gap-3">
+          <a href="https://udc-wqis.happycoast-d9b0bcde.centralus.azurecontainerapps.io/" target="_blank" rel="noopener"
+             class="inline-flex items-center gap-2 px-6 py-3 font-label-caps text-label-caps hover:opacity-90 transition-all duration-300"
+             style="background:#efbf71;color:#281900;font-size:11px;font-weight:700;letter-spacing:0.1em;box-shadow:0 0 20px rgba(239,191,113,0.2);">
+            Open Dashboard <span class="material-symbols-outlined text-[14px]">open_in_new</span>
+          </a>
+          <a href="products.html" class="inline-flex items-center gap-2 border border-white/15 text-white/70 px-6 py-3 font-label-caps text-label-caps hover:border-secondary/50 hover:text-secondary transition-all duration-300" style="font-size:11px;font-weight:700;letter-spacing:0.1em;">
+            Details <span class="material-symbols-outlined text-[14px]">arrow_forward</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- Hakimet -->
+      <div class="product-card teal card-glow reveal">
+        <div class="flex items-start justify-between mb-7">
+          <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-teal-400/30" style="background:rgba(73,253,227,0.06);">
+            <span class="w-1.5 h-1.5 rounded-full bg-primary"></span>
+            <span style="font-size:10px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:#49fde3;">Live Platform</span>
+          </div>
+          <span style="font-size:10px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:#3b4a46;">Telehealth</span>
+        </div>
+        <h3 class="font-display-lg text-display-lg text-on-surface mb-4" style="font-size:clamp(28px,3vw,48px);">Hakimet</h3>
+        <p style="font-size:15px;line-height:1.7;color:#bacac5;flex:1;margin-bottom:28px;">
+          Enterprise telehealth infrastructure for African healthcare systems. Connecting patients, clinicians, and administrators through a secure, low-bandwidth-optimized, multi-language platform.
+        </p>
+        <div class="flex gap-8 mb-8 pl-5" style="border-left:1px solid rgba(255,255,255,0.08);">
+          <div><div class="metric-num" style="color:#49fde3;">HIPAA</div><div class="metric-label">Aligned</div></div>
+          <div><div class="metric-num" style="color:#49fde3;">Multi</div><div class="metric-label">Language</div></div>
+          <div><div class="metric-num" style="color:#49fde3;">EMR</div><div class="metric-label">Integrated</div></div>
+        </div>
+        <div class="flex flex-wrap gap-3">
+          <a href="https://www.hakimet.com" target="_blank" rel="noopener"
+             class="inline-flex items-center gap-2 bg-primary text-on-primary px-6 py-3 font-label-caps text-label-caps hover:bg-primary-container transition-all duration-300 glow-teal"
+             style="font-size:11px;font-weight:700;letter-spacing:0.1em;">
+            Open Platform <span class="material-symbols-outlined text-[14px]">open_in_new</span>
+          </a>
+          <a href="products.html" class="inline-flex items-center gap-2 border border-white/15 text-white/70 px-6 py-3 font-label-caps text-label-caps hover:border-primary/50 hover:text-primary transition-all duration-300" style="font-size:11px;font-weight:700;letter-spacing:0.1em;">
+            Details <span class="material-symbols-outlined text-[14px]">arrow_forward</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- Olink Fleet -->
+      <div class="product-card amber card-glow reveal reveal-delay-1">
+        <div class="flex items-start justify-between mb-7">
+          <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border" style="border-color:rgba(239,191,113,0.3);background:rgba(239,191,113,0.06);">
+            <span class="w-1.5 h-1.5 rounded-full" style="background:#efbf71;"></span>
+            <span style="font-size:10px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:#efbf71;">Live in Ethiopia</span>
+          </div>
+          <span style="font-size:10px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:#3b4a46;">Fleet Management</span>
+        </div>
+        <h3 class="font-display-lg text-display-lg text-on-surface mb-4" style="font-size:clamp(28px,3vw,48px);">Olink Fleet</h3>
+        <p style="font-size:15px;line-height:1.7;color:#bacac5;flex:1;margin-bottom:28px;">
+          Smart fleet management engineered for Ethiopia. Real-time GPS tracking, AI-powered route optimization, driver performance analytics, and predictive maintenance for commercial fleets.
+        </p>
+        <div class="flex gap-8 mb-8 pl-5" style="border-left:1px solid rgba(255,255,255,0.08);">
+          <div><div class="metric-num" style="color:#efbf71;">Live</div><div class="metric-label">GPS Tracking</div></div>
+          <div><div class="metric-num" style="color:#efbf71;">AI</div><div class="metric-label">Routing</div></div>
+          <div><div class="metric-num" style="color:#efbf71;">ETH</div><div class="metric-label">Market Built</div></div>
+        </div>
+        <div class="flex flex-wrap gap-3">
+          <a href="https://olink-fleet.vercel.app/" target="_blank" rel="noopener"
+             class="inline-flex items-center gap-2 px-6 py-3 font-label-caps text-label-caps hover:opacity-90 transition-all duration-300"
+             style="background:#efbf71;color:#281900;font-size:11px;font-weight:700;letter-spacing:0.1em;box-shadow:0 0 20px rgba(239,191,113,0.2);">
+            Open Platform <span class="material-symbols-outlined text-[14px]">open_in_new</span>
+          </a>
+          <a href="products.html" class="inline-flex items-center gap-2 border border-white/15 text-white/70 px-6 py-3 font-label-caps text-label-caps hover:border-secondary/50 hover:text-secondary transition-all duration-300" style="font-size:11px;font-weight:700;letter-spacing:0.1em;">
+            Details <span class="material-symbols-outlined text-[14px]">arrow_forward</span>
+          </a>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="mt-12 reveal">
+      <a href="products.html" class="link-underline text-primary hover:text-white transition-colors" style="font-size:11px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;">
+        Full Product Suite <span class="material-symbols-outlined text-[14px]">arrow_forward</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ══ Services Preview ══════════════════════════════════════════════ -->
+<section style="background:#0d1117;border-top:1px solid rgba(255,255,255,0.05);padding:128px 0;">
+  <div class="max-w-[1440px] mx-auto px-6 md:px-12">
+
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-end mb-16">
+      <div class="reveal">
+        <div class="eyebrow">Core Capabilities</div>
+        <h2 class="font-display-lg text-display-lg text-on-surface">
+          Engineering<br/>Fidelity.
+        </h2>
+      </div>
+      <div class="reveal">
+        <p style="font-size:17px;line-height:1.75;color:#bacac5;">
+          We design and architect high-performance data pipelines, predictive models, and intuitive visualization systems. Our methodology strips away the superficial, leaving only actionable, uncompromising truth.
+        </p>
+        <a href="services.html" class="link-underline text-primary hover:text-white transition-colors mt-8 inline-flex" style="font-size:11px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;">
+          View All Services <span class="material-symbols-outlined text-[14px]">arrow_forward</span>
+        </a>
+      </div>
+    </div>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+      <div class="service-card reveal">
+        <span class="material-symbols-outlined mb-5 block" style="font-size:32px;color:#49fde3;" data-fill="1">analytics</span>
+        <h3 class="text-white font-semibold mb-3" style="font-size:16px;">Predictive Analytics</h3>
+        <p style="font-size:14px;line-height:1.65;color:#bacac5;">Advanced ML models forecasting market shifts, operational bottlenecks, and consumer behavior with forensic precision.</p>
+      </div>
+      <div class="service-card reveal reveal-delay-1">
+        <span class="material-symbols-outlined mb-5 block" style="font-size:32px;color:#efbf71;" data-fill="1">schema</span>
+        <h3 class="text-white font-semibold mb-3" style="font-size:16px;">Data Infrastructure</h3>
+        <p style="font-size:14px;line-height:1.65;color:#bacac5;">Scalable, resilient architectures on modern cloud primitives — from raw ingestion to production insight.</p>
+      </div>
+      <div class="service-card reveal reveal-delay-2">
+        <span class="material-symbols-outlined mb-5 block" style="font-size:32px;color:#dee2ed;" data-fill="1">dashboard</span>
+        <h3 class="text-white font-semibold mb-3" style="font-size:16px;">Visual Intelligence</h3>
+        <p style="font-size:14px;line-height:1.65;color:#bacac5;">Bespoke dashboards designed with luxury automotive interface principles. Complex data, presented beautifully.</p>
+      </div>
+      <div class="service-card reveal reveal-delay-3">
+        <span class="material-symbols-outlined mb-5 block" style="font-size:32px;color:#49fde3;" data-fill="1">tune</span>
+        <h3 class="text-white font-semibold mb-3" style="font-size:16px;">Strategic Auditing</h3>
+        <p style="font-size:14px;line-height:1.65;color:#bacac5;">Comprehensive evaluation of existing data ecosystems — identifying latency, gaps, and architectural flaws.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ Industries Preview ════════════════════════════════════════════ -->
+<section style="background:#0a0d12;border-top:1px solid rgba(255,255,255,0.05);padding:128px 0;">
+  <div class="max-w-[1440px] mx-auto px-6 md:px-12">
+    <div class="mb-16">
+      <div class="eyebrow reveal">Sector Coverage</div>
+      <div class="flex flex-wrap justify-between items-end gap-6">
+        <h2 class="font-display-lg text-display-lg text-on-surface reveal">
+          Intelligence across<br/>every industry.
+        </h2>
+        <a href="industries.html" class="link-underline text-primary hover:text-white transition-colors reveal" style="font-size:11px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;">
+          All Industries <span class="material-symbols-outlined text-[14px]">arrow_forward</span>
+        </a>
+      </div>
+    </div>
+    <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
+      <a href="industries.html" class="group border border-white/[0.08] hover:border-primary/40 rounded-lg p-6 text-center transition-all duration-400 reveal" style="background:#0d1117;">
+        <span class="material-symbols-outlined text-3xl mb-3 block transition-colors text-white/25 group-hover:text-primary" style="font-variation-settings:'FILL' 1;">account_balance</span>
+        <p style="font-size:10px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:#849490;" class="group-hover:text-white transition-colors">Banking</p>
+      </a>
+      <a href="industries.html" class="group border border-white/[0.08] hover:border-primary/40 rounded-lg p-6 text-center transition-all duration-400 reveal reveal-delay-1" style="background:#0d1117;">
+        <span class="material-symbols-outlined text-3xl mb-3 block transition-colors text-white/25 group-hover:text-primary" style="font-variation-settings:'FILL' 1;">gavel</span>
+        <p style="font-size:10px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:#849490;" class="group-hover:text-white transition-colors">Government</p>
+      </a>
+      <a href="industries.html" class="group border border-white/[0.08] hover:border-primary/40 rounded-lg p-6 text-center transition-all duration-400 reveal reveal-delay-2" style="background:#0d1117;">
+        <span class="material-symbols-outlined text-3xl mb-3 block transition-colors text-white/25 group-hover:text-primary" style="font-variation-settings:'FILL' 1;">cell_tower</span>
+        <p style="font-size:10px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:#849490;" class="group-hover:text-white transition-colors">Telecom</p>
+      </a>
+      <a href="industries.html" class="group border border-white/[0.08] hover:border-primary/40 rounded-lg p-6 text-center transition-all duration-400 reveal reveal-delay-3" style="background:#0d1117;">
+        <span class="material-symbols-outlined text-3xl mb-3 block transition-colors text-white/25 group-hover:text-primary" style="font-variation-settings:'FILL' 1;">ecg_heart</span>
+        <p style="font-size:10px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:#849490;" class="group-hover:text-white transition-colors">Healthcare</p>
+      </a>
+      <a href="industries.html" class="group border border-white/[0.08] hover:border-primary/40 rounded-lg p-6 text-center transition-all duration-400 reveal" style="background:#0d1117;">
+        <span class="material-symbols-outlined text-3xl mb-3 block transition-colors text-white/25 group-hover:text-primary" style="font-variation-settings:'FILL' 1;">agriculture</span>
+        <p style="font-size:10px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:#849490;" class="group-hover:text-white transition-colors">Agriculture</p>
+      </a>
+      <a href="industries.html" class="group border border-white/[0.08] hover:border-primary/40 rounded-lg p-6 text-center transition-all duration-400 reveal reveal-delay-1" style="background:#0d1117;">
+        <span class="material-symbols-outlined text-3xl mb-3 block transition-colors text-white/25 group-hover:text-primary" style="font-variation-settings:'FILL' 1;">local_shipping</span>
+        <p style="font-size:10px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:#849490;" class="group-hover:text-white transition-colors">Logistics</p>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ══ CTA ═══════════════════════════════════════════════════════════ -->
+<section class="cta-bg noise-overlay" style="padding:160px 0;border-top:1px solid rgba(255,255,255,0.05);position:relative;overflow:hidden;">
+  <!-- Radial glow orb -->
+  <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:600px;height:400px;border-radius:50%;background:radial-gradient(ellipse,rgba(73,253,227,0.07) 0%,transparent 70%);pointer-events:none;"></div>
+
+  <div class="max-w-[1440px] mx-auto px-6 md:px-12 text-center" style="position:relative;z-index:1;">
+    <div class="eyebrow justify-center reveal">Ready to Proceed?</div>
+    <h2 class="font-display-xl text-display-xl text-on-surface mb-6 reveal reveal-delay-1 text-glow"
+        style="font-size:clamp(40px,6vw,96px);">
+      Initiate your data<br/>transformation.
+    </h2>
+    <p class="reveal reveal-delay-2 mx-auto mb-12" style="font-size:18px;line-height:1.7;color:#bacac5;max-width:520px;">
+      Connect with our analytics specialists to architect high-fidelity solutions for your enterprise.
+    </p>
+    <div class="flex flex-wrap justify-center gap-4 reveal reveal-delay-3">
+      <a href="contact.html"
+         class="inline-flex items-center gap-2 bg-primary text-on-primary px-10 py-4 font-label-caps text-label-caps hover:bg-primary-container transition-all duration-300 glow-teal"
+         style="font-size:11px;font-weight:700;letter-spacing:0.12em;">
+        Initiate Contact <span class="material-symbols-outlined text-[15px]">arrow_forward</span>
+      </a>
+      <a href="products.html"
+         class="inline-flex items-center gap-2 border border-white/20 text-white/80 px-10 py-4 font-label-caps text-label-caps hover:border-white/40 hover:text-white transition-all duration-300"
+         style="font-size:11px;font-weight:700;letter-spacing:0.12em;">
+        View Products
+      </a>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- ══ Footer ════════════════════════════════════════════════════════ -->
+<footer style="background:#050709;border-top:1px solid rgba(255,255,255,0.05);">
+  <div class="max-w-[1440px] mx-auto px-6 md:px-12 py-20">
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-12 mb-14">
+      <div class="md:col-span-2">
+        <a href="index.html" class="block mb-4">
+          <img src="assets/images/daps-logo-full.svg" alt="DAPS Analytics" style="height:60px;width:auto;"/>
+        </a>
+        <p style="font-size:13px;line-height:1.7;color:#3b4a46;max-width:300px;margin-bottom:20px;">High-fidelity data solutions engineered for clarity, speed, and uncompromising accuracy.</p>
+        <div class="flex gap-4">
+          <a href="https://onekof.com" target="_blank" rel="noopener" style="font-size:10px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:#3b4a46;" class="hover:text-primary transition-colors">Onekof</a>
+          <span style="color:#1e2a26;">·</span>
+          <a href="https://udc-wqis.happycoast-d9b0bcde.centralus.azurecontainerapps.io/" target="_blank" rel="noopener" style="font-size:10px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:#3b4a46;" class="hover:text-primary transition-colors">WQIS</a>
+          <span style="color:#1e2a26;">·</span>
+          <a href="https://www.hakimet.com" target="_blank" rel="noopener" style="font-size:10px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:#3b4a46;" class="hover:text-primary transition-colors">Hakimet</a>
+          <span style="color:#1e2a26;">·</span>
+          <a href="https://olink-fleet.vercel.app/" target="_blank" rel="noopener" style="font-size:10px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:#3b4a46;" class="hover:text-primary transition-colors">Olink</a>
+        </div>
+      </div>
+      <div>
+        <h4 style="font-size:10px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:#dee2ed;margin-bottom:20px;">Platform</h4>
+        <ul class="space-y-3" style="font-size:13px;">
+          <li><a href="products.html"   style="color:#3b4a46;" class="hover:text-teal-400 transition-colors">Products</a></li>
+          <li><a href="services.html"   style="color:#3b4a46;" class="hover:text-teal-400 transition-colors">Services</a></li>
+          <li><a href="industries.html" style="color:#3b4a46;" class="hover:text-teal-400 transition-colors">Industries</a></li>
+          <li><a href="insights.html"   style="color:#3b4a46;" class="hover:text-teal-400 transition-colors">Insights</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 style="font-size:10px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:#dee2ed;margin-bottom:20px;">Company</h4>
+        <ul class="space-y-3" style="font-size:13px;">
+          <li><a href="company.html" style="color:#3b4a46;" class="hover:text-teal-400 transition-colors">About Us</a></li>
+          <li><a href="contact.html" style="color:#3b4a46;" class="hover:text-teal-400 transition-colors">Contact</a></li>
+          <li><a href="insights.html" style="color:#3b4a46;" class="hover:text-teal-400 transition-colors">Resources</a></li>
+        </ul>
+      </div>
+    </div>
+    <div style="border-top:1px solid rgba(255,255,255,0.04);padding-top:28px;display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:12px;">
+      <p style="font-size:12px;color:#1e2a26;">© 2025 DAPS Analytics. All rights reserved.</p>
+      <p style="font-size:12px;color:#1e2a26;">Built by <span style="color:#3b4a46;">Olink Technologies Inc.</span> &amp; <span style="color:#3b4a46;">DAPS Analytics</span></p>
+    </div>
+  </div>
+</footer>
+
+<!-- ══ Shared JS ═════════════════════════════════════════════════════ -->
+<script src="assets/navbar.js"></script>
+<script src="assets/daps.js"></script>
+
+<!-- ══ WebGL Globe ═══════════════════════════════════════════════════ -->
+<script>
+(function () {
+  'use strict';
+
+  function boot() {
+    if (typeof THREE === 'undefined') { setTimeout(boot, 80); return; }
+    initGlobe();
+  }
+
+  function initGlobe() {
+    var canvas = document.getElementById('globe-canvas');
+    if (!canvas) return;
+
+    var section = canvas.parentElement;
+    var W = section.clientWidth  || window.innerWidth;
+    var H = section.clientHeight || window.innerHeight;
+
+    /* ── Renderer ─────────────────────────────────────────────── */
+    var renderer = new THREE.WebGLRenderer({ canvas: canvas, antialias: true, alpha: true, powerPreference: 'high-performance' });
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    renderer.setSize(W, H);
+    renderer.setClearColor(0x000000, 0);
+
+    /* ── Scene / Camera ───────────────────────────────────────── */
+    var scene  = new THREE.Scene();
+    /* Shift camera LEFT so globe appears on right side of hero */
+    var camera = new THREE.PerspectiveCamera(42, W / H, 0.1, 1000);
+    camera.position.set(-1.8, 0.4, 5.8);
+    camera.lookAt(0, 0, 0);
+
+    /* ── Lights ───────────────────────────────────────────────── */
+    scene.add(new THREE.AmbientLight(0x001a15, 2));
+    var key = new THREE.PointLight(0x49fde3, 5, 25);
+    key.position.set(6, 4, 6);
+    scene.add(key);
+    var fill = new THREE.PointLight(0x003730, 2, 25);
+    fill.position.set(-5, -3, -5);
+    scene.add(fill);
+
+    /* ── Globe group ──────────────────────────────────────────── */
+    var G = new THREE.Group();
+    scene.add(G);
+    var R = 2;
+
+    /* 1 · Base sphere */
+    G.add(new THREE.Mesh(
+      new THREE.SphereGeometry(R, 72, 72),
+      new THREE.MeshPhongMaterial({
+        color: 0x050a10, emissive: 0x001208,
+        specular: 0x49fde3, shininess: 6,
+        transparent: true, opacity: 0.97
+      })
+    ));
+
+    /* 2 · Lat/lon wireframe (very faint) */
+    G.add(new THREE.Mesh(
+      new THREE.SphereGeometry(R + 0.003, 24, 16),
+      new THREE.MeshBasicMaterial({
+        color: 0x49fde3, wireframe: true,
+        transparent: true, opacity: 0.035,
+        blending: THREE.AdditiveBlending, depthWrite: false
+      })
+    ));
+
+    /* 3 · Inner atmosphere glow (custom shader) */
+    G.add(new THREE.Mesh(
+      new THREE.SphereGeometry(R + 0.28, 64, 64),
+      new THREE.ShaderMaterial({
+        vertexShader:   'varying vec3 vN; void main(){vN=normalize(normalMatrix*normal);gl_Position=projectionMatrix*modelViewMatrix*vec4(position,1.);}',
+        fragmentShader: 'varying vec3 vN; void main(){float i=pow(max(0.,0.70-dot(vN,vec3(0,0,1))),2.2);gl_FragColor=vec4(0.286,0.992,0.890,i*0.85);}',
+        blending: THREE.AdditiveBlending, side: THREE.BackSide,
+        transparent: true, depthWrite: false
+      })
+    ));
+
+    /* 4 · Outer halo */
+    G.add(new THREE.Mesh(
+      new THREE.SphereGeometry(R + 0.65, 64, 64),
+      new THREE.ShaderMaterial({
+        vertexShader:   'varying vec3 vN; void main(){vN=normalize(normalMatrix*normal);gl_Position=projectionMatrix*modelViewMatrix*vec4(position,1.);}',
+        fragmentShader: 'varying vec3 vN; void main(){float i=pow(max(0.,0.82-dot(vN,vec3(0,0,1))),5.0);gl_FragColor=vec4(0.286,0.992,0.890,i*0.12);}',
+        blending: THREE.AdditiveBlending, side: THREE.BackSide,
+        transparent: true, depthWrite: false
+      })
+    ));
+
+    /* Helper — random point on sphere surface */
+    function rnd(r) {
+      var phi   = Math.acos(2 * Math.random() - 1);
+      var theta = 2 * Math.PI * Math.random();
+      return new THREE.Vector3(
+        r * Math.sin(phi) * Math.cos(theta),
+        r * Math.cos(phi),
+        r * Math.sin(phi) * Math.sin(theta)
+      );
+    }
+
+    /* 5 · Node particles */
+    var N_NODES = 420;
+    var nodePts = [], nPos = [];
+    for (var i = 0; i < N_NODES; i++) {
+      var p = rnd(R + 0.013); nodePts.push(p);
+      nPos.push(p.x, p.y, p.z);
+    }
+    var nGeo = new THREE.BufferGeometry();
+    nGeo.setAttribute('position', new THREE.Float32BufferAttribute(nPos, 3));
+    G.add(new THREE.Points(nGeo, new THREE.PointsMaterial({
+      color: 0x49fde3, size: 0.022, sizeAttenuation: true,
+      transparent: true, opacity: 0.72,
+      blending: THREE.AdditiveBlending, depthWrite: false
+    })));
+
+    /* 6 · Bright highlight nodes */
+    var hPos = [];
+    for (var j = 0; j < 65; j++) {
+      var q = rnd(R + 0.018); hPos.push(q.x, q.y, q.z);
+    }
+    var hGeo = new THREE.BufferGeometry();
+    hGeo.setAttribute('position', new THREE.Float32BufferAttribute(hPos, 3));
+    G.add(new THREE.Points(hGeo, new THREE.PointsMaterial({
+      color: 0xffffff, size: 0.06, sizeAttenuation: true,
+      transparent: true, opacity: 0.9,
+      blending: THREE.AdditiveBlending, depthWrite: false
+    })));
+
+    /* 7 · Arcs + traveling dots */
+    var N_ARCS = 75;
+    var arcs = [];
+    for (var k = 0; k < N_ARCS; k++) {
+      var a = nodePts[Math.floor(Math.random() * N_NODES)];
+      var b = nodePts[Math.floor(Math.random() * N_NODES)];
+
+      var mid = a.clone().add(b).multiplyScalar(0.5);
+      var lift = R * (0.10 + 0.28 * Math.random());
+      mid.normalize().multiplyScalar(mid.length() + lift);
+
+      var curve = new THREE.QuadraticBezierCurve3(a, mid, b);
+
+      /* Static line */
+      var aGeo = new THREE.BufferGeometry().setFromPoints(curve.getPoints(60));
+      G.add(new THREE.Line(aGeo, new THREE.LineBasicMaterial({
+        color: 0x49fde3, transparent: true,
+        opacity: 0.07 + Math.random() * 0.09,
+        blending: THREE.AdditiveBlending, depthWrite: false
+      })));
+
+      /* Traveling dot */
+      var dGeo = new THREE.BufferGeometry();
+      dGeo.setAttribute('position', new THREE.Float32BufferAttribute([0,0,0], 3));
+      var dot = new THREE.Points(dGeo, new THREE.PointsMaterial({
+        color: 0x49fde3, size: 0.075, sizeAttenuation: true,
+        transparent: true, opacity: 0.95,
+        blending: THREE.AdditiveBlending, depthWrite: false
+      }));
+      G.add(dot);
+
+      arcs.push({ curve: curve, dot: dot, t: Math.random(), spd: 0.0022 + Math.random() * 0.003 });
+    }
+
+    /* 8 · Starfield */
+    var sPos = [];
+    for (var s = 0; s < 2800; s++) {
+      var sp = rnd(90 + Math.random() * 140); sPos.push(sp.x, sp.y, sp.z);
+    }
+    var sGeo = new THREE.BufferGeometry();
+    sGeo.setAttribute('position', new THREE.Float32BufferAttribute(sPos, 3));
+    scene.add(new THREE.Points(sGeo, new THREE.PointsMaterial({
+      color: 0xffffff, size: 0.18, sizeAttenuation: true,
+      transparent: true, opacity: 0.22,
+      blending: THREE.AdditiveBlending, depthWrite: false
+    })));
+
+    /* ── Animation loop ───────────────────────────────────────── */
+    function tick() {
+      requestAnimationFrame(tick);
+
+      /* Slow globe rotation + gentle bob */
+      G.rotation.y += 0.0013;
+      G.rotation.x = Math.sin(Date.now() * 0.00008) * 0.06;
+
+      /* Key light slow orbit */
+      var t = Date.now() * 0.00025;
+      key.position.x = Math.cos(t) * 7;
+      key.position.z = Math.sin(t) * 7;
+
+      /* Animate traveling dots */
+      for (var i = 0; i < arcs.length; i++) {
+        var arc = arcs[i];
+        arc.t = (arc.t + arc.spd) % 1;
+        var pt = arc.curve.getPoint(arc.t);
+        arc.dot.geometry.attributes.position.setXYZ(0, pt.x, pt.y, pt.z);
+        arc.dot.geometry.attributes.position.needsUpdate = true;
+      }
+
+      renderer.render(scene, camera);
+    }
+    tick();
+
+    /* ── Resize ───────────────────────────────────────────────── */
+    function resize() {
+      W = section.clientWidth  || window.innerWidth;
+      H = section.clientHeight || window.innerHeight;
+      camera.aspect = W / H;
+      camera.updateProjectionMatrix();
+      renderer.setSize(W, H);
+    }
+    window.addEventListener('resize', resize);
+  }
+
+  /* Boot after DOM + Three.js ready */
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', function(){ setTimeout(boot, 50); });
+  } else {
+    setTimeout(boot, 50);
+  }
+})();
+</script>
+
+</body>
+</html>

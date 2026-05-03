@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>DAPS Analytics - Home</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "secondary-container": "#694700",
+                        "error": "#ffb4ab",
+                        "tertiary-container": "#c6c8ca",
+                        "surface-tint": "#00dfc6",
+                        "on-tertiary-fixed": "#191c1e",
+                        "primary-fixed-dim": "#00dfc6",
+                        "on-primary-fixed": "#00201b",
+                        "inverse-surface": "#dee2ed",
+                        "on-primary-container": "#005e53",
+                        "primary-fixed": "#47fce2",
+                        "on-tertiary-container": "#515455",
+                        "on-secondary-fixed": "#281900",
+                        "surface": "#0e141b",
+                        "tertiary": "#e3e4e6",
+                        "surface-bright": "#343942",
+                        "secondary": "#efbf71",
+                        "on-primary": "#003730",
+                        "surface-container-low": "#171c24",
+                        "inverse-primary": "#006b5e",
+                        "on-secondary-container": "#e7b76a",
+                        "on-background": "#dee2ed",
+                        "background": "#0e141b",
+                        "tertiary-fixed-dim": "#c5c6c8",
+                        "primary": "#49fde3",
+                        "surface-container-high": "#252a32",
+                        "secondary-fixed": "#ffdead",
+                        "on-error-container": "#ffdad6",
+                        "on-surface": "#dee2ed",
+                        "primary-container": "#00e0c7",
+                        "on-tertiary": "#2e3132",
+                        "error-container": "#93000a",
+                        "surface-container-lowest": "#090e16",
+                        "on-surface-variant": "#bacac5",
+                        "tertiary-fixed": "#e1e2e4",
+                        "surface-dim": "#0e141b",
+                        "surface-container": "#1b2028",
+                        "inverse-on-surface": "#2b3139",
+                        "outline-variant": "#3b4a46",
+                        "surface-variant": "#30353d",
+                        "secondary-fixed-dim": "#efbf71",
+                        "on-tertiary-fixed-variant": "#444749",
+                        "surface-container-highest": "#30353d",
+                        "on-secondary-fixed-variant": "#604100",
+                        "outline": "#849490",
+                        "on-primary-fixed-variant": "#005046",
+                        "on-secondary": "#432c00",
+                        "on-error": "#690005"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "lg": "4rem",
+                        "xl": "8rem",
+                        "xs": "0.5rem",
+                        "md": "2rem",
+                        "2xl": "12rem",
+                        "gutter": "24px",
+                        "margin": "64px",
+                        "unit": "4px",
+                        "sm": "1rem"
+                    },
+                    "fontFamily": {
+                        "display-lg": ["Inter"],
+                        "label-caps": ["Inter"],
+                        "headline-md": ["Inter"],
+                        "display-2xl": ["Inter"],
+                        "body-md": ["Inter"],
+                        "display-xl": ["Inter"],
+                        "body-lg": ["Inter"]
+                    },
+                    "fontSize": {
+                        "display-lg": ["56px", { "lineHeight": "115%", "letterSpacing": "-0.02em", "fontWeight": "400" }],
+                        "label-caps": ["12px", { "lineHeight": "100%", "letterSpacing": "0.1em", "fontWeight": "600" }],
+                        "headline-md": ["32px", { "lineHeight": "130%", "letterSpacing": "-0.01em", "fontWeight": "400" }],
+                        "display-2xl": ["128px", { "lineHeight": "110%", "letterSpacing": "-0.04em", "fontWeight": "300" }],
+                        "body-md": ["16px", { "lineHeight": "160%", "letterSpacing": "0em", "fontWeight": "400" }],
+                        "display-xl": ["96px", { "lineHeight": "110%", "letterSpacing": "-0.03em", "fontWeight": "300" }],
+                        "body-lg": ["18px", { "lineHeight": "160%", "letterSpacing": "0em", "fontWeight": "400" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body { background-color: theme('colors.background'); color: theme('colors.on-background'); }
+    </style>
+</head>
+<body class="antialiased selection:bg-primary-container selection:text-on-primary-container">
+<!-- TopNavBar -->
+<nav class="fixed top-0 w-full z-50 bg-transparent dark:bg-black/80 backdrop-blur-2xl border-b border-white/10 shadow-none">
+<div class="flex justify-between items-center w-full px-12 py-6 max-w-[1440px] mx-auto hidden md:flex">
+<div class="text-2xl font-black tracking-tighter text-white">DAPS Analytics</div>
+<ul class="flex items-center space-x-8 font-inter tracking-[0.2em] uppercase text-[10px] font-bold">
+<li class="text-white/70 hover:text-white transition-all duration-400 cubic-bezier(0.4,0,0.2,1)"><a href="#">Services</a></li>
+<li class="text-white/70 hover:text-white transition-all duration-400 cubic-bezier(0.4,0,0.2,1)"><a href="#">Products</a></li>
+<li class="text-white/70 hover:text-white transition-all duration-400 cubic-bezier(0.4,0,0.2,1)"><a href="#">Solutions</a></li>
+<li class="text-white/70 hover:text-white transition-all duration-400 cubic-bezier(0.4,0,0.2,1)"><a href="#">Industries</a></li>
+<li class="text-white/70 hover:text-white transition-all duration-400 cubic-bezier(0.4,0,0.2,1)"><a href="#">Insights</a></li>
+<li class="text-white/70 hover:text-white transition-all duration-400 cubic-bezier(0.4,0,0.2,1)"><a href="#">Company</a></li>
+</ul>
+<div class="flex items-center space-x-4">
+<button class="font-label-caps text-label-caps text-on-surface hover:text-primary transition-colors flex items-center space-x-2">
+<span class="material-symbols-outlined" data-icon="language" style="font-variation-settings: 'FILL' 0;">language</span>
+<span>Global</span>
+</button>
+<button class="px-6 py-3 border border-primary text-primary font-label-caps text-label-caps hover:bg-primary hover:text-on-primary transition-colors duration-400 rounded-none scale-95 active:scale-100">Book a Call</button>
+</div>
+</div>
+</nav>
+<main>
+<!-- Hero Section -->
+<section class="relative min-h-screen flex items-center px-12 pt-32 pb-24 overflow-hidden">
+<div class="absolute inset-0 z-0">
+<img alt="Hero Background" class="w-full h-full object-cover opacity-30 mix-blend-luminosity scale-105" data-alt="A cinematic, high-contrast 3D visualization of a global data network. Glowing teal nodes and flowing data lines construct an intricate, futuristic globe against a deep, almost black background. The mood is one of quiet authority, precision, and technological advancement, reflecting an ultra-minimalist, high-end enterprise aesthetic. Subtle atmospheric glows highlight key connection points." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAPOPsA-qZHvBuiZmh6rrhF5t07mgSs5t2Qj3l_b79ClQS1iUTUmlNDRej99svMg954iE13YX86HS7E-BQF8ajhBJ5Oj-EAPoN6gvc705s9NUH45M2gS8ue_OAHKKu84hzN6Rjl58Hxsk97lEcCM02SJ0T7_yP6zYY84uQomOm2482au6iJp-_Ywb6N-7XuWNA_3kX3jMK8iqZP_ZMHavpQiSwlmIZwxWhWlb983U0ma2zxsOvi8cBmlJz9gZw__xa_PvgvHoBvGrA0"/>
+<div class="absolute inset-0 bg-gradient-to-r from-background via-background/80 to-transparent"></div>
+</div>
+<div class="relative z-10 max-w-[1440px] mx-auto grid grid-cols-12 gap-gutter w-full">
+<div class="col-span-12 md:col-span-8 lg:col-span-7 flex flex-col justify-center">
+<h1 class="font-display-xl text-display-xl text-on-surface mb-8">
+                        The intelligence layer for the next generation of African and global enterprises.
+                    </h1>
+<div class="flex items-center space-x-6">
+<button class="bg-primary text-on-primary px-8 py-4 font-label-caps text-label-caps hover:bg-primary-container transition-colors duration-400 rounded-full">
+                            EXPLORE PLATFORM
+                        </button>
+<button class="border border-white/20 text-on-surface px-8 py-4 font-label-caps text-label-caps hover:border-primary hover:text-primary transition-colors duration-400 rounded-full">
+                            VIEW CASE STUDIES
+                        </button>
+</div>
+</div>
+</div>
+</section>
+<!-- Trust Bar -->
+<section class="py-xl px-12 border-t border-white/5 bg-surface-container-lowest">
+<div class="max-w-[1440px] mx-auto">
+<p class="font-label-caps text-label-caps text-on-surface-variant mb-8 text-center opacity-50">TRUSTED BY VISIONARY ORGANIZATIONS</p>
+<div class="flex justify-between items-center opacity-40 grayscale gap-8 flex-wrap">
+<img alt="Logo 1" class="h-8 object-contain" data-alt="A minimalist, monochromatic corporate logo of a financial institution, presented in high contrast against a dark background. The design is sleek and stripped back, aligning with a premium, quiet luxury aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBW-S37RL2oeY7EADoTHd82YuZavjYCefV4kMn7mutCmajxM8SHptnZT2MqgJg6Mfb9yGgTMG4ery_FAZk5g_5PtfNiQ4x5--zHX0Ffur3-2PCr8SmUAiuvLUi5SMrkuQBcIYj36Y8RCC9u4JCdonCsrVbjnVGeSv4cpkQGoCjyzBS5fKtGtNsvKa0uJaDhEQmYe4ul78zXoOBR-R3thwYlN0Yn0eTl9FB5xSnaGhqDdO-jbXjlLiPiUQfzU9hEulh3qoYO8n2EPNt2"/>
+<img alt="Logo 2" class="h-8 object-contain" data-alt="A sleek, single-color abstract logo representing a government ministry, rendered in sharp greyscale on a deep black surface. The clean lines evoke precision and institutional authority." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDgvinUIbsdp9LtC3mJITq8yQloZUDiMEr1pAdLCJ_xR8gZchCr9PsCkG6NOmljBTDFrZixVR7wBexkWbcxB6egJo9qVbZW0RzyrzeGaIvK2OsF4OydzTDy0td6xksIvs-K4OsUzAgUHHg0_xiSJP0kHmkrsZlxByeReZRtMS8tT-jHPmAPdN2Cl7AUud2I1Cy7MiaOrw4UFaR85BEqc5CEPzM4EC-u6OBXo7koaSHViHZxqnXGLE0WSQlyn7H3nOOVYRPJAqyAYjiF"/>
+<img alt="Logo 3" class="h-8 object-contain" data-alt="A stark, minimalist emblem for a global NGO, designed in pure white against a dark void. The high-contrast rendering emphasizes structural simplicity and modern corporate identity." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCmXyw8hUj8na1tg7DKPEYf4r9CXvER0C-6sfEmLSRQ4b2_fO6_K_e0lp0TW5AjBqzF8YJDf-0mQIQ0_AdHXE_XYAUOnJc4VLWTwuWDCQUvYIFeMMx6D5Glpee2baYg5QSBcwldXVFIxIMcde5T55iEAG6nlrkwrHCwCbcmMDpi-eylGPgkjzx0TojczKr3YYuolW4CMbYHxMk3cn19_SgnN8O4SAHYtMtT8Wgmu3KWczB5OR2QvXtNPbr6kb-kdkCield7Cs336yMe"/>
+<img alt="Logo 4" class="h-8 object-contain" data-alt="A high-end, monochromatic tech enterprise logo, utilizing negative space and sharp geometric forms. Set against a cinematic dark background to reflect a sophisticated, ultra-minimalist brand." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDnW-VWX-XL2mwIS1KAJMfEsuoC0si5SLwJk2B-Sb-RXo63yIo-83BiKVlk5hv4KGMJMhXT8cweSyFEaY1Hvd8RuMqRNYxqzg4r7vlij5H_bH9iZ6eyeH3VxrUdYES3wTXOJTjluOmhE_N2ylpYwdnttLp0hfShlYT5mMIg42nRJ1v3WXMIS0mVaPQrW4q8ReeizbHbdw6QMoOT4KgktlxY3muF23RPqE-D3jLULxXWejgQokHZRZKkllzSskZzc9eGppc9NmsuNvhp"/>
+<img alt="Logo 5" class="h-8 object-contain" data-alt="A refined, greyscale insignia of a data analytics firm. The logo features ultra-thin linework and is isolated in a dark, atmospheric setting, conveying calm intelligence and clarity." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDKi_6kcIg5Uyt8NglbYUhP34ALBWmivIOqfFqN0c55LaUegC18Gry5c1FSwtKQiiOya7yUF6fqnT7nuMRCcmqJeWX5Yx2KoJ-G_x7J3L8L2rZxvvMjprGUVmiZBgaZJ1Nu04lhYETssN_YnzIlPmsn4cuC2-SSij8AIwS26j0Q0-N-Z3jqlhJJ_5lC9Ii3NrkdvR9KKCTfILP6JgJXlV3kNnNYI_jNmpsk26345ifjb1GKjqiQKv1pzRLDaP-Q7y5443uSmpbxwA2_"/>
+</div>
+</div>
+</section>
+<!-- Product Portfolio -->
+<section class="py-2xl bg-background">
+<div class="max-w-[1440px] mx-auto px-12">
+<div class="mb-2xl">
+<h2 class="font-display-lg text-display-lg text-on-surface mb-6">Core Infrastructure</h2>
+<p class="font-body-lg text-body-lg text-on-surface-variant max-w-2xl">High-fidelity data solutions engineered for complex environments.</p>
+</div>
+<div class="space-y-32">
+<!-- Product 1 -->
+<div class="grid grid-cols-12 gap-gutter items-center">
+<div class="col-span-12 md:col-span-5 pr-8">
+<div class="inline-flex items-center space-x-2 border border-primary/30 rounded-full px-3 py-1 mb-6">
+<span class="w-2 h-2 rounded-full bg-primary"></span>
+<span class="font-label-caps text-label-caps text-primary">LIVE SYSTEM</span>
+</div>
+<h3 class="font-display-lg text-display-lg text-on-surface mb-6">Onekof PM</h3>
+<p class="font-body-md text-body-md text-on-surface-variant mb-8">A comprehensive project management intelligence layer designed for massive scale infrastructure deployment.</p>
+<div class="flex space-x-8 mb-12 border-l border-white/10 pl-6">
+<div>
+<div class="font-headline-md text-headline-md text-on-surface">99.9%</div>
+<div class="font-label-caps text-label-caps text-on-surface-variant mt-1">UPTIME</div>
+</div>
+<div>
+<div class="font-headline-md text-headline-md text-on-surface">2M+</div>
+<div class="font-label-caps text-label-caps text-on-surface-variant mt-1">NODES</div>
+</div>
+</div>
+<button class="border border-primary text-primary px-8 py-4 font-label-caps text-label-caps hover:bg-primary hover:text-on-primary transition-colors duration-400">
+                                EXPLORE ONEKOF
+                            </button>
+</div>
+<div class="col-span-12 md:col-span-7">
+<div class="bg-surface-container-low border border-white/5 p-2 rounded-xl relative overflow-hidden group">
+<div class="absolute inset-0 bg-primary/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-10"></div>
+<img alt="Onekof Interface" class="w-full h-auto rounded-lg grayscale opacity-80 group-hover:grayscale-0 transition-all duration-700" data-alt="A high-fidelity rendering of a sophisticated data visualization dashboard displayed on a sleek, borderless monitor. The interface features intricate, dark-mode charts with ultra-thin teal 1px axes and gridlines. The overall scene is ultra-minimalist, set in a dark cinematic environment with subtle atmospheric lighting reflecting off the screen, embodying quiet luxury and precision analytics." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBdoWYS81tF4oWSfSNLUyVJROcRKTgBuxOMzR8bwm3LSxAy6P1uefa08Kqkh54_s_JWnvzr0CEKIhEywKniwmzhrvAZ4b0T-EDZu0Wrvr491kY1xQ2ZD9-plyEts7pBnkFrzLifYVJtDdiBzAS5FQGjRXAMehzyFq1cMhe_0QJqEO833Rf80vlgx_rXiyuTwRYJAlSHp9JsILOEfpV7zVhOod5BucZttR7nSeEGYuZS8xhRJwra5rBZRKMbJo8OxmVGB3ZPJ7zsNRI9"/>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="w-full border-t border-white/5 py-20 bg-zinc-950 tonal layering with secondary surface #111418 flat no shadows">
+<div class="grid grid-cols-4 gap-12 px-12 max-w-[1440px] mx-auto">
+<div class="col-span-1">
+<div class="text-xl font-bold text-white tracking-widest mb-6">DAPS Analytics</div>
+<p class="font-inter text-sm tracking-tight text-zinc-500">© 2024 DAPS Analytics. High-fidelity data solutions.</p>
+</div>
+<div class="col-span-1">
+<h4 class="font-label-caps text-label-caps text-white mb-4">PLATFORM</h4>
+<ul class="space-y-3 font-inter text-sm tracking-tight">
+<li><a class="text-zinc-500 hover:text-white hover:text-teal-400 transition-colors duration-400 opacity-80 hover:opacity-100" href="#">Products</a></li>
+<li><a class="text-zinc-500 hover:text-white hover:text-teal-400 transition-colors duration-400 opacity-80 hover:opacity-100" href="#">Services</a></li>
+</ul>
+</div>
+<div class="col-span-1">
+<h4 class="font-label-caps text-label-caps text-white mb-4">COMPANY</h4>
+<ul class="space-y-3 font-inter text-sm tracking-tight">
+<li><a class="text-zinc-500 hover:text-white hover:text-teal-400 transition-colors duration-400 opacity-80 hover:opacity-100" href="#">Company</a></li>
+<li><a class="text-zinc-500 hover:text-white hover:text-teal-400 transition-colors duration-400 opacity-80 hover:opacity-100" href="#">Resources</a></li>
+</ul>
+</div>
+</div>
+</footer>
+</body></html>

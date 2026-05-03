@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html class="dark" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Strategic Projects — DAPS Analytics</title>
+<meta name="description" content="DAPS Analytics mega projects: TDT in collaboration with MINT, and other transformative data initiatives across Africa and beyond."/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;900&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<script>
+  tailwind.config = {
+    darkMode:"class",theme:{extend:{colors:{"secondary-container":"#694700","error":"#ffb4ab","tertiary-container":"#c6c8ca","surface-tint":"#00dfc6","on-tertiary-fixed":"#191c1e","primary-fixed-dim":"#00dfc6","on-primary-fixed":"#00201b","inverse-surface":"#dee2ed","on-primary-container":"#005e53","primary-fixed":"#47fce2","on-tertiary-container":"#515455","on-secondary-fixed":"#281900","surface":"#0e141b","tertiary":"#e3e4e6","surface-bright":"#343942","secondary":"#efbf71","on-primary":"#003730","surface-container-low":"#171c24","inverse-primary":"#006b5e","on-secondary-container":"#e7b76a","on-background":"#dee2ed","background":"#0e141b","tertiary-fixed-dim":"#c5c6c8","primary":"#49fde3","surface-container-high":"#252a32","secondary-fixed":"#ffdead","on-error-container":"#ffdad6","on-surface":"#dee2ed","primary-container":"#00e0c7","on-tertiary":"#2e3132","error-container":"#93000a","surface-container-lowest":"#090e16","on-surface-variant":"#bacac5","tertiary-fixed":"#e1e2e4","surface-dim":"#0e141b","surface-container":"#1b2028","inverse-on-surface":"#2b3139","outline-variant":"#3b4a46","surface-variant":"#30353d","secondary-fixed-dim":"#efbf71","on-tertiary-fixed-variant":"#444749","surface-container-highest":"#30353d","on-secondary-fixed-variant":"#604100","outline":"#849490","on-primary-fixed-variant":"#005046","on-secondary":"#432c00","on-error":"#690005"},
+    borderRadius:{DEFAULT:"0.25rem",lg:"0.5rem",xl:"0.75rem",full:"9999px"},
+    spacing:{lg:"4rem",xl:"8rem",xs:"0.5rem",md:"2rem","2xl":"12rem",gutter:"24px",margin:"64px",unit:"4px",sm:"1rem"},
+    fontFamily:{"display-lg":["Inter"],"label-caps":["Inter"],"headline-md":["Inter"],"display-2xl":["Inter"],"body-md":["Inter"],"display-xl":["Inter"],"body-lg":["Inter"]},
+    fontSize:{"display-lg":["56px",{lineHeight:"115%",letterSpacing:"-0.02em",fontWeight:"400"}],"label-caps":["12px",{lineHeight:"100%",letterSpacing:"0.1em",fontWeight:"600"}],"headline-md":["32px",{lineHeight:"130%",letterSpacing:"-0.01em",fontWeight:"400"}],"display-2xl":["128px",{lineHeight:"110%",letterSpacing:"-0.04em",fontWeight:"300"}],"body-md":["16px",{lineHeight:"160%",letterSpacing:"0em",fontWeight:"400"}],"display-xl":["96px",{lineHeight:"110%",letterSpacing:"-0.03em",fontWeight:"300"}],"body-lg":["18px",{lineHeight:"160%",letterSpacing:"0em",fontWeight:"400"}]}}}
+  }
+</script>
+<style>
+  body { background-color: #0e141b; color: #dee2ed; }
+  .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.8s cubic-bezier(0.4,0,0.2,1), transform 0.8s cubic-bezier(0.4,0,0.2,1); }
+  .reveal.revealed { opacity: 1; transform: translateY(0); }
+  .reveal-delay-1 { transition-delay: 0.12s; }
+  .reveal-delay-2 { transition-delay: 0.24s; }
+  .reveal-delay-3 { transition-delay: 0.36s; }
+  .eyebrow { display:flex;align-items:center;gap:12px;font-size:11px;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;color:#49fde3;margin-bottom:20px; }
+  .eyebrow::before { content:'';display:block;width:32px;height:1px;background:#49fde3;flex-shrink:0; }
+  .project-card { background:#0d1117;border:1px solid rgba(255,255,255,0.08);border-radius:12px;overflow:hidden;transition:border-color 0.4s ease,box-shadow 0.4s ease; }
+  .project-card:hover { border-color:rgba(73,253,227,0.3);box-shadow:0 0 40px rgba(73,253,227,0.06); }
+  .project-card.amber:hover { border-color:rgba(239,191,113,0.3);box-shadow:0 0 40px rgba(239,191,113,0.06); }
+  .status-active { background:rgba(73,253,227,0.12);color:#49fde3;border:1px solid rgba(73,253,227,0.25); }
+  .status-active::before { content:'';display:inline-block;width:6px;height:6px;border-radius:50%;background:#49fde3;margin-right:8px;animation:pulse 2s infinite; }
+  .status-development { background:rgba(239,191,113,0.12);color:#efbf71;border:1px solid rgba(239,191,113,0.25); }
+  @keyframes pulse { 0%,100%{opacity:1;}50%{opacity:0.4;} }
+  .timeline-line { position:absolute;left:0;top:0;bottom:0;width:1px;background:linear-gradient(to bottom,rgba(73,253,227,0.4),rgba(73,253,227,0.1),transparent); }
+  .timeline-dot { width:8px;height:8px;border-radius:50%;flex-shrink:0;margin-top:6px; }
+</style>
+</head>
+<body class="antialiased selection:bg-primary/20 selection:text-primary min-h-screen flex flex-col">
+
+
+
+<main class="flex-grow">
+
+<!-- ── Hero ──────────────────────────────────────────────────────────── -->
+<section class="relative pt-40 pb-24 px-6 md:px-12 overflow-hidden" style="background:linear-gradient(180deg,#060a10 0%,#0e141b 100%);">
+  <div class="absolute inset-0 pointer-events-none" style="background:radial-gradient(ellipse 60% 50% at 50% 0%,rgba(73,253,227,0.07) 0%,transparent 70%);"></div>
+  <div class="max-w-[1440px] mx-auto relative z-10">
+    <div class="eyebrow reveal">Strategic Initiatives</div>
+    <h1 class="font-display-xl text-display-xl text-on-surface mb-6 reveal reveal-delay-1" style="font-size:clamp(48px,7vw,96px);">
+      Transforming Africa<br/>through data.
+    </h1>
+    <p class="font-body-lg text-body-lg text-on-surface-variant max-w-2xl mb-12 reveal reveal-delay-2">
+      DAPS Analytics is engaged in landmark infrastructure and technology transfer projects across Ethiopia and the broader African continent — in partnership with governments, ministries, and international institutions.
+    </p>
+    <div class="flex flex-wrap gap-8 reveal reveal-delay-3">
+      <div>
+        <div class="font-display-lg text-display-lg text-primary" style="font-size:40px;">4+</div>
+        <div class="font-label-caps text-label-caps text-on-surface-variant mt-1">Active Mega Projects</div>
+      </div>
+      <div>
+        <div class="font-display-lg text-display-lg text-primary" style="font-size:40px;">3</div>
+        <div class="font-label-caps text-label-caps text-on-surface-variant mt-1">Government Partners</div>
+      </div>
+      <div>
+        <div class="font-display-lg text-display-lg text-primary" style="font-size:40px;">2</div>
+        <div class="font-label-caps text-label-caps text-on-surface-variant mt-1">Countries Served</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── TDT Flagship ───────────────────────────────────────────────────── -->
+<section class="py-24 px-6 md:px-12 border-t border-white/5">
+  <div class="max-w-[1440px] mx-auto">
+
+    <!-- Partnership banner -->
+    <div class="flex flex-wrap items-center gap-4 mb-12 reveal">
+      <span class="status-active font-label-caps text-label-caps px-4 py-2 rounded-full text-[11px]">Active Project</span>
+      <span class="font-label-caps text-label-caps text-on-surface-variant/50 text-[10px] tracking-widest">Government Partnership</span>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
+      <!-- Left: Main content -->
+      <div class="lg:col-span-7 reveal">
+        <div class="font-label-caps text-label-caps text-primary mb-4">Flagship Initiative</div>
+        <h2 class="font-display-lg text-display-lg text-on-surface mb-3" style="font-size:clamp(40px,5vw,64px);">TDT</h2>
+        <p class="font-headline-md text-headline-md text-on-surface-variant mb-6" style="font-size:20px;">Technology Development &amp; Transfer</p>
+        <p class="font-body-lg text-body-lg text-on-surface-variant mb-8 max-w-2xl">
+          In strategic collaboration with <strong class="text-on-surface">MINT — the Ethiopian Ministry of Innovation and Technology</strong>, DAPS Analytics is architecting a comprehensive Technology Development and Transfer framework designed to accelerate Ethiopia's digital transformation agenda.
+        </p>
+        <p class="font-body-md text-body-md text-on-surface-variant mb-8 max-w-2xl">
+          The TDT initiative bridges the gap between Ethiopia's emerging tech ecosystem and global best practices — deploying high-fidelity data infrastructure, AI capability building, and institutional knowledge transfer at national scale. DAPS Analytics serves as the lead analytics and data engineering partner, providing the intelligence layer that informs policy, optimizes resource allocation, and tracks progress across Ethiopia's technology development objectives.
+        </p>
+
+        <!-- Key pillars -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-10">
+          <div class="border border-white/10 rounded-lg p-5 hover:border-primary/40 transition-colors">
+            <span class="material-symbols-outlined text-primary text-2xl mb-3 block" style="font-variation-settings:'FILL' 1;">psychology</span>
+            <h4 class="font-body-lg text-body-lg text-white font-semibold mb-2" style="font-size:15px;">AI Capability Building</h4>
+            <p class="text-on-surface-variant" style="font-size:14px;line-height:1.6;">Deploying ML models and training Ethiopian institutions in predictive analytics and data-driven decision-making.</p>
+          </div>
+          <div class="border border-white/10 rounded-lg p-5 hover:border-primary/40 transition-colors">
+            <span class="material-symbols-outlined text-primary text-2xl mb-3 block" style="font-variation-settings:'FILL' 1;">account_tree</span>
+            <h4 class="font-body-lg text-body-lg text-white font-semibold mb-2" style="font-size:15px;">Data Infrastructure</h4>
+            <p class="text-on-surface-variant" style="font-size:14px;line-height:1.6;">Architecting scalable national data pipelines that connect ministries, agencies, and research institutions.</p>
+          </div>
+          <div class="border border-white/10 rounded-lg p-5 hover:border-primary/40 transition-colors">
+            <span class="material-symbols-outlined text-secondary text-2xl mb-3 block" style="font-variation-settings:'FILL' 1;">school</span>
+            <h4 class="font-body-lg text-body-lg text-white font-semibold mb-2" style="font-size:15px;">Knowledge Transfer</h4>
+            <p class="text-on-surface-variant" style="font-size:14px;line-height:1.6;">Structured programs transferring international technology standards, methodologies, and engineering practices.</p>
+          </div>
+          <div class="border border-white/10 rounded-lg p-5 hover:border-primary/40 transition-colors">
+            <span class="material-symbols-outlined text-secondary text-2xl mb-3 block" style="font-variation-settings:'FILL' 1;">monitoring</span>
+            <h4 class="font-body-lg text-body-lg text-white font-semibold mb-2" style="font-size:15px;">Policy Intelligence</h4>
+            <p class="text-on-surface-variant" style="font-size:14px;line-height:1.6;">Real-time analytics dashboards informing ministerial decision-making with fidelity, speed, and transparency.</p>
+          </div>
+        </div>
+
+        <a href="contact.html" class="inline-flex items-center gap-2 bg-primary text-on-primary px-8 py-4 font-label-caps text-label-caps hover:bg-primary-container transition-all duration-300">
+          Engage on This Project <span class="material-symbols-outlined text-[15px]">arrow_forward</span>
+        </a>
+      </div>
+
+      <!-- Right: Project card + partnership -->
+      <div class="lg:col-span-5 reveal reveal-delay-1">
+        <!-- TDT Visual card -->
+        <div class="rounded-xl p-8 mb-6 relative overflow-hidden" style="background:linear-gradient(135deg,#0d1520 0%,#0a1a15 100%);border:1px solid rgba(73,253,227,0.2);">
+          <div class="absolute top-0 right-0 w-48 h-48 rounded-full pointer-events-none" style="background:radial-gradient(circle,rgba(73,253,227,0.08) 0%,transparent 70%);"></div>
+          <div class="relative z-10">
+            <div class="flex items-center justify-between mb-8">
+              <div>
+                <div style="font-size:10px;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;color:#49fde3;margin-bottom:4px;">DAPS Analytics</div>
+                <div style="font-size:10px;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;color:#3b4a46;">×</div>
+                <div style="font-size:10px;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;color:#efbf71;margin-top:4px;">MINT — Ethiopia</div>
+              </div>
+              <div class="text-right">
+                <div style="font-size:28px;font-weight:300;letter-spacing:-0.03em;color:#49fde3;">TDT</div>
+                <div style="font-size:10px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:#849490;margin-top:2px;">Initiative</div>
+              </div>
+            </div>
+            <div class="space-y-4">
+              <div class="flex justify-between items-center py-3 border-b border-white/5">
+                <span style="font-size:12px;color:#849490;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;">Status</span>
+                <span class="status-active font-label-caps text-label-caps px-3 py-1 rounded-full" style="font-size:10px;">Active</span>
+              </div>
+              <div class="flex justify-between items-center py-3 border-b border-white/5">
+                <span style="font-size:12px;color:#849490;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;">Lead Partner</span>
+                <span style="font-size:13px;color:#dee2ed;">MINT, Ethiopia</span>
+              </div>
+              <div class="flex justify-between items-center py-3 border-b border-white/5">
+                <span style="font-size:12px;color:#849490;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;">Scope</span>
+                <span style="font-size:13px;color:#dee2ed;">National Scale</span>
+              </div>
+              <div class="flex justify-between items-center py-3 border-b border-white/5">
+                <span style="font-size:12px;color:#849490;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;">Domain</span>
+                <span style="font-size:13px;color:#dee2ed;">Tech Transfer + AI</span>
+              </div>
+              <div class="flex justify-between items-center py-3">
+                <span style="font-size:12px;color:#849490;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;">DAPS Role</span>
+                <span style="font-size:13px;color:#49fde3;">Lead Data Partner</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- MINT info box -->
+        <div class="rounded-xl p-6" style="background:#0d1117;border:1px solid rgba(255,255,255,0.08);">
+          <div class="flex items-start gap-4">
+            <div class="w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0" style="background:rgba(239,191,113,0.12);border:1px solid rgba(239,191,113,0.2);">
+              <span class="material-symbols-outlined text-secondary" style="font-size:20px;">gavel</span>
+            </div>
+            <div>
+              <h4 class="font-body-lg text-body-lg text-white font-semibold mb-1" style="font-size:14px;">Ministry of Innovation &amp; Technology</h4>
+              <p class="text-on-surface-variant mb-2" style="font-size:13px;line-height:1.6;">MINT is the Federal Democratic Republic of Ethiopia's lead ministry for science, technology, and innovation policy — mandated to drive Ethiopia's digital transformation and technology adoption.</p>
+              <a href="contact.html" class="font-label-caps text-label-caps text-primary hover:text-white transition-colors" style="font-size:10px;letter-spacing:0.12em;">
+                Learn about partnership →
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── TDT Project Phases ─────────────────────────────────────────────── -->
+<section class="py-20 px-6 md:px-12 border-t border-white/5" style="background:#090d12;">
+  <div class="max-w-[1440px] mx-auto">
+    <h2 class="font-headline-md text-headline-md text-on-surface mb-12 reveal">TDT Delivery Framework</h2>
+    <div class="relative pl-6">
+      <div class="timeline-line"></div>
+      <div class="space-y-12">
+        <div class="flex gap-6 reveal">
+          <div class="timeline-dot" style="background:#49fde3;box-shadow:0 0 10px rgba(73,253,227,0.5);"></div>
+          <div>
+            <div class="font-label-caps text-label-caps text-primary mb-2">Phase 1 — Foundation</div>
+            <h3 class="font-body-lg text-body-lg text-white font-semibold mb-2" style="font-size:18px;">Data Architecture &amp; Assessment</h3>
+            <p class="text-on-surface-variant max-w-2xl" style="font-size:15px;line-height:1.7;">Comprehensive audit of existing government data systems. Designing the unified data architecture and establishing baseline infrastructure across MINT's priority sectors.</p>
+          </div>
+        </div>
+        <div class="flex gap-6 reveal">
+          <div class="timeline-dot" style="background:#efbf71;"></div>
+          <div>
+            <div class="font-label-caps text-label-caps text-secondary mb-2">Phase 2 — Deployment</div>
+            <h3 class="font-body-lg text-body-lg text-white font-semibold mb-2" style="font-size:18px;">Platform Build &amp; Integration</h3>
+            <p class="text-on-surface-variant max-w-2xl" style="font-size:15px;line-height:1.7;">Deploying DAPS Analytics platforms (Onekof PM, WQIS) adapted for ministerial use. Integrating existing government databases and establishing real-time data pipelines.</p>
+          </div>
+        </div>
+        <div class="flex gap-6 reveal">
+          <div class="timeline-dot" style="background:#dee2ed;opacity:0.4;"></div>
+          <div>
+            <div class="font-label-caps text-label-caps text-on-surface-variant mb-2">Phase 3 — Transfer</div>
+            <h3 class="font-body-lg text-body-lg text-white font-semibold mb-2" style="font-size:18px;">Capacity Building &amp; Handover</h3>
+            <p class="text-on-surface-variant max-w-2xl" style="font-size:15px;line-height:1.7;">Training Ethiopian engineers and data scientists. Establishing domestic AI/data centers. Transferring technology ownership to MINT with ongoing DAPS advisory support.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Other Mega Projects ────────────────────────────────────────────── -->
+<section class="py-24 px-6 md:px-12 border-t border-white/5">
+  <div class="max-w-[1440px] mx-auto">
+    <div class="mb-16 reveal">
+      <div class="eyebrow">Active Portfolio</div>
+      <h2 class="font-display-lg text-display-lg text-on-surface" style="font-size:clamp(36px,4.5vw,56px);">Other Mega Projects</h2>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+
+      <!-- UDC-WQIS Government Project -->
+      <div class="project-card reveal">
+        <div class="relative overflow-hidden" style="height:160px;background:linear-gradient(135deg,#0a1520,#051510);">
+          <div class="absolute inset-0 flex items-center justify-center">
+            <span class="material-symbols-outlined" style="font-size:72px;color:rgba(73,253,227,0.15);font-variation-settings:'FILL' 1;">water_drop</span>
+          </div>
+          <div class="absolute top-4 left-4">
+            <span class="status-active font-label-caps px-3 py-1.5 rounded-full" style="font-size:10px;">Live</span>
+          </div>
+          <div class="absolute top-4 right-4 font-label-caps text-label-caps text-on-surface-variant/40" style="font-size:10px;">ENVIRONMENTAL</div>
+        </div>
+        <div class="p-6">
+          <h3 class="font-headline-md text-headline-md text-white mb-2" style="font-size:22px;">UDC-WQIS</h3>
+          <p class="text-on-surface-variant mb-4" style="font-size:14px;line-height:1.65;">Water Quality Information System for the University of the District of Columbia — real-time monitoring of the Anacostia watershed across 12 stations in collaboration with UDC CAUSES and WRRI.</p>
+          <div class="flex flex-wrap gap-2 mb-4">
+            <span class="font-label-caps text-label-caps px-2 py-1 rounded" style="font-size:10px;background:rgba(73,253,227,0.08);color:#49fde3;border:1px solid rgba(73,253,227,0.2);">UDC / CAUSES</span>
+            <span class="font-label-caps text-label-caps px-2 py-1 rounded" style="font-size:10px;background:rgba(255,255,255,0.05);color:#849490;border:1px solid rgba(255,255,255,0.08);">Washington DC</span>
+          </div>
+          <a href="https://udc-wqis.happycoast-d9b0bcde.centralus.azurecontainerapps.io/" target="_blank" rel="noopener" class="inline-flex items-center gap-2 font-label-caps text-label-caps text-primary hover:text-white transition-colors" style="font-size:10px;letter-spacing:0.12em;">
+            Open Dashboard <span class="material-symbols-outlined text-[14px]">open_in_new</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- Onekof PM Infrastructure Project -->
+      <div class="project-card reveal reveal-delay-1">
+        <div class="relative overflow-hidden" style="height:160px;background:linear-gradient(135deg,#0a1520,#0a1010);">
+          <div class="absolute inset-0 flex items-center justify-center">
+            <span class="material-symbols-outlined" style="font-size:72px;color:rgba(73,253,227,0.15);font-variation-settings:'FILL' 1;">view_kanban</span>
+          </div>
+          <div class="absolute top-4 left-4">
+            <span class="status-active font-label-caps px-3 py-1.5 rounded-full" style="font-size:10px;">Live in Ethiopia</span>
+          </div>
+          <div class="absolute top-4 right-4 font-label-caps text-label-caps text-on-surface-variant/40" style="font-size:10px;">INFRASTRUCTURE</div>
+        </div>
+        <div class="p-6">
+          <h3 class="font-headline-md text-headline-md text-white mb-2" style="font-size:22px;">Onekof PM</h3>
+          <p class="text-on-surface-variant mb-4" style="font-size:14px;line-height:1.65;">Ethiopia's first enterprise project management platform — natively built for the Ethiopian calendar, language, and currency. Deployed across government and private sector infrastructure projects.</p>
+          <div class="flex flex-wrap gap-2 mb-4">
+            <span class="font-label-caps text-label-caps px-2 py-1 rounded" style="font-size:10px;background:rgba(73,253,227,0.08);color:#49fde3;border:1px solid rgba(73,253,227,0.2);">Enterprise SaaS</span>
+            <span class="font-label-caps text-label-caps px-2 py-1 rounded" style="font-size:10px;background:rgba(255,255,255,0.05);color:#849490;border:1px solid rgba(255,255,255,0.08);">Ethiopia</span>
+          </div>
+          <a href="https://onekof.com" target="_blank" rel="noopener" class="inline-flex items-center gap-2 font-label-caps text-label-caps text-primary hover:text-white transition-colors" style="font-size:10px;letter-spacing:0.12em;">
+            Open Platform <span class="material-symbols-outlined text-[14px]">open_in_new</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- Olink Fleet National Logistics -->
+      <div class="project-card amber reveal reveal-delay-2">
+        <div class="relative overflow-hidden" style="height:160px;background:linear-gradient(135deg,#151005,#100d05);">
+          <div class="absolute inset-0 flex items-center justify-center">
+            <span class="material-symbols-outlined" style="font-size:72px;color:rgba(239,191,113,0.15);font-variation-settings:'FILL' 1;">local_shipping</span>
+          </div>
+          <div class="absolute top-4 left-4">
+            <span class="status-active font-label-caps px-3 py-1.5 rounded-full" style="font-size:10px;">Live</span>
+          </div>
+          <div class="absolute top-4 right-4 font-label-caps text-label-caps text-on-surface-variant/40" style="font-size:10px;">LOGISTICS</div>
+        </div>
+        <div class="p-6">
+          <h3 class="font-headline-md text-headline-md text-white mb-2" style="font-size:22px;">Olink Fleet</h3>
+          <p class="text-on-surface-variant mb-4" style="font-size:14px;line-height:1.65;">Smart fleet management built for Ethiopia's logistics realities — GPS tracking, AI-powered route optimization, driver analytics, and predictive maintenance across commercial transport networks.</p>
+          <div class="flex flex-wrap gap-2 mb-4">
+            <span class="font-label-caps text-label-caps px-2 py-1 rounded" style="font-size:10px;background:rgba(239,191,113,0.08);color:#efbf71;border:1px solid rgba(239,191,113,0.2);">Olink Technologies</span>
+            <span class="font-label-caps text-label-caps px-2 py-1 rounded" style="font-size:10px;background:rgba(255,255,255,0.05);color:#849490;border:1px solid rgba(255,255,255,0.08);">Ethiopia</span>
+          </div>
+          <a href="https://olink-fleet.vercel.app/" target="_blank" rel="noopener" class="inline-flex items-center gap-2 font-label-caps text-label-caps text-secondary hover:text-white transition-colors" style="font-size:10px;letter-spacing:0.12em;">
+            Open Platform <span class="material-symbols-outlined text-[14px]">open_in_new</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- Hakimet Telehealth -->
+      <div class="project-card reveal">
+        <div class="relative overflow-hidden" style="height:160px;background:linear-gradient(135deg,#0a1520,#051015);">
+          <div class="absolute inset-0 flex items-center justify-center">
+            <span class="material-symbols-outlined" style="font-size:72px;color:rgba(73,253,227,0.15);font-variation-settings:'FILL' 1;">ecg_heart</span>
+          </div>
+          <div class="absolute top-4 left-4">
+            <span class="status-active font-label-caps px-3 py-1.5 rounded-full" style="font-size:10px;">Live</span>
+          </div>
+          <div class="absolute top-4 right-4 font-label-caps text-label-caps text-on-surface-variant/40" style="font-size:10px;">HEALTHCARE</div>
+        </div>
+        <div class="p-6">
+          <h3 class="font-headline-md text-headline-md text-white mb-2" style="font-size:22px;">Hakimet Telehealth</h3>
+          <p class="text-on-surface-variant mb-4" style="font-size:14px;line-height:1.65;">Enterprise telehealth infrastructure for African healthcare systems — low-bandwidth optimized, multi-language, EMR-integrated, and HIPAA-aligned for East African clinical environments.</p>
+          <div class="flex flex-wrap gap-2 mb-4">
+            <span class="font-label-caps text-label-caps px-2 py-1 rounded" style="font-size:10px;background:rgba(73,253,227,0.08);color:#49fde3;border:1px solid rgba(73,253,227,0.2);">Healthcare SaaS</span>
+            <span class="font-label-caps text-label-caps px-2 py-1 rounded" style="font-size:10px;background:rgba(255,255,255,0.05);color:#849490;border:1px solid rgba(255,255,255,0.08);">East Africa</span>
+          </div>
+          <a href="https://www.hakimet.com" target="_blank" rel="noopener" class="inline-flex items-center gap-2 font-label-caps text-label-caps text-primary hover:text-white transition-colors" style="font-size:10px;letter-spacing:0.12em;">
+            Open Platform <span class="material-symbols-outlined text-[14px]">open_in_new</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- Pan-African Data Grid (Coming) -->
+      <div class="project-card amber reveal reveal-delay-1">
+        <div class="relative overflow-hidden" style="height:160px;background:linear-gradient(135deg,#151005,#0a1005);">
+          <div class="absolute inset-0 flex items-center justify-center">
+            <span class="material-symbols-outlined" style="font-size:72px;color:rgba(239,191,113,0.12);font-variation-settings:'FILL' 1;">hub</span>
+          </div>
+          <div class="absolute top-4 left-4">
+            <span class="status-development font-label-caps px-3 py-1.5 rounded-full" style="font-size:10px;">In Development</span>
+          </div>
+          <div class="absolute top-4 right-4 font-label-caps text-label-caps text-on-surface-variant/40" style="font-size:10px;">CONNECTIVITY</div>
+        </div>
+        <div class="p-6">
+          <h3 class="font-headline-md text-headline-md text-white mb-2" style="font-size:22px;">Pan-African Data Grid</h3>
+          <p class="text-on-surface-variant mb-4" style="font-size:14px;line-height:1.65;">A federated cross-border data infrastructure initiative connecting Ethiopian government data systems with East African partner nations — enabling regional analytics interoperability.</p>
+          <div class="flex flex-wrap gap-2 mb-4">
+            <span class="font-label-caps text-label-caps px-2 py-1 rounded" style="font-size:10px;background:rgba(239,191,113,0.08);color:#efbf71;border:1px solid rgba(239,191,113,0.2);">Regional Initiative</span>
+            <span class="font-label-caps text-label-caps px-2 py-1 rounded" style="font-size:10px;background:rgba(255,255,255,0.05);color:#849490;border:1px solid rgba(255,255,255,0.08);">East Africa</span>
+          </div>
+          <a href="contact.html" class="inline-flex items-center gap-2 font-label-caps text-label-caps text-secondary hover:text-white transition-colors" style="font-size:10px;letter-spacing:0.12em;">
+            Inquire <span class="material-symbols-outlined text-[14px]">arrow_forward</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- Smart Government Analytics -->
+      <div class="project-card reveal reveal-delay-2">
+        <div class="relative overflow-hidden" style="height:160px;background:linear-gradient(135deg,#0a1520,#051018);">
+          <div class="absolute inset-0 flex items-center justify-center">
+            <span class="material-symbols-outlined" style="font-size:72px;color:rgba(73,253,227,0.12);font-variation-settings:'FILL' 1;">account_balance</span>
+          </div>
+          <div class="absolute top-4 left-4">
+            <span class="status-development font-label-caps px-3 py-1.5 rounded-full" style="font-size:10px;">In Development</span>
+          </div>
+          <div class="absolute top-4 right-4 font-label-caps text-label-caps text-on-surface-variant/40" style="font-size:10px;">GOVERNANCE</div>
+        </div>
+        <div class="p-6">
+          <h3 class="font-headline-md text-headline-md text-white mb-2" style="font-size:22px;">Smart Government Analytics</h3>
+          <p class="text-on-surface-variant mb-4" style="font-size:14px;line-height:1.65;">Building real-time analytics dashboards for Ethiopian federal and regional governments — enabling transparent budget tracking, project performance monitoring, and citizen service metrics.</p>
+          <div class="flex flex-wrap gap-2 mb-4">
+            <span class="font-label-caps text-label-caps px-2 py-1 rounded" style="font-size:10px;background:rgba(73,253,227,0.08);color:#49fde3;border:1px solid rgba(73,253,227,0.2);">GovTech</span>
+            <span class="font-label-caps text-label-caps px-2 py-1 rounded" style="font-size:10px;background:rgba(255,255,255,0.05);color:#849490;border:1px solid rgba(255,255,255,0.08);">Ethiopia</span>
+          </div>
+          <a href="contact.html" class="inline-flex items-center gap-2 font-label-caps text-label-caps text-primary hover:text-white transition-colors" style="font-size:10px;letter-spacing:0.12em;">
+            Inquire <span class="material-symbols-outlined text-[14px]">arrow_forward</span>
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ── Partnership CTA ────────────────────────────────────────────────── -->
+<section class="py-24 px-6 md:px-12 border-t border-white/5" style="background:#090d12;">
+  <div class="max-w-[1440px] mx-auto">
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+      <div class="reveal">
+        <div class="eyebrow">Work With Us</div>
+        <h2 class="font-display-lg text-display-lg text-on-surface mb-6" style="font-size:clamp(36px,4vw,56px);">Propose a project partnership.</h2>
+        <p class="font-body-lg text-body-lg text-on-surface-variant mb-8">
+          DAPS Analytics engages with governments, NGOs, and private enterprises on high-impact data projects. If you have a complex data challenge at national or regional scale, we want to hear from you.
+        </p>
+        <a href="contact.html" class="inline-flex items-center gap-2 bg-primary text-on-primary px-10 py-4 font-label-caps text-label-caps hover:bg-primary-container transition-all duration-300">
+          Initiate Conversation <span class="material-symbols-outlined text-[15px]">arrow_forward</span>
+        </a>
+      </div>
+      <div class="reveal reveal-delay-1">
+        <div class="grid grid-cols-2 gap-4">
+          <div class="rounded-xl p-6 text-center" style="background:#0d1117;border:1px solid rgba(255,255,255,0.08);">
+            <span class="material-symbols-outlined text-primary text-3xl mb-3 block" style="font-variation-settings:'FILL' 1;">gavel</span>
+            <div style="font-size:12px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:#dee2ed;margin-bottom:4px;">Government</div>
+            <div style="font-size:13px;color:#849490;">Ministry &amp; agency partnerships</div>
+          </div>
+          <div class="rounded-xl p-6 text-center" style="background:#0d1117;border:1px solid rgba(255,255,255,0.08);">
+            <span class="material-symbols-outlined text-secondary text-3xl mb-3 block" style="font-variation-settings:'FILL' 1;">language</span>
+            <div style="font-size:12px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:#dee2ed;margin-bottom:4px;">NGO / UN</div>
+            <div style="font-size:13px;color:#849490;">Impact-driven data projects</div>
+          </div>
+          <div class="rounded-xl p-6 text-center" style="background:#0d1117;border:1px solid rgba(255,255,255,0.08);">
+            <span class="material-symbols-outlined text-primary text-3xl mb-3 block" style="font-variation-settings:'FILL' 1;">corporate_fare</span>
+            <div style="font-size:12px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:#dee2ed;margin-bottom:4px;">Enterprise</div>
+            <div style="font-size:13px;color:#849490;">Large-scale analytics builds</div>
+          </div>
+          <div class="rounded-xl p-6 text-center" style="background:#0d1117;border:1px solid rgba(255,255,255,0.08);">
+            <span class="material-symbols-outlined text-secondary text-3xl mb-3 block" style="font-variation-settings:'FILL' 1;">school</span>
+            <div style="font-size:12px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:#dee2ed;margin-bottom:4px;">Research</div>
+            <div style="font-size:13px;color:#849490;">Academic &amp; research collabs</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- Footer -->
+<footer style="background:#050709;border-top:1px solid rgba(255,255,255,0.05);">
+  <div class="max-w-[1440px] mx-auto px-6 md:px-12 py-20">
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-12 mb-14">
+      <div class="md:col-span-2">
+        <a href="index.html" class="block mb-4"><img src="assets/images/daps-logo-full.svg" alt="DAPS Analytics" style="height:60px;width:auto;"/></a>
+        <p style="font-size:13px;line-height:1.7;color:#3b4a46;max-width:300px;">High-fidelity data solutions engineered for clarity, speed, and uncompromising accuracy.</p>
+      </div>
+      <div>
+        <h4 style="font-size:10px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:#dee2ed;margin-bottom:20px;">Platform</h4>
+        <ul class="space-y-3" style="font-size:13px;">
+          <li><a href="products.html"   style="color:#3b4a46;" class="hover:text-teal-400 transition-colors">Products</a></li>
+          <li><a href="services.html"   style="color:#3b4a46;" class="hover:text-teal-400 transition-colors">Services</a></li>
+          <li><a href="projects.html"   style="color:#49fde3;">Projects</a></li>
+          <li><a href="industries.html" style="color:#3b4a46;" class="hover:text-teal-400 transition-colors">Industries</a></li>
+          <li><a href="insights.html"   style="color:#3b4a46;" class="hover:text-teal-400 transition-colors">Insights</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 style="font-size:10px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:#dee2ed;margin-bottom:20px;">Company</h4>
+        <ul class="space-y-3" style="font-size:13px;">
+          <li><a href="company.html" style="color:#3b4a46;" class="hover:text-teal-400 transition-colors">About Us</a></li>
+          <li><a href="contact.html" style="color:#3b4a46;" class="hover:text-teal-400 transition-colors">Contact</a></li>
+          <li><a href="insights.html" style="color:#3b4a46;" class="hover:text-teal-400 transition-colors">Resources</a></li>
+        </ul>
+      </div>
+    </div>
+    <div style="border-top:1px solid rgba(255,255,255,0.04);padding-top:28px;">
+      <p style="font-size:12px;color:#1e2a26;">© 2025 DAPS Analytics. All rights reserved.</p>
+    </div>
+  </div>
+</footer>
+
+<script src="assets/navbar.js"></script>
+<script src="assets/daps.js"></script>
+</body>
+</html>

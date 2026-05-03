@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html class="dark" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Insights — DAPS Analytics</title>
+<meta name="description" content="Deep dives into data intelligence shaping African and global markets. Research, case studies, and product updates from DAPS Analytics."/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;900&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<script>
+  tailwind.config={darkMode:"class",theme:{extend:{colors:{"secondary-container":"#694700","error":"#ffb4ab","tertiary-container":"#c6c8ca","surface-tint":"#00dfc6","on-tertiary-fixed":"#191c1e","primary-fixed-dim":"#00dfc6","on-primary-fixed":"#00201b","inverse-surface":"#dee2ed","on-primary-container":"#005e53","primary-fixed":"#47fce2","on-tertiary-container":"#515455","on-secondary-fixed":"#281900","surface":"#0e141b","tertiary":"#e3e4e6","surface-bright":"#343942","secondary":"#efbf71","on-primary":"#003730","surface-container-low":"#171c24","inverse-primary":"#006b5e","on-secondary-container":"#e7b76a","on-background":"#dee2ed","background":"#0e141b","tertiary-fixed-dim":"#c5c6c8","primary":"#49fde3","surface-container-high":"#252a32","secondary-fixed":"#ffdead","on-error-container":"#ffdad6","on-surface":"#dee2ed","primary-container":"#00e0c7","on-tertiary":"#2e3132","error-container":"#93000a","surface-container-lowest":"#090e16","on-surface-variant":"#bacac5","tertiary-fixed":"#e1e2e4","surface-dim":"#0e141b","surface-container":"#1b2028","inverse-on-surface":"#2b3139","outline-variant":"#3b4a46","surface-variant":"#30353d","secondary-fixed-dim":"#efbf71","on-tertiary-fixed-variant":"#444749","surface-container-highest":"#30353d","on-secondary-fixed-variant":"#604100","outline":"#849490","on-primary-fixed-variant":"#005046","on-secondary":"#432c00","on-error":"#690005"},borderRadius:{DEFAULT:"0.25rem",lg:"0.5rem",xl:"0.75rem",full:"9999px"},spacing:{lg:"4rem",xl:"8rem",xs:"0.5rem",md:"2rem","2xl":"12rem",gutter:"24px",margin:"64px",unit:"4px",sm:"1rem"},fontFamily:{"display-lg":["Inter"],"label-caps":["Inter"],"headline-md":["Inter"],"display-2xl":["Inter"],"body-md":["Inter"],"display-xl":["Inter"],"body-lg":["Inter"]},fontSize:{"display-lg":["56px",{lineHeight:"115%",letterSpacing:"-0.02em",fontWeight:"400"}],"label-caps":["12px",{lineHeight:"100%",letterSpacing:"0.1em",fontWeight:"600"}],"headline-md":["32px",{lineHeight:"130%",letterSpacing:"-0.01em",fontWeight:"400"}],"display-2xl":["128px",{lineHeight:"110%",letterSpacing:"-0.04em",fontWeight:"300"}],"body-md":["16px",{lineHeight:"160%",letterSpacing:"0em",fontWeight:"400"}],"display-xl":["96px",{lineHeight:"110%",letterSpacing:"-0.03em",fontWeight:"300"}],"body-lg":["18px",{lineHeight:"160%",letterSpacing:"0em",fontWeight:"400"}]}}}}
+</script>
+<style>
+  body { background-color: #0e141b; color: #dee2ed; }
+  .glass-panel { background-color: rgba(17,20,24,0.6); backdrop-filter: blur(24px); border: 1px solid rgba(255,255,255,0.05); }
+  .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.7s cubic-bezier(0.4,0,0.2,1), transform 0.7s cubic-bezier(0.4,0,0.2,1); }
+  .reveal.revealed { opacity: 1; transform: translateY(0); }
+  .hide-scrollbar::-webkit-scrollbar { display: none; }
+  .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+  /* Filter pill active state */
+  .filter-pill.active { background: rgba(73,253,227,0.1); color:#49fde3; border-color:rgba(73,253,227,0.4); }
+  /* Article card */
+  .article-card { transition: opacity 0.35s ease, transform 0.35s ease; }
+  .article-card.hidden-card { opacity: 0; pointer-events: none; height: 0; overflow: hidden; margin: 0; padding: 0; }
+  /* Search input */
+  #search-input { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.1); color: #dee2ed; border-radius: 6px; padding: 10px 16px 10px 40px; width: 100%; transition: border-color 0.3s; outline: none; font-size: 14px; }
+  #search-input:focus { border-color: rgba(73,253,227,0.4); }
+  #search-input::placeholder { color: #849490; }
+  /* Category badge colors */
+  .cat-market   { background:rgba(73,253,227,0.08);color:#49fde3;border:1px solid rgba(73,253,227,0.2); }
+  .cat-data     { background:rgba(239,191,113,0.08);color:#efbf71;border:1px solid rgba(239,191,113,0.2); }
+  .cat-case     { background:rgba(255,255,255,0.06);color:#bacac5;border:1px solid rgba(255,255,255,0.12); }
+  .cat-project  { background:rgba(73,253,227,0.12);color:#49fde3;border:1px solid rgba(73,253,227,0.3); }
+  .cat-product  { background:rgba(171,208,84,0.1);color:#abd054;border:1px solid rgba(171,208,84,0.25); }
+  /* Read time badge */
+  .read-badge { font-size:10px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase; }
+  /* Trending item */
+  .trending-item { display:flex;align-items:flex-start;gap:12px;padding:14px 0;border-bottom:1px solid rgba(255,255,255,0.05); }
+  .trending-item:last-child { border-bottom:none; }
+  /* Stats bar */
+  .stat-item { text-align:center;padding:20px 0; }
+  .stat-num { font-size:28px;font-weight:300;letter-spacing:-0.03em;color:#49fde3;line-height:1; }
+  .stat-label { font-size:10px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:#849490;margin-top:4px; }
+  /* No results */
+  #no-results { display:none; }
+</style>
+</head>
+<body class="antialiased selection:bg-primary/20 selection:text-primary min-h-screen flex flex-col">
+
+
+
+<main class="flex-grow pt-[100px] md:pt-[130px] pb-2xl">
+
+  <!-- Stats bar -->
+  <div style="background:#090d12;border-bottom:1px solid rgba(255,255,255,0.05);">
+    <div class="max-w-[1440px] mx-auto px-6 md:px-12">
+      <div class="grid grid-cols-2 md:grid-cols-4 divide-x divide-white/5">
+        <div class="stat-item"><div class="stat-num" id="total-count">12</div><div class="stat-label">Total Articles</div></div>
+        <div class="stat-item"><div class="stat-num">5</div><div class="stat-label">Categories</div></div>
+        <div class="stat-item"><div class="stat-num">2025</div><div class="stat-label">Year</div></div>
+        <div class="stat-item"><div class="stat-num">DAPS</div><div class="stat-label">Authored</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Header + Search + Filters -->
+  <header class="max-w-[1440px] mx-auto px-6 md:px-12 pt-12 pb-8">
+    <div class="flex flex-col lg:flex-row lg:items-end justify-between gap-8 mb-8">
+      <div class="reveal">
+        <h1 class="font-display-lg text-display-lg text-white" style="font-size:clamp(36px,5vw,56px);">Insights &amp; Intelligence</h1>
+        <p class="font-body-lg text-body-lg text-on-surface-variant max-w-xl mt-3">Research, analysis, and case studies from the DAPS Analytics team — covering African markets, data science, and our live deployments.</p>
+      </div>
+      <!-- Search -->
+      <div class="relative min-w-0 lg:w-72 reveal">
+        <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant/50" style="font-size:16px;pointer-events:none;">search</span>
+        <input id="search-input" type="text" placeholder="Search articles…" autocomplete="off"/>
+      </div>
+    </div>
+
+    <!-- Filter pills -->
+    <div class="flex gap-3 overflow-x-auto pb-3 hide-scrollbar">
+      <button class="filter-pill active whitespace-nowrap px-5 py-2 rounded-full border border-primary/40 font-label-caps text-label-caps transition-all" data-filter="all">All Articles <span class="opacity-50 ml-1" id="count-all">(12)</span></button>
+      <button class="filter-pill whitespace-nowrap px-5 py-2 rounded-full border border-white/10 text-white/60 font-label-caps text-label-caps hover:text-white hover:border-white/30 transition-all" data-filter="market-trends">Market Trends <span class="opacity-50 ml-1">(3)</span></button>
+      <button class="filter-pill whitespace-nowrap px-5 py-2 rounded-full border border-white/10 text-white/60 font-label-caps text-label-caps hover:text-white hover:border-white/30 transition-all" data-filter="data-science">Data Science <span class="opacity-50 ml-1">(2)</span></button>
+      <button class="filter-pill whitespace-nowrap px-5 py-2 rounded-full border border-white/10 text-white/60 font-label-caps text-label-caps hover:text-white hover:border-white/30 transition-all" data-filter="case-studies">Case Studies <span class="opacity-50 ml-1">(3)</span></button>
+      <button class="filter-pill whitespace-nowrap px-5 py-2 rounded-full border border-white/10 text-white/60 font-label-caps text-label-caps hover:text-white hover:border-white/30 transition-all" data-filter="projects">Projects <span class="opacity-50 ml-1">(2)</span></button>
+      <button class="filter-pill whitespace-nowrap px-5 py-2 rounded-full border border-white/10 text-white/60 font-label-caps text-label-caps hover:text-white hover:border-white/30 transition-all" data-filter="product-updates">Product Updates <span class="opacity-50 ml-1">(2)</span></button>
+    </div>
+  </header>
+
+  <!-- Hero / Featured Article -->
+  <section class="max-w-[1440px] mx-auto px-6 md:px-12 mb-16 article-card" data-category="market-trends" data-title="The Predictive Power of Granular Satellite Imagery in Agricultural Forecasting">
+    <a href="article.html?id=1" class="block"><div class="relative group cursor-pointer overflow-hidden rounded-xl" style="height:500px;">
+      <div class="absolute inset-0 bg-cover bg-center transition-transform duration-[30s] group-hover:scale-105"
+           style="background-image:url('https://lh3.googleusercontent.com/aida-public/AB6AXuC5UbuVsxK7Epaci18Hqbo0GUdDA3Qb221mK7fds8uq1Qgz_edAincGeT9V3g9sgs2GZkg3by0uupXJc645-Ujlz5v7GGuGW7FxNIVRpT7n7C6_X5aoCJvwLMy8GxfGQ053sctpUyQYqmxMx5H4gXE3DIlj5GpHOMvlGtXBWlwmjluGTSS9VWOiYPzjgBGwU73RKbNPCxgBwVngxo_beD0YU_G3zljsxHuc9V6VSr7pQe3wVusDXYlFes6QfTTCwYEDE5ACqueai4V_');"></div>
+      <div class="absolute inset-0" style="background:linear-gradient(to top,#0e141b 0%,rgba(14,20,27,0.6) 50%,rgba(14,20,27,0.15) 100%);"></div>
+      <div class="absolute top-6 left-6">
+        <span class="cat-market read-badge px-3 py-1.5 rounded-full">Market Trends · Featured</span>
+      </div>
+      <div class="absolute bottom-0 left-0 w-full p-8 md:p-12 flex flex-col md:w-3/4">
+        <div class="flex items-center gap-3 mb-4">
+          <span class="font-label-caps text-label-caps text-secondary" style="font-size:10px;">8 Min Read</span>
+          <span style="color:#3b4a46;font-size:10px;">·</span>
+          <span class="font-label-caps text-label-caps text-on-surface-variant/60" style="font-size:10px;">May 2025</span>
+        </div>
+        <h2 class="font-display-lg text-display-lg text-white group-hover:text-primary transition-colors duration-400 mb-4" style="font-size:clamp(24px,3.5vw,40px);">The Predictive Power of Granular Satellite Imagery in Agricultural Forecasting</h2>
+        <p class="font-body-md text-body-md text-on-surface-variant hidden md:block max-w-2xl">How new multi-spectral imaging models are redefining yield predictions and risk mitigation strategies for global commodity markets — with focus on the East African harvest cycle.</p>
+      </div>
+    </div></a>
+  </section>
+
+  <!-- Main layout: articles + sidebar -->
+  <div class="max-w-[1440px] mx-auto px-6 md:px-12 mb-2xl">
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-12">
+
+      <!-- Article grid -->
+      <div class="lg:col-span-8">
+        <!-- No results -->
+        <div id="no-results" class="text-center py-20">
+          <span class="material-symbols-outlined text-on-surface-variant/30 text-6xl mb-4 block">search_off</span>
+          <p class="text-on-surface-variant" style="font-size:16px;">No articles match your search.</p>
+        </div>
+
+        <div id="articles-grid" class="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-12">
+
+          <!-- Article 1 -->
+          <a href="article.html?id=2" class="block article-card" data-category="data-science" data-title="Optimizing Latency in High-Frequency Trading Pipelines">
+            <div class="overflow-hidden rounded-lg mb-5 aspect-video">
+              <img class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 opacity-75 group-hover:opacity-100 grayscale group-hover:grayscale-0"
+                   src="https://lh3.googleusercontent.com/aida-public/AB6AXuDk9zkV7uZqpbpjAMkwVJrHdBSAQv0DcTciCuDPssmTjklJWtQSaSHcXCF1D490kGn_NKOtYyhK_DxiIhOT2U7d1fmIveeBSoIfRGhpi3i3lPQnCIHi1YNV_z3vrwbELOECK4H_SslypEkMRUAO_YVVg0mpA6qtMyYdA33LaOniyjyVh92627SvUskf7yzU1k3yla-nZXifDntaXOvCS4M4WwTL055ZpmNoru9FOBCzbWdoi3yIZbL0_DFvc0Jyiw6PpdgCkd1sUJgk"
+                   alt="Server infrastructure"/>
+            </div>
+            <div class="flex items-center gap-3 mb-3">
+              <span class="cat-data read-badge px-2 py-1 rounded" style="font-size:10px;">Data Science</span>
+              <span class="font-label-caps text-label-caps text-on-surface-variant/50" style="font-size:10px;">5 Min</span>
+            </div>
+            <h3 class="text-white font-semibold leading-snug mb-2 group-hover:text-primary transition-colors" style="font-size:16px;line-height:1.5;">Optimizing Latency in High-Frequency Trading Pipelines</h3>
+            <p class="text-on-surface-variant line-clamp-2" style="font-size:14px;line-height:1.65;">A technical deep dive into kernel-bypass networking and its impact on microsecond-level trade execution across African financial markets.</p>
+          </a>
+
+          <!-- Article 2 -->
+          <a href="article.html?id=3" class="block article-card" data-category="case-studies" data-title="Strategic Restructuring Through Machine Learning Workflows">
+            <div class="overflow-hidden rounded-lg mb-5 aspect-video">
+              <img class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 opacity-75 group-hover:opacity-100 grayscale group-hover:grayscale-0"
+                   src="https://lh3.googleusercontent.com/aida-public/AB6AXuBE1ltXPQamBxiJBQ-4MVVDs3kSHEINmfem93AgNEeKSWuExRs4r1PE8lU2nYMpBhxqyQILTBdl_PD6n-sFO0piuKSicyrlOK0NDq0awAkl8xId4eWCRf0DVOoVKY2cSiZwVRIVSHrIPNwHQLdVMdR49dsb-vvttbb_b09pMdjmbiXgOSXgLvUm-d-tTx3U16wH31sYVfoHW1KipJRdE1BQ0NADlOsgxwzT00E-cSfvLVLV0QWgdjoXwDLxqyGZ5riB70Vxd6whA30V"
+                   alt="Boardroom analytics"/>
+            </div>
+            <div class="flex items-center gap-3 mb-3">
+              <span class="cat-case read-badge px-2 py-1 rounded" style="font-size:10px;">Case Study</span>
+              <span class="font-label-caps text-label-caps text-on-surface-variant/50" style="font-size:10px;">12 Min</span>
+            </div>
+            <h3 class="text-white font-semibold leading-snug mb-2 group-hover:text-primary transition-colors" style="font-size:16px;line-height:1.5;">Strategic Restructuring Through Machine Learning Workflows</h3>
+            <p class="text-on-surface-variant line-clamp-2" style="font-size:14px;line-height:1.65;">How Nexus Global utilized DAPS predictive modeling to streamline their supply chain during the European logistics crisis — 23% cost reduction in 90 days.</p>
+          </a>
+
+          <!-- Article 3 -->
+          <a href="article.html?id=4" class="block article-card" data-category="market-trends" data-title="The Next Decade of Emerging Market Connectivity">
+            <div class="overflow-hidden rounded-lg mb-5 aspect-video">
+              <img class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 opacity-75 group-hover:opacity-100 grayscale group-hover:grayscale-0"
+                   src="https://lh3.googleusercontent.com/aida-public/AB6AXuAOkpd1P0sMhBikDwPARdReO0KUk6u0oA0Sq3l7SxApS5zQMY2qx07i2EMrpymMIcqeBLL1bqDRxVtB0ve2xFdxNGaP-JQVhIdT_aWIvCk4kDGhNMI2VAScBUxtEOSLH3_PLedsA4l9SCbmlANccmfDt4juwMobRS8_eUNE7JYH9W-YXrZ9iEjdEkXa82CwjIjVjkP8_ENZGdzNKt-VV8zIdbbZNqw8dL1gmDkUdhNtABEj9ms3Y6n86efgMPncdqMp73KL3Q0StwKY"
+                   alt="Global connectivity"/>
+            </div>
+            <div class="flex items-center gap-3 mb-3">
+              <span class="cat-market read-badge px-2 py-1 rounded" style="font-size:10px;">Market Trends</span>
+              <span class="font-label-caps text-label-caps text-on-surface-variant/50" style="font-size:10px;">6 Min</span>
+            </div>
+            <h3 class="text-white font-semibold leading-snug mb-2 group-hover:text-primary transition-colors" style="font-size:16px;line-height:1.5;">The Next Decade of Emerging Market Connectivity</h3>
+            <p class="text-on-surface-variant line-clamp-2" style="font-size:14px;line-height:1.65;">Analyzing the infrastructure investments driving telecommunications growth across Southeast Asia and Sub-Saharan Africa through 2035.</p>
+          </a>
+
+          <!-- Article 4 -->
+          <a href="article.html?id=5" class="block article-card" data-category="data-science" data-title="Federated Learning in Patient Data Analysis">
+            <div class="overflow-hidden rounded-lg mb-5 aspect-video">
+              <img class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 opacity-75 group-hover:opacity-100 grayscale group-hover:grayscale-0"
+                   src="https://lh3.googleusercontent.com/aida-public/AB6AXuDhYV0Tl0gk6LPT_00bfwtBVxhFaGjbxC0eTYtyySlCHGO6_kFkVDJ2uBOXMFVfvZZxPVZqFlihPennphi0wzUEqiwkUGq1R3aI5wNL1EnS5CeigwfDr4TH95Jl2VjQFN96FwnQZvV0cWk-O0fNrCjgFkGBXCGOul5AfExfx3rrhiWB02XnqKnRFpxWsTMwltmgI1cqWOeXwz4WGWHCwSHA7g5CDC5Grg3ittXI3AVfwhoUuh3YVKxRRZ_pDPFSIe4orjs2KlWZE4CY"
+                   alt="Healthcare data"/>
+            </div>
+            <div class="flex items-center gap-3 mb-3">
+              <span class="cat-data read-badge px-2 py-1 rounded" style="font-size:10px;">Data Science</span>
+              <span class="font-label-caps text-label-caps text-on-surface-variant/50" style="font-size:10px;">9 Min</span>
+            </div>
+            <h3 class="text-white font-semibold leading-snug mb-2 group-hover:text-primary transition-colors" style="font-size:16px;line-height:1.5;">Federated Learning in Patient Data Analysis</h3>
+            <p class="text-on-surface-variant line-clamp-2" style="font-size:14px;line-height:1.65;">How privacy-preserving ML enables real-time epidemiological intelligence across distributed hospital networks in East Africa.</p>
+          </a>
+
+          <!-- Article 5: Projects category -->
+          <a href="article.html?id=6" class="block article-card" data-category="projects" data-title="TDT Initiative: Building Ethiopia's National Data Framework with MINT">
+            <div class="overflow-hidden rounded-lg mb-5 aspect-video" style="background:linear-gradient(135deg,#0a1520,#051510);position:relative;">
+              <div class="absolute inset-0 flex items-center justify-center">
+                <span class="material-symbols-outlined" style="font-size:64px;color:rgba(73,253,227,0.2);font-variation-settings:'FILL' 1;">account_tree</span>
+              </div>
+              <div class="absolute top-3 left-3">
+                <span class="cat-project read-badge px-2 py-1 rounded" style="font-size:9px;">Active Project</span>
+              </div>
+            </div>
+            <div class="flex items-center gap-3 mb-3">
+              <span class="cat-project read-badge px-2 py-1 rounded" style="font-size:10px;">Projects</span>
+              <span class="font-label-caps text-label-caps text-on-surface-variant/50" style="font-size:10px;">10 Min</span>
+            </div>
+            <h3 class="text-white font-semibold leading-snug mb-2 group-hover:text-primary transition-colors" style="font-size:16px;line-height:1.5;">TDT Initiative: Building Ethiopia's National Data Framework with MINT</h3>
+            <p class="text-on-surface-variant line-clamp-2" style="font-size:14px;line-height:1.65;">Inside DAPS Analytics' landmark collaboration with the Ethiopian Ministry of Innovation and Technology — architecting a national-scale technology development and transfer program.</p>
+            <a href="projects.html" class="inline-flex items-center gap-1 text-primary hover:text-white transition-colors mt-3" style="font-size:11px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;">
+              View Project <span class="material-symbols-outlined text-[13px]">arrow_forward</span>
+            </a>
+          </a>
+
+          <!-- Article 6 -->
+          <a href="article.html?id=7" class="block article-card" data-category="market-trends" data-title="Satellite Yield Forecasting Q3 East Africa Report">
+            <div class="overflow-hidden rounded-lg mb-5 aspect-video">
+              <img class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 opacity-75 group-hover:opacity-100 grayscale group-hover:grayscale-0"
+                   src="https://lh3.googleusercontent.com/aida-public/AB6AXuDCyBEp9Ahur52tarC3zNph128GNVs_ryIIiOgXbXSiYUysyM-2KC6MjfOcQ0id7fiU9-K-WM2y9dNDSH8yGjDmZjFlP4QeLY1yN4zSwXpWB_9xGdFxBn1UMZ5KNArVc7maVGC0ta4NY39eJ8x7-JTCrkNvY-A59H5VegqfkUV1mtdEJJTbSDi_63OWlQmXsWNrMapzhAFzwr0saGlsqJ_RoHKwRigz4Xj0YDLKtxUw4aDiNFtU57mII6nSk5L1KtJzum4AEAhKW5go"
+                   alt="Agriculture analytics"/>
+            </div>
+            <div class="flex items-center gap-3 mb-3">
+              <span class="cat-market read-badge px-2 py-1 rounded" style="font-size:10px;">Market Trends</span>
+              <span class="font-label-caps text-label-caps text-on-surface-variant/50" style="font-size:10px;">7 Min</span>
+            </div>
+            <h3 class="text-white font-semibold leading-snug mb-2 group-hover:text-primary transition-colors" style="font-size:16px;line-height:1.5;">Satellite Yield Forecasting: Q3 East Africa Report</h3>
+            <p class="text-on-surface-variant line-clamp-2" style="font-size:14px;line-height:1.65;">Multi-spectral analysis reveals below-average maize yields across the Great Rift Valley ahead of the primary harvest. Risk mitigation strategies for commodity buyers.</p>
+          </a>
+
+          <!-- Article 7 -->
+          <a href="article.html?id=8" class="block article-card" data-category="case-studies" data-title="Dynamic Routing Algorithms Under Supply Chain Stress">
+            <div class="overflow-hidden rounded-lg mb-5 aspect-video">
+              <img class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 opacity-75 group-hover:opacity-100 grayscale group-hover:grayscale-0"
+                   src="https://lh3.googleusercontent.com/aida-public/AB6AXuB61Srd9yx3ib2wUKOXWS-_9KtQLsongHTEg6enek_-UJTh7jVnHQrMcO9Vl-PKjQZbgHpiH4a1kpyMlLCZ7C4wF7HE97zvDYHJ8oGXvUpTfE03xzd0G8tIyWukDgg8JKRvc81sTkjFqY3Llbdw0kuodEw-v-vGVArVoqu8H0rcehQa0xnh-PzIUNEN1LKvWDKK-KuYa-rACEoJFZ__cuir5y5IJMlqEh01at-zX3YH1loFo0PJhqZ1Bc5ZMKOVu_1XKFLIRLHagFm_"
+                   alt="Logistics port"/>
+            </div>
+            <div class="flex items-center gap-3 mb-3">
+              <span class="cat-case read-badge px-2 py-1 rounded" style="font-size:10px;">Case Study</span>
+              <span class="font-label-caps text-label-caps text-on-surface-variant/50" style="font-size:10px;">10 Min</span>
+            </div>
+            <h3 class="text-white font-semibold leading-snug mb-2 group-hover:text-primary transition-colors" style="font-size:16px;line-height:1.5;">Dynamic Routing Algorithms Under Supply Chain Stress</h3>
+            <p class="text-on-surface-variant line-clamp-2" style="font-size:14px;line-height:1.65;">Evaluating Olink Fleet's real-time rerouting heuristics against stochastic port disruption scenarios using DAPS simulation infrastructure.</p>
+          </a>
+
+          <!-- Article 8: Product update -->
+          <a href="article.html?id=9" class="block article-card" data-category="product-updates" data-title="Onekof PM 2025 Feature Release: Ethiopian Calendar Integration">
+            <div class="overflow-hidden rounded-lg mb-5 aspect-video" style="background:linear-gradient(135deg,#0a1520,#051015);position:relative;">
+              <div class="absolute inset-0 flex items-center justify-center">
+                <span class="material-symbols-outlined" style="font-size:64px;color:rgba(73,253,227,0.2);font-variation-settings:'FILL' 1;">calendar_month</span>
+              </div>
+            </div>
+            <div class="flex items-center gap-3 mb-3">
+              <span class="cat-product read-badge px-2 py-1 rounded" style="font-size:10px;">Product Update</span>
+              <span class="font-label-caps text-label-caps text-on-surface-variant/50" style="font-size:10px;">4 Min</span>
+            </div>
+            <h3 class="text-white font-semibold leading-snug mb-2 group-hover:text-primary transition-colors" style="font-size:16px;line-height:1.5;">Onekof PM 2025: Full Ethiopian Calendar &amp; Amharic UI Release</h3>
+            <p class="text-on-surface-variant line-clamp-2" style="font-size:14px;line-height:1.65;">Complete native 13-month Ethiopian calendar integration, Amharic/Oromoo/Tigrinya UI, and ETB multi-currency budgeting now live for all enterprise users.</p>
+            <a href="https://onekof.com" target="_blank" rel="noopener" class="inline-flex items-center gap-1 text-primary hover:text-white transition-colors mt-3" style="font-size:11px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;">
+              Open Platform <span class="material-symbols-outlined text-[13px]">open_in_new</span>
+            </a>
+          </a>
+
+          <!-- Article 9 -->
+          <a href="article.html?id=10" class="block article-card" data-category="case-studies" data-title="Water Quality Intelligence Anacostia Watershed 2025 Annual Report">
+            <div class="overflow-hidden rounded-lg mb-5 aspect-video">
+              <img class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 opacity-75 group-hover:opacity-100 grayscale group-hover:grayscale-0"
+                   src="https://lh3.googleusercontent.com/aida-public/AB6AXuAizSvHMBlRAIdLzjXfgsweLPAGZKnN5r9rv812iunxl2vEcdRAgh3XwCbbiDNe3peK2V64r4PaMpIuVLpif8sIYxPu_z074tIfB4mGU-M3gX6Gfa1BOExmBqqoqlVp63O4UpWElftWe7bnEQ_dePLefAWNAP9CUc9gVaZICf0cIPCkHqkrl6qSPdg47uChUK7suwwKsR7QHb7IuTdxjZ9smqKZu8JTDBjk-xT-d8m8Fd2T_a-9GYsqTkyTa4Dh21Np_5Tv1cRtcgS_"
+                   alt="Water monitoring"/>
+            </div>
+            <div class="flex items-center gap-3 mb-3">
+              <span class="cat-case read-badge px-2 py-1 rounded" style="font-size:10px;">Case Study</span>
+              <span class="font-label-caps text-label-caps text-on-surface-variant/50" style="font-size:10px;">11 Min</span>
+            </div>
+            <h3 class="text-white font-semibold leading-snug mb-2 group-hover:text-primary transition-colors" style="font-size:16px;line-height:1.5;">Water Quality Intelligence: Anacostia Watershed 2025 Annual Report</h3>
+            <p class="text-on-surface-variant line-clamp-2" style="font-size:14px;line-height:1.65;">UDC-WQIS delivers a comprehensive environmental picture of the Anacostia watershed — 12 active monitoring stations, 78% Water Quality Index, and E. coli at seasonal peak.</p>
+            <a href="https://udc-wqis.happycoast-d9b0bcde.centralus.azurecontainerapps.io/" target="_blank" rel="noopener" class="inline-flex items-center gap-1 text-secondary hover:text-white transition-colors mt-3" style="font-size:11px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;">
+              View Dashboard <span class="material-symbols-outlined text-[13px]">open_in_new</span>
+            </a>
+          </a>
+
+          <!-- Article 10: Product update -->
+          <a href="article.html?id=11" class="block article-card" data-category="product-updates" data-title="Hakimet Telehealth Year One Clinical Outcomes Report">
+            <div class="overflow-hidden rounded-lg mb-5 aspect-video" style="background:linear-gradient(135deg,#0a1520,#051015);position:relative;">
+              <div class="absolute inset-0 flex items-center justify-center">
+                <span class="material-symbols-outlined" style="font-size:64px;color:rgba(73,253,227,0.2);font-variation-settings:'FILL' 1;">ecg_heart</span>
+              </div>
+            </div>
+            <div class="flex items-center gap-3 mb-3">
+              <span class="cat-product read-badge px-2 py-1 rounded" style="font-size:10px;">Product Update</span>
+              <span class="font-label-caps text-label-caps text-on-surface-variant/50" style="font-size:10px;">8 Min</span>
+            </div>
+            <h3 class="text-white font-semibold leading-snug mb-2 group-hover:text-primary transition-colors" style="font-size:16px;line-height:1.5;">Hakimet Telehealth: Year One Clinical Outcomes Report</h3>
+            <p class="text-on-surface-variant line-clamp-2" style="font-size:14px;line-height:1.65;">Measuring Hakimet's first year of live clinical operations: patient throughput, clinician adoption rates, and diagnostic accuracy improvements across East African deployment sites.</p>
+          </a>
+
+          <!-- Article 11: Projects category -->
+          <a href="article.html?id=2" class="block article-card" data-category="projects" data-title="Government Data Infrastructure Lessons from the MINT Partnership">
+            <div class="overflow-hidden rounded-lg mb-5 aspect-video" style="background:linear-gradient(135deg,#151005,#0a1005);position:relative;">
+              <div class="absolute inset-0 flex items-center justify-center">
+                <span class="material-symbols-outlined" style="font-size:64px;color:rgba(239,191,113,0.2);font-variation-settings:'FILL' 1;">gavel</span>
+              </div>
+            </div>
+            <div class="flex items-center gap-3 mb-3">
+              <span class="cat-project read-badge px-2 py-1 rounded" style="font-size:10px;">Projects</span>
+              <span class="font-label-caps text-label-caps text-on-surface-variant/50" style="font-size:10px;">14 Min</span>
+            </div>
+            <h3 class="text-white font-semibold leading-snug mb-2 group-hover:text-primary transition-colors" style="font-size:16px;line-height:1.5;">Government Data Infrastructure: Lessons from the MINT Partnership</h3>
+            <p class="text-on-surface-variant line-clamp-2" style="font-size:14px;line-height:1.65;">Reflections on architecting national-scale data infrastructure in a developing economy — governance, security, community engagement, and the realities of Ethiopian ministerial workflows.</p>
+            <a href="projects.html" class="inline-flex items-center gap-1 text-primary hover:text-white transition-colors mt-3" style="font-size:11px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;">
+              Read Full Project <span class="material-symbols-outlined text-[13px]">arrow_forward</span>
+            </a>
+          </a>
+
+        </div>
+
+        <!-- Load More button -->
+        <div class="text-center mt-14" id="load-more-wrap">
+          <button id="load-more-btn" class="inline-flex items-center gap-2 border border-white/15 text-on-surface/70 px-10 py-4 font-label-caps text-label-caps hover:border-primary hover:text-primary transition-all duration-300" style="font-size:11px;font-weight:700;letter-spacing:0.12em;">
+            Load More Articles
+          </button>
+        </div>
+      </div>
+
+      <!-- Sidebar -->
+      <aside class="lg:col-span-4 space-y-8">
+
+        <!-- Trending -->
+        <div class="rounded-xl p-6" style="background:#0d1117;border:1px solid rgba(255,255,255,0.08);">
+          <h3 class="font-label-caps text-label-caps text-white mb-5 flex items-center gap-2" style="font-size:11px;letter-spacing:0.14em;">
+            <span class="material-symbols-outlined text-primary" style="font-size:16px;">trending_up</span> Trending Now
+          </h3>
+          <div>
+            <div class="trending-item">
+              <span style="font-size:20px;font-weight:300;color:#3b4a46;flex-shrink:0;line-height:1;">01</span>
+              <div>
+                <p class="text-white hover:text-primary cursor-pointer transition-colors" style="font-size:13px;line-height:1.5;font-weight:600;">TDT Initiative: Building Ethiopia's National Data Framework</p>
+                <span style="font-size:10px;color:#849490;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;">Projects · 10 Min</span>
+              </div>
+            </div>
+            <div class="trending-item">
+              <span style="font-size:20px;font-weight:300;color:#3b4a46;flex-shrink:0;line-height:1;">02</span>
+              <div>
+                <p class="text-white hover:text-primary cursor-pointer transition-colors" style="font-size:13px;line-height:1.5;font-weight:600;">Satellite Yield Forecasting: Q3 East Africa Report</p>
+                <span style="font-size:10px;color:#849490;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;">Market Trends · 7 Min</span>
+              </div>
+            </div>
+            <div class="trending-item">
+              <span style="font-size:20px;font-weight:300;color:#3b4a46;flex-shrink:0;line-height:1;">03</span>
+              <div>
+                <p class="text-white hover:text-primary cursor-pointer transition-colors" style="font-size:13px;line-height:1.5;font-weight:600;">Anacostia Watershed 2025 Annual Report</p>
+                <span style="font-size:10px;color:#849490;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;">Case Study · 11 Min</span>
+              </div>
+            </div>
+            <div class="trending-item">
+              <span style="font-size:20px;font-weight:300;color:#3b4a46;flex-shrink:0;line-height:1;">04</span>
+              <div>
+                <p class="text-white hover:text-primary cursor-pointer transition-colors" style="font-size:13px;line-height:1.5;font-weight:600;">Onekof PM 2025 Feature Release</p>
+                <span style="font-size:10px;color:#849490;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;">Product Update · 4 Min</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Active Projects callout -->
+        <div class="rounded-xl p-6 relative overflow-hidden" style="background:linear-gradient(135deg,#0a1520,#051510);border:1px solid rgba(73,253,227,0.2);">
+          <div class="absolute top-0 right-0 w-32 h-32 rounded-full pointer-events-none" style="background:radial-gradient(circle,rgba(73,253,227,0.06) 0%,transparent 70%);"></div>
+          <div class="relative z-10">
+            <div class="flex items-center gap-2 mb-3">
+              <span class="w-2 h-2 rounded-full bg-primary" style="animation:pulse 2s infinite;"></span>
+              <span style="font-size:10px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:#49fde3;">Active Project</span>
+            </div>
+            <h3 class="text-white font-semibold mb-2" style="font-size:15px;line-height:1.4;">TDT × MINT Ethiopia</h3>
+            <p class="text-on-surface-variant mb-4" style="font-size:13px;line-height:1.6;">Technology Development &amp; Transfer initiative — DAPS Analytics as lead data partner to the Ethiopian Ministry of Innovation and Technology.</p>
+            <a href="projects.html" class="inline-flex items-center gap-2 font-label-caps text-label-caps text-primary hover:text-white transition-colors" style="font-size:10px;letter-spacing:0.12em;">
+              View Project <span class="material-symbols-outlined text-[13px]">arrow_forward</span>
+            </a>
+          </div>
+        </div>
+
+        <!-- Topics -->
+        <div class="rounded-xl p-6" style="background:#0d1117;border:1px solid rgba(255,255,255,0.08);">
+          <h3 class="font-label-caps text-label-caps text-white mb-5" style="font-size:11px;letter-spacing:0.14em;">Browse Topics</h3>
+          <div class="flex flex-wrap gap-2">
+            <button onclick="setFilter('market-trends')" class="px-3 py-1.5 rounded-full border border-white/10 hover:border-primary/50 hover:text-primary text-on-surface-variant transition-all" style="font-size:11px;font-weight:600;letter-spacing:0.08em;">Market Trends</button>
+            <button onclick="setFilter('data-science')" class="px-3 py-1.5 rounded-full border border-white/10 hover:border-secondary/50 hover:text-secondary text-on-surface-variant transition-all" style="font-size:11px;font-weight:600;letter-spacing:0.08em;">Data Science</button>
+            <button onclick="setFilter('case-studies')" class="px-3 py-1.5 rounded-full border border-white/10 hover:border-white/30 hover:text-white text-on-surface-variant transition-all" style="font-size:11px;font-weight:600;letter-spacing:0.08em;">Case Studies</button>
+            <button onclick="setFilter('projects')" class="px-3 py-1.5 rounded-full border border-white/10 hover:border-primary/50 hover:text-primary text-on-surface-variant transition-all" style="font-size:11px;font-weight:600;letter-spacing:0.08em;">Projects</button>
+            <button onclick="setFilter('product-updates')" class="px-3 py-1.5 rounded-full border border-white/10 hover:border-primary/30 hover:text-primary text-on-surface-variant transition-all" style="font-size:11px;font-weight:600;letter-spacing:0.08em;">Product Updates</button>
+            <button onclick="setFilter('all')" class="px-3 py-1.5 rounded-full border border-white/10 hover:border-white/30 hover:text-white text-on-surface-variant transition-all" style="font-size:11px;font-weight:600;letter-spacing:0.08em;">All</button>
+          </div>
+        </div>
+
+        <!-- Newsletter -->
+        <div class="glass-panel rounded-xl p-6 relative overflow-hidden">
+          <div class="absolute -top-8 -right-8 w-32 h-32 rounded-full pointer-events-none" style="background:radial-gradient(circle,rgba(73,253,227,0.06) 0%,transparent 70%);"></div>
+          <div class="relative z-10">
+            <h3 class="font-headline-md text-headline-md text-white mb-2" style="font-size:20px;">Signal, Not Noise.</h3>
+            <p class="text-on-surface-variant mb-5" style="font-size:14px;line-height:1.6;">Receive DAPS proprietary insights weekly. High signal-to-noise ratio guaranteed.</p>
+            <form onsubmit="handleNewsletterSubmit(event)" class="space-y-3">
+              <input type="email" placeholder="Corporate email address" required
+                     class="w-full bg-transparent border-b border-white/20 focus:border-primary transition-colors text-white pb-2 outline-none placeholder-on-surface-variant/50" style="font-size:14px;"/>
+              <button type="submit" class="w-full py-3 bg-primary text-on-primary font-label-caps text-label-caps hover:bg-primary/90 transition-colors" style="font-size:11px;font-weight:700;letter-spacing:0.12em;">Subscribe</button>
+            </form>
+            <p id="newsletter-msg" class="text-primary text-center mt-3 hidden" style="font-size:12px;font-weight:600;">You're subscribed.</p>
+          </div>
+        </div>
+
+      </aside>
+    </div>
+  </div>
+
+</main>
+
+<!-- Footer -->
+<footer style="background:#050709;border-top:1px solid rgba(255,255,255,0.05);">
+  <div class="max-w-[1440px] mx-auto px-6 md:px-12 py-20">
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-12 mb-14">
+      <div class="md:col-span-2">
+        <a href="index.html" class="block mb-4"><img src="assets/images/daps-logo-full.svg" alt="DAPS Analytics" style="height:60px;width:auto;"/></a>
+        <p style="font-size:13px;line-height:1.7;color:#3b4a46;max-width:300px;">High-fidelity data solutions engineered for clarity, speed, and uncompromising accuracy.</p>
+      </div>
+      <div>
+        <h4 style="font-size:10px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:#dee2ed;margin-bottom:20px;">Platform</h4>
+        <ul class="space-y-3" style="font-size:13px;">
+          <li><a href="products.html"   style="color:#3b4a46;" class="hover:text-teal-400 transition-colors">Products</a></li>
+          <li><a href="services.html"   style="color:#3b4a46;" class="hover:text-teal-400 transition-colors">Services</a></li>
+          <li><a href="projects.html"   style="color:#3b4a46;" class="hover:text-teal-400 transition-colors">Projects</a></li>
+          <li><a href="industries.html" style="color:#3b4a46;" class="hover:text-teal-400 transition-colors">Industries</a></li>
+          <li><a href="insights.html"   style="color:#49fde3;">Insights</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 style="font-size:10px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:#dee2ed;margin-bottom:20px;">Company</h4>
+        <ul class="space-y-3" style="font-size:13px;">
+          <li><a href="company.html" style="color:#3b4a46;" class="hover:text-teal-400 transition-colors">About Us</a></li>
+          <li><a href="contact.html" style="color:#3b4a46;" class="hover:text-teal-400 transition-colors">Contact</a></li>
+        </ul>
+      </div>
+    </div>
+    <div style="border-top:1px solid rgba(255,255,255,0.04);padding-top:28px;">
+      <p style="font-size:12px;color:#1e2a26;">© 2025 DAPS Analytics. All rights reserved.</p>
+    </div>
+  </div>
+</footer>
+
+<script src="assets/navbar.js"></script>
+<script src="assets/daps.js"></script>
+<script>
+/* ── Insights Page: Filter + Search ─────────────────────────────── */
+var currentFilter = 'all';
+
+function setFilter(cat) {
+  currentFilter = cat;
+  // Update pills
+  document.querySelectorAll('.filter-pill').forEach(function(p) {
+    if (p.dataset.filter === cat) {
+      p.classList.add('active');
+    } else {
+      p.classList.remove('active');
+    }
+  });
+  applyFilters();
+}
+
+function applyFilters() {
+  var searchVal = (document.getElementById('search-input').value || '').toLowerCase().trim();
+  var cards = document.querySelectorAll('.article-card');
+  var visible = 0;
+
+  cards.forEach(function(card) {
+    var cat = card.dataset.category || 'all';
+    var title = (card.dataset.title || '').toLowerCase();
+    var catMatch = currentFilter === 'all' || cat === currentFilter;
+    var searchMatch = !searchVal || title.indexOf(searchVal) !== -1;
+
+    if (catMatch && searchMatch) {
+      card.style.display = '';
+      card.style.opacity = '1';
+      card.style.height = '';
+      card.style.overflow = '';
+      card.style.margin = '';
+      card.style.padding = '';
+      visible++;
+    } else {
+      card.style.display = 'none';
+    }
+  });
+
+  // Update count
+  document.getElementById('total-count').textContent = visible;
+  document.getElementById('no-results').style.display = visible === 0 ? 'block' : 'none';
+  document.getElementById('articles-grid').style.display = visible === 0 ? 'none' : '';
+}
+
+// Filter pills
+document.querySelectorAll('.filter-pill').forEach(function(pill) {
+  pill.addEventListener('click', function() { setFilter(this.dataset.filter); });
+});
+
+// Search
+var searchInput = document.getElementById('search-input');
+if (searchInput) {
+  searchInput.addEventListener('input', applyFilters);
+  searchInput.addEventListener('keydown', function(e) { if (e.key === 'Escape') { this.value = ''; applyFilters(); } });
+}
+
+// Load More (placeholder)
+var loadMoreBtn = document.getElementById('load-more-btn');
+if (loadMoreBtn) {
+  loadMoreBtn.addEventListener('click', function() {
+    this.textContent = 'All articles shown';
+    this.disabled = true;
+    this.style.opacity = '0.4';
+  });
+}
+
+// Newsletter
+function handleNewsletterSubmit(e) {
+  e.preventDefault();
+  e.target.querySelector('input').value = '';
+  var msg = document.getElementById('newsletter-msg');
+  if (msg) { msg.classList.remove('hidden'); }
+}
+</script>
+</body>
+</html>

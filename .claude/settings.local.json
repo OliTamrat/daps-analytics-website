@@ -1,0 +1,30 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(Get-ChildItem -Path \"c:\\\\Users\\\\olita\\\\Downloads\\\\stitch_daps_analytics_cinematic_web_experience\" -Recurse -Force)",
+      "Bash(Select-Object FullName, Extension)",
+      "Bash(Sort-Object FullName)",
+      "Bash(python -m http.server 3030)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:3030/index.html)",
+      "WebFetch(domain:www.onekof.com)",
+      "WebFetch(domain:udc-wqis.happycoast-d9b0bcde.centralus.azurecontainerapps.io)",
+      "WebFetch(domain:www.hakimet.com)",
+      "WebFetch(domain:olink-fleet.vercel.app)",
+      "WebFetch(domain:onekof.com)",
+      "WebFetch(domain:hakimet.com)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:3030/assets/images/daps-logo-nav.svg)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:3030/assets/images/daps-logo-full.svg)",
+      "Bash(curl -s -o /dev/null -w \"nav:%{http_code} \" http://localhost:3030/assets/images/daps-logo-nav.svg)",
+      "Bash(curl -s -o /dev/null -w \"full:%{http_code}\" http://localhost:3030/assets/images/daps-logo-full.svg)",
+      "Bash(curl -s -o /dev/null -w \"index:%{http_code} \" http://localhost:3030/index.html)",
+      "Bash(curl -s -o /dev/null -w \"products:%{http_code} \" http://localhost:3030/products.html)",
+      "Bash(curl -s -o /dev/null -w \"projects:%{http_code} \" http://localhost:3030/projects.html)",
+      "Bash(curl -s -o /dev/null -w \"insights:%{http_code}\" http://localhost:3030/insights.html)",
+      "Bash(curl -s -o /dev/null -w \"article:%{http_code} \" http://localhost:3030/article.html)",
+      "Bash(curl -s -o /dev/null -w \"articles-data:%{http_code} \" http://localhost:3030/assets/articles-data.js)",
+      "Bash(git init *)",
+      "Bash(git add *)",
+      "Bash(git commit *)"
+    ]
+  }
+}

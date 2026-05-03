@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html class="dark" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Services — DAPS Analytics</title>
+<meta name="description" content="Predictive analytics, data infrastructure, visual intelligence and strategic auditing for the enterprise."/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;900&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<script>
+  tailwind.config = {
+    darkMode: "class",
+    theme: {
+      extend: {
+        colors: {
+          "secondary-container": "#694700","error": "#ffb4ab","tertiary-container": "#c6c8ca",
+          "surface-tint": "#00dfc6","on-tertiary-fixed": "#191c1e","primary-fixed-dim": "#00dfc6",
+          "on-primary-fixed": "#00201b","inverse-surface": "#dee2ed","on-primary-container": "#005e53",
+          "primary-fixed": "#47fce2","on-tertiary-container": "#515455","on-secondary-fixed": "#281900",
+          "surface": "#0e141b","tertiary": "#e3e4e6","surface-bright": "#343942","secondary": "#efbf71",
+          "on-primary": "#003730","surface-container-low": "#171c24","inverse-primary": "#006b5e",
+          "on-secondary-container": "#e7b76a","on-background": "#dee2ed","background": "#0e141b",
+          "tertiary-fixed-dim": "#c5c6c8","primary": "#49fde3","surface-container-high": "#252a32",
+          "secondary-fixed": "#ffdead","on-error-container": "#ffdad6","on-surface": "#dee2ed",
+          "primary-container": "#00e0c7","on-tertiary": "#2e3132","error-container": "#93000a",
+          "surface-container-lowest": "#090e16","on-surface-variant": "#bacac5","tertiary-fixed": "#e1e2e4",
+          "surface-dim": "#0e141b","surface-container": "#1b2028","inverse-on-surface": "#2b3139",
+          "outline-variant": "#3b4a46","surface-variant": "#30353d","secondary-fixed-dim": "#efbf71",
+          "on-tertiary-fixed-variant": "#444749","surface-container-highest": "#30353d",
+          "on-secondary-fixed-variant": "#604100","outline": "#849490","on-primary-fixed-variant": "#005046",
+          "on-secondary": "#432c00","on-error": "#690005"
+        },
+        borderRadius: { DEFAULT: "0.25rem", lg: "0.5rem", xl: "0.75rem", full: "9999px" },
+        spacing: { lg: "4rem", xl: "8rem", xs: "0.5rem", md: "2rem", "2xl": "12rem", gutter: "24px", margin: "64px", unit: "4px", sm: "1rem" },
+        fontFamily: { "display-lg": ["Inter"], "label-caps": ["Inter"], "headline-md": ["Inter"], "display-2xl": ["Inter"], "body-md": ["Inter"], "display-xl": ["Inter"], "body-lg": ["Inter"] },
+        fontSize: {
+          "display-lg": ["56px", { lineHeight: "115%", letterSpacing: "-0.02em", fontWeight: "400" }],
+          "label-caps": ["12px", { lineHeight: "100%", letterSpacing: "0.1em", fontWeight: "600" }],
+          "headline-md": ["32px", { lineHeight: "130%", letterSpacing: "-0.01em", fontWeight: "400" }],
+          "display-2xl": ["128px", { lineHeight: "110%", letterSpacing: "-0.04em", fontWeight: "300" }],
+          "body-md": ["16px", { lineHeight: "160%", letterSpacing: "0em", fontWeight: "400" }],
+          "display-xl": ["96px", { lineHeight: "110%", letterSpacing: "-0.03em", fontWeight: "300" }],
+          "body-lg": ["18px", { lineHeight: "160%", letterSpacing: "0em", fontWeight: "400" }]
+        }
+      }
+    }
+  }
+</script>
+<style>
+  body { background-color: #0e141b; color: #dee2ed; }
+  .bg-secondary-surface { background-color: #111418; }
+  .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.7s cubic-bezier(0.4,0,0.2,1), transform 0.7s cubic-bezier(0.4,0,0.2,1); }
+  .reveal.revealed { opacity: 1; transform: translateY(0); }
+  .reveal-delay-1 { transition-delay: 0.1s; }
+  .reveal-delay-2 { transition-delay: 0.2s; }
+  .reveal-delay-3 { transition-delay: 0.3s; }
+</style>
+</head>
+<body class="antialiased selection:bg-primary/20 selection:text-primary min-h-screen flex flex-col">
+
+
+
+<main class="flex-grow pt-32 pb-24 px-6 md:px-12 max-w-[1440px] mx-auto w-full">
+
+  <!-- Hero -->
+  <section class="mb-xl md:mb-2xl pt-12 md:pt-24">
+    <h1 class="font-display-xl text-display-xl text-white mb-8 tracking-tighter leading-tight max-w-4xl reveal" style="font-size: clamp(48px, 8vw, 96px);">
+      Engineering <br/><span class="text-primary">Fidelity.</span>
+    </h1>
+    <p class="font-body-lg text-body-lg text-on-surface-variant max-w-2xl leading-relaxed reveal">
+      We design and architect high-performance data pipelines, predictive models, and intuitive visualization systems. Our methodology strips away the superficial, leaving only actionable, uncompromising truth.
+    </p>
+  </section>
+
+  <!-- Services Bento Grid -->
+  <section class="mb-xl md:mb-2xl">
+    <h2 class="font-headline-md text-headline-md text-white mb-12 flex items-center gap-4 reveal">
+      <span class="w-8 h-px bg-primary"></span>Core Capabilities
+    </h2>
+    <div class="grid grid-cols-1 md:grid-cols-12 gap-6">
+
+      <!-- Service 1: Predictive Analytics (large) -->
+      <div class="md:col-span-8 bg-secondary-surface border border-white/10 p-8 md:p-12 relative overflow-hidden group rounded-lg hover:border-primary/50 transition-colors duration-500 reveal">
+        <div class="absolute inset-0 opacity-10 bg-cover bg-center transition-transform duration-[30s] group-hover:scale-110"
+             style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAFB2xONZgBm-wOeEF_jqA0nvWF-oMHuhcs4duBI7wokDkIrIo-rTvXnFPJgKZGYZEXS_ED1uLUaph6vwMr33T8lGnSWghp3yUkOdZpOXJE1EJpmg3eOPUXNRTyNERzx5PIgEUEyO-BhxUa3Eh6lWiqTcVaHBgGbabruTGfQBb-dpOzN9qq-FOHpHo-pJu82tiHNL0tAYqSrnf-QYkEe0ewSQJVdMr-w3xx8-_qIPZ3fJT5eVVd0mVN3tUJYCG0hgyTFCe64wa6QZAa')">
+        </div>
+        <div class="relative z-10 flex flex-col h-full justify-between min-h-[280px]">
+          <div>
+            <span class="material-symbols-outlined text-primary text-4xl mb-6 block" style="font-variation-settings: 'FILL' 1;">analytics</span>
+            <h3 class="font-display-lg text-display-lg text-white mb-4" style="font-size: clamp(32px, 4vw, 56px);">Predictive Analytics</h3>
+          </div>
+          <p class="font-body-md text-body-md text-on-surface-variant max-w-md mt-8">
+            Advanced ML models engineered to forecast market shifts, operational bottlenecks, and consumer behavior with forensic precision.
+          </p>
+        </div>
+      </div>
+
+      <!-- Service 2: Data Infrastructure -->
+      <div class="md:col-span-4 bg-secondary-surface border border-white/10 p-8 md:p-12 relative overflow-hidden group rounded-lg hover:border-primary/50 transition-colors duration-500 reveal reveal-delay-1">
+        <div class="relative z-10 flex flex-col h-full justify-between min-h-[280px]">
+          <div>
+            <span class="material-symbols-outlined text-secondary text-4xl mb-6 block" style="font-variation-settings: 'FILL' 1;">schema</span>
+            <h3 class="font-headline-md text-headline-md text-white mb-4">Data Infrastructure</h3>
+          </div>
+          <p class="font-body-md text-body-md text-on-surface-variant mt-8">
+            Scalable, resilient architectures on modern cloud primitives. Data flows securely and seamlessly from ingestion to insight.
+          </p>
+        </div>
+      </div>
+
+      <!-- Service 3: Visual Intelligence -->
+      <div class="md:col-span-5 bg-secondary-surface border border-white/10 p-8 md:p-12 relative overflow-hidden group rounded-lg hover:border-primary/50 transition-colors duration-500 reveal reveal-delay-2">
+        <div class="relative z-10 flex flex-col h-full justify-between min-h-[260px]">
+          <div>
+            <span class="material-symbols-outlined text-white text-4xl mb-6 block" style="font-variation-settings: 'FILL' 1;">dashboard</span>
+            <h3 class="font-headline-md text-headline-md text-white mb-4">Visual Intelligence</h3>
+          </div>
+          <p class="font-body-md text-body-md text-on-surface-variant mt-8">
+            Bespoke dashboards and reporting interfaces designed with luxury automotive interface principles. Complex data, presented beautifully.
+          </p>
+        </div>
+      </div>
+
+      <!-- Service 4: Strategic Auditing (large) -->
+      <div class="md:col-span-7 bg-secondary-surface border border-white/10 p-8 md:p-12 relative overflow-hidden group rounded-lg hover:border-primary/50 transition-colors duration-500 reveal reveal-delay-3">
+        <div class="absolute inset-0 opacity-10 bg-cover bg-center transition-transform duration-[30s] group-hover:scale-110"
+             style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDk9zkV7uZqpbpjAMkwVJrHdBSAQv0DcTciCuDPssmTjklJWtQSaSHcXCF1D490kGn_NKOtYyhK_DxiIhOT2U7d1fmIveeBSoIfRGhpi3i3lPQnCIHi1YNV_z3vrwbELOECK4H_SslypEkMRUAO_YVVg0mpA6qtMyYdA33LaOniyjyVh92627SvUskf7yzU1k3yla-nZXifDntaXOvCS4M4WwTL055ZpmNoru9FOBCzbWdoi3yIZbL0_DFvc0Jyiw6PpdgCkd1sUJgk')">
+        </div>
+        <div class="relative z-10 flex flex-col h-full justify-between min-h-[260px]">
+          <div>
+            <span class="material-symbols-outlined text-primary text-4xl mb-6 block" style="font-variation-settings: 'FILL' 1;">tune</span>
+            <h3 class="font-display-lg text-display-lg text-white mb-4" style="font-size: clamp(32px, 4vw, 56px);">Strategic Auditing</h3>
+          </div>
+          <p class="font-body-md text-body-md text-on-surface-variant max-w-md mt-8">
+            Comprehensive evaluation of your existing data ecosystems. We identify latency, security gaps, and architectural flaws — prescribing exact technical remedies.
+          </p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Process Section -->
+  <section class="mb-xl md:mb-2xl">
+    <h2 class="font-headline-md text-headline-md text-white mb-12 flex items-center gap-4 reveal">
+      <span class="w-8 h-px bg-primary"></span>Our Methodology
+    </h2>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+      <div class="border-t border-white/10 pt-8 reveal">
+        <div class="font-label-caps text-label-caps text-primary mb-4">01 — Diagnose</div>
+        <h3 class="font-headline-md text-headline-md text-white mb-4" style="font-size: 24px;">Deep Analysis</h3>
+        <p class="font-body-md text-body-md text-on-surface-variant">We begin by mapping your existing data landscape — identifying gaps, bottlenecks, and untapped signal sources.</p>
+      </div>
+      <div class="border-t border-white/10 pt-8 reveal reveal-delay-1">
+        <div class="font-label-caps text-label-caps text-primary mb-4">02 — Architect</div>
+        <h3 class="font-headline-md text-headline-md text-white mb-4" style="font-size: 24px;">Precision Design</h3>
+        <p class="font-body-md text-body-md text-on-surface-variant">We engineer bespoke solutions calibrated to your operational environment, compliance requirements, and scale targets.</p>
+      </div>
+      <div class="border-t border-white/10 pt-8 reveal reveal-delay-2">
+        <div class="font-label-caps text-label-caps text-primary mb-4">03 — Deploy</div>
+        <h3 class="font-headline-md text-headline-md text-white mb-4" style="font-size: 24px;">Continuous Fidelity</h3>
+        <p class="font-body-md text-body-md text-on-surface-variant">Deployment is followed by ongoing monitoring, model retraining, and iterative optimization to maintain peak accuracy.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="border border-white/10 rounded-lg p-8 md:p-16 text-center reveal relative overflow-hidden">
+    <div class="absolute -top-20 left-1/2 -translate-x-1/2 w-96 h-96 bg-primary/8 rounded-full blur-3xl pointer-events-none"></div>
+    <div class="relative z-10">
+      <h2 class="font-display-lg text-display-lg text-white mb-6" style="font-size: clamp(32px, 4vw, 56px);">Ready to engage?</h2>
+      <p class="font-body-lg text-body-lg text-on-surface-variant max-w-xl mx-auto mb-10">Connect with our specialists to discuss your data architecture requirements.</p>
+      <a href="contact.html" class="inline-block bg-primary text-on-primary px-10 py-4 font-label-caps text-label-caps hover:bg-primary-container transition-colors duration-400">Book a Consultation</a>
+    </div>
+  </section>
+
+</main>
+
+<!-- Footer -->
+<footer class="w-full border-t border-white/5 py-20 bg-zinc-950">
+  <div class="max-w-[1440px] mx-auto px-6 md:px-12">
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
+      <div class="md:col-span-2">
+        <a href="index.html" class="block mb-4"><img src="assets/images/daps-logo-full.svg" alt="DAPS Analytics" style="height:60px;width:auto;"/></a>
+        <p class="text-sm text-zinc-500 max-w-sm mt-2">High-fidelity data solutions engineered for clarity, speed, and uncompromising accuracy.</p>
+      </div>
+      <div>
+        <h4 class="font-label-caps text-label-caps text-white mb-6">Platform</h4>
+        <ul class="space-y-3 text-sm">
+          <li><a href="products.html" class="text-zinc-500 hover:text-teal-400 transition-colors duration-400">Products</a></li>
+          <li><a href="services.html" class="text-teal-400">Services</a></li>
+          <li><a href="industries.html" class="text-zinc-500 hover:text-teal-400 transition-colors duration-400">Industries</a></li>
+          <li><a href="insights.html" class="text-zinc-500 hover:text-teal-400 transition-colors duration-400">Insights</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 class="font-label-caps text-label-caps text-white mb-6">Company</h4>
+        <ul class="space-y-3 text-sm">
+          <li><a href="company.html" class="text-zinc-500 hover:text-teal-400 transition-colors duration-400">About Us</a></li>
+          <li><a href="contact.html" class="text-zinc-500 hover:text-teal-400 transition-colors duration-400">Contact</a></li>
+          <li><a href="insights.html" class="text-zinc-500 hover:text-teal-400 transition-colors duration-400">Resources</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="border-t border-white/5 pt-8">
+      <p class="text-sm text-zinc-600">© 2025 DAPS Analytics. All rights reserved.</p>
+    </div>
+  </div>
+</footer>
+
+<script src="assets/navbar.js"></script>
+<script src="assets/daps.js"></script>
+</body>
+</html>

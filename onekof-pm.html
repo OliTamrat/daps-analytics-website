@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html class="dark" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Onekof PM — DAPS Analytics</title>
+<meta name="description" content="Onekof PM: precision monitoring for high-fidelity project execution. Live in Ethiopia."/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;900&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<script>
+  tailwind.config = {
+    darkMode: "class",
+    theme: {
+      extend: {
+        colors: {
+          "secondary-container": "#694700","error": "#ffb4ab","tertiary-container": "#c6c8ca",
+          "surface-tint": "#00dfc6","on-tertiary-fixed": "#191c1e","primary-fixed-dim": "#00dfc6",
+          "on-primary-fixed": "#00201b","inverse-surface": "#dee2ed","on-primary-container": "#005e53",
+          "primary-fixed": "#47fce2","on-tertiary-container": "#515455","on-secondary-fixed": "#281900",
+          "surface": "#0e141b","tertiary": "#e3e4e6","surface-bright": "#343942","secondary": "#efbf71",
+          "on-primary": "#003730","surface-container-low": "#171c24","inverse-primary": "#006b5e",
+          "on-secondary-container": "#e7b76a","on-background": "#dee2ed","background": "#0e141b",
+          "tertiary-fixed-dim": "#c5c6c8","primary": "#49fde3","surface-container-high": "#252a32",
+          "secondary-fixed": "#ffdead","on-error-container": "#ffdad6","on-surface": "#dee2ed",
+          "primary-container": "#00e0c7","on-tertiary": "#2e3132","error-container": "#93000a",
+          "surface-container-lowest": "#090e16","on-surface-variant": "#bacac5","tertiary-fixed": "#e1e2e4",
+          "surface-dim": "#0e141b","surface-container": "#1b2028","inverse-on-surface": "#2b3139",
+          "outline-variant": "#3b4a46","surface-variant": "#30353d","secondary-fixed-dim": "#efbf71",
+          "on-tertiary-fixed-variant": "#444749","surface-container-highest": "#30353d",
+          "on-secondary-fixed-variant": "#604100","outline": "#849490","on-primary-fixed-variant": "#005046",
+          "on-secondary": "#432c00","on-error": "#690005"
+        },
+        borderRadius: { DEFAULT: "0.25rem", lg: "0.5rem", xl: "0.75rem", full: "9999px" },
+        spacing: { lg: "4rem", xl: "8rem", xs: "0.5rem", md: "2rem", "2xl": "12rem", gutter: "24px", margin: "64px", unit: "4px", sm: "1rem" },
+        fontFamily: { "display-lg": ["Inter"], "label-caps": ["Inter"], "headline-md": ["Inter"], "display-2xl": ["Inter"], "body-md": ["Inter"], "display-xl": ["Inter"], "body-lg": ["Inter"] },
+        fontSize: {
+          "display-lg": ["56px", { lineHeight: "115%", letterSpacing: "-0.02em", fontWeight: "400" }],
+          "label-caps": ["12px", { lineHeight: "100%", letterSpacing: "0.1em", fontWeight: "600" }],
+          "headline-md": ["32px", { lineHeight: "130%", letterSpacing: "-0.01em", fontWeight: "400" }],
+          "display-2xl": ["128px", { lineHeight: "110%", letterSpacing: "-0.04em", fontWeight: "300" }],
+          "body-md": ["16px", { lineHeight: "160%", letterSpacing: "0em", fontWeight: "400" }],
+          "display-xl": ["96px", { lineHeight: "110%", letterSpacing: "-0.03em", fontWeight: "300" }],
+          "body-lg": ["18px", { lineHeight: "160%", letterSpacing: "0em", fontWeight: "400" }]
+        }
+      }
+    }
+  }
+</script>
+<style>
+  body { background-color: #0e141b; color: #dee2ed; }
+  .glass-panel { background-color: #1b2028; border: 1px solid #3b4a46; }
+  .text-glow { text-shadow: 0 0 20px rgba(73,253,227,0.3); }
+  @keyframes slowZoom { from { transform: scale(1); } to { transform: scale(1.08); } }
+  .hero-zoom { animation: slowZoom 30s ease-in-out infinite alternate; }
+  .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.7s cubic-bezier(0.4,0,0.2,1), transform 0.7s cubic-bezier(0.4,0,0.2,1); }
+  .reveal.revealed { opacity: 1; transform: translateY(0); }
+  .reveal-delay-1 { transition-delay: 0.15s; }
+  .reveal-delay-2 { transition-delay: 0.3s; }
+</style>
+</head>
+<body class="antialiased min-h-screen flex flex-col selection:bg-primary/20 selection:text-primary">
+
+
+
+<main class="flex-grow pt-24">
+
+  <!-- Hero -->
+  <section class="relative min-h-[795px] flex items-center justify-center overflow-hidden border-b border-outline-variant">
+    <div class="absolute inset-0 z-0 overflow-hidden">
+      <img class="w-full h-full object-cover object-center opacity-40 mix-blend-luminosity hero-zoom"
+           src="https://lh3.googleusercontent.com/aida-public/AB6AXuDaS7d94D90GStk_w-97kVm4ZnBgq9ndPWgAjsEl9qMH_CcI471shFIZxXijsqbzv_vtvrIisA51SGeDq9BYeSuyU72cB7WJ-5vp2f6h2_wtWhLd_Kz1z5zVV2QK_5Qts-fZtZmcWKBn3EA0nk9qm6gitXDqJaQ6mUGJIJt0E3ceZf7LFTaLHKcrh_7S5h4cby4fsssaJWg7STlE5K9ylGfdodAiaGS3i18I8NyuFN7KQXDDagI71jST7WPJFsufaev0R58_XgSq2Ep"
+           alt="Onekof PM hero background"/>
+      <div class="absolute inset-0 bg-gradient-to-t from-background via-background/80 to-transparent"></div>
+    </div>
+    <div class="relative z-10 max-w-[1440px] mx-auto px-6 md:px-12 flex flex-col items-center text-center">
+      <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-primary/30 bg-primary/10 backdrop-blur-md mb-8 reveal">
+        <span class="w-2 h-2 rounded-full bg-primary animate-pulse"></span>
+        <span class="font-label-caps text-label-caps text-primary tracking-widest">Live in Ethiopia</span>
+      </div>
+      <h1 class="font-display-2xl text-on-surface mb-6 tracking-tighter text-glow reveal" style="font-size: clamp(56px, 10vw, 128px);">Onekof PM</h1>
+      <p class="font-headline-md text-headline-md text-on-surface-variant max-w-3xl mb-12 font-light reveal">
+        The #1 project management platform built for Ethiopia. Native calendar. Native language. Precision intelligence.
+      </p>
+      <div class="flex flex-wrap justify-center gap-4 reveal">
+        <a href="https://onekof.com" target="_blank" rel="noopener"
+           class="inline-flex items-center gap-2 font-label-caps text-label-caps bg-primary text-on-primary px-10 py-4 hover:bg-primary-container transition-colors duration-400 tracking-widest uppercase shadow-[0_0_20px_rgba(73,253,227,0.2)] hover:shadow-[0_0_30px_rgba(73,253,227,0.35)]">
+          Open Live Platform <span class="material-symbols-outlined text-[16px]">open_in_new</span>
+        </a>
+        <a href="contact.html"
+           class="inline-flex items-center gap-2 font-label-caps text-label-caps border border-white/30 text-white px-10 py-4 hover:border-primary hover:text-primary transition-colors duration-400 tracking-widest uppercase">
+          Request Demo
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Stats Bar -->
+  <section class="border-b border-outline-variant bg-surface-container-lowest py-12">
+    <div class="max-w-[1440px] mx-auto px-6 md:px-12">
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+        <div class="reveal">
+          <div class="font-display-lg text-display-lg text-primary mb-2" style="font-size: clamp(32px, 4vw, 56px);">99.9%</div>
+          <div class="font-label-caps text-label-caps text-on-surface-variant">Uptime SLA</div>
+        </div>
+        <div class="reveal reveal-delay-1">
+          <div class="font-display-lg text-display-lg text-primary mb-2" style="font-size: clamp(32px, 4vw, 56px);">13</div>
+          <div class="font-label-caps text-label-caps text-on-surface-variant">Month Calendar</div>
+        </div>
+        <div class="reveal">
+          <div class="font-display-lg text-display-lg text-primary mb-2" style="font-size: clamp(32px, 4vw, 56px);">4</div>
+          <div class="font-label-caps text-label-caps text-on-surface-variant">Native Languages</div>
+        </div>
+        <div class="reveal reveal-delay-1">
+          <div class="font-display-lg text-display-lg text-primary mb-2" style="font-size: clamp(32px, 4vw, 56px);">SOC 2</div>
+          <div class="font-label-caps text-label-caps text-on-surface-variant">Security Aligned</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Problem Statement -->
+  <section class="py-32 px-6 md:px-12 max-w-[1440px] mx-auto grid grid-cols-1 md:grid-cols-12 gap-12 items-center border-b border-outline-variant">
+    <div class="md:col-span-5 reveal">
+      <h2 class="font-display-lg text-display-lg text-on-surface leading-tight" style="font-size: clamp(32px, 4vw, 56px);">Built for Ethiopia. Not adapted for it.</h2>
+    </div>
+    <div class="md:col-span-7 md:col-start-6 reveal">
+      <p class="font-body-lg text-body-lg text-on-surface-variant">
+        Global tools like Jira, Asana, and Trello were built for Western workflows — no Ethiopian calendar, no Amharic, no ETB. Ethiopian organizations are forced to compromise. Onekof PM was built from the ground up for Ethiopian enterprises: native 13-month calendar, full language support, local currency, and AI-powered document processing — delivering the precision of enterprise PM without the cultural mismatch.
+      </p>
+    </div>
+  </section>
+
+  <!-- How It Works -->
+  <section class="py-32 bg-surface-container-low border-b border-outline-variant">
+    <div class="max-w-[1440px] mx-auto px-6 md:px-12">
+      <h3 class="font-label-caps text-label-caps text-primary tracking-widest uppercase mb-16 text-center reveal">Architecture of Clarity</h3>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+
+        <div class="glass-panel p-10 flex flex-col items-center text-center group hover:border-primary/50 transition-colors duration-400 reveal">
+          <div class="w-16 h-16 rounded-full bg-surface-container-highest border border-outline flex items-center justify-center mb-8 group-hover:shadow-[0_0_15px_rgba(73,253,227,0.2)] transition-shadow">
+            <span class="font-label-caps text-label-caps text-on-surface">01</span>
+          </div>
+          <h4 class="font-body-lg text-body-lg font-bold text-on-surface mb-4">Ingest</h4>
+          <p class="font-body-md text-body-md text-on-surface-variant">Aggregates telemetry from field sensors, supply chain APIs, and localized ERPs into a unified data stream.</p>
+        </div>
+
+        <div class="glass-panel p-10 flex flex-col items-center text-center group hover:border-primary/50 transition-colors duration-400 reveal reveal-delay-1">
+          <div class="w-16 h-16 rounded-full bg-surface-container-highest border border-outline flex items-center justify-center mb-8 group-hover:shadow-[0_0_15px_rgba(73,253,227,0.2)] transition-shadow">
+            <span class="font-label-caps text-label-caps text-on-surface">02</span>
+          </div>
+          <h4 class="font-body-lg text-body-lg font-bold text-on-surface mb-4">Synthesize</h4>
+          <p class="font-body-md text-body-md text-on-surface-variant">Proprietary algorithms filter noise, normalizing data against regional baseline metrics and historical benchmarks.</p>
+        </div>
+
+        <div class="glass-panel p-10 flex flex-col items-center text-center group hover:border-primary/50 transition-colors duration-400 reveal reveal-delay-2">
+          <div class="w-16 h-16 rounded-full bg-primary/10 border border-primary/50 flex items-center justify-center mb-8 shadow-[0_0_20px_rgba(73,253,227,0.15)]">
+            <span class="font-label-caps text-label-caps text-primary">03</span>
+          </div>
+          <h4 class="font-body-lg text-body-lg font-bold text-on-surface mb-4">Actuate</h4>
+          <p class="font-body-md text-body-md text-on-surface-variant">Delivers actionable, high-contrast visual intelligence to decision-makers in real time — no lag, no ambiguity.</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Features Grid -->
+  <section class="py-32 px-6 md:px-12 max-w-[1440px] mx-auto border-b border-outline-variant">
+    <h2 class="font-headline-md text-headline-md text-on-surface mb-16 reveal">Platform Capabilities</h2>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      <div class="border-t border-white/10 pt-8 reveal">
+        <span class="material-symbols-outlined text-primary text-3xl mb-4 block" style="font-variation-settings: 'FILL' 1;">calendar_month</span>
+        <h3 class="font-body-lg text-body-lg text-white font-semibold mb-3">Ethiopian Calendar</h3>
+        <p class="font-body-md text-body-md text-on-surface-variant">Native 13-month Ethiopian calendar with Amharic month names — fully integrated across all scheduling, timelines, and deadline tracking.</p>
+      </div>
+      <div class="border-t border-white/10 pt-8 reveal reveal-delay-1">
+        <span class="material-symbols-outlined text-secondary text-3xl mb-4 block" style="font-variation-settings: 'FILL' 1;">translate</span>
+        <h3 class="font-body-lg text-body-lg text-white font-semibold mb-3">Multilingual Support</h3>
+        <p class="font-body-md text-body-md text-on-surface-variant">Full support for Amharic, Afaan Oromoo, Tigrinya, and English — every interface element natively localized, not translated.</p>
+      </div>
+      <div class="border-t border-white/10 pt-8 reveal reveal-delay-2">
+        <span class="material-symbols-outlined text-white text-3xl mb-4 block" style="font-variation-settings: 'FILL' 1;">account_balance_wallet</span>
+        <h3 class="font-body-lg text-body-lg text-white font-semibold mb-3">ETB Budget Tracking</h3>
+        <p class="font-body-md text-body-md text-on-surface-variant">Financial management in Ethiopian Birr with live exchange rate integration, budget forecasting, and multi-currency project accounting.</p>
+      </div>
+      <div class="border-t border-white/10 pt-8 reveal">
+        <span class="material-symbols-outlined text-primary text-3xl mb-4 block" style="font-variation-settings: 'FILL' 1;">smart_toy</span>
+        <h3 class="font-body-lg text-body-lg text-white font-semibold mb-3">AI Document Processor</h3>
+        <p class="font-body-md text-body-md text-on-surface-variant">Automated contract and proposal analysis powered by LLM — extract key clauses, deadlines, obligations, and risks in seconds.</p>
+      </div>
+      <div class="border-t border-white/10 pt-8 reveal reveal-delay-1">
+        <span class="material-symbols-outlined text-secondary text-3xl mb-4 block" style="font-variation-settings: 'FILL' 1;">view_kanban</span>
+        <h3 class="font-body-lg text-body-lg text-white font-semibold mb-3">Kanban, Gantt &amp; Analytics</h3>
+        <p class="font-body-md text-body-md text-on-surface-variant">Flexible project views: Kanban boards, Gantt chart timelines, backlog management, and real-time analytics dashboards — all in one platform.</p>
+      </div>
+      <div class="border-t border-white/10 pt-8 reveal reveal-delay-2">
+        <span class="material-symbols-outlined text-white text-3xl mb-4 block" style="font-variation-settings: 'FILL' 1;">shield</span>
+        <h3 class="font-body-lg text-body-lg text-white font-semibold mb-3">Enterprise Security</h3>
+        <p class="font-body-md text-body-md text-on-surface-variant">RBAC role-based access control, two-factor authentication, full audit logs, SOC 2 aligned — enterprise-grade security for government and institutional clients.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="py-2xl px-6 md:px-12 max-w-[1440px] mx-auto text-center">
+    <div class="relative overflow-hidden border border-white/10 rounded-lg p-12 md:p-20">
+      <div class="absolute -top-20 left-1/2 -translate-x-1/2 w-[500px] h-[500px] bg-primary/6 rounded-full blur-3xl pointer-events-none"></div>
+      <div class="relative z-10">
+        <p class="font-label-caps text-label-caps text-primary mb-6 reveal">Ready to Deploy</p>
+        <h2 class="font-display-lg text-display-lg text-on-surface mb-8 reveal" style="font-size: clamp(32px, 4vw, 56px);">Deploy Onekof PM in your environment.</h2>
+        <p class="font-body-lg text-body-lg text-on-surface-variant max-w-xl mx-auto mb-12 reveal">Our team handles full implementation, training, and ongoing optimization. Average deployment: 8 weeks.</p>
+        <div class="flex flex-wrap justify-center gap-4 reveal">
+          <a href="https://onekof.com" target="_blank" rel="noopener"
+             class="inline-flex items-center gap-2 bg-primary text-on-primary px-10 py-4 font-label-caps text-label-caps hover:bg-primary-container transition-colors duration-400 shadow-[0_0_20px_rgba(73,253,227,0.2)]">
+            Open Live Platform <span class="material-symbols-outlined text-[16px]">open_in_new</span>
+          </a>
+          <a href="contact.html" class="border border-white/20 text-on-surface px-10 py-4 font-label-caps text-label-caps hover:border-primary hover:text-primary transition-colors duration-400">Request Demo</a>
+          <a href="products.html" class="border border-white/10 text-on-surface/70 px-10 py-4 font-label-caps text-label-caps hover:border-white/30 hover:text-on-surface transition-colors duration-400">All Products</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- Footer -->
+<footer class="w-full border-t border-white/5 py-20 bg-zinc-950">
+  <div class="max-w-[1440px] mx-auto px-6 md:px-12">
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
+      <div class="md:col-span-2">
+        <a href="index.html" class="block mb-4"><img src="assets/images/daps-logo-full.svg" alt="DAPS Analytics" style="height:60px;width:auto;"/></a>
+        <p class="text-sm text-zinc-500 max-w-sm mt-2">High-fidelity data solutions. Onekof PM is live and operational in Ethiopia.</p>
+      </div>
+      <div>
+        <h4 class="font-label-caps text-label-caps text-white mb-6">Platform</h4>
+        <ul class="space-y-3 text-sm">
+          <li><a href="products.html" class="text-teal-400">Products</a></li>
+          <li><a href="services.html" class="text-zinc-500 hover:text-teal-400 transition-colors duration-400">Services</a></li>
+          <li><a href="industries.html" class="text-zinc-500 hover:text-teal-400 transition-colors duration-400">Industries</a></li>
+          <li><a href="insights.html" class="text-zinc-500 hover:text-teal-400 transition-colors duration-400">Insights</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 class="font-label-caps text-label-caps text-white mb-6">Company</h4>
+        <ul class="space-y-3 text-sm">
+          <li><a href="company.html" class="text-zinc-500 hover:text-teal-400 transition-colors duration-400">About Us</a></li>
+          <li><a href="contact.html" class="text-zinc-500 hover:text-teal-400 transition-colors duration-400">Contact</a></li>
+          <li><a href="insights.html" class="text-zinc-500 hover:text-teal-400 transition-colors duration-400">Resources</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="border-t border-white/5 pt-8">
+      <p class="text-sm text-zinc-600">© 2025 DAPS Analytics. All rights reserved.</p>
+    </div>
+  </div>
+</footer>
+
+<script src="assets/navbar.js"></script>
+<script src="assets/daps.js"></script>
+</body>
+</html>

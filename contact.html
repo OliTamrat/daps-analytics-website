@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html class="dark" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Contact — DAPS Analytics</title>
+<meta name="description" content="Initiate contact with DAPS Analytics. Connect with our specialists to architect high-fidelity data solutions."/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;900&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<script>
+  tailwind.config = {
+    darkMode: "class",
+    theme: {
+      extend: {
+        colors: {
+          "secondary-container": "#694700","error": "#ffb4ab","tertiary-container": "#c6c8ca",
+          "surface-tint": "#00dfc6","on-tertiary-fixed": "#191c1e","primary-fixed-dim": "#00dfc6",
+          "on-primary-fixed": "#00201b","inverse-surface": "#dee2ed","on-primary-container": "#005e53",
+          "primary-fixed": "#47fce2","on-tertiary-container": "#515455","on-secondary-fixed": "#281900",
+          "surface": "#0e141b","tertiary": "#e3e4e6","surface-bright": "#343942","secondary": "#efbf71",
+          "on-primary": "#003730","surface-container-low": "#171c24","inverse-primary": "#006b5e",
+          "on-secondary-container": "#e7b76a","on-background": "#dee2ed","background": "#0e141b",
+          "tertiary-fixed-dim": "#c5c6c8","primary": "#49fde3","surface-container-high": "#252a32",
+          "secondary-fixed": "#ffdead","on-error-container": "#ffdad6","on-surface": "#dee2ed",
+          "primary-container": "#00e0c7","on-tertiary": "#2e3132","error-container": "#93000a",
+          "surface-container-lowest": "#090e16","on-surface-variant": "#bacac5","tertiary-fixed": "#e1e2e4",
+          "surface-dim": "#0e141b","surface-container": "#1b2028","inverse-on-surface": "#2b3139",
+          "outline-variant": "#3b4a46","surface-variant": "#30353d","secondary-fixed-dim": "#efbf71",
+          "on-tertiary-fixed-variant": "#444749","surface-container-highest": "#30353d",
+          "on-secondary-fixed-variant": "#604100","outline": "#849490","on-primary-fixed-variant": "#005046",
+          "on-secondary": "#432c00","on-error": "#690005"
+        },
+        borderRadius: { DEFAULT: "0.25rem", lg: "0.5rem", xl: "0.75rem", full: "9999px" },
+        spacing: { lg: "4rem", xl: "8rem", xs: "0.5rem", md: "2rem", "2xl": "12rem", gutter: "24px", margin: "64px", unit: "4px", sm: "1rem" },
+        fontFamily: { "display-lg": ["Inter"], "label-caps": ["Inter"], "headline-md": ["Inter"], "display-2xl": ["Inter"], "body-md": ["Inter"], "display-xl": ["Inter"], "body-lg": ["Inter"] },
+        fontSize: {
+          "display-lg": ["56px", { lineHeight: "115%", letterSpacing: "-0.02em", fontWeight: "400" }],
+          "label-caps": ["12px", { lineHeight: "100%", letterSpacing: "0.1em", fontWeight: "600" }],
+          "headline-md": ["32px", { lineHeight: "130%", letterSpacing: "-0.01em", fontWeight: "400" }],
+          "display-2xl": ["128px", { lineHeight: "110%", letterSpacing: "-0.04em", fontWeight: "300" }],
+          "body-md": ["16px", { lineHeight: "160%", letterSpacing: "0em", fontWeight: "400" }],
+          "display-xl": ["96px", { lineHeight: "110%", letterSpacing: "-0.03em", fontWeight: "300" }],
+          "body-lg": ["18px", { lineHeight: "160%", letterSpacing: "0em", fontWeight: "400" }]
+        }
+      }
+    }
+  }
+</script>
+<style>
+  body { background-color: #0e141b; color: #dee2ed; }
+  .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.7s cubic-bezier(0.4,0,0.2,1), transform 0.7s cubic-bezier(0.4,0,0.2,1); }
+  .reveal.revealed { opacity: 1; transform: translateY(0); }
+  /* Underline-only inputs */
+  input[type="text"], input[type="email"], select, textarea {
+    background: transparent !important;
+    border: none !important;
+    border-bottom: 1px solid #849490 !important;
+    border-radius: 0 !important;
+    color: #dee2ed;
+    padding: 8px 0;
+    width: 100%;
+    outline: none;
+    box-shadow: none !important;
+  }
+  input[type="text"]:focus, input[type="email"]:focus, select:focus, textarea:focus {
+    border-bottom-color: #49fde3 !important;
+  }
+  select option { background: #1b2028; color: #dee2ed; }
+</style>
+</head>
+<body class="antialiased overflow-x-hidden min-h-screen flex flex-col">
+
+
+
+<main class="flex-grow pt-[120px] pb-xl px-4 md:px-12 max-w-[1440px] mx-auto w-full">
+
+  <!-- Hero -->
+  <section class="mb-xl text-center md:text-left reveal">
+    <p class="font-label-caps text-label-caps text-primary mb-4">Get in Touch</p>
+    <h1 class="font-display-lg text-display-lg text-white mb-md" style="font-size: clamp(36px, 5vw, 56px);">Initiate Contact.</h1>
+    <p class="font-body-lg text-body-lg text-on-surface-variant max-w-2xl">Connect with our analytics specialists to architect your high-fidelity data solutions.</p>
+  </section>
+
+  <div class="grid grid-cols-1 lg:grid-cols-12 gap-gutter">
+
+    <!-- Left: Form & Info -->
+    <div class="lg:col-span-5 space-y-xl">
+
+      <!-- Qualification Form -->
+      <div class="bg-surface-container-low border border-white/10 p-md md:p-lg rounded-lg reveal">
+        <h2 class="font-headline-md text-headline-md text-white mb-lg">Qualification Criteria</h2>
+        <form class="space-y-md" id="contact-form" onsubmit="handleSubmit(event)">
+          <div>
+            <label class="block font-label-caps text-label-caps text-on-surface-variant mb-xs">Full Name</label>
+            <input type="text" placeholder="Jane Smith" required/>
+          </div>
+          <div>
+            <label class="block font-label-caps text-label-caps text-on-surface-variant mb-xs">Corporate Email</label>
+            <input type="email" placeholder="jane@enterprise.com" required/>
+          </div>
+          <div>
+            <label class="block font-label-caps text-label-caps text-on-surface-variant mb-xs">Operating Region</label>
+            <select>
+              <option value="">Select Region</option>
+              <option value="africa">Africa</option>
+              <option value="na">North America</option>
+              <option value="eu">Europe</option>
+              <option value="apac">APAC</option>
+              <option value="mea">Middle East</option>
+            </select>
+          </div>
+          <div>
+            <label class="block font-label-caps text-label-caps text-on-surface-variant mb-xs">Service Interest</label>
+            <select>
+              <option value="">Select Service</option>
+              <option value="analytics">Predictive Analytics</option>
+              <option value="infrastructure">Data Infrastructure</option>
+              <option value="visual">Visual Intelligence</option>
+              <option value="audit">Strategic Audit</option>
+              <option value="onekof">Onekof PM</option>
+              <option value="wqis">UDC-WQIS</option>
+            </select>
+          </div>
+          <div>
+            <label class="block font-label-caps text-label-caps text-on-surface-variant mb-xs">Project Budget</label>
+            <select>
+              <option value="">Select Range</option>
+              <option value="25-50">$25k – $50k</option>
+              <option value="50-100">$50k – $100k</option>
+              <option value="100-250">$100k – $250k</option>
+              <option value="250+">$250k+</option>
+            </select>
+          </div>
+          <div>
+            <label class="block font-label-caps text-label-caps text-on-surface-variant mb-xs">Project Brief (Optional)</label>
+            <textarea rows="3" placeholder="Describe your data challenge..."></textarea>
+          </div>
+          <button type="submit"
+                  class="w-full py-4 border border-primary text-primary font-label-caps text-label-caps hover:bg-primary/10 transition-colors duration-400 mt-lg">
+            Submit Protocol
+          </button>
+          <p id="form-msg" class="text-center font-label-caps text-label-caps text-primary hidden">Message received — we'll be in touch within 48 hours.</p>
+        </form>
+      </div>
+
+      <!-- Office & Comms -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-md reveal">
+        <div class="bg-surface-container border border-white/10 p-md rounded-lg">
+          <span class="material-symbols-outlined text-primary mb-sm block">location_on</span>
+          <h3 class="font-label-caps text-label-caps text-white mb-xs">Headquarters — Bethesda, MD</h3>
+          <p class="font-body-md text-body-md text-on-surface-variant">3 Pooks Hill Rd, Suite 914<br/>Bethesda, MD 20814<br/>United States</p>
+        </div>
+        <div class="bg-surface-container border border-white/10 p-md rounded-lg">
+          <span class="material-symbols-outlined text-primary mb-sm block">forum</span>
+          <h3 class="font-label-caps text-label-caps text-white mb-xs">Direct Comms</h3>
+          <a href="mailto:hello@dapsanalytics.com" class="font-body-md text-body-md text-on-surface-variant hover:text-primary transition-colors flex items-center gap-xs">
+            <span class="material-symbols-outlined text-[16px]">mail</span> hello@dapsanalytics.com
+          </a>
+          <a href="#" class="font-body-md text-body-md text-on-surface-variant hover:text-primary transition-colors flex items-center gap-xs mt-2">
+            <span class="material-symbols-outlined text-[16px]">chat</span> Secure WhatsApp
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right: Schedule -->
+    <div class="lg:col-span-7 mt-xl lg:mt-0 reveal">
+      <div class="bg-surface-container-low border border-white/10 rounded-lg h-full min-h-[600px] flex items-center justify-center p-md relative overflow-hidden">
+        <div class="absolute inset-0 bg-surface-bright/20 backdrop-blur-sm z-0"></div>
+        <div class="relative z-10 text-center px-6">
+          <span class="material-symbols-outlined text-primary mb-md block" style="font-size: 72px;">calendar_month</span>
+          <h2 class="font-headline-md text-headline-md text-white mb-sm">Schedule Deployment</h2>
+          <p class="font-body-md text-body-md text-on-surface-variant mb-lg max-w-sm mx-auto">Select a time for your initial architecture review with a DAPS senior analyst.</p>
+          <button onclick="alert('Calendly integration coming soon. Please use the contact form or email us directly.')"
+                  class="px-8 py-4 bg-primary text-on-primary font-label-caps text-label-caps hover:opacity-90 transition-opacity duration-400 shadow-[0_0_15px_rgba(73,253,227,0.2)] hover:shadow-[0_0_25px_rgba(73,253,227,0.4)]">
+            Load Availability
+          </button>
+          <div class="mt-12 pt-8 border-t border-white/10">
+            <p class="font-label-caps text-label-caps text-on-surface-variant mb-4">Average response time</p>
+            <p class="font-headline-md text-headline-md text-primary">&lt; 48 hours</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+</main>
+
+<!-- Footer -->
+<footer class="w-full border-t border-white/5 py-20 bg-zinc-950 mt-auto">
+  <div class="max-w-[1440px] mx-auto px-6 md:px-12">
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
+      <div class="md:col-span-2">
+        <a href="index.html" class="block mb-4"><img src="assets/images/daps-logo-full.svg" alt="DAPS Analytics" style="height:60px;width:auto;"/></a>
+        <p class="text-sm text-zinc-500 max-w-sm mt-2">High-fidelity data solutions engineered for clarity, speed, and uncompromising accuracy.</p>
+      </div>
+      <div>
+        <h4 class="font-label-caps text-label-caps text-white mb-6">Platform</h4>
+        <ul class="space-y-3 text-sm">
+          <li><a href="products.html" class="text-zinc-500 hover:text-teal-400 transition-colors duration-400">Products</a></li>
+          <li><a href="services.html" class="text-zinc-500 hover:text-teal-400 transition-colors duration-400">Services</a></li>
+          <li><a href="industries.html" class="text-zinc-500 hover:text-teal-400 transition-colors duration-400">Industries</a></li>
+          <li><a href="insights.html" class="text-zinc-500 hover:text-teal-400 transition-colors duration-400">Insights</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 class="font-label-caps text-label-caps text-white mb-6">Company</h4>
+        <ul class="space-y-3 text-sm">
+          <li><a href="company.html" class="text-zinc-500 hover:text-teal-400 transition-colors duration-400">About Us</a></li>
+          <li><a href="contact.html" class="text-teal-400">Contact</a></li>
+          <li><a href="insights.html" class="text-zinc-500 hover:text-teal-400 transition-colors duration-400">Resources</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="border-t border-white/5 pt-8">
+      <p class="text-sm text-zinc-600">© 2025 DAPS Analytics. All rights reserved.</p>
+    </div>
+  </div>
+</footer>
+
+<script src="assets/navbar.js"></script>
+<script src="assets/daps.js"></script>
+<script>
+  function handleSubmit(e) {
+    e.preventDefault();
+    var msg = document.getElementById('form-msg');
+    msg.classList.remove('hidden');
+    e.target.reset();
+    setTimeout(function() { msg.classList.add('hidden'); }, 6000);
+  }
+</script>
+</body>
+</html>
