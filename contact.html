@@ -4,7 +4,7 @@
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <title>Contact — DAPS Analytics</title>
-<meta name="description" content="Initiate contact with DAPS Analytics. Connect with our specialists to architect high-fidelity data solutions."/>
+<meta name="description" content="Schedule a consultation or send a project brief to DAPS Analytics. We respond within 48 hours."/>
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;900&display=swap" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
@@ -51,171 +51,365 @@
   body { background-color: #0e141b; color: #dee2ed; }
   .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.7s cubic-bezier(0.4,0,0.2,1), transform 0.7s cubic-bezier(0.4,0,0.2,1); }
   .reveal.revealed { opacity: 1; transform: translateY(0); }
-  /* Underline-only inputs */
-  input[type="text"], input[type="email"], select, textarea {
-    background: transparent !important;
-    border: none !important;
-    border-bottom: 1px solid #849490 !important;
-    border-radius: 0 !important;
+  .reveal-delay-1 { transition-delay: 0.1s; }
+  .reveal-delay-2 { transition-delay: 0.2s; }
+  .reveal-delay-3 { transition-delay: 0.3s; }
+  .eyebrow { display:flex;align-items:center;gap:12px;font-size:11px;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;color:#49fde3;margin-bottom:20px; }
+  .eyebrow::before { content:'';display:block;width:32px;height:1px;background:#49fde3;flex-shrink:0; }
+  @keyframes dot-pulse { 0%,100%{opacity:1;transform:scale(1);}50%{opacity:0.5;transform:scale(1.2);} }
+  .status-dot { animation: dot-pulse 2s ease-in-out infinite; }
+
+  /* Form field base */
+  .f-label { display:block;font-size:10px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:#849490;margin-bottom:8px; }
+  .f-input, .f-select, .f-textarea {
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid rgba(132,148,144,0.35);
+    border-radius: 0;
     color: #dee2ed;
-    padding: 8px 0;
+    font-size: 15px;
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+    padding: 10px 0;
     width: 100%;
     outline: none;
-    box-shadow: none !important;
+    box-shadow: none;
+    transition: border-color 0.3s ease;
+    -webkit-appearance: none;
+    appearance: none;
   }
-  input[type="text"]:focus, input[type="email"]:focus, select:focus, textarea:focus {
-    border-bottom-color: #49fde3 !important;
-  }
-  select option { background: #1b2028; color: #dee2ed; }
+  .f-input::placeholder, .f-textarea::placeholder { color: rgba(186,202,197,0.3); font-size:15px; }
+  .f-input:focus, .f-select:focus, .f-textarea:focus { border-bottom-color: #49fde3; }
+  .f-select { cursor: pointer; }
+  .f-select option { background: #1b2028; color: #dee2ed; }
+
+  /* Call type cards */
+  .call-type { background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.08);border-radius:10px;padding:16px;cursor:pointer;transition:border-color 0.3s,background 0.3s; }
+  .call-type:hover { border-color:rgba(73,253,227,0.25);background:rgba(73,253,227,0.04); }
+  .call-type.active { background:rgba(73,253,227,0.07);border-color:rgba(73,253,227,0.3); }
+
+  /* Info cards */
+  .info-card { background:#0d1117;border:1px solid rgba(255,255,255,0.07);border-radius:12px;padding:24px;transition:border-color 0.4s ease; }
+  .info-card:hover { border-color:rgba(73,253,227,0.2); }
 </style>
 </head>
 <body class="antialiased overflow-x-hidden min-h-screen flex flex-col">
 
 
 
-<main class="flex-grow pb-xl px-4 md:px-12 max-w-[1440px] mx-auto w-full">
+<main class="flex-grow">
 
-  <!-- Hero -->
-  <section class="mb-8 md:mb-xl text-center md:text-left reveal">
-    <p class="font-label-caps text-label-caps text-primary mb-3">Get in Touch</p>
-    <h1 class="font-display-lg text-display-lg text-white mb-3" style="font-size: clamp(32px, 5vw, 56px);">Initiate Contact.</h1>
-    <p class="font-body-lg text-body-lg text-on-surface-variant max-w-2xl" style="font-size:16px;">Connect with our analytics specialists to architect your high-fidelity data solutions.</p>
-  </section>
-
-  <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-gutter">
-
-    <!-- Left: Form & Info -->
-    <div class="lg:col-span-5 space-y-6 lg:space-y-xl">
-
-      <!-- Qualification Form -->
-      <div class="bg-surface-container-low border border-white/10 p-5 md:p-8 rounded-lg reveal">
-        <h2 class="font-headline-md text-headline-md text-white mb-6" style="font-size:20px;letter-spacing:-0.01em;">Qualification Criteria</h2>
-        <form class="space-y-5" id="contact-form" onsubmit="handleSubmit(event)">
-          <div>
-            <label class="block font-label-caps text-label-caps text-on-surface-variant mb-xs">Full Name</label>
-            <input type="text" placeholder="Jane Smith" required/>
-          </div>
-          <div>
-            <label class="block font-label-caps text-label-caps text-on-surface-variant mb-xs">Corporate Email</label>
-            <input type="email" placeholder="jane@enterprise.com" required/>
-          </div>
-          <div>
-            <label class="block font-label-caps text-label-caps text-on-surface-variant mb-xs">Operating Region</label>
-            <select>
-              <option value="">Select Region</option>
-              <option value="africa">Africa</option>
-              <option value="na">North America</option>
-              <option value="eu">Europe</option>
-              <option value="apac">APAC</option>
-              <option value="mea">Middle East</option>
-            </select>
-          </div>
-          <div>
-            <label class="block font-label-caps text-label-caps text-on-surface-variant mb-xs">Service Interest</label>
-            <select>
-              <option value="">Select Service</option>
-              <option value="analytics">Predictive Analytics</option>
-              <option value="infrastructure">Data Infrastructure</option>
-              <option value="visual">Visual Intelligence</option>
-              <option value="audit">Strategic Audit</option>
-              <option value="onekof">Onekof PM</option>
-              <option value="wqis">UDC-WQIS</option>
-            </select>
-          </div>
-          <div>
-            <label class="block font-label-caps text-label-caps text-on-surface-variant mb-xs">Project Budget</label>
-            <select>
-              <option value="">Select Range</option>
-              <option value="25-50">$25k – $50k</option>
-              <option value="50-100">$50k – $100k</option>
-              <option value="100-250">$100k – $250k</option>
-              <option value="250+">$250k+</option>
-            </select>
-          </div>
-          <div>
-            <label class="block font-label-caps text-label-caps text-on-surface-variant mb-xs">Project Brief (Optional)</label>
-            <textarea rows="3" placeholder="Describe your data challenge..."></textarea>
-          </div>
-          <button type="submit"
-                  class="w-full py-4 border border-primary text-primary font-label-caps text-label-caps hover:bg-primary/10 transition-colors duration-400 mt-lg">
-            Submit Protocol
-          </button>
-          <p id="form-msg" class="text-center font-label-caps text-label-caps text-primary hidden">Message received — we'll be in touch within 48 hours.</p>
-        </form>
+<!-- ── Hero ──────────────────────────────────────────────────────────── -->
+<section class="relative pt-2 pb-16 px-6 md:px-12 overflow-hidden" style="background:#0e141b;">
+  <div class="absolute inset-0 pointer-events-none" style="background:radial-gradient(ellipse 55% 65% at 80% 40%,rgba(73,253,227,0.05) 0%,transparent 70%);"></div>
+  <div class="max-w-[1440px] mx-auto relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-12 items-end">
+    <div>
+      <div class="eyebrow reveal">Get In Touch</div>
+      <h1 class="reveal reveal-delay-1" style="font-size:clamp(36px,4.5vw,64px);line-height:1.12;font-weight:300;letter-spacing:-0.02em;color:#dee2ed;margin-bottom:1rem;">
+        Let's discuss your<br/>data challenge.
+      </h1>
+      <p class="reveal reveal-delay-2" style="font-size:17px;line-height:1.7;color:#bacac5;max-width:480px;margin-bottom:2rem;">
+        Schedule a 30-minute architecture review or send a project brief. We respond to every enquiry within 48 hours.
+      </p>
+      <div class="flex flex-wrap gap-3 reveal reveal-delay-3">
+        <a href="#schedule" class="inline-flex items-center gap-2 bg-primary text-on-primary px-7 py-3 rounded-full hover:bg-primary-container transition-colors duration-300" style="font-size:11px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;text-decoration:none;">
+          Schedule a Call <span class="material-symbols-outlined" style="font-size:14px;">calendar_today</span>
+        </a>
+        <a href="#brief" class="inline-flex items-center gap-2 border border-white/20 text-white/80 px-7 py-3 rounded-full hover:border-white/50 hover:text-white transition-colors duration-300" style="font-size:11px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;text-decoration:none;">
+          Send a Brief
+        </a>
       </div>
-
-      <!-- Office & Comms -->
-      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 reveal">
-        <div class="bg-surface-container border border-white/10 p-md rounded-lg">
-          <span class="material-symbols-outlined text-primary mb-sm block">location_on</span>
-          <h3 class="font-label-caps text-label-caps text-white mb-xs">Headquarters — Bethesda, MD</h3>
-          <p class="font-body-md text-body-md text-on-surface-variant">3 Pooks Hill Rd, Suite 914<br/>Bethesda, MD 20814<br/>United States</p>
+    </div>
+    <!-- Hero meta: response stats -->
+    <div class="reveal reveal-delay-2 hidden lg:flex items-end justify-end pb-2">
+      <div class="flex gap-10">
+        <div class="text-right">
+          <div style="font-size:32px;font-weight:300;letter-spacing:-0.03em;color:#49fde3;line-height:1;">&lt;48h</div>
+          <div style="font-size:10px;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:#849490;margin-top:6px;">Response Time</div>
         </div>
-        <div class="bg-surface-container border border-white/10 p-md rounded-lg">
-          <span class="material-symbols-outlined text-primary mb-sm block">forum</span>
-          <h3 class="font-label-caps text-label-caps text-white mb-xs">Direct Comms</h3>
-          <a href="mailto:hello@dapsanalytics.com" class="font-body-md text-body-md text-on-surface-variant hover:text-primary transition-colors flex items-center gap-xs">
-            <span class="material-symbols-outlined text-[16px]">mail</span> hello@dapsanalytics.com
-          </a>
-          <a href="#" class="font-body-md text-body-md text-on-surface-variant hover:text-primary transition-colors flex items-center gap-xs mt-2">
-            <span class="material-symbols-outlined text-[16px]">chat</span> Secure WhatsApp
-          </a>
+        <div class="text-right">
+          <div style="font-size:32px;font-weight:300;letter-spacing:-0.03em;color:#49fde3;line-height:1;">Free</div>
+          <div style="font-size:10px;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:#849490;margin-top:6px;">Consultation</div>
+        </div>
+        <div class="text-right">
+          <div style="font-size:32px;font-weight:300;letter-spacing:-0.03em;color:#49fde3;line-height:1;">Senior</div>
+          <div style="font-size:10px;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:#849490;margin-top:6px;">Analyst</div>
         </div>
       </div>
     </div>
-
-    <!-- Right: Schedule -->
-    <div class="lg:col-span-7 mt-6 lg:mt-0 reveal">
-      <div class="bg-surface-container-low border border-white/10 rounded-lg h-full min-h-[600px] flex items-center justify-center p-md relative overflow-hidden">
-        <div class="absolute inset-0 bg-surface-bright/20 backdrop-blur-sm z-0"></div>
-        <div class="relative z-10 text-center px-6">
-          <span class="material-symbols-outlined text-primary mb-md block" style="font-size: 72px;">calendar_month</span>
-          <h2 class="font-headline-md text-headline-md text-white mb-sm">Schedule Deployment</h2>
-          <p class="font-body-md text-body-md text-on-surface-variant mb-lg max-w-sm mx-auto">Select a time for your initial architecture review with a DAPS senior analyst.</p>
-          <button onclick="alert('Calendly integration coming soon. Please use the contact form or email us directly.')"
-                  class="px-8 py-4 bg-primary text-on-primary font-label-caps text-label-caps hover:opacity-90 transition-opacity duration-400 shadow-[0_0_15px_rgba(73,253,227,0.2)] hover:shadow-[0_0_25px_rgba(73,253,227,0.4)]">
-            Load Availability
-          </button>
-          <div class="mt-12 pt-8 border-t border-white/10">
-            <p class="font-label-caps text-label-caps text-on-surface-variant mb-4">Average response time</p>
-            <p class="font-headline-md text-headline-md text-primary">&lt; 48 hours</p>
-          </div>
-        </div>
-      </div>
-    </div>
-
   </div>
+</section>
+
+<!-- ── Main: Schedule + Form ─────────────────────────────────────────── -->
+<section class="px-6 md:px-12 pb-16" style="background:#0e141b;">
+  <div class="max-w-[1440px] mx-auto">
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 xl:gap-8">
+
+      <!-- LEFT ── Schedule a Call ──────────────────────────────────────── -->
+      <div id="schedule" class="reveal">
+        <div class="flex flex-col h-full" style="background:linear-gradient(145deg,#0a1520 0%,#060e14 100%);border:1px solid rgba(73,253,227,0.15);border-radius:16px;overflow:hidden;position:relative;">
+          <!-- Ambient glows -->
+          <div style="position:absolute;top:-100px;right:-80px;width:360px;height:360px;border-radius:50%;background:radial-gradient(circle,rgba(73,253,227,0.07) 0%,transparent 70%);pointer-events:none;"></div>
+          <div style="position:absolute;bottom:-80px;left:-60px;width:280px;height:280px;border-radius:50%;background:radial-gradient(circle,rgba(73,253,227,0.04) 0%,transparent 70%);pointer-events:none;"></div>
+
+          <!-- Card header -->
+          <div style="padding:32px 32px 24px;border-bottom:1px solid rgba(255,255,255,0.06);position:relative;z-index:1;">
+            <div class="flex items-center gap-2 mb-3">
+              <span class="status-dot" style="display:inline-block;width:8px;height:8px;border-radius:50%;background:#49fde3;"></span>
+              <span style="font-size:10px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:#49fde3;">Available for Booking</span>
+            </div>
+            <h2 style="font-size:clamp(20px,2.2vw,28px);font-weight:300;letter-spacing:-0.02em;color:#dee2ed;margin-bottom:8px;">Schedule a Consultation</h2>
+            <p style="font-size:14px;line-height:1.65;color:#849490;">A focused 30-minute session with a senior DAPS analyst. We review your data environment and outline a path forward. No obligation.</p>
+          </div>
+
+          <!-- Call format picker -->
+          <div style="padding:24px 32px;position:relative;z-index:1;">
+            <p style="font-size:10px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:#849490;margin-bottom:12px;">Choose Format</p>
+            <div class="grid grid-cols-2 gap-3">
+              <div class="call-type active" onclick="selectCall(this)">
+                <span class="material-symbols-outlined" style="font-size:22px;color:#49fde3;display:block;margin-bottom:8px;font-variation-settings:'FILL' 1;">video_call</span>
+                <div style="font-size:13px;font-weight:600;color:#dee2ed;margin-bottom:3px;">Video Call</div>
+                <div style="font-size:11px;color:#849490;">30 min · Zoom / Meet</div>
+              </div>
+              <div class="call-type" onclick="selectCall(this)">
+                <span class="material-symbols-outlined" style="font-size:22px;color:#efbf71;display:block;margin-bottom:8px;font-variation-settings:'FILL' 1;">phone_in_talk</span>
+                <div style="font-size:13px;font-weight:600;color:#dee2ed;margin-bottom:3px;">Phone Call</div>
+                <div style="font-size:11px;color:#849490;">30 min · US / Int'l</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- What to expect -->
+          <div style="padding:0 32px 24px;position:relative;z-index:1;">
+            <p style="font-size:10px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:#849490;margin-bottom:12px;">What We Cover</p>
+            <div class="space-y-3">
+              <div class="flex items-start gap-3">
+                <span style="color:#49fde3;font-size:15px;margin-top:1px;flex-shrink:0;">→</span>
+                <span style="font-size:13px;line-height:1.5;color:#bacac5;">Audit of your current data environment and gaps</span>
+              </div>
+              <div class="flex items-start gap-3">
+                <span style="color:#49fde3;font-size:15px;margin-top:1px;flex-shrink:0;">→</span>
+                <span style="font-size:13px;line-height:1.5;color:#bacac5;">Recommended architecture and product fit</span>
+              </div>
+              <div class="flex items-start gap-3">
+                <span style="color:#49fde3;font-size:15px;margin-top:1px;flex-shrink:0;">→</span>
+                <span style="font-size:13px;line-height:1.5;color:#bacac5;">Indicative timeline and engagement structure</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- CTA -->
+          <div style="padding:0 32px 28px;position:relative;z-index:1;margin-top:auto;">
+            <button onclick="alert('Calendly integration coming soon. Please use the contact form or email us directly.')"
+              class="w-full flex items-center justify-center gap-2"
+              style="padding:14px 24px;background:#49fde3;color:#003730;font-size:11px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;border:none;border-radius:8px;cursor:pointer;box-shadow:0 0 24px rgba(73,253,227,0.2);transition:opacity 0.3s,box-shadow 0.3s;"
+              onmouseover="this.style.opacity='0.9';this.style.boxShadow='0 0 36px rgba(73,253,227,0.35)'" onmouseout="this.style.opacity='1';this.style.boxShadow='0 0 24px rgba(73,253,227,0.2)'">
+              Load Availability
+              <span class="material-symbols-outlined" style="font-size:15px;">calendar_month</span>
+            </button>
+          </div>
+
+          <!-- Bottom stat strip -->
+          <div style="border-top:1px solid rgba(255,255,255,0.06);padding:18px 32px;display:grid;grid-template-columns:repeat(3,1fr);gap:12px;position:relative;z-index:1;background:rgba(0,0,0,0.15);">
+            <div class="text-center">
+              <div style="font-size:20px;font-weight:300;letter-spacing:-0.03em;color:#49fde3;line-height:1;">&lt;48h</div>
+              <div style="font-size:9px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:#849490;margin-top:4px;">Response</div>
+            </div>
+            <div class="text-center">
+              <div style="font-size:20px;font-weight:300;letter-spacing:-0.03em;color:#49fde3;line-height:1;">Free</div>
+              <div style="font-size:9px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:#849490;margin-top:4px;">No Cost</div>
+            </div>
+            <div class="text-center">
+              <div style="font-size:20px;font-weight:300;letter-spacing:-0.03em;color:#49fde3;line-height:1;">Senior</div>
+              <div style="font-size:9px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:#849490;margin-top:4px;">Analyst</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- RIGHT ── Project Brief Form ────────────────────────────────── -->
+      <div id="brief" class="reveal reveal-delay-1">
+        <div style="background:#0d1117;border:1px solid rgba(255,255,255,0.08);border-radius:16px;padding:32px;height:100%;">
+
+          <h2 style="font-size:clamp(20px,2.2vw,28px);font-weight:300;letter-spacing:-0.02em;color:#dee2ed;margin-bottom:6px;">Send a Project Brief</h2>
+          <p style="font-size:14px;line-height:1.6;color:#849490;margin-bottom:28px;">We review every submission personally and respond with a tailored proposal.</p>
+
+          <form id="contact-form" onsubmit="handleSubmit(event)">
+
+            <!-- Row 1: Name + Email -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-6 mb-6">
+              <div>
+                <label class="f-label">Full Name</label>
+                <input class="f-input" type="text" placeholder="Abebe Bikila" required/>
+              </div>
+              <div>
+                <label class="f-label">Corporate Email</label>
+                <input class="f-input" type="email" placeholder="abebe@company.com" required/>
+              </div>
+            </div>
+
+            <!-- Row 2: Region + Service -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-6 mb-6">
+              <div>
+                <label class="f-label">Operating Region</label>
+                <select class="f-select">
+                  <option value="">Select Region</option>
+                  <option value="ethiopia">Ethiopia</option>
+                  <option value="africa">Africa (Other)</option>
+                  <option value="na">North America</option>
+                  <option value="eu">Europe</option>
+                  <option value="apac">APAC</option>
+                  <option value="mea">Middle East</option>
+                </select>
+              </div>
+              <div>
+                <label class="f-label">Service Interest</label>
+                <select class="f-select">
+                  <option value="">Select Service</option>
+                  <option value="analytics">Predictive Analytics</option>
+                  <option value="infrastructure">Data Infrastructure</option>
+                  <option value="visual">Visual Intelligence</option>
+                  <option value="audit">Strategic Audit</option>
+                  <option value="ai">ML / AI Development</option>
+                  <option value="nlp">Ethiopian NLP / Language AI</option>
+                  <option value="onekof">Onekof PM</option>
+                  <option value="wqis">UDC-WQIS</option>
+                  <option value="fleet">Olink Fleet</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- Row 3: Budget -->
+            <div class="mb-6">
+              <label class="f-label">Estimated Project Budget</label>
+              <select class="f-select">
+                <option value="">Select Range</option>
+                <option value="under25">Under $25k</option>
+                <option value="25-50">$25k – $50k</option>
+                <option value="50-100">$50k – $100k</option>
+                <option value="100-250">$100k – $250k</option>
+                <option value="250+">$250k+</option>
+              </select>
+            </div>
+
+            <!-- Row 4: Brief -->
+            <div class="mb-7">
+              <label class="f-label">
+                Project Brief
+                <span style="text-transform:none;letter-spacing:0;font-weight:400;font-size:10px;color:#3b4a46;"> — Optional</span>
+              </label>
+              <textarea class="f-textarea" rows="4" placeholder="Describe your data challenge — what you need to solve, current bottlenecks, relevant context, or any constraints..."></textarea>
+            </div>
+
+            <!-- Submit -->
+            <button type="submit"
+              class="w-full flex items-center justify-center gap-2"
+              style="padding:14px 24px;background:transparent;border:1px solid rgba(73,253,227,0.6);color:#49fde3;font-size:11px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;border-radius:8px;cursor:pointer;font-family:'Inter',sans-serif;transition:background 0.3s,border-color 0.3s;"
+              onmouseover="this.style.background='rgba(73,253,227,0.08)';this.style.borderColor='#49fde3'"
+              onmouseout="this.style.background='transparent';this.style.borderColor='rgba(73,253,227,0.6)'">
+              Submit Protocol
+              <span class="material-symbols-outlined" style="font-size:15px;">send</span>
+            </button>
+
+            <div id="form-msg" style="display:none;text-align:center;font-size:11px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:#49fde3;margin-top:14px;padding:12px;background:rgba(73,253,227,0.06);border:1px solid rgba(73,253,227,0.15);border-radius:8px;">
+              Message received — we'll be in touch within 48 hours.
+            </div>
+          </form>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ── Contact Info Strip ─────────────────────────────────────────────── -->
+<section class="px-6 md:px-12 pb-24" style="background:#0e141b;">
+  <div class="max-w-[1440px] mx-auto">
+
+    <!-- Divider with label -->
+    <div class="flex items-center gap-4 mb-8 reveal">
+      <div style="flex:1;height:1px;background:rgba(255,255,255,0.06);"></div>
+      <span style="font-size:10px;font-weight:700;letter-spacing:0.16em;text-transform:uppercase;color:#3b4a46;white-space:nowrap;">Other Ways to Reach Us</span>
+      <div style="flex:1;height:1px;background:rgba(255,255,255,0.06);"></div>
+    </div>
+
+    <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+
+      <div class="info-card reveal">
+        <div class="flex items-center gap-3 mb-4">
+          <div style="width:36px;height:36px;border-radius:8px;background:rgba(73,253,227,0.08);border:1px solid rgba(73,253,227,0.15);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+            <span class="material-symbols-outlined" style="font-size:18px;color:#49fde3;font-variation-settings:'FILL' 1;">location_on</span>
+          </div>
+          <span style="font-size:10px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:#dee2ed;">Headquarters</span>
+        </div>
+        <p style="font-size:14px;line-height:1.75;color:#849490;">3 Pooks Hill Rd, Suite 914<br/>Bethesda, MD 20814<br/>United States</p>
+      </div>
+
+      <div class="info-card reveal reveal-delay-1">
+        <div class="flex items-center gap-3 mb-4">
+          <div style="width:36px;height:36px;border-radius:8px;background:rgba(73,253,227,0.08);border:1px solid rgba(73,253,227,0.15);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+            <span class="material-symbols-outlined" style="font-size:18px;color:#49fde3;font-variation-settings:'FILL' 1;">mail</span>
+          </div>
+          <span style="font-size:10px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:#dee2ed;">Email</span>
+        </div>
+        <a href="mailto:hello@dapsanalytics.com"
+           style="display:block;font-size:14px;color:#849490;text-decoration:none;transition:color 0.3s;margin-bottom:4px;"
+           onmouseover="this.style.color='#49fde3'" onmouseout="this.style.color='#849490'">
+          hello@dapsanalytics.com
+        </a>
+        <p style="font-size:12px;color:#3b4a46;">Response within 48 hours</p>
+      </div>
+
+      <div class="info-card reveal reveal-delay-2">
+        <div class="flex items-center gap-3 mb-4">
+          <div style="width:36px;height:36px;border-radius:8px;background:rgba(239,191,113,0.08);border:1px solid rgba(239,191,113,0.15);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+            <span class="material-symbols-outlined" style="font-size:18px;color:#efbf71;font-variation-settings:'FILL' 1;">chat</span>
+          </div>
+          <span style="font-size:10px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:#dee2ed;">Direct Comms</span>
+        </div>
+        <a href="#"
+           style="display:block;font-size:14px;color:#849490;text-decoration:none;transition:color 0.3s;margin-bottom:4px;"
+           onmouseover="this.style.color='#efbf71'" onmouseout="this.style.color='#849490'">
+          Secure WhatsApp
+        </a>
+        <p style="font-size:12px;color:#3b4a46;">Encrypted business channel</p>
+      </div>
+
+    </div>
+  </div>
+</section>
 
 </main>
 
 <!-- Footer -->
-<footer class="w-full border-t border-white/5 py-20 bg-zinc-950 mt-auto">
-  <div class="max-w-[1440px] mx-auto px-6 md:px-12">
-    <div class="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
+<footer style="background:#050709;border-top:1px solid rgba(255,255,255,0.05);">
+  <div class="max-w-[1440px] mx-auto px-6 md:px-12 py-20">
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-12 mb-14">
       <div class="md:col-span-2">
         <a href="index.html" class="block mb-4"><img src="assets/images/daps-logo-full.svg" alt="DAPS Analytics" style="height:60px;width:auto;"/></a>
-        <p class="text-sm text-zinc-500 max-w-sm mt-2">High-fidelity data solutions engineered for clarity, speed, and uncompromising accuracy.</p>
+        <p style="font-size:13px;line-height:1.7;color:#3b4a46;max-width:300px;">High-fidelity data solutions engineered for clarity, speed, and uncompromising accuracy.</p>
       </div>
       <div>
-        <h4 class="font-label-caps text-label-caps text-white mb-6">Platform</h4>
-        <ul class="space-y-3 text-sm">
-          <li><a href="products.html" class="text-zinc-500 hover:text-teal-400 transition-colors duration-400">Products</a></li>
-          <li><a href="services.html" class="text-zinc-500 hover:text-teal-400 transition-colors duration-400">Services</a></li>
-          <li><a href="industries.html" class="text-zinc-500 hover:text-teal-400 transition-colors duration-400">Industries</a></li>
-          <li><a href="insights.html" class="text-zinc-500 hover:text-teal-400 transition-colors duration-400">Insights</a></li>
+        <h4 style="font-size:10px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:#dee2ed;margin-bottom:20px;">Platform</h4>
+        <ul class="space-y-3" style="font-size:13px;">
+          <li><a href="products.html"   style="color:#3b4a46;" class="hover:text-teal-400 transition-colors">Products</a></li>
+          <li><a href="services.html"   style="color:#3b4a46;" class="hover:text-teal-400 transition-colors">Services</a></li>
+          <li><a href="industries.html" style="color:#3b4a46;" class="hover:text-teal-400 transition-colors">Industries</a></li>
+          <li><a href="insights.html"   style="color:#3b4a46;" class="hover:text-teal-400 transition-colors">Insights</a></li>
         </ul>
       </div>
       <div>
-        <h4 class="font-label-caps text-label-caps text-white mb-6">Company</h4>
-        <ul class="space-y-3 text-sm">
-          <li><a href="company.html" class="text-zinc-500 hover:text-teal-400 transition-colors duration-400">About Us</a></li>
-          <li><a href="contact.html" class="text-teal-400">Contact</a></li>
-          <li><a href="insights.html" class="text-zinc-500 hover:text-teal-400 transition-colors duration-400">Resources</a></li>
+        <h4 style="font-size:10px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:#dee2ed;margin-bottom:20px;">Company</h4>
+        <ul class="space-y-3" style="font-size:13px;">
+          <li><a href="company.html" style="color:#3b4a46;" class="hover:text-teal-400 transition-colors">About Us</a></li>
+          <li><a href="contact.html" style="color:#49fde3;">Contact</a></li>
+          <li><a href="insights.html" style="color:#3b4a46;" class="hover:text-teal-400 transition-colors">Resources</a></li>
         </ul>
       </div>
     </div>
-    <div class="border-t border-white/5 pt-8">
-      <p class="text-sm text-zinc-600">© 2025 DAPS Analytics. All rights reserved.</p>
+    <div style="border-top:1px solid rgba(255,255,255,0.04);padding-top:28px;display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:12px;">
+      <p style="font-size:12px;color:#1e2a26;">© 2025 DAPS Analytics. All rights reserved.</p>
+      <p style="font-size:12px;color:#1e2a26;">Built by <span style="color:#3b4a46;">Olink Technologies Inc.</span> &amp; <span style="color:#3b4a46;">DAPS Analytics</span></p>
     </div>
   </div>
 </footer>
@@ -226,9 +420,13 @@
   function handleSubmit(e) {
     e.preventDefault();
     var msg = document.getElementById('form-msg');
-    msg.classList.remove('hidden');
+    msg.style.display = 'block';
     e.target.reset();
-    setTimeout(function() { msg.classList.add('hidden'); }, 6000);
+    setTimeout(function() { msg.style.display = 'none'; }, 6000);
+  }
+  function selectCall(el) {
+    document.querySelectorAll('.call-type').forEach(function(c){ c.classList.remove('active'); });
+    el.classList.add('active');
   }
 </script>
 </body>
