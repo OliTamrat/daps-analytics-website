@@ -7,7 +7,10 @@
 
   /* ── CSS ─────────────────────────────────────────────────────── */
   var CSS = [
-    '#daps-nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(5,7,9,0.88);backdrop-filter:blur(28px);-webkit-backdrop-filter:blur(28px);border-bottom:1px solid rgba(255,255,255,0.07);}',
+    /* Reserve space for fixed nav + reset any conflicting top padding */
+    'body{padding-top:70px !important;}',
+    'body>*:not(#daps-nav){margin-top:0 !important;}',
+    '#daps-nav{position:fixed;top:0;left:0;right:0;z-index:1000;background:rgba(5,7,9,0.9);backdrop-filter:blur(28px);-webkit-backdrop-filter:blur(28px);border-bottom:1px solid rgba(255,255,255,0.07);}',
     '#daps-nav .ni{display:flex;justify-content:space-between;align-items:center;max-width:1440px;margin:0 auto;padding:0 48px;height:70px;}',
     '@media(max-width:768px){#daps-nav .ni{padding:0 20px;}}',
 
@@ -312,13 +315,6 @@
       });
     }
 
-    /* Body-level page top padding (so content doesn't hide under fixed nav) */
-    document.body.style.paddingTop = '70px';
-    /* Un-pad sections that already accounted for the nav */
-    document.querySelectorAll('.pt-24,.pt-\\[120px\\],.pt-\\[100px\\],.pt-\\[140px\\],.pt-\\[130px\\]').forEach(function(el){
-      /* keep existing — they add to the 70px body padding, so reduce them */
-      el.style.paddingTop = '0';
-    });
   }
 
   /* ── Toast ───────────────────────────────────────────────────── */

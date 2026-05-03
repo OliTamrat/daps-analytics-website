@@ -24,7 +24,14 @@
       "Bash(curl -s -o /dev/null -w \"articles-data:%{http_code} \" http://localhost:3030/assets/articles-data.js)",
       "Bash(git init *)",
       "Bash(git add *)",
-      "Bash(git commit *)"
+      "Bash(git commit *)",
+      "Bash(gh auth *)",
+      "Bash(gh repo *)",
+      "Bash(npx vercel *)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" https://stitchdapsanalyticscinematicwebexperience-7xssfz6vx.vercel.app)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:3030)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" \"https://stitchdapsanalyticscinematicwebexpe.vercel.app\")",
+      "Bash(git push *)"
     ]
   }
 }
