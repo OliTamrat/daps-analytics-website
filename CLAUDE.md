@@ -223,28 +223,40 @@ After pulling changes or editing files, do a **hard refresh** (`Ctrl+Shift+R`) �
 
 ## Pre-Launch Checklist & Next Phase Tasks
 
-### Critical — Must complete before public launch
+### DONE (as of 2026-05-04)
+- [x] Contact form wired → Resend via Vercel serverless function (`api/contact.js`). Needs `RESEND_API_KEY` env var set in Vercel dashboard.
+- [x] Calendly button wired → `https://calendly.com/olitamrat/30min` (temporary — replacing with Teams/Zoom, see below)
+- [x] Privacy Policy page (`privacy.html`) — 10-section legal policy
+- [x] Favicon (SVG) on all pages
+- [x] Open Graph + Twitter Card meta tags on all 13 pages — `og:image` refs `assets/images/og-preview.png`
+- [x] `robots.txt` and `sitemap.xml` (14 pages)
+- [x] Privacy Policy link in footer of all 14 pages
 
-| Task | Detail | Effort |
-|------|--------|--------|
-| **Wire contact form** | Sign up at Formspree.io → get form ID → change `<form>` action to `https://formspree.io/f/YOUR_ID` in `contact.html` | 10 min |
-| **Connect Calendly** | Create Calendly account → set availability → replace `alert(...)` in "Load Availability" button with `window.open('https://calendly.com/YOUR_LINK', '_blank')` | 10 min |
-| **Set up hello@dapsanalytics.com** | Google Workspace ($6/mo) or Zoho Mail (free). Emails will bounce without this. | 1 hr |
-| **Add WhatsApp link** | Replace `href="#"` on Secure WhatsApp in `contact.html` with `href="https://wa.me/1YOURNUMBER"` | 2 min |
-| **Founder photos** | 7 "Add Photo" placeholders on `company.html` — replace gradient divs with `<img>` tags | Per photo |
-| **Custom domain** | Buy `dapsanalytics.com` or similar on Namecheap (~$12/yr) → add to Vercel → update all internal URLs | 1 hr |
-| **Privacy Policy page** | Legally required when collecting form data. Create `privacy.html`. Use a generator (termly.io, iubenda) or draft manually. | 2 hrs |
+### TODO — Pending your action
+
+| Task | What Claude needs / what you do | File to touch |
+|------|--------------------------------|---------------|
+| **Add RESEND_API_KEY to Vercel** | Vercel dashboard → daps-analytics-website → Settings → Env Vars → add `RESEND_API_KEY` | Vercel UI only |
+| **Replace Calendly with Teams or Zoom scheduler** | Provide your Teams Bookings URL or Zoom Scheduler link — Claude updates one line | `contact.html` line with `calendly.com/olitamrat/30min` |
+| **OG preview image** | Run `og-generator.html` via local server → click Download → save PNG to `assets/images/og-preview.png` → push | `assets/images/og-preview.png` |
+| **Set up hello@dapsanalytics.com** | Google Workspace ($6/mo) or Zoho Mail (free) — then update `CONTACT_TO_EMAIL` env var in Vercel | Vercel UI + one line in `api/contact.js` |
+| **Update Resend from-address** | Once hello@dapsanalytics.com verified in Resend dashboard, change one line: `from: 'DAPS Analytics <hello@dapsanalytics.com>'` | `api/contact.js` line 44 |
+| **Founder photos** | 7 gradient placeholders on `company.html` — provide photo files, Claude wires them | `company.html` |
+| **Google Analytics** | Create GA4 property → get Measurement ID (G-XXXXXXXXXX) → Claude adds script to all pages | All HTML pages |
+| **Real trust logos** | Provide partner/client logo files or SVGs | `index.html` trust bar section |
+
+### After custom domain (dapsanalytics.com) lands
+1. Find-replace `dapsanalytics.vercel.app` → `www.dapsanalytics.com` across all HTML files (Claude does this in one pass)
+2. Re-run `og-generator.html` → save new `og-preview.png` with updated URL text → push
+3. Update Vercel domain settings
+4. Update Resend verified domain if using hello@dapsanalytics.com
 
 ### Medium priority — Before marketing push
 
 | Task | Detail |
 |------|--------|
-| **Favicon** | Add `<link rel="icon">` pointing to a 32×32 SVG/PNG of the DAPS mark |
-| **Open Graph meta tags** | Add `og:title`, `og:description`, `og:image`, `og:url` to all pages so LinkedIn/WhatsApp shares look good |
 | **Real trust logos** | Homepage trust bar uses placeholder CDN images — replace with real partner/client logos |
-| **Sitemap.xml** | Create `/sitemap.xml` listing all 13 pages for Google indexing |
-| **robots.txt** | Create `/robots.txt` with `User-agent: * / Allow: /` |
-| **Google Analytics** | Add GA4 tracking script to all pages |
+| **WhatsApp link** | Replace `href="#"` on Secure WhatsApp in `contact.html` with `href="https://wa.me/1YOURNUMBER"` |
 
 ### Marketing — Post-launch
 
@@ -254,10 +266,10 @@ After pulling changes or editing files, do a **hard refresh** (`Ctrl+Shift+R`) �
 - Cross-post the 12 existing articles from `insights.html` to LinkedIn
 - Professional email signatures for all 7 founders
 
-### Pages completed (as of 2026-05-03)
+### Pages completed (as of 2026-05-04)
 - `index.html`, `products.html`, `services.html`, `industries.html`, `company.html`
 - `insights.html`, `article.html`, `projects.html`, `contact.html`, `onekof-pm.html`
-- `udc-wqis.html`, `hakimet.html`, `olink-fleet.html` ← new product detail pages
+- `udc-wqis.html`, `hakimet.html`, `olink-fleet.html`, `privacy.html`
 
 ---
 
