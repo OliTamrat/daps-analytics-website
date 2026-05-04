@@ -435,9 +435,6 @@
 <script src="assets/navbar.js"></script>
 <script src="assets/daps.js"></script>
 <script>
-  // TODO: Replace with your Formspree form ID from formspree.io
-  var FORMSPREE_ID = 'YOUR_FORM_ID';
-
   function handleSubmit(e) {
     e.preventDefault();
     var form = e.target;
@@ -447,10 +444,19 @@
     btn.disabled = true;
     btn.innerHTML = 'Sending… <span class="material-symbols-outlined" style="font-size:15px;">hourglass_empty</span>';
 
-    fetch('https://formspree.io/f/' + FORMSPREE_ID, {
+    var data = {
+      name:    form.querySelector('[name="name"]').value,
+      email:   form.querySelector('[name="email"]').value,
+      region:  form.querySelector('[name="region"]').value,
+      service: form.querySelector('[name="service"]').value,
+      budget:  form.querySelector('[name="budget"]').value,
+      message: form.querySelector('[name="message"]').value
+    };
+
+    fetch('/api/contact', {
       method: 'POST',
-      body: new FormData(form),
-      headers: { 'Accept': 'application/json' }
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data)
     }).then(function(response) {
       btn.disabled = false;
       btn.innerHTML = 'Submit Protocol <span class="material-symbols-outlined" style="font-size:15px;">send</span>';
