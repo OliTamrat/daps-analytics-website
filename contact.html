@@ -5,6 +5,17 @@
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <title>Contact — DAPS Analytics</title>
 <meta name="description" content="Schedule a consultation or send a project brief to DAPS Analytics. We respond within 48 hours."/>
+<link rel="icon" href="assets/images/daps-logo-nav.svg" type="image/svg+xml"/>
+<meta property="og:type" content="website"/>
+<meta property="og:site_name" content="DAPS Analytics"/>
+<meta property="og:title" content="Contact — DAPS Analytics"/>
+<meta property="og:description" content="Schedule a consultation or send a project brief to DAPS Analytics. We respond within 48 hours."/>
+<meta property="og:url" content="https://dapsanalytics.vercel.app/contact.html"/>
+<meta property="og:image" content="https://dapsanalytics.vercel.app/assets/images/og-preview.png"/>
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:title" content="Contact — DAPS Analytics"/>
+<meta name="twitter:description" content="Schedule a consultation or send a project brief to DAPS Analytics. We respond within 48 hours."/>
+<meta name="twitter:image" content="https://dapsanalytics.vercel.app/assets/images/og-preview.png"/>
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;900&display=swap" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
@@ -207,11 +218,11 @@
 
           <!-- CTA -->
           <div style="padding:0 32px 28px;position:relative;z-index:1;margin-top:auto;">
-            <button onclick="alert('Calendly integration coming soon. Please use the contact form or email us directly.')"
+            <button onclick="window.open('https://calendly.com/CALENDLY_LINK', '_blank')"
               class="w-full flex items-center justify-center gap-2"
               style="padding:14px 24px;background:#49fde3;color:#003730;font-size:11px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;border:none;border-radius:8px;cursor:pointer;box-shadow:0 0 24px rgba(73,253,227,0.2);transition:opacity 0.3s,box-shadow 0.3s;"
               onmouseover="this.style.opacity='0.9';this.style.boxShadow='0 0 36px rgba(73,253,227,0.35)'" onmouseout="this.style.opacity='1';this.style.boxShadow='0 0 24px rgba(73,253,227,0.2)'">
-              Load Availability
+              Book a Time
               <span class="material-symbols-outlined" style="font-size:15px;">calendar_month</span>
             </button>
           </div>
@@ -247,11 +258,11 @@
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-6 mb-6">
               <div>
                 <label class="f-label">Full Name</label>
-                <input class="f-input" type="text" placeholder="Abebe Bikila" required/>
+                <input class="f-input" type="text" name="name" placeholder="Abebe Bikila" required/>
               </div>
               <div>
                 <label class="f-label">Corporate Email</label>
-                <input class="f-input" type="email" placeholder="abebe@company.com" required/>
+                <input class="f-input" type="email" name="email" placeholder="abebe@company.com" required/>
               </div>
             </div>
 
@@ -259,7 +270,7 @@
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-6 mb-6">
               <div>
                 <label class="f-label">Operating Region</label>
-                <select class="f-select">
+                <select class="f-select" name="region">
                   <option value="">Select Region</option>
                   <option value="ethiopia">Ethiopia</option>
                   <option value="africa">Africa (Other)</option>
@@ -271,7 +282,7 @@
               </div>
               <div>
                 <label class="f-label">Service Interest</label>
-                <select class="f-select">
+                <select class="f-select" name="service">
                   <option value="">Select Service</option>
                   <option value="analytics">Predictive Analytics</option>
                   <option value="infrastructure">Data Infrastructure</option>
@@ -289,7 +300,7 @@
             <!-- Row 3: Budget -->
             <div class="mb-6">
               <label class="f-label">Estimated Project Budget</label>
-              <select class="f-select">
+              <select class="f-select" name="budget">
                 <option value="">Select Range</option>
                 <option value="under25">Under $25k</option>
                 <option value="25-50">$25k – $50k</option>
@@ -305,7 +316,7 @@
                 Project Brief
                 <span style="text-transform:none;letter-spacing:0;font-weight:400;font-size:10px;color:#3b4a46;"> — Optional</span>
               </label>
-              <textarea class="f-textarea" rows="4" placeholder="Describe your data challenge — what you need to solve, current bottlenecks, relevant context, or any constraints..."></textarea>
+              <textarea class="f-textarea" name="message" rows="4" placeholder="Describe your data challenge — what you need to solve, current bottlenecks, relevant context, or any constraints..."></textarea>
             </div>
 
             <!-- Submit -->
@@ -415,7 +426,7 @@
       </div>
     </div>
     <div style="border-top:1px solid rgba(255,255,255,0.04);padding-top:28px;display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:12px;">
-      <p style="font-size:12px;color:#1e2a26;">© 2025 DAPS Analytics. All rights reserved.</p>
+      <p style="font-size:12px;color:#1e2a26;">© 2025 DAPS Analytics. All rights reserved. &middot; <a href="privacy.html" style="color:#3b4a46;text-decoration:none;" onmouseover="this.style.color='#49fde3'" onmouseout="this.style.color='#3b4a46'">Privacy Policy</a></p>
       <p style="font-size:12px;color:#1e2a26;">Built by <span style="color:#3b4a46;">Olink Technologies Inc.</span> &amp; <span style="color:#3b4a46;">DAPS Analytics</span></p>
     </div>
   </div>
@@ -424,13 +435,39 @@
 <script src="assets/navbar.js"></script>
 <script src="assets/daps.js"></script>
 <script>
+  // TODO: Replace with your Formspree form ID from formspree.io
+  var FORMSPREE_ID = 'YOUR_FORM_ID';
+
   function handleSubmit(e) {
     e.preventDefault();
+    var form = e.target;
+    var btn = form.querySelector('button[type="submit"]');
     var msg = document.getElementById('form-msg');
-    msg.style.display = 'block';
-    e.target.reset();
-    setTimeout(function() { msg.style.display = 'none'; }, 6000);
+
+    btn.disabled = true;
+    btn.innerHTML = 'Sending… <span class="material-symbols-outlined" style="font-size:15px;">hourglass_empty</span>';
+
+    fetch('https://formspree.io/f/' + FORMSPREE_ID, {
+      method: 'POST',
+      body: new FormData(form),
+      headers: { 'Accept': 'application/json' }
+    }).then(function(response) {
+      btn.disabled = false;
+      btn.innerHTML = 'Submit Protocol <span class="material-symbols-outlined" style="font-size:15px;">send</span>';
+      if (response.ok) {
+        msg.style.display = 'block';
+        form.reset();
+        setTimeout(function() { msg.style.display = 'none'; }, 6000);
+      } else {
+        alert('Something went wrong. Please email us at hello@dapsanalytics.com');
+      }
+    }).catch(function() {
+      btn.disabled = false;
+      btn.innerHTML = 'Submit Protocol <span class="material-symbols-outlined" style="font-size:15px;">send</span>';
+      alert('Network error. Please email us at hello@dapsanalytics.com');
+    });
   }
+
   function selectCall(el) {
     document.querySelectorAll('.call-type').forEach(function(c){ c.classList.remove('active'); });
     el.classList.add('active');
