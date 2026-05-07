@@ -76,23 +76,22 @@
 <main class="flex-grow">
 
   <!-- Hero -->
-  <section class="relative min-h-screen flex items-center justify-center overflow-hidden border-b border-outline-variant" style="background:#060a0e;">
-    <canvas id="hakimet-3d" style="position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:0;"></canvas>
-    <div style="position:absolute;inset:0;z-index:1;pointer-events:none;background:radial-gradient(ellipse 70% 60% at 50% 50%,rgba(73,253,227,0.04) 0%,transparent 70%);"></div>
-    <div style="position:absolute;inset-x-0;bottom:0;height:220px;z-index:1;pointer-events:none;background:linear-gradient(to top,#0e141b,transparent);"></div>
-    <div style="position:absolute;inset-x-0;top:0;height:100px;z-index:1;pointer-events:none;background:linear-gradient(to bottom,rgba(6,10,14,0.5),transparent);"></div>
-    <div class="relative z-10 max-w-[1440px] mx-auto px-6 md:px-12 flex flex-col items-center text-center">
-
-
-      <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-primary/30 bg-primary/10 backdrop-blur-md mb-8 reveal">
+  <section class="min-h-screen w-full relative flex items-center overflow-hidden border-b border-outline-variant" style="background:#060a0e;">
+    <canvas id="hakimet-3d" style="position:absolute;right:0;top:0;width:62%;height:100%;pointer-events:none;z-index:0;"></canvas>
+    <!-- Left-to-right fade keeps text readable -->
+    <div style="position:absolute;inset:0;z-index:1;pointer-events:none;background:linear-gradient(90deg,#060a0e 0%,#060a0e 30%,rgba(6,10,14,0.88) 50%,rgba(6,10,14,0.35) 70%,transparent 100%);"></div>
+    <div style="position:absolute;inset-x-0;bottom:0;height:160px;z-index:1;pointer-events:none;background:linear-gradient(to top,#0e141b,transparent);"></div>
+    <div class="relative z-10 max-w-[1440px] mx-auto w-full px-6 md:px-12">
+      <div style="max-width:520px;">
+        <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-primary/30 bg-primary/10 backdrop-blur-md mb-8 reveal">
         <span class="w-2 h-2 rounded-full bg-primary animate-pulse"></span>
         <span class="font-label-caps text-label-caps text-primary tracking-widest">Live — East Africa</span>
       </div>
       <h1 class="font-display-2xl text-on-surface mb-6 tracking-tighter text-glow reveal" style="font-size: clamp(44px, 5.5vw, 80px);">Hakimet</h1>
-      <p class="font-headline-md text-headline-md text-on-surface-variant max-w-3xl mb-12 font-light reveal">
+      <p class="font-headline-md text-headline-md text-on-surface-variant max-w-lg mb-12 font-light reveal">
         Enterprise telehealth infrastructure for African healthcare systems. Connecting patients, clinicians, and administrators through a secure, low-bandwidth-optimized platform.
       </p>
-      <div class="flex flex-wrap justify-center gap-4 reveal">
+      <div class="flex flex-wrap gap-4 reveal">
         <a href="https://www.hakimet.com" target="_blank" rel="noopener"
            class="inline-flex items-center gap-2 font-label-caps text-label-caps bg-primary text-on-primary px-10 py-4 hover:bg-primary-container transition-colors duration-400 tracking-widest uppercase shadow-[0_0_20px_rgba(73,253,227,0.2)] hover:shadow-[0_0_30px_rgba(73,253,227,0.35)]">
           Open Platform <span class="material-symbols-outlined text-[16px]">open_in_new</span>
@@ -103,6 +102,7 @@
         </a>
       </div>
     </div>    </div>
+      </div>
     </div>
   </section>
 
@@ -352,6 +352,140 @@ var t=0,ecgOff=0;
   renderer.render(scene,cam);
 })();
 window.addEventListener('resize',function(){w=c.offsetWidth;h=c.offsetHeight;cam.aspect=w/h;cam.updateProjectionMatrix();renderer.setSize(w,h);});
+}
+boot();
+})();
+</script>
+<script>
+(function(){
+var cv=document.getElementById('hakimet-3d');if(!cv)return;
+function boot(){if(typeof THREE==='undefined'){setTimeout(boot,60);return;}run();}
+function run(){
+var w=cv.offsetWidth,h=cv.offsetHeight;
+var renderer=new THREE.WebGLRenderer({canvas:cv,alpha:true,antialias:true});
+renderer.setPixelRatio(Math.min(devicePixelRatio,2));renderer.setSize(w,h);
+var scene=new THREE.Scene();
+var cam=new THREE.PerspectiveCamera(55,w/h,0.1,400);
+cam.position.set(0,2,36);cam.lookAt(0,0,0);
+
+/* --- Telehealth Node Network --- */
+/* Node positions: hub (hospital) in center, patient nodes spread around */
+var NODES=[
+  {x:0,   y:0,  z:0,   type:'hub',   r:1.1},   /* Central hospital */
+  {x:-9,  y:4,  z:-3,  type:'clinic',r:0.65},
+  {x: 9,  y:5,  z:-4,  type:'clinic',r:0.65},
+  {x:-11, y:-3, z:2,   type:'clinic',r:0.65},
+  {x: 10, y:-4, z:1,   type:'clinic',r:0.65},
+  {x: 0,  y:10, z:-5,  type:'clinic',r:0.55},
+  {x: 0,  y:-9, z:-2,  type:'clinic',r:0.55},
+  {x:-14, y:1,  z:-6,  type:'patient',r:0.38},
+  {x: 14, y:2,  z:-5,  type:'patient',r:0.38},
+  {x:-7,  y: 9, z:3,   type:'patient',r:0.38},
+  {x: 7,  y: 8, z:4,   type:'patient',r:0.38},
+  {x:-8,  y:-9, z:1,   type:'patient',r:0.38},
+  {x: 8,  y:-8, z:2,   type:'patient',r:0.38},
+  {x: 0,  y: 0, z:8,   type:'patient',r:0.38},
+  {x: 0,  y: 0, z:-9,  type:'patient',r:0.38},
+];
+var nodeMeshes=[];
+NODES.forEach(function(n,i){
+  var col=n.type==='hub'?0x49fde3:(n.type==='clinic'?0x49fde3:0x49fde3);
+  var op=n.type==='hub'?0.4:(n.type==='clinic'?0.3:0.22);
+  var m=new THREE.Mesh(new THREE.SphereGeometry(n.r,12,12),
+    new THREE.MeshBasicMaterial({color:col,transparent:true,opacity:op}));
+  m.position.set(n.x,n.y,n.z);m.userData={ph:i*0.45,baseOp:op,type:n.type};scene.add(m);
+  /* Glow halo */
+  var hm=new THREE.Mesh(new THREE.SphereGeometry(n.r*2.2,12,12),
+    new THREE.MeshBasicMaterial({color:0x49fde3,transparent:true,opacity:0.06,side:THREE.BackSide}));
+  hm.position.set(n.x,n.y,n.z);scene.add(hm);
+  /* Medical cross on hub */
+  if(n.type==='hub'){
+    [[2.5,6.5],[6.5,2.5]].forEach(function(dim){
+      var pg=new THREE.PlaneGeometry(dim[0],dim[1]);
+      var cg=new THREE.Group();
+      cg.add(new THREE.Mesh(pg,new THREE.MeshBasicMaterial({color:0x49fde3,transparent:true,opacity:0.18,side:THREE.DoubleSide})));
+      cg.add(new THREE.LineSegments(new THREE.EdgesGeometry(pg),new THREE.LineBasicMaterial({color:0x49fde3,transparent:true,opacity:0.5})));
+      scene.add(cg);
+    });
+  }
+  nodeMeshes.push(m);
+});
+
+/* Connection lines between hub and all other nodes */
+NODES.forEach(function(n,i){
+  if(i===0)return;
+  var hub=NODES[0];
+  var lineGeo=new THREE.BufferGeometry().setFromPoints([
+    new THREE.Vector3(hub.x,hub.y,hub.z),new THREE.Vector3(n.x,n.y,n.z)]);
+  scene.add(new THREE.Line(lineGeo,new THREE.LineBasicMaterial({color:0x49fde3,transparent:true,opacity:0.14})));
+});
+/* Clinic-to-clinic connections */
+var clinicPairs=[[1,2],[1,5],[2,6],[3,4],[3,5],[4,6]];
+clinicPairs.forEach(function(pair){
+  var a=NODES[pair[0]],b=NODES[pair[1]];
+  var lg=new THREE.BufferGeometry().setFromPoints([
+    new THREE.Vector3(a.x,a.y,a.z),new THREE.Vector3(b.x,b.y,b.z)]);
+  scene.add(new THREE.Line(lg,new THREE.LineBasicMaterial({color:0x49fde3,transparent:true,opacity:0.10})));
+});
+
+/* Traveling data packets along connections */
+var pkts=[];
+NODES.forEach(function(n,i){
+  if(i===0)return;
+  var hub=NODES[0];
+  var m=new THREE.Mesh(new THREE.SphereGeometry(0.22,6,6),
+    new THREE.MeshBasicMaterial({color:0x49fde3}));
+  scene.add(m);
+  pkts.push({mesh:m,from:hub,to:n,t:Math.random(),spd:0.006+Math.random()*0.006,dir:1});
+});
+
+/* ECG sweep line at bottom */
+var ECG_N=100;
+var ecgBuf=new Float32Array(ECG_N*3);
+function ecgY(x){
+  var m=((x%1)+1)%1;
+  if(m<0.30)return 0;if(m<0.36)return(m-0.30)*7;if(m<0.42)return(0.42-m)*7;
+  if(m<0.44)return 0;if(m<0.46)return-(m-0.44)*16;
+  if(m<0.52)return(m-0.44)*56-(0.46-0.44)*16;if(m<0.58)return((0.58-m)/0.06)*5-1;
+  if(m<0.62)return 0;if(m<0.68)return(m-0.62)*7;if(m<0.75)return(0.75-m)*7;return 0;
+}
+var ecgGeo=new THREE.BufferGeometry();ecgGeo.setAttribute('position',new THREE.BufferAttribute(ecgBuf,3));
+var ecgLine=new THREE.Line(ecgGeo,new THREE.LineBasicMaterial({color:0x49fde3,transparent:true,opacity:0.55}));
+ecgLine.position.set(-14,-14,4);scene.add(ecgLine);
+
+/* Background star field */
+var stArr=new Float32Array(300*3);
+for(var i=0;i<300;i++){stArr[i*3]=(Math.random()-0.5)*200;stArr[i*3+1]=(Math.random()-0.5)*200;stArr[i*3+2]=(Math.random()-0.5)*100-30;}
+var stGeo=new THREE.BufferGeometry();stGeo.setAttribute('position',new THREE.BufferAttribute(stArr,3));
+scene.add(new THREE.Points(stGeo,new THREE.PointsMaterial({color:0x49fde3,size:0.28,transparent:true,opacity:0.25})));
+
+var t=0,ecgOff=0;
+(function loop(){
+  requestAnimationFrame(loop);t+=0.008;
+  /* Pulse nodes */
+  nodeMeshes.forEach(function(m){
+    var p=0.85+Math.abs(Math.sin(t*2.5+m.userData.ph))*0.3;
+    m.scale.set(p,p,p);m.material.opacity=m.userData.baseOp*p;
+  });
+  /* Move packets */
+  pkts.forEach(function(p){
+    p.t+=p.spd*p.dir;
+    if(p.t>=1){p.t=1;p.dir=-1;}else if(p.t<=0){p.t=0;p.dir=1;}
+    var tt=p.t;
+    p.mesh.position.set(
+      p.from.x+(p.to.x-p.from.x)*tt,
+      p.from.y+(p.to.y-p.from.y)*tt,
+      p.from.z+(p.to.z-p.from.z)*tt);
+  });
+  /* ECG sweep */
+  ecgOff+=0.01;
+  for(var i=0;i<ECG_N;i++){ecgBuf[i*3]=(i/(ECG_N-1))*22;ecgBuf[i*3+1]=ecgY(i/(ECG_N-1)+ecgOff)*1.6;ecgBuf[i*3+2]=0;}
+  ecgGeo.attributes.position.needsUpdate=true;
+  /* Camera drift */
+  cam.position.x=Math.sin(t*0.04)*5;cam.position.y=2+Math.sin(t*0.03)*2;cam.lookAt(0,0,0);
+  renderer.render(scene,cam);
+})();
+window.addEventListener('resize',function(){w=cv.offsetWidth;h=cv.offsetHeight;cam.aspect=w/h;cam.updateProjectionMatrix();renderer.setSize(w,h);});
 }
 boot();
 })();

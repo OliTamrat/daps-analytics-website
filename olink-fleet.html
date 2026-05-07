@@ -76,23 +76,22 @@
 <main class="flex-grow">
 
   <!-- Hero -->
-  <section class="relative min-h-screen flex items-center justify-center overflow-hidden border-b border-outline-variant" style="background:#060a0e;">
-    <canvas id="fleet-3d" style="position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:0;"></canvas>
-    <div style="position:absolute;inset:0;z-index:1;pointer-events:none;background:radial-gradient(ellipse 70% 60% at 50% 50%,rgba(239,191,113,0.04) 0%,transparent 70%);"></div>
-    <div style="position:absolute;inset-x-0;bottom:0;height:220px;z-index:1;pointer-events:none;background:linear-gradient(to top,#0e141b,transparent);"></div>
-    <div style="position:absolute;inset-x-0;top:0;height:100px;z-index:1;pointer-events:none;background:linear-gradient(to bottom,rgba(6,10,14,0.5),transparent);"></div>
-    <div class="relative z-10 max-w-[1440px] mx-auto px-6 md:px-12 flex flex-col items-center text-center">
-
-
-      <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border backdrop-blur-md mb-8 reveal" style="border-color:rgba(239,191,113,0.3);background:rgba(239,191,113,0.1);">
+  <section class="min-h-screen w-full relative flex items-center overflow-hidden border-b border-outline-variant" style="background:#060a0e;">
+    <canvas id="fleet-3d" style="position:absolute;right:0;top:0;width:62%;height:100%;pointer-events:none;z-index:0;"></canvas>
+    <!-- Left-to-right fade keeps text readable -->
+    <div style="position:absolute;inset:0;z-index:1;pointer-events:none;background:linear-gradient(90deg,#060a0e 0%,#060a0e 30%,rgba(6,10,14,0.88) 50%,rgba(6,10,14,0.35) 70%,transparent 100%);"></div>
+    <div style="position:absolute;inset-x-0;bottom:0;height:160px;z-index:1;pointer-events:none;background:linear-gradient(to top,#0e141b,transparent);"></div>
+    <div class="relative z-10 max-w-[1440px] mx-auto w-full px-6 md:px-12">
+      <div style="max-width:520px;">
+        <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border backdrop-blur-md mb-8 reveal" style="border-color:rgba(239,191,113,0.3);background:rgba(239,191,113,0.1);">
         <span class="w-2 h-2 rounded-full animate-pulse" style="background:#efbf71;"></span>
         <span class="font-label-caps text-label-caps tracking-widest" style="color:#efbf71;">Live — Ethiopia</span>
       </div>
       <h1 class="font-display-2xl text-on-surface mb-6 tracking-tighter text-glow reveal" style="font-size: clamp(44px, 5.5vw, 80px);">Olink Fleet</h1>
-      <p class="font-headline-md text-headline-md text-on-surface-variant max-w-3xl mb-12 font-light reveal">
+      <p class="font-headline-md text-headline-md text-on-surface-variant max-w-lg mb-12 font-light reveal">
         Smart fleet management engineered for Ethiopia. Real-time visibility, AI-powered routing, and predictive intelligence for commercial transport operations.
       </p>
-      <div class="flex flex-wrap justify-center gap-4 reveal">
+      <div class="flex flex-wrap gap-4 reveal">
         <a href="https://olink-fleet.vercel.app/" target="_blank" rel="noopener"
            class="inline-flex items-center gap-2 font-label-caps text-label-caps px-10 py-4 transition-colors duration-400 tracking-widest uppercase"
            style="background:#efbf71;color:#281900;box-shadow:0 0 20px rgba(239,191,113,0.2);">
@@ -104,6 +103,7 @@
         </a>
       </div>
     </div>    </div>
+      </div>
     </div>
   </section>
 
@@ -349,6 +349,129 @@ var t=0;
   renderer.render(scene,cam);
 })();
 window.addEventListener('resize',function(){w=c.offsetWidth;h=c.offsetHeight;cam.aspect=w/h;cam.updateProjectionMatrix();renderer.setSize(w,h);});
+}
+boot();
+})();
+</script>
+<script>
+(function(){
+var cv=document.getElementById('fleet-3d');if(!cv)return;
+function boot(){if(typeof THREE==='undefined'){setTimeout(boot,60);return;}run();}
+function run(){
+var w=cv.offsetWidth,h=cv.offsetHeight;
+var renderer=new THREE.WebGLRenderer({canvas:cv,alpha:true,antialias:true});
+renderer.setPixelRatio(Math.min(devicePixelRatio,2));renderer.setSize(w,h);
+var scene=new THREE.Scene();
+var cam=new THREE.PerspectiveCamera(55,w/h,0.1,400);
+cam.position.set(0,6,32);cam.lookAt(0,0,0);
+
+/* Wireframe globe */
+var R=10;
+var sGeo=new THREE.SphereGeometry(R,28,28);
+var sMat=new THREE.MeshBasicMaterial({color:0x2a1400,wireframe:true,transparent:true,opacity:0.18});
+var globe=new THREE.Group();
+globe.add(new THREE.Mesh(sGeo,sMat));
+
+/* Atmosphere glow */
+var atGeo=new THREE.SphereGeometry(R*1.06,24,24);
+var atMat=new THREE.MeshBasicMaterial({color:0xefbf71,transparent:true,opacity:0.04,side:THREE.BackSide});
+globe.add(new THREE.Mesh(atGeo,atMat));
+
+/* Convert lat/lon to 3D point on sphere */
+function ll(lat,lon){
+  var phi=(90-lat)*Math.PI/180, theta=(lon+180)*Math.PI/180;
+  return new THREE.Vector3(-R*Math.sin(phi)*Math.cos(theta),R*Math.cos(phi),R*Math.sin(phi)*Math.sin(theta));
+}
+
+/* Ethiopian city locations */
+var CITIES={
+  addis:ll(9.0,38.7), direDawa:ll(9.6,41.9), mekelle:ll(13.5,39.5),
+  bahirDar:ll(11.6,37.4),hawassa:ll(7.0,38.5),gondar:ll(12.6,37.5),
+  jimma:ll(7.7,36.8),jijiga:ll(9.4,42.8),arba:ll(6.0,37.6),
+  adama:ll(8.5,39.3)
+};
+
+/* City dots */
+Object.values(CITIES).forEach(function(p){
+  var dg=new THREE.SphereGeometry(0.22,8,8);
+  var dm=new THREE.MeshBasicMaterial({color:0xefbf71});
+  var dot=new THREE.Mesh(dg,dm);dot.position.copy(p);globe.add(dot);
+  /* Pulse ring */
+  var rg=new THREE.RingGeometry(0.35,0.55,16);
+  var rm=new THREE.Mesh(rg,new THREE.MeshBasicMaterial({color:0xefbf71,transparent:true,opacity:0.35,side:THREE.DoubleSide}));
+  rm.position.copy(p);rm.lookAt(new THREE.Vector3(0,0,0));rm.userData={ph:Math.random()*Math.PI*2};
+  globe.add(rm);
+});
+
+/* Arc between two sphere points */
+function makeArc(p1,p2,segs,heightMult){
+  var pts=[];
+  for(var i=0;i<=segs;i++){
+    var t=i/segs;
+    var angle=p1.angleTo(p2);
+    var sA=Math.sin(angle);
+    var mid=new THREE.Vector3();
+    mid.addScaledVector(p1.clone().normalize(),Math.sin((1-t)*angle)/sA);
+    mid.addScaledVector(p2.clone().normalize(),Math.sin(t*angle)/sA);
+    mid.normalize().multiplyScalar(R*(1+heightMult*Math.sin(Math.PI*t)));
+    pts.push(mid.clone());
+  }
+  return pts;
+}
+
+/* Route pairs */
+var ROUTES=[
+  [CITIES.addis,CITIES.mekelle],[CITIES.addis,CITIES.bahirDar],
+  [CITIES.addis,CITIES.hawassa],[CITIES.addis,CITIES.direDawa],
+  [CITIES.addis,CITIES.jimma], [CITIES.addis,CITIES.gondar],
+  [CITIES.addis,CITIES.adama], [CITIES.direDawa,CITIES.jijiga],
+  [CITIES.bahirDar,CITIES.gondar],[CITIES.mekelle,CITIES.gondar],
+  [CITIES.hawassa,CITIES.arba], [CITIES.adama,CITIES.direDawa],
+];
+
+/* Draw arcs + create packet objects */
+var packets=[];
+ROUTES.forEach(function(pair){
+  var pts=makeArc(pair[0],pair[1],48,0.18);
+  var arcGeo=new THREE.BufferGeometry().setFromPoints(pts);
+  globe.add(new THREE.Line(arcGeo,new THREE.LineBasicMaterial({color:0xefbf71,transparent:true,opacity:0.28})));
+  /* Traveling packets along arc */
+  var pg=new THREE.SphereGeometry(0.18,6,6);
+  var pm=new THREE.MeshBasicMaterial({color:0xefbf71});
+  var pkt=new THREE.Mesh(pg,pm);globe.add(pkt);
+  packets.push({mesh:pkt,pts:pts,t:Math.random(),speed:0.003+Math.random()*0.004});
+});
+
+/* Background stars */
+var stArr=new Float32Array(400*3);
+for(var i=0;i<400;i++){stArr[i*3]=(Math.random()-0.5)*300;stArr[i*3+1]=(Math.random()-0.5)*300;stArr[i*3+2]=(Math.random()-0.5)*300;}
+var stGeo=new THREE.BufferGeometry();stGeo.setAttribute('position',new THREE.BufferAttribute(stArr,3));
+scene.add(new THREE.Points(stGeo,new THREE.PointsMaterial({color:0xffffff,size:0.35,transparent:true,opacity:0.3})));
+
+scene.add(globe);
+
+var t=0;
+(function loop(){
+  requestAnimationFrame(loop);t+=0.007;
+  globe.rotation.y+=0.004;
+  /* Animate packets */
+  packets.forEach(function(p){
+    p.t+=p.speed;if(p.t>=1)p.t=0;
+    var idx=Math.floor(p.t*(p.pts.length-1));
+    p.mesh.position.copy(p.pts[Math.min(idx,p.pts.length-1)]);
+  });
+  /* Pulse rings */
+  globe.children.forEach(function(c){
+    if(c.userData&&c.userData.ph!==undefined){
+      var s=1+Math.sin(t*2+c.userData.ph)*0.3;
+      c.scale.set(s,s,s);c.material.opacity=0.2+Math.sin(t*2+c.userData.ph)*0.15;
+    }
+  });
+  /* Gentle camera bob */
+  cam.position.y=6+Math.sin(t*0.35)*1.5;
+  renderer.render(scene,cam);
+})();
+window.addEventListener('resize',function(){w=cv.offsetWidth;h=cv.offsetHeight;cam.aspect=w/h;cam.updateProjectionMatrix();renderer.setSize(w,h);});
 }
 boot();
 })();
