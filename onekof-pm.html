@@ -68,6 +68,18 @@
   .reveal.revealed { opacity: 1; transform: translateY(0); }
   .reveal-delay-1 { transition-delay: 0.15s; }
   .reveal-delay-2 { transition-delay: 0.3s; }
+
+  /* ── Mobile responsive hero ───────────────────────── */
+  @media (max-width:768px){
+    .hero-canvas-bg{width:100%!important;left:0!important;right:0!important;opacity:0.45!important;}
+    .hero-text-col{max-width:100%!important;text-align:center;}
+    .hero-text-col .flex{justify-content:center;}
+    .hero-text-col h1{font-size:clamp(36px,9vw,56px)!important;}
+    .hero-text-col p{font-size:15px!important;margin-left:auto;margin-right:auto;}
+  }
+  @media (max-width:480px){
+    .hero-text-col h1{font-size:clamp(30px,8vw,44px)!important;}
+  }
 </style>
 <script src="https://unpkg.com/three@0.160.1/build/three.min.js"></script>
 </head>
@@ -79,12 +91,12 @@
 
   <!-- Hero -->
   <section class="min-h-screen w-full relative flex items-center overflow-hidden border-b border-outline-variant" style="background:#060a0e;">
-    <canvas id="onekof-3d" style="position:absolute;right:0;top:0;width:62%;height:100%;pointer-events:none;z-index:0;"></canvas>
+    <canvas id="onekof-3d" class="hero-canvas-bg" style="position:absolute;right:0;top:0;width:62%;height:100%;pointer-events:none;z-index:0;"></canvas>
     <!-- Left-to-right fade keeps text readable -->
     <div style="position:absolute;inset:0;z-index:1;pointer-events:none;background:linear-gradient(90deg,#060a0e 0%,#060a0e 30%,rgba(6,10,14,0.88) 50%,rgba(6,10,14,0.35) 70%,transparent 100%);"></div>
     <div style="position:absolute;inset-x-0;bottom:0;height:160px;z-index:1;pointer-events:none;background:linear-gradient(to top,#0e141b,transparent);"></div>
     <div class="relative z-10 max-w-[1440px] mx-auto w-full px-6 md:px-12">
-      <div style="max-width:520px;">
+      <div class="hero-text-col" style="max-width:520px;">
         <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-primary/30 bg-primary/10 backdrop-blur-md mb-8 reveal">
         <span class="w-2 h-2 rounded-full bg-primary animate-pulse"></span>
         <span class="font-label-caps text-label-caps text-primary tracking-widest">Live in Ethiopia</span>
@@ -348,6 +360,128 @@ var t=0;
   renderer.render(scene,cam);
 })();
 window.addEventListener('resize',function(){w=c.offsetWidth;h=c.offsetHeight;cam.aspect=w/h;cam.updateProjectionMatrix();renderer.setSize(w,h);});
+}
+boot();
+})();
+</script>
+<script>
+(function(){
+var cv=document.getElementById('onekof-3d');if(!cv)return;
+function boot(){if(typeof THREE==='undefined'){setTimeout(boot,60);return;}run();}
+function run(){
+var w=cv.offsetWidth,h=cv.offsetHeight;
+var renderer=new THREE.WebGLRenderer({canvas:cv,alpha:true,antialias:true});
+renderer.setPixelRatio(Math.min(devicePixelRatio,2));renderer.setSize(w,h);
+var scene=new THREE.Scene();
+var cam=new THREE.PerspectiveCamera(52,w/h,0.1,400);
+cam.position.set(0,8,32);cam.lookAt(0,0,0);
+
+/* Central project hub */
+var hub=new THREE.Mesh(new THREE.SphereGeometry(1.6,16,16),
+  new THREE.MeshBasicMaterial({color:0x49fde3,transparent:true,opacity:0.55}));
+scene.add(hub);
+var hubGlow=new THREE.Mesh(new THREE.SphereGeometry(2.8,16,16),
+  new THREE.MeshBasicMaterial({color:0x49fde3,transparent:true,opacity:0.08,side:THREE.BackSide}));
+scene.add(hubGlow);
+
+/* Build orbit ring with task nodes */
+function makeRing(opts){
+  /*  opts: radius, incX, incZ, color, numTasks, doneCount, speed, phase  */
+  var grp=new THREE.Group();
+  grp.rotation.x=opts.incX;grp.rotation.z=opts.incZ;
+
+  /* Ring line */
+  var pts=[];
+  for(var i=0;i<=80;i++){var a=(i/80)*Math.PI*2;pts.push(new THREE.Vector3(Math.cos(a)*opts.r,0,Math.sin(a)*opts.r));}
+  grp.add(new THREE.Line(new THREE.BufferGeometry().setFromPoints(pts),
+    new THREE.LineBasicMaterial({color:opts.color,transparent:true,opacity:0.4})));
+
+  /* Task nodes on ring */
+  var nodes=[];
+  for(var i=0;i<opts.numTasks;i++){
+    var a=(i/opts.numTasks)*Math.PI*2;
+    var done=i<opts.doneCount;
+    var active=i===opts.doneCount;
+    var nm=new THREE.Mesh(
+      new THREE.SphereGeometry(done?0.45:(active?0.55:0.32),8,8),
+      new THREE.MeshBasicMaterial({color:done?opts.color:(active?0xffffff:0x2a3a36),
+        transparent:true,opacity:done?0.9:(active?1.0:0.35)}));
+    nm.position.set(Math.cos(a)*opts.r,0,Math.sin(a)*opts.r);
+    nm.userData={ph:i*0.55,active:active,done:done};
+    grp.add(nm);nodes.push(nm);
+    /* Connecting lines hub→active task */
+    if(active){
+      var lg=new THREE.BufferGeometry().setFromPoints([
+        new THREE.Vector3(0,0,0),nm.position.clone()]);
+      scene.add(new THREE.Line(lg,new THREE.LineBasicMaterial({color:opts.color,transparent:true,opacity:0.2})));
+    }
+  }
+
+  /* Traveling packet along orbit */
+  var pkt=new THREE.Mesh(new THREE.SphereGeometry(0.28,6,6),
+    new THREE.MeshBasicMaterial({color:opts.color}));
+  grp.add(pkt);
+
+  scene.add(grp);
+  return{grp:grp,nodes:nodes,pkt:pkt,r:opts.r,t:opts.phase,speed:opts.speed,color:opts.color};
+}
+
+var RINGS=[
+  makeRing({r:5,  incX: 0.35,incZ: 0.1, color:0x49fde3,numTasks:8, doneCount:8, speed:0.008, phase:0.0}),
+  makeRing({r:9,  incX:-0.20,incZ: 0.3, color:0x49fde3,numTasks:11,doneCount:7, speed:0.005, phase:0.4}),
+  makeRing({r:13, incX: 0.45,incZ:-0.2, color:0xefbf71,numTasks:12,doneCount:4, speed:0.0035,phase:0.8}),
+  makeRing({r:17, incX:-0.15,incZ: 0.4, color:0xefbf71,numTasks:9, doneCount:1, speed:0.002, phase:1.2}),
+];
+
+/* Progress arc overlays (teal/amber bands showing completion) */
+RINGS.forEach(function(ring){
+  var done=0;ring.nodes.forEach(function(n){if(n.userData.done)done++;});
+  var prog=done/ring.nodes.length;
+  var arcPts=[];
+  for(var i=0;i<=Math.floor(prog*80);i++){
+    var a=(i/80)*Math.PI*2;
+    arcPts.push(new THREE.Vector3(Math.cos(a)*(ring.r+0.12),0,Math.sin(a)*(ring.r+0.12)));
+  }
+  if(arcPts.length>1){
+    var ag=new THREE.BufferGeometry().setFromPoints(arcPts);
+    var al=new THREE.Line(ag,new THREE.LineBasicMaterial({color:ring.color,transparent:true,opacity:0.7}));
+    al.rotation.x=ring.grp.rotation.x;al.rotation.z=ring.grp.rotation.z;
+    scene.add(al);
+  }
+});
+
+/* Stars background */
+var sArr=new Float32Array(500*3);
+for(var i=0;i<500;i++){sArr[i*3]=(Math.random()-0.5)*300;sArr[i*3+1]=(Math.random()-0.5)*300;sArr[i*3+2]=(Math.random()-0.5)*300;}
+var sg=new THREE.BufferGeometry();sg.setAttribute('position',new THREE.BufferAttribute(sArr,3));
+scene.add(new THREE.Points(sg,new THREE.PointsMaterial({color:0x49fde3,size:0.3,transparent:true,opacity:0.28})));
+
+/* Milestone label lines (from outer rings to hub) */
+[[8,0,4],[-10,5,-3],[6,-7,8],[-5,8,-7]].forEach(function(p){
+  var lg=new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(0,0,0),new THREE.Vector3(p[0],p[1],p[2])]);
+  scene.add(new THREE.Line(lg,new THREE.LineBasicMaterial({color:0x49fde3,transparent:true,opacity:0.1})));
+});
+
+var t=0;
+(function loop(){
+  requestAnimationFrame(loop);t+=0.008;
+  /* Pulse hub */
+  var hp=1+Math.sin(t*1.5)*0.1;hub.scale.set(hp,hp,hp);
+  /* Rotate rings at different speeds */
+  RINGS.forEach(function(ring){
+    ring.t+=ring.speed;
+    var a=ring.t*Math.PI*2;
+    ring.pkt.position.set(Math.cos(a)*ring.r,0,Math.sin(a)*ring.r);
+    /* Pulse active task node */
+    ring.nodes.forEach(function(n){
+      if(n.userData.active){var p=1+Math.sin(t*3+n.userData.ph)*0.3;n.scale.set(p,p,p);}
+    });
+    ring.grp.rotation.y+=ring.speed*0.4;
+  });
+  cam.position.x=Math.sin(t*0.04)*6;cam.position.y=8+Math.sin(t*0.03)*2;cam.lookAt(0,0,0);
+  renderer.render(scene,cam);
+})();
+window.addEventListener('resize',function(){w=cv.offsetWidth;h=cv.offsetHeight;cam.aspect=w/h;cam.updateProjectionMatrix();renderer.setSize(w,h);});
 }
 boot();
 })();
