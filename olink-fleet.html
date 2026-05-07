@@ -366,6 +366,7 @@ boot();
 })();
 </script>
 
+
 <script>
 (function(){
 var cv=document.getElementById('fleet-3d');if(!cv)return;
@@ -375,107 +376,137 @@ var w=cv.offsetWidth,h=cv.offsetHeight;
 var renderer=new THREE.WebGLRenderer({canvas:cv,alpha:true,antialias:true});
 renderer.setPixelRatio(Math.min(devicePixelRatio,2));renderer.setSize(w,h);
 var scene=new THREE.Scene();
-var cam=new THREE.PerspectiveCamera(50,w/h,0.1,500);
-cam.position.set(0,5,24);cam.lookAt(0,0,0);
+var cam=new THREE.PerspectiveCamera(48,w/h,0.1,500);
+cam.position.set(0,4,26);cam.lookAt(0,0,0);
 
 var R=16;
 var globe=new THREE.Group();
 
-/* Wireframe sphere */
-globe.add(new THREE.Mesh(
-  new THREE.SphereGeometry(R,32,32),
-  new THREE.MeshBasicMaterial({color:0x2a1200,wireframe:true,transparent:true,opacity:0.16})));
+/* Solid dark inner sphere for depth */
+globe.add(new THREE.Mesh(new THREE.SphereGeometry(R*0.97,32,32),
+  new THREE.MeshBasicMaterial({color:0x030608})));
 
-/* Atmosphere */
-globe.add(new THREE.Mesh(
-  new THREE.SphereGeometry(R*1.045,24,24),
-  new THREE.MeshBasicMaterial({color:0xefbf71,transparent:true,opacity:0.05,side:THREE.BackSide})));
+/* Wireframe outer sphere */
+globe.add(new THREE.Mesh(new THREE.SphereGeometry(R,28,28),
+  new THREE.MeshBasicMaterial({color:0x3a1a00,wireframe:true,transparent:true,opacity:0.22})));
 
-/* lat/lon → Vec3 */
+/* Atmospheric amber glow ring */
+globe.add(new THREE.Mesh(new THREE.SphereGeometry(R*1.06,24,24),
+  new THREE.MeshBasicMaterial({color:0xefbf71,transparent:true,opacity:0.06,side:THREE.BackSide})));
+
+/* lat/lon to sphere point */
 function ll(lat,lon){
   var phi=(90-lat)*Math.PI/180,theta=(lon+180)*Math.PI/180;
   return new THREE.Vector3(-R*Math.sin(phi)*Math.cos(theta),R*Math.cos(phi),R*Math.sin(phi)*Math.sin(theta));
 }
 
-/* Ethiopian cities */
+/* Key Ethiopian cities */
 var C={
-  addis:ll(9.0,38.7),   direDawa:ll(9.6,41.9),  mekelle:ll(13.5,39.5),
-  bahirDar:ll(11.6,37.4),hawassa:ll(7.0,38.5),   gondar:ll(12.6,37.5),
-  jimma:ll(7.7,36.8),   jijiga:ll(9.4,42.8),     adama:ll(8.5,39.3),
-  arba:ll(6.0,37.6),    assosa:ll(10.1,34.5),    desse:ll(11.1,39.6)
+  addis:ll(9.0,38.7), mekelle:ll(13.5,39.5), bahirDar:ll(11.6,37.4),
+  hawassa:ll(7.0,38.5),gondar:ll(12.6,37.5),  jimma:ll(7.7,36.8),
+  direDawa:ll(9.6,41.9),adama:ll(8.5,39.3)
 };
 
-/* City dots + pulse rings */
+/* City markers — amber dots with bright rings */
 Object.values(C).forEach(function(p,i){
-  var dot=new THREE.Mesh(new THREE.SphereGeometry(0.32,8,8),
+  /* Core dot */
+  var dot=new THREE.Mesh(new THREE.SphereGeometry(0.42,10,10),
     new THREE.MeshBasicMaterial({color:0xefbf71}));
   dot.position.copy(p);globe.add(dot);
-  var rg=new THREE.RingGeometry(0.55,0.85,20);
-  var rm=new THREE.Mesh(rg,new THREE.MeshBasicMaterial({color:0xefbf71,transparent:true,opacity:0.4,side:THREE.DoubleSide}));
-  rm.position.copy(p);rm.lookAt(new THREE.Vector3(0,0,0));rm.userData={ph:i*0.42};
+  /* Glow halo */
+  var halo=new THREE.Mesh(new THREE.SphereGeometry(0.85,10,10),
+    new THREE.MeshBasicMaterial({color:0xefbf71,transparent:true,opacity:0.18,side:THREE.BackSide}));
+  halo.position.copy(p);globe.add(halo);
+  /* Pulse ring */
+  var rg=new THREE.RingGeometry(0.6,0.9,20);
+  var rm=new THREE.Mesh(rg,new THREE.MeshBasicMaterial({color:0xefbf71,transparent:true,opacity:0.45,side:THREE.DoubleSide}));
+  rm.position.copy(p);rm.lookAt(new THREE.Vector3(0,0,0));rm.userData={ph:i*0.55};
   globe.add(rm);
 });
 
-/* SLERP arc */
-function arc(p1,p2,segs,h){
-  var pts=[],ang=p1.angleTo(p2),sa=Math.sin(ang);
-  if(sa<0.0001)return[p1.clone(),p2.clone()];
+/* SLERP arc between two sphere points */
+function arc(a,b,segs,lift){
+  var pts=[],ang=a.angleTo(b),sa=Math.sin(ang);
+  if(sa<0.001)return[a.clone(),b.clone()];
   for(var i=0;i<=segs;i++){
     var t=i/segs;
-    var mid=new THREE.Vector3()
-      .addScaledVector(p1.clone().normalize(),Math.sin((1-t)*ang)/sa)
-      .addScaledVector(p2.clone().normalize(),Math.sin(t*ang)/sa);
-    mid.normalize().multiplyScalar(R*(1+h*Math.sin(Math.PI*t)));
-    pts.push(mid.clone());
+    var v=new THREE.Vector3()
+      .addScaledVector(a.clone().normalize(),Math.sin((1-t)*ang)/sa)
+      .addScaledVector(b.clone().normalize(),Math.sin(t*ang)/sa);
+    v.normalize().multiplyScalar(R*(1+lift*Math.sin(Math.PI*t)));
+    pts.push(v.clone());
   }
   return pts;
 }
 
-/* Route pairs */
+/* 8 primary fleet routes */
 var PAIRS=[
-  [C.addis,C.mekelle],[C.addis,C.bahirDar],[C.addis,C.hawassa],[C.addis,C.direDawa],
-  [C.addis,C.jimma],[C.addis,C.gondar],[C.addis,C.adama],[C.direDawa,C.jijiga],
-  [C.bahirDar,C.gondar],[C.mekelle,C.gondar],[C.hawassa,C.arba],[C.adama,C.direDawa],
-  [C.addis,C.assosa],[C.addis,C.desse],[C.mekelle,C.desse],[C.gondar,C.bahirDar],
+  [C.addis,C.mekelle],  [C.addis,C.bahirDar],
+  [C.addis,C.hawassa],  [C.addis,C.direDawa],
+  [C.addis,C.jimma],    [C.gondar,C.mekelle],
+  [C.addis,C.adama],    [C.bahirDar,C.gondar],
 ];
 
 var packets=[];
 PAIRS.forEach(function(pair){
-  var pts=arc(pair[0],pair[1],56,0.16);
-  var ag=new THREE.BufferGeometry().setFromPoints(pts);
-  globe.add(new THREE.Line(ag,new THREE.LineBasicMaterial({color:0xefbf71,transparent:true,opacity:0.38})));
-  var pm=new THREE.Mesh(new THREE.SphereGeometry(0.25,6,6),new THREE.MeshBasicMaterial({color:0xefbf71}));
-  globe.add(pm);
-  packets.push({mesh:pm,pts:pts,t:Math.random(),spd:0.0025+Math.random()*0.004});
+  var pts=arc(pair[0],pair[1],64,0.14);
+  /* Route arc line */
+  globe.add(new THREE.Line(
+    new THREE.BufferGeometry().setFromPoints(pts),
+    new THREE.LineBasicMaterial({color:0xefbf71,transparent:true,opacity:0.55})));
+  /* Large glowing packet */
+  var pktGroup=new THREE.Group();
+  /* Core */
+  pktGroup.add(new THREE.Mesh(new THREE.SphereGeometry(0.38,8,8),
+    new THREE.MeshBasicMaterial({color:0xefbf71})));
+  /* Glow shell */
+  pktGroup.add(new THREE.Mesh(new THREE.SphereGeometry(0.75,8,8),
+    new THREE.MeshBasicMaterial({color:0xefbf71,transparent:true,opacity:0.22,side:THREE.BackSide})));
+  globe.add(pktGroup);
+  packets.push({grp:pktGroup,pts:pts,t:Math.random(),spd:0.0022+Math.random()*0.003});
 });
 
-/* Stars */
-var stArr=new Float32Array(600*3);
-for(var i=0;i<600;i++){stArr[i*3]=(Math.random()-0.5)*400;stArr[i*3+1]=(Math.random()-0.5)*400;stArr[i*3+2]=(Math.random()-0.5)*400;}
-var stg=new THREE.BufferGeometry();stg.setAttribute('position',new THREE.BufferAttribute(stArr,3));
-scene.add(new THREE.Points(stg,new THREE.PointsMaterial({color:0xffffff,size:0.4,transparent:true,opacity:0.35})));
+/* Star field */
+var sArr=new Float32Array(500*3);
+for(var i=0;i<500;i++){sArr[i*3]=(Math.random()-0.5)*400;sArr[i*3+1]=(Math.random()-0.5)*400;sArr[i*3+2]=(Math.random()-0.5)*400;}
+var stg=new THREE.BufferGeometry();stg.setAttribute('position',new THREE.BufferAttribute(sArr,3));
+scene.add(new THREE.Points(stg,new THREE.PointsMaterial({color:0xffffff,size:0.45,transparent:true,opacity:0.35})));
 
 scene.add(globe);
 
 var t=0;
 (function loop(){
-  requestAnimationFrame(loop);t+=0.007;
-  globe.rotation.y+=0.003;
+  requestAnimationFrame(loop);t+=0.006;
+
+  /* Slow, majestic globe rotation */
+  globe.rotation.y+=0.0022;
+
+  /* Animate route packets */
   packets.forEach(function(p){
     p.t+=p.spd;if(p.t>=1)p.t=0;
     var idx=Math.min(Math.floor(p.t*(p.pts.length-1)),p.pts.length-1);
-    p.mesh.position.copy(p.pts[idx]);
+    p.grp.position.copy(p.pts[idx]);
   });
+
+  /* Pulse city rings */
   globe.children.forEach(function(c){
     if(c.userData&&c.userData.ph!==undefined){
-      var s=1+Math.sin(t*2.2+c.userData.ph)*0.28;c.scale.set(s,s,s);
-      c.material.opacity=0.22+Math.abs(Math.sin(t*2.2+c.userData.ph))*0.2;
+      var s=1+Math.sin(t*1.8+c.userData.ph)*0.3;
+      c.scale.set(s,s,s);
+      c.material.opacity=0.25+Math.abs(Math.sin(t*1.8+c.userData.ph))*0.22;
     }
   });
-  cam.position.y=5+Math.sin(t*0.3)*1.5;
+
+  /* Gentle camera drift */
+  cam.position.y=4+Math.sin(t*0.28)*2;
   renderer.render(scene,cam);
 })();
-window.addEventListener('resize',function(){w=cv.offsetWidth;h=cv.offsetHeight;cam.aspect=w/h;cam.updateProjectionMatrix();renderer.setSize(w,h);});
+
+window.addEventListener('resize',function(){
+  w=cv.offsetWidth;h=cv.offsetHeight;
+  cam.aspect=w/h;cam.updateProjectionMatrix();
+  renderer.setSize(w,h);
+});
 }
 boot();
 })();
