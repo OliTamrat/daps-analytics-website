@@ -74,15 +74,13 @@
 
 <main class="flex-grow">
 
-  <!-- Hero -->
-  <section class="relative min-h-[795px] flex items-center justify-center overflow-hidden border-b border-outline-variant">
-    <div class="absolute inset-0 z-0 overflow-hidden">
-      <img class="w-full h-full object-cover object-center opacity-40 mix-blend-luminosity hero-zoom"
-           src="https://lh3.googleusercontent.com/aida-public/AB6AXuBBKm3cMRtLIqrNV8E3E6oP_VcPb7xEHSNT8kPPGcq1MiO-PtSzAZjXtfIDG-kDNIJZPAoN5fZSKCFoxFzYRovSRQ4NVNS9EF8q0w5bsSmaBEjhTPVzR3bGVUr-bJsNqLQSBRhPfAiHXfqQ0yh0KBLVbqgb4-2LmmOoCVCpS-GE_0B3u3uXgaJOAfOH-rJ3w5VZ3aJiJGv1jE-gY_NqVpM7BoiwBHFXXYVjblkFKv_TcB3T7YDnNKRWFiEjGp4A3Z8XkXIi2oUnQp"
-           alt="UDC-WQIS hero background — Anacostia watershed"/>
-      <div class="absolute inset-0 bg-gradient-to-t from-background via-background/80 to-transparent"></div>
-    </div>
+<!-- Hero -->
+  <section class="relative min-h-screen flex items-center justify-center overflow-hidden border-b border-outline-variant" style="background:#060a0e;">
+    <canvas id="wqis-hero-canvas" style="position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:0;"></canvas>
+    <div style="position:absolute;inset:0;z-index:1;pointer-events:none;background:radial-gradient(ellipse 60% 55% at 50% 50%,rgba(239,191,113,0.06) 0%,transparent 65%);"></div>
+    <div style="position:absolute;inset-x-0;bottom:0;height:200px;z-index:1;pointer-events:none;background:linear-gradient(to top,#0e141b,transparent);"></div>
     <div class="relative z-10 max-w-[1440px] mx-auto px-6 md:px-12 flex flex-col items-center text-center">
+
       <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border backdrop-blur-md mb-8 reveal" style="border-color:rgba(239,191,113,0.3);background:rgba(239,191,113,0.1);">
         <span class="w-2 h-2 rounded-full animate-pulse" style="background:#efbf71;"></span>
         <span class="font-label-caps text-label-caps tracking-widest" style="color:#efbf71;">Live — Washington DC</span>
@@ -102,10 +100,10 @@
           Request Integration
         </a>
       </div>
-    </div>
+    </div>    </div>
   </section>
 
-  <!-- Stats Bar -->
+    <!-- Stats Bar -->
   <section class="border-b border-outline-variant bg-surface-container-lowest py-12">
     <div class="max-w-[1440px] mx-auto px-6 md:px-12">
       <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
@@ -268,5 +266,87 @@
 
 <script src="assets/navbar.js"></script>
 <script src="assets/daps.js"></script>
+<script>
+(function(){
+  var cvs=document.getElementById('wqis-hero-canvas');
+  if(!cvs)return;
+  var ctx=cvs.getContext('2d'),W,H,nodes=[],packets=[];
+  var N=42,MAX_D=170,DPR=window.devicePixelRatio||1;
+  function resize(){
+    W=cvs.offsetWidth;H=cvs.offsetHeight;
+    cvs.width=W*DPR;cvs.height=H*DPR;
+    ctx.scale(DPR,DPR);
+  }
+  function initNodes(){
+    nodes=[];
+    for(var i=0;i<N;i++){
+      nodes.push({
+        x:W*(0.04+Math.random()*0.92),
+        y:H*(0.04+Math.random()*0.92),
+        vx:(Math.random()-0.5)*0.28,
+        vy:(Math.random()-0.5)*0.28,
+        r:1.8+Math.random()*2.2,
+        col:Math.random()>0.28?'#49fde3':'#efbf71',
+        pulse:Math.random()*Math.PI*2
+      });
+    }
+    packets=[];
+    for(var j=0;j<20;j++) spawnPacket();
+  }
+  function spawnPacket(){
+    var a=Math.floor(Math.random()*nodes.length);
+    var b=(a+1+Math.floor(Math.random()*(nodes.length-1)))%nodes.length;
+    packets.push({from:a,to:b,t:Math.random(),speed:0.003+Math.random()*0.005,col:Math.random()>0.28?'#49fde3':'#efbf71'});
+  }
+  function frame(){
+    ctx.clearRect(0,0,W,H);
+    nodes.forEach(function(n){
+      n.x+=n.vx;n.y+=n.vy;n.pulse+=0.016;
+      if(n.x<10||n.x>W-10)n.vx*=-1;
+      if(n.y<10||n.y>H-10)n.vy*=-1;
+    });
+    for(var i=0;i<nodes.length;i++){
+      for(var j=i+1;j<nodes.length;j++){
+        var dx=nodes[j].x-nodes[i].x,dy=nodes[j].y-nodes[i].y,d=Math.sqrt(dx*dx+dy*dy);
+        if(d<MAX_D){
+          var a=(1-d/MAX_D)*0.18;
+          var amb=nodes[i].col==='#efbf71'||nodes[j].col==='#efbf71';
+          ctx.beginPath();ctx.moveTo(nodes[i].x,nodes[i].y);ctx.lineTo(nodes[j].x,nodes[j].y);
+          ctx.strokeStyle=amb?nodes[i].col.replace(')',','+a+')').replace('rgb','rgba'):'rgba(73,253,227,'+a+')';
+          if(nodes[i].col==='#efbf71'){
+            var parts='#efbf71'.replace('#','');
+            var r=parseInt(parts.substr(0,2),16),g=parseInt(parts.substr(2,2),16),b=parseInt(parts.substr(4,2),16);
+            ctx.strokeStyle='rgba('+r+','+g+','+b+','+a+')';
+          } else {
+            ctx.strokeStyle='rgba(73,253,227,'+a+')';
+          }
+          ctx.lineWidth=0.7;ctx.stroke();
+        }
+      }
+    }
+    for(var pi=packets.length-1;pi>=0;pi--){
+      var p=packets[pi];p.t+=p.speed;
+      if(p.t>1){packets.splice(pi,1);spawnPacket();continue;}
+      var fa=nodes[p.from],fb=nodes[p.to];
+      var px=fa.x+(fb.x-fa.x)*p.t,py=fa.y+(fb.y-fa.y)*p.t;
+      var gr=ctx.createRadialGradient(px,py,0,px,py,9);
+      gr.addColorStop(0,p.col+'ff');gr.addColorStop(1,p.col+'00');
+      ctx.fillStyle=gr;ctx.beginPath();ctx.arc(px,py,9,0,Math.PI*2);ctx.fill();
+      ctx.fillStyle=p.col;ctx.beginPath();ctx.arc(px,py,2.2,0,Math.PI*2);ctx.fill();
+    }
+    nodes.forEach(function(n){
+      var ps=0.5+0.3*Math.sin(n.pulse);
+      var gr=ctx.createRadialGradient(n.x,n.y,0,n.x,n.y,n.r*3*ps);
+      gr.addColorStop(0,n.col+'bb');gr.addColorStop(1,n.col+'00');
+      ctx.fillStyle=gr;ctx.beginPath();ctx.arc(n.x,n.y,n.r*3*ps,0,Math.PI*2);ctx.fill();
+      ctx.fillStyle=n.col;ctx.beginPath();ctx.arc(n.x,n.y,n.r,0,Math.PI*2);ctx.fill();
+    });
+    requestAnimationFrame(frame);
+  }
+  function init(){resize();initNodes();frame();}
+  window.addEventListener('resize',function(){resize();initNodes();});
+  if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded',init);}else{init();}
+})();
+</script>
 </body>
 </html>
