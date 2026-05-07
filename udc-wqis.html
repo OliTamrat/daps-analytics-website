@@ -69,17 +69,20 @@
   .reveal-delay-1 { transition-delay: 0.15s; }
   .reveal-delay-2 { transition-delay: 0.3s; }
 </style>
+<script src="https://unpkg.com/three@0.160.1/build/three.min.js"></script>
 </head>
 <body class="antialiased min-h-screen flex flex-col selection:bg-secondary/20 selection:text-secondary">
 
 <main class="flex-grow">
 
-<!-- Hero -->
+  <!-- Hero -->
   <section class="relative min-h-screen flex items-center justify-center overflow-hidden border-b border-outline-variant" style="background:#060a0e;">
-    <canvas id="wqis-hero-canvas" style="position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:0;"></canvas>
-    <div style="position:absolute;inset:0;z-index:1;pointer-events:none;background:radial-gradient(ellipse 60% 55% at 50% 50%,rgba(239,191,113,0.06) 0%,transparent 65%);"></div>
-    <div style="position:absolute;inset-x-0;bottom:0;height:200px;z-index:1;pointer-events:none;background:linear-gradient(to top,#0e141b,transparent);"></div>
+    <canvas id="wqis-3d" style="position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:0;"></canvas>
+    <div style="position:absolute;inset:0;z-index:1;pointer-events:none;background:radial-gradient(ellipse 70% 60% at 50% 50%,rgba(30,120,140,0.05) 0%,transparent 70%);"></div>
+    <div style="position:absolute;inset-x-0;bottom:0;height:220px;z-index:1;pointer-events:none;background:linear-gradient(to top,#0e141b,transparent);"></div>
+    <div style="position:absolute;inset-x-0;top:0;height:100px;z-index:1;pointer-events:none;background:linear-gradient(to bottom,rgba(6,10,14,0.5),transparent);"></div>
     <div class="relative z-10 max-w-[1440px] mx-auto px-6 md:px-12 flex flex-col items-center text-center">
+
 
       <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border backdrop-blur-md mb-8 reveal" style="border-color:rgba(239,191,113,0.3);background:rgba(239,191,113,0.1);">
         <span class="w-2 h-2 rounded-full animate-pulse" style="background:#efbf71;"></span>
@@ -101,6 +104,7 @@
         </a>
       </div>
     </div>    </div>
+    </div>
   </section>
 
     <!-- Stats Bar -->
@@ -266,86 +270,90 @@
 
 <script src="assets/navbar.js"></script>
 <script src="assets/daps.js"></script>
+
 <script>
 (function(){
-  var cvs=document.getElementById('wqis-hero-canvas');
-  if(!cvs)return;
-  var ctx=cvs.getContext('2d'),W,H,nodes=[],packets=[];
-  var N=42,MAX_D=170,DPR=window.devicePixelRatio||1;
-  function resize(){
-    W=cvs.offsetWidth;H=cvs.offsetHeight;
-    cvs.width=W*DPR;cvs.height=H*DPR;
-    ctx.scale(DPR,DPR);
+var c=document.getElementById('wqis-3d');if(!c)return;
+function boot(){if(typeof THREE==='undefined'){setTimeout(boot,60);return;}run();}
+function run(){
+var w=c.offsetWidth,h=c.offsetHeight;
+var renderer=new THREE.WebGLRenderer({canvas:c,alpha:true,antialias:true});
+renderer.setPixelRatio(Math.min(devicePixelRatio,2));renderer.setSize(w,h);
+var scene=new THREE.Scene();
+var cam=new THREE.PerspectiveCamera(50,w/h,0.1,500);
+cam.position.set(0,28,22);cam.lookAt(0,0,0);
+/* Dark water base */
+var base=new THREE.Mesh(new THREE.PlaneGeometry(80,80),
+  new THREE.MeshBasicMaterial({color:0x020c12,transparent:true,opacity:0.9}));
+base.rotation.x=-Math.PI/2;base.position.y=-0.15;scene.add(base);
+/* Wireframe wave surface */
+var GRID=72,SEG=52;
+var geo=new THREE.PlaneGeometry(GRID,GRID,SEG,SEG);
+geo.rotateX(-Math.PI/2);
+var water=new THREE.Mesh(geo,
+  new THREE.MeshBasicMaterial({color:0x0d4a5e,wireframe:true,transparent:true,opacity:0.45}));
+scene.add(water);
+/* Sensor buoy positions */
+var SP=[[-20,0,-15],[8,0,-23],[24,0,5],[-6,0,18],[-27,0,7],[1,0,-5],
+        [15,0,-11],[-16,0,22],[23,0,21],[-24,0,-23],[5,0,27],[27,0,-17]];
+var buoys=SP.map(function(p){
+  var m=new THREE.Mesh(new THREE.SphereGeometry(0.58,10,10),
+    new THREE.MeshBasicMaterial({color:0x49fde3}));
+  m.position.set(p[0],0.6,p[2]);m.userData={bx:p[0],bz:p[2]};scene.add(m);
+  var rg=new THREE.RingGeometry(1.0,1.5,24);rg.rotateX(-Math.PI/2);
+  var rm=new THREE.Mesh(rg,new THREE.MeshBasicMaterial({color:0x49fde3,transparent:true,opacity:0.2,side:THREE.DoubleSide}));
+  rm.position.set(p[0],0.1,p[2]);rm.userData={bx:p[0],bz:p[2],phase:Math.random()*Math.PI*2};scene.add(rm);
+  return{s:m,r:rm};
+});
+/* Amber data-reading dots above buoys */
+var rdArr=new Float32Array(SP.length*3);
+SP.forEach(function(p,i){rdArr[i*3]=p[0];rdArr[i*3+1]=3.5;rdArr[i*3+2]=p[2];});
+var rdGeo=new THREE.BufferGeometry();rdGeo.setAttribute('position',new THREE.BufferAttribute(rdArr,3));
+scene.add(new THREE.Points(rdGeo,new THREE.PointsMaterial({color:0xefbf71,size:0.65})));
+/* Sensor network lines */
+var lArr=[];
+for(var i=0;i<SP.length;i++)for(var j=i+1;j<SP.length;j++){
+  var dx=SP[i][0]-SP[j][0],dz=SP[i][2]-SP[j][2];
+  if(Math.sqrt(dx*dx+dz*dz)<27)lArr.push(SP[i][0],0.1,SP[i][2],SP[j][0],0.1,SP[j][2]);
+}
+var lGeo=new THREE.BufferGeometry();lGeo.setAttribute('position',new THREE.BufferAttribute(new Float32Array(lArr),3));
+scene.add(new THREE.LineSegments(lGeo,new THREE.LineBasicMaterial({color:0x49fde3,transparent:true,opacity:0.22})));
+/* Rain particles */
+var RN=650,rPos=new Float32Array(RN*3),rVel=new Float32Array(RN);
+for(var i=0;i<RN;i++){rPos[i*3]=(Math.random()-0.5)*GRID;rPos[i*3+1]=4+Math.random()*34;rPos[i*3+2]=(Math.random()-0.5)*GRID;rVel[i]=0.22+Math.random()*0.38;}
+var rainGeo=new THREE.BufferGeometry();rainGeo.setAttribute('position',new THREE.BufferAttribute(rPos,3));
+var rain=new THREE.Points(rainGeo,new THREE.PointsMaterial({color:0x4a8fa0,size:0.15,transparent:true,opacity:0.48}));
+scene.add(rain);
+/* Cache wave vertex Y */
+var verts=geo.attributes.position,origY=new Float32Array(verts.count);
+for(var i=0;i<verts.count;i++)origY[i]=verts.getY(i);
+var t=0;
+(function loop(){
+  requestAnimationFrame(loop);t+=0.014;
+  for(var i=0;i<verts.count;i++){
+    var x=verts.getX(i),z=verts.getZ(i);
+    verts.setY(i,origY[i]+Math.sin(x*0.22+t)*1.1+Math.cos(z*0.19+t*1.12)*0.78);
   }
-  function initNodes(){
-    nodes=[];
-    for(var i=0;i<N;i++){
-      nodes.push({
-        x:W*(0.04+Math.random()*0.92),
-        y:H*(0.04+Math.random()*0.92),
-        vx:(Math.random()-0.5)*0.28,
-        vy:(Math.random()-0.5)*0.28,
-        r:1.8+Math.random()*2.2,
-        col:Math.random()>0.28?'#49fde3':'#efbf71',
-        pulse:Math.random()*Math.PI*2
-      });
-    }
-    packets=[];
-    for(var j=0;j<20;j++) spawnPacket();
+  verts.needsUpdate=true;
+  buoys.forEach(function(b){
+    var x=b.s.userData.bx,z=b.s.userData.bz;
+    var wh=Math.sin(x*0.22+t)*1.1+Math.cos(z*0.19+t*1.12)*0.78;
+    b.s.position.y=wh+0.58;b.r.position.y=wh+0.08;
+    var p=1+Math.sin(t*1.8+b.r.userData.phase)*0.35;
+    b.r.scale.set(p,p,p);b.r.material.opacity=0.12+Math.sin(t*1.8+b.r.userData.phase)*0.08;
+  });
+  var rp=rainGeo.attributes.position;
+  for(var i=0;i<RN;i++){
+    rp.setY(i,rp.getY(i)-rVel[i]);
+    if(rp.getY(i)<0){rp.setY(i,4+Math.random()*34);rp.setX(i,(Math.random()-0.5)*GRID);rp.setZ(i,(Math.random()-0.5)*GRID);}
   }
-  function spawnPacket(){
-    var a=Math.floor(Math.random()*nodes.length);
-    var b=(a+1+Math.floor(Math.random()*(nodes.length-1)))%nodes.length;
-    packets.push({from:a,to:b,t:Math.random(),speed:0.003+Math.random()*0.005,col:Math.random()>0.28?'#49fde3':'#efbf71'});
-  }
-  function frame(){
-    ctx.clearRect(0,0,W,H);
-    nodes.forEach(function(n){
-      n.x+=n.vx;n.y+=n.vy;n.pulse+=0.016;
-      if(n.x<10||n.x>W-10)n.vx*=-1;
-      if(n.y<10||n.y>H-10)n.vy*=-1;
-    });
-    for(var i=0;i<nodes.length;i++){
-      for(var j=i+1;j<nodes.length;j++){
-        var dx=nodes[j].x-nodes[i].x,dy=nodes[j].y-nodes[i].y,d=Math.sqrt(dx*dx+dy*dy);
-        if(d<MAX_D){
-          var a=(1-d/MAX_D)*0.18;
-          var amb=nodes[i].col==='#efbf71'||nodes[j].col==='#efbf71';
-          ctx.beginPath();ctx.moveTo(nodes[i].x,nodes[i].y);ctx.lineTo(nodes[j].x,nodes[j].y);
-          ctx.strokeStyle=amb?nodes[i].col.replace(')',','+a+')').replace('rgb','rgba'):'rgba(73,253,227,'+a+')';
-          if(nodes[i].col==='#efbf71'){
-            var parts='#efbf71'.replace('#','');
-            var r=parseInt(parts.substr(0,2),16),g=parseInt(parts.substr(2,2),16),b=parseInt(parts.substr(4,2),16);
-            ctx.strokeStyle='rgba('+r+','+g+','+b+','+a+')';
-          } else {
-            ctx.strokeStyle='rgba(73,253,227,'+a+')';
-          }
-          ctx.lineWidth=0.7;ctx.stroke();
-        }
-      }
-    }
-    for(var pi=packets.length-1;pi>=0;pi--){
-      var p=packets[pi];p.t+=p.speed;
-      if(p.t>1){packets.splice(pi,1);spawnPacket();continue;}
-      var fa=nodes[p.from],fb=nodes[p.to];
-      var px=fa.x+(fb.x-fa.x)*p.t,py=fa.y+(fb.y-fa.y)*p.t;
-      var gr=ctx.createRadialGradient(px,py,0,px,py,9);
-      gr.addColorStop(0,p.col+'ff');gr.addColorStop(1,p.col+'00');
-      ctx.fillStyle=gr;ctx.beginPath();ctx.arc(px,py,9,0,Math.PI*2);ctx.fill();
-      ctx.fillStyle=p.col;ctx.beginPath();ctx.arc(px,py,2.2,0,Math.PI*2);ctx.fill();
-    }
-    nodes.forEach(function(n){
-      var ps=0.5+0.3*Math.sin(n.pulse);
-      var gr=ctx.createRadialGradient(n.x,n.y,0,n.x,n.y,n.r*3*ps);
-      gr.addColorStop(0,n.col+'bb');gr.addColorStop(1,n.col+'00');
-      ctx.fillStyle=gr;ctx.beginPath();ctx.arc(n.x,n.y,n.r*3*ps,0,Math.PI*2);ctx.fill();
-      ctx.fillStyle=n.col;ctx.beginPath();ctx.arc(n.x,n.y,n.r,0,Math.PI*2);ctx.fill();
-    });
-    requestAnimationFrame(frame);
-  }
-  function init(){resize();initNodes();frame();}
-  window.addEventListener('resize',function(){resize();initNodes();});
-  if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded',init);}else{init();}
+  rp.needsUpdate=true;
+  cam.position.x=Math.sin(t*0.035)*6;
+  renderer.render(scene,cam);
+})();
+window.addEventListener('resize',function(){w=c.offsetWidth;h=c.offsetHeight;cam.aspect=w/h;cam.updateProjectionMatrix();renderer.setSize(w,h);});
+}
+boot();
 })();
 </script>
 </body>

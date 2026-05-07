@@ -69,6 +69,7 @@
   .reveal-delay-1 { transition-delay: 0.15s; }
   .reveal-delay-2 { transition-delay: 0.3s; }
 </style>
+<script src="https://unpkg.com/three@0.160.1/build/three.min.js"></script>
 </head>
 <body class="antialiased min-h-screen flex flex-col selection:bg-primary/20 selection:text-primary">
 
@@ -77,14 +78,13 @@
 <main class="flex-grow ">
 
   <!-- Hero -->
-  <section class="relative min-h-[795px] flex items-center justify-center overflow-hidden border-b border-outline-variant">
-    <div class="absolute inset-0 z-0 overflow-hidden">
-      <img class="w-full h-full object-cover object-center opacity-40 mix-blend-luminosity hero-zoom"
-           src="https://lh3.googleusercontent.com/aida-public/AB6AXuDaS7d94D90GStk_w-97kVm4ZnBgq9ndPWgAjsEl9qMH_CcI471shFIZxXijsqbzv_vtvrIisA51SGeDq9BYeSuyU72cB7WJ-5vp2f6h2_wtWhLd_Kz1z5zVV2QK_5Qts-fZtZmcWKBn3EA0nk9qm6gitXDqJaQ6mUGJIJt0E3ceZf7LFTaLHKcrh_7S5h4cby4fsssaJWg7STlE5K9ylGfdodAiaGS3i18I8NyuFN7KQXDDagI71jST7WPJFsufaev0R58_XgSq2Ep"
-           alt="Onekof PM hero background"/>
-      <div class="absolute inset-0 bg-gradient-to-t from-background via-background/80 to-transparent"></div>
-    </div>
+  <section class="relative min-h-screen flex items-center justify-center overflow-hidden border-b border-outline-variant" style="background:#060a0e;">
+    <canvas id="onekof-3d" style="position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:0;"></canvas>
+    <div style="position:absolute;inset:0;z-index:1;pointer-events:none;background:radial-gradient(ellipse 70% 60% at 50% 50%,rgba(73,253,227,0.04) 0%,transparent 70%);"></div>
+    <div style="position:absolute;inset-x-0;bottom:0;height:220px;z-index:1;pointer-events:none;background:linear-gradient(to top,#0e141b,transparent);"></div>
+    <div style="position:absolute;inset-x-0;top:0;height:100px;z-index:1;pointer-events:none;background:linear-gradient(to bottom,rgba(6,10,14,0.5),transparent);"></div>
     <div class="relative z-10 max-w-[1440px] mx-auto px-6 md:px-12 flex flex-col items-center text-center">
+
       <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-primary/30 bg-primary/10 backdrop-blur-md mb-8 reveal">
         <span class="w-2 h-2 rounded-full bg-primary animate-pulse"></span>
         <span class="font-label-caps text-label-caps text-primary tracking-widest">Live in Ethiopia</span>
@@ -104,9 +104,10 @@
         </a>
       </div>
     </div>
+    </div>
   </section>
 
-  <!-- Stats Bar -->
+    <!-- Stats Bar -->
   <section class="border-b border-outline-variant bg-surface-container-lowest py-12">
     <div class="max-w-[1440px] mx-auto px-6 md:px-12">
       <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
@@ -269,5 +270,87 @@
 
 <script src="assets/navbar.js"></script>
 <script src="assets/daps.js"></script>
+<script>
+(function(){
+var c=document.getElementById('onekof-3d');if(!c)return;
+function boot(){if(typeof THREE==='undefined'){setTimeout(boot,60);return;}run();}
+function run(){
+var w=c.offsetWidth,h=c.offsetHeight;
+var renderer=new THREE.WebGLRenderer({canvas:c,alpha:true,antialias:true});
+renderer.setPixelRatio(Math.min(devicePixelRatio,2));renderer.setSize(w,h);
+var scene=new THREE.Scene();
+var cam=new THREE.PerspectiveCamera(58,w/h,0.1,400);
+cam.position.set(0,6,38);cam.lookAt(0,0,-2);
+/* Kanban columns */
+[-12,0,12].forEach(function(x,i){
+  var col=i===1?0xefbf71:0x49fde3;
+  var pg=new THREE.PlaneGeometry(7,18);
+  var p=new THREE.Mesh(pg,new THREE.MeshBasicMaterial({color:col,transparent:true,opacity:0.04,side:THREE.DoubleSide}));p.position.set(x,0,-4);scene.add(p);
+  var el=new THREE.LineSegments(new THREE.EdgesGeometry(pg),new THREE.LineBasicMaterial({color:col,transparent:true,opacity:0.12}));el.position.set(x,0,-4);scene.add(el);
+  var hb=new THREE.Mesh(new THREE.PlaneGeometry(7,0.4),new THREE.MeshBasicMaterial({color:col,transparent:true,opacity:0.28,side:THREE.DoubleSide}));hb.position.set(x,9,-4);scene.add(hb);
+});
+/* Task cards */
+var CARDS=[
+  {x:-12,y:5,  z:-3,w:5.5,h:2.8,col:0x49fde3,op:0.14,prog:0.9, ph:0.0},
+  {x:-12,y:1,  z:-3,w:5.5,h:2.8,col:0x49fde3,op:0.14,prog:0.7, ph:0.5},
+  {x:-12,y:-3, z:-3,w:5.5,h:2.8,col:0x49fde3,op:0.14,prog:0.5, ph:1.0},
+  {x:  0,y:6,  z:-3,w:5.5,h:2.8,col:0xefbf71,op:0.16,prog:0.45,ph:0.3},
+  {x:  0,y:2,  z:-3,w:5.5,h:2.8,col:0xefbf71,op:0.16,prog:0.30,ph:0.8},
+  {x:  0,y:-2, z:-3,w:5.5,h:2.8,col:0x49fde3,op:0.14,prog:0.60,ph:1.3},
+  {x: 12,y:5,  z:-3,w:5.5,h:2.8,col:0x49fde3,op:0.14,prog:1.0, ph:0.2},
+  {x: 12,y:1,  z:-3,w:5.5,h:2.8,col:0xefbf71,op:0.16,prog:1.0, ph:0.7},
+  {x: 12,y:-3, z:-3,w:5.5,h:2.8,col:0x49fde3,op:0.14,prog:1.0, ph:1.5},
+  {x:-20,y:3,  z:-12,w:5,h:2.5,col:0x49fde3,op:0.07,prog:0.5,ph:0.4},
+  {x: 20,y:-1, z:-12,w:5,h:2.5,col:0xefbf71,op:0.07,prog:0.7,ph:0.9},
+  {x: -6,y:-7, z:-10,w:5.5,h:2.5,col:0x49fde3,op:0.07,prog:0.4,ph:1.1},
+  {x:  8,y: 8, z:-10,w:5.5,h:2.5,col:0xefbf71,op:0.07,prog:0.8,ph:0.6},
+];
+var floaters=[];
+CARDS.forEach(function(d){
+  var pg=new THREE.PlaneGeometry(d.w,d.h);
+  var m=new THREE.Mesh(pg,new THREE.MeshBasicMaterial({color:d.col,transparent:true,opacity:d.op,side:THREE.DoubleSide}));
+  m.position.set(d.x,d.y,d.z);m.userData={baseY:d.y,ph:d.ph};scene.add(m);floaters.push(m);
+  var el=new THREE.LineSegments(new THREE.EdgesGeometry(pg),new THREE.LineBasicMaterial({color:d.col,transparent:true,opacity:d.op+0.14}));
+  el.position.set(d.x,d.y,d.z);el.userData={baseY:d.y,ph:d.ph};scene.add(el);floaters.push(el);
+  var pw=d.w*0.78*d.prog;
+  var bar=new THREE.Mesh(new THREE.PlaneGeometry(pw,0.22),new THREE.MeshBasicMaterial({color:d.col,transparent:true,opacity:0.6}));
+  bar.position.set(d.x+(pw/2-d.w*0.39),d.y-d.h*0.32,d.z+0.02);bar.userData={baseY:d.y-d.h*0.32,ph:d.ph};scene.add(bar);floaters.push(bar);
+});
+/* Dependency lines */
+[[0,3],[1,4],[3,6],[4,7],[5,8],[2,5],[1,3]].forEach(function(dep){
+  var a=CARDS[dep[0]],b=CARDS[dep[1]];
+  scene.add(new THREE.Line(
+    new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(a.x,a.y,a.z),new THREE.Vector3(b.x,b.y,b.z)]),
+    new THREE.LineBasicMaterial({color:0x49fde3,transparent:true,opacity:0.10})));
+});
+/* Gantt bars */
+for(var i=0;i<10;i++){
+  var gw=4+Math.random()*9,gx=(Math.random()-0.5)*30;
+  var gb=new THREE.Mesh(new THREE.PlaneGeometry(gw,0.28),
+    new THREE.MeshBasicMaterial({color:i%2===0?0x49fde3:0xefbf71,transparent:true,opacity:0.08}));
+  gb.position.set(gx,-10+i*0.55,-18);scene.add(gb);
+}
+/* Task nodes */
+var tArr=new Float32Array(50*3);
+for(var i=0;i<50;i++){tArr[i*3]=(Math.random()-0.5)*48;tArr[i*3+1]=(Math.random()-0.5)*22;tArr[i*3+2]=(Math.random()-0.5)*18-5;}
+var tGeo=new THREE.BufferGeometry();tGeo.setAttribute('position',new THREE.BufferAttribute(tArr,3));
+scene.add(new THREE.Points(tGeo,new THREE.PointsMaterial({color:0x49fde3,size:0.32,transparent:true,opacity:0.45})));
+var t=0;
+(function loop(){
+  requestAnimationFrame(loop);t+=0.007;
+  floaters.forEach(function(m){
+    if(m.userData.baseY!==undefined){
+      m.position.y=m.userData.baseY+Math.sin(t+m.userData.ph)*0.42;
+      m.rotation.y=Math.sin(t*0.4+m.userData.ph*0.5)*0.04;
+    }
+  });
+  cam.position.x=Math.sin(t*0.05)*7;cam.position.y=6+Math.sin(t*0.038)*1.5;cam.lookAt(0,0,-2);
+  renderer.render(scene,cam);
+})();
+window.addEventListener('resize',function(){w=c.offsetWidth;h=c.offsetHeight;cam.aspect=w/h;cam.updateProjectionMatrix();renderer.setSize(w,h);});
+}
+boot();
+})();
+</script>
 </body>
 </html>

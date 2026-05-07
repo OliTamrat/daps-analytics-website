@@ -69,17 +69,20 @@
   .reveal-delay-1 { transition-delay: 0.15s; }
   .reveal-delay-2 { transition-delay: 0.3s; }
 </style>
+<script src="https://unpkg.com/three@0.160.1/build/three.min.js"></script>
 </head>
 <body class="antialiased min-h-screen flex flex-col selection:bg-primary/20 selection:text-primary">
 
 <main class="flex-grow">
 
-<!-- Hero -->
+  <!-- Hero -->
   <section class="relative min-h-screen flex items-center justify-center overflow-hidden border-b border-outline-variant" style="background:#060a0e;">
-    <canvas id="hakimet-hero-canvas" style="position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:0;"></canvas>
-    <div style="position:absolute;inset:0;z-index:1;pointer-events:none;background:radial-gradient(ellipse 60% 55% at 50% 50%,rgba(73,253,227,0.06) 0%,transparent 65%);"></div>
-    <div style="position:absolute;inset-x-0;bottom:0;height:200px;z-index:1;pointer-events:none;background:linear-gradient(to top,#0e141b,transparent);"></div>
+    <canvas id="hakimet-3d" style="position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:0;"></canvas>
+    <div style="position:absolute;inset:0;z-index:1;pointer-events:none;background:radial-gradient(ellipse 70% 60% at 50% 50%,rgba(73,253,227,0.04) 0%,transparent 70%);"></div>
+    <div style="position:absolute;inset-x-0;bottom:0;height:220px;z-index:1;pointer-events:none;background:linear-gradient(to top,#0e141b,transparent);"></div>
+    <div style="position:absolute;inset-x-0;top:0;height:100px;z-index:1;pointer-events:none;background:linear-gradient(to bottom,rgba(6,10,14,0.5),transparent);"></div>
     <div class="relative z-10 max-w-[1440px] mx-auto px-6 md:px-12 flex flex-col items-center text-center">
+
 
       <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-primary/30 bg-primary/10 backdrop-blur-md mb-8 reveal">
         <span class="w-2 h-2 rounded-full bg-primary animate-pulse"></span>
@@ -100,6 +103,7 @@
         </a>
       </div>
     </div>    </div>
+    </div>
   </section>
 
     <!-- Stats Bar -->
@@ -264,86 +268,92 @@
 
 <script src="assets/navbar.js"></script>
 <script src="assets/daps.js"></script>
+
 <script>
 (function(){
-  var cvs=document.getElementById('hakimet-hero-canvas');
-  if(!cvs)return;
-  var ctx=cvs.getContext('2d'),W,H,nodes=[],packets=[];
-  var N=42,MAX_D=170,DPR=window.devicePixelRatio||1;
-  function resize(){
-    W=cvs.offsetWidth;H=cvs.offsetHeight;
-    cvs.width=W*DPR;cvs.height=H*DPR;
-    ctx.scale(DPR,DPR);
-  }
-  function initNodes(){
-    nodes=[];
-    for(var i=0;i<N;i++){
-      nodes.push({
-        x:W*(0.04+Math.random()*0.92),
-        y:H*(0.04+Math.random()*0.92),
-        vx:(Math.random()-0.5)*0.28,
-        vy:(Math.random()-0.5)*0.28,
-        r:1.8+Math.random()*2.2,
-        col:Math.random()>0.22?'#efbf71':'#49fde3',
-        pulse:Math.random()*Math.PI*2
-      });
-    }
-    packets=[];
-    for(var j=0;j<20;j++) spawnPacket();
-  }
-  function spawnPacket(){
-    var a=Math.floor(Math.random()*nodes.length);
-    var b=(a+1+Math.floor(Math.random()*(nodes.length-1)))%nodes.length;
-    packets.push({from:a,to:b,t:Math.random(),speed:0.003+Math.random()*0.005,col:Math.random()>0.22?'#efbf71':'#49fde3'});
-  }
-  function frame(){
-    ctx.clearRect(0,0,W,H);
-    nodes.forEach(function(n){
-      n.x+=n.vx;n.y+=n.vy;n.pulse+=0.016;
-      if(n.x<10||n.x>W-10)n.vx*=-1;
-      if(n.y<10||n.y>H-10)n.vy*=-1;
-    });
-    for(var i=0;i<nodes.length;i++){
-      for(var j=i+1;j<nodes.length;j++){
-        var dx=nodes[j].x-nodes[i].x,dy=nodes[j].y-nodes[i].y,d=Math.sqrt(dx*dx+dy*dy);
-        if(d<MAX_D){
-          var a=(1-d/MAX_D)*0.18;
-          var amb=nodes[i].col==='#49fde3'||nodes[j].col==='#49fde3';
-          ctx.beginPath();ctx.moveTo(nodes[i].x,nodes[i].y);ctx.lineTo(nodes[j].x,nodes[j].y);
-          ctx.strokeStyle=amb?nodes[i].col.replace(')',','+a+')').replace('rgb','rgba'):'rgba(73,253,227,'+a+')';
-          if(nodes[i].col==='#49fde3'){
-            var parts='#49fde3'.replace('#','');
-            var r=parseInt(parts.substr(0,2),16),g=parseInt(parts.substr(2,2),16),b=parseInt(parts.substr(4,2),16);
-            ctx.strokeStyle='rgba('+r+','+g+','+b+','+a+')';
-          } else {
-            ctx.strokeStyle='rgba(73,253,227,'+a+')';
-          }
-          ctx.lineWidth=0.7;ctx.stroke();
-        }
-      }
-    }
-    for(var pi=packets.length-1;pi>=0;pi--){
-      var p=packets[pi];p.t+=p.speed;
-      if(p.t>1){packets.splice(pi,1);spawnPacket();continue;}
-      var fa=nodes[p.from],fb=nodes[p.to];
-      var px=fa.x+(fb.x-fa.x)*p.t,py=fa.y+(fb.y-fa.y)*p.t;
-      var gr=ctx.createRadialGradient(px,py,0,px,py,9);
-      gr.addColorStop(0,p.col+'ff');gr.addColorStop(1,p.col+'00');
-      ctx.fillStyle=gr;ctx.beginPath();ctx.arc(px,py,9,0,Math.PI*2);ctx.fill();
-      ctx.fillStyle=p.col;ctx.beginPath();ctx.arc(px,py,2.2,0,Math.PI*2);ctx.fill();
-    }
-    nodes.forEach(function(n){
-      var ps=0.5+0.3*Math.sin(n.pulse);
-      var gr=ctx.createRadialGradient(n.x,n.y,0,n.x,n.y,n.r*3*ps);
-      gr.addColorStop(0,n.col+'bb');gr.addColorStop(1,n.col+'00');
-      ctx.fillStyle=gr;ctx.beginPath();ctx.arc(n.x,n.y,n.r*3*ps,0,Math.PI*2);ctx.fill();
-      ctx.fillStyle=n.col;ctx.beginPath();ctx.arc(n.x,n.y,n.r,0,Math.PI*2);ctx.fill();
-    });
-    requestAnimationFrame(frame);
-  }
-  function init(){resize();initNodes();frame();}
-  window.addEventListener('resize',function(){resize();initNodes();});
-  if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded',init);}else{init();}
+var c=document.getElementById('hakimet-3d');if(!c)return;
+function boot(){if(typeof THREE==='undefined'){setTimeout(boot,60);return;}run();}
+function run(){
+var w=c.offsetWidth,h=c.offsetHeight;
+var renderer=new THREE.WebGLRenderer({canvas:c,alpha:true,antialias:true});
+renderer.setPixelRatio(Math.min(devicePixelRatio,2));renderer.setSize(w,h);
+var scene=new THREE.Scene();
+var cam=new THREE.PerspectiveCamera(58,w/h,0.1,400);
+cam.position.set(0,2,38);cam.lookAt(0,0,0);
+/* DNA double helix */
+var HP=220,R=3.2,s1=[],s2=[];
+for(var i=0;i<HP;i++){
+  var tt=(i/HP)*Math.PI*2*6;var y=(i/HP)*28-14;
+  s1.push(new THREE.Vector3(Math.cos(tt)*R,y,Math.sin(tt)*R));
+  s2.push(new THREE.Vector3(Math.cos(tt+Math.PI)*R,y,Math.sin(tt+Math.PI)*R));
+}
+var hg=new THREE.Group();
+hg.add(new THREE.Line(new THREE.BufferGeometry().setFromPoints(s1),new THREE.LineBasicMaterial({color:0x49fde3,transparent:true,opacity:0.65})));
+hg.add(new THREE.Line(new THREE.BufferGeometry().setFromPoints(s2),new THREE.LineBasicMaterial({color:0xefbf71,transparent:true,opacity:0.55})));
+for(var i=0;i<HP;i+=10){
+  hg.add(new THREE.Line(new THREE.BufferGeometry().setFromPoints([s1[i],s2[i]]),new THREE.LineBasicMaterial({color:0x49fde3,transparent:true,opacity:0.2})));
+  var mid=new THREE.Vector3().addVectors(s1[i],s2[i]).multiplyScalar(0.5);
+  var dg=new THREE.BufferGeometry();dg.setAttribute('position',new THREE.BufferAttribute(new Float32Array([mid.x,mid.y,mid.z]),3));
+  hg.add(new THREE.Points(dg,new THREE.PointsMaterial({color:0x49fde3,size:0.5})));
+}
+hg.position.x=11;scene.add(hg);
+/* ECG line */
+var ECG_N=120;
+var ecgBuf=new Float32Array(ECG_N*3);
+function ecgY(x){
+  var m=((x%1)+1)%1;
+  if(m<0.30)return 0;
+  if(m<0.36)return(m-0.30)*8;
+  if(m<0.42)return(0.42-m)*8;
+  if(m<0.44)return 0;
+  if(m<0.46)return-(m-0.44)*18;
+  if(m<0.52)return(m-0.44)*58-(0.46-0.44)*18;
+  if(m<0.58)return((0.58-m)/0.06)*6-1;
+  if(m<0.62)return 0;
+  if(m<0.68)return(m-0.62)*9;
+  if(m<0.75)return(0.75-m)*9;
+  return 0;
+}
+var ecgGeo=new THREE.BufferGeometry();ecgGeo.setAttribute('position',new THREE.BufferAttribute(ecgBuf,3));
+var ecgLine=new THREE.Line(ecgGeo,new THREE.LineBasicMaterial({color:0x49fde3,transparent:true,opacity:0.75}));
+ecgLine.position.set(-14,-10,6);scene.add(ecgLine);
+/* Medical cross */
+var crossG=new THREE.Group();
+[[2.5,7],[7,2.5]].forEach(function(dim){
+  var pg=new THREE.PlaneGeometry(dim[0],dim[1]);
+  crossG.add(new THREE.Mesh(pg,new THREE.MeshBasicMaterial({color:0x49fde3,transparent:true,opacity:0.10,side:THREE.DoubleSide})));
+  crossG.add(new THREE.LineSegments(new THREE.EdgesGeometry(pg),new THREE.LineBasicMaterial({color:0x49fde3,transparent:true,opacity:0.35})));
+});
+crossG.position.set(-14,8,0);scene.add(crossG);
+/* Data nodes */
+var ptArr=new Float32Array(70*3);
+for(var i=0;i<70;i++){ptArr[i*3]=(Math.random()-0.5)*42;ptArr[i*3+1]=(Math.random()-0.5)*26;ptArr[i*3+2]=(Math.random()-0.5)*16-4;}
+var ptGeo=new THREE.BufferGeometry();ptGeo.setAttribute('position',new THREE.BufferAttribute(ptArr,3));
+scene.add(new THREE.Points(ptGeo,new THREE.PointsMaterial({color:0x49fde3,size:0.33,transparent:true,opacity:0.38})));
+/* Pulse rings */
+var pRings=[[-14,0,4],[-6,-5,3],[2,5,5],[14,-2,3]].map(function(p,i){
+  var rg=new THREE.RingGeometry(1.8,2.5,28);
+  var rm=new THREE.Mesh(rg,new THREE.MeshBasicMaterial({color:0x49fde3,transparent:true,opacity:0.3,side:THREE.DoubleSide}));
+  rm.position.set(p[0],p[1],p[2]);rm.userData={ph:i*0.8};scene.add(rm);return rm;
+});
+var t=0,ecgOff=0;
+(function loop(){
+  requestAnimationFrame(loop);t+=0.008;
+  hg.rotation.y+=0.005;
+  ecgOff+=0.012;
+  for(var i=0;i<ECG_N;i++){ecgBuf[i*3]=(i/(ECG_N-1))*26;ecgBuf[i*3+1]=ecgY(i/(ECG_N-1)+ecgOff)*1.8;ecgBuf[i*3+2]=0;}
+  ecgGeo.attributes.position.needsUpdate=true;
+  pRings.forEach(function(r){
+    var p=1+Math.abs(Math.sin(t*2.8+r.userData.ph))*0.7;
+    r.scale.set(p,p,p);r.material.opacity=0.08+Math.abs(Math.sin(t*2.8+r.userData.ph))*0.28;
+  });
+  var cp=1+Math.sin(t*2)*0.04;crossG.scale.set(cp,cp,cp);
+  cam.position.x=Math.sin(t*0.04)*6;cam.position.y=2+Math.sin(t*0.03)*2;cam.lookAt(0,0,0);
+  renderer.render(scene,cam);
+})();
+window.addEventListener('resize',function(){w=c.offsetWidth;h=c.offsetHeight;cam.aspect=w/h;cam.updateProjectionMatrix();renderer.setSize(w,h);});
+}
+boot();
 })();
 </script>
 </body>
