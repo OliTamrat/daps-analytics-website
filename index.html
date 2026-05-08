@@ -107,9 +107,26 @@
   .service-card { background: #0d1117; border: 1px solid rgba(255,255,255,0.07); border-radius: 8px; padding: 32px; transition: border-color 0.4s ease; }
   .service-card:hover { border-color: rgba(73,253,227,0.3); }
 
-  /* ── Trust logo filter ──────────────────────────────────────── */
-  .trust-logo { filter: grayscale(1) brightness(0.5); transition: filter 0.4s ease; }
-  .trust-logo:hover { filter: grayscale(0) brightness(0.8); }
+  /* ── Trust logo pills ───────────────────────────────────────── */
+  .trust-pill {
+    display:flex;align-items:center;justify-content:center;
+    background:rgba(255,255,255,0.07);
+    border:1px solid rgba(255,255,255,0.10);
+    border-radius:10px;
+    padding:10px 20px;
+    min-width:100px;height:56px;
+    opacity:0.72;
+    transition:opacity 0.35s ease,background 0.35s ease,border-color 0.35s ease;
+  }
+  .trust-pill:hover {
+    opacity:1;
+    background:rgba(255,255,255,0.13);
+    border-color:rgba(255,255,255,0.24);
+  }
+  .trust-pill-img {
+    height:34px;width:auto;max-width:120px;object-fit:contain;
+    filter:brightness(1.1);
+  }
 
   /* ── Noise texture overlay ──────────────────────────────────── */
   .noise-overlay { position: relative; }
@@ -233,69 +250,51 @@
     <p style="font-size:10px;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;color:#3b4a46;text-align:center;margin-bottom:28px;">
       Trusted by Visionary Organizations
     </p>
-    <div class="flex justify-center md:justify-between items-center gap-8 flex-wrap">
+    <div class="flex justify-center md:justify-between items-center gap-5 flex-wrap">
 
-      <!-- BAO -->
-      <svg class="trust-logo" style="height:28px;width:auto;flex-shrink:0;" viewBox="0 0 72 28" xmlns="http://www.w3.org/2000/svg">
-        <rect x="0" y="4" width="3" height="20" rx="1.5" fill="#efbf71"/>
-        <text x="9" y="20" font-family="'Arial Black',Arial,sans-serif" font-size="17" font-weight="900" fill="white" letter-spacing="2">BAO</text>
-      </svg>
+      <!-- Bank of America -->
+      <div class="trust-pill" title="Bank of America">
+        <img src="https://logo.clearbit.com/bankofamerica.com?size=120" alt="Bank of America" class="trust-pill-img"/>
+      </div>
 
       <!-- Verizon -->
-      <svg class="trust-logo" style="height:28px;width:auto;flex-shrink:0;" viewBox="0 0 96 28" xmlns="http://www.w3.org/2000/svg">
-        <polyline points="5,7 12,21 23,5" fill="none" stroke="#CD040B" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
-        <text x="29" y="20" font-family="Arial,sans-serif" font-size="15" font-weight="700" fill="white" letter-spacing="-0.3">verizon</text>
-      </svg>
+      <div class="trust-pill" title="Verizon">
+        <img src="https://logo.clearbit.com/verizon.com?size=120" alt="Verizon" class="trust-pill-img"/>
+      </div>
 
       <!-- UDC -->
-      <svg class="trust-logo" style="height:28px;width:auto;flex-shrink:0;" viewBox="0 0 130 28" xmlns="http://www.w3.org/2000/svg">
-        <circle cx="14" cy="14" r="12" fill="#002D72"/>
-        <text x="14" y="18" font-family="'Arial Black',Arial,sans-serif" font-size="8.5" font-weight="900" fill="white" text-anchor="middle" letter-spacing="0.5">UDC</text>
-        <line x1="30" y1="14" x2="31" y2="14" stroke="rgba(255,255,255,0.2)" stroke-width="1"/>
-        <text x="34" y="11" font-family="Arial,sans-serif" font-size="7" fill="white" font-weight="600">University of the</text>
-        <text x="34" y="22" font-family="Arial,sans-serif" font-size="7" fill="white" font-weight="600">District of Columbia</text>
-      </svg>
+      <div class="trust-pill" title="University of the District of Columbia">
+        <img src="https://logo.clearbit.com/udc.edu?size=120" alt="UDC" class="trust-pill-img"/>
+      </div>
 
-      <!-- MINT (Ethiopian Ministry of Innovation & Technology) -->
-      <svg class="trust-logo" style="height:28px;width:auto;flex-shrink:0;" viewBox="0 0 68 28" xmlns="http://www.w3.org/2000/svg">
-        <!-- Ethiopian flag bar -->
-        <rect x="0" y="0"  width="4" height="9"  fill="#078930"/>
-        <rect x="0" y="9"  width="4" height="10" fill="#FCDD09"/>
-        <rect x="0" y="19" width="4" height="9"  fill="#DA121A"/>
-        <text x="10" y="18" font-family="'Arial Black',Arial,sans-serif" font-size="16" font-weight="900" fill="white" letter-spacing="1.5">MINT</text>
-        <text x="10" y="27" font-family="Arial,sans-serif" font-size="5.5" fill="rgba(255,255,255,0.55)" letter-spacing="0.3">Ministry · Innovation &amp; Tech</text>
-      </svg>
+      <!-- MINT — Ethiopia Ministry of Innovation & Technology -->
+      <div class="trust-pill" title="Ministry of Innovation & Technology — Ethiopia">
+        <svg style="height:34px;width:auto;" viewBox="0 0 90 34" xmlns="http://www.w3.org/2000/svg">
+          <!-- Ethiopian flag tricolor -->
+          <rect x="0" y="0"  width="5" height="11" rx="1" fill="#078930"/>
+          <rect x="0" y="11" width="5" height="12" fill="#FCDD09"/>
+          <rect x="0" y="23" width="5" height="11" rx="1" fill="#DA121A"/>
+          <!-- Ethiopian star on yellow band -->
+          <polygon points="2.5,17 3.5,14.5 4.5,17 2,15.5 5,15.5" fill="#0066CC" transform="scale(0.7) translate(-0.5,4)"/>
+          <text x="11" y="22" font-family="'Arial Black',Arial,sans-serif" font-size="18" font-weight="900" fill="white" letter-spacing="1">MINT</text>
+          <text x="11" y="31" font-family="Arial,sans-serif" font-size="6" fill="rgba(255,255,255,0.5)" letter-spacing="0.4">MINISTRY OF INNOVATION &amp; TECH</text>
+        </svg>
+      </div>
 
       <!-- EPA -->
-      <svg class="trust-logo" style="height:28px;width:auto;flex-shrink:0;" viewBox="0 0 88 28" xmlns="http://www.w3.org/2000/svg">
-        <circle cx="14" cy="14" r="12.5" fill="#007A33"/>
-        <!-- Simplified leaf/flower suggestion -->
-        <path d="M14,5 Q18,10 14,14 Q10,10 14,5Z" fill="rgba(255,255,255,0.45)"/>
-        <text x="14" y="21" font-family="'Arial Black',Arial,sans-serif" font-size="9" font-weight="900" fill="white" text-anchor="middle" letter-spacing="0.5">EPA</text>
-        <text x="33" y="11" font-family="Arial,sans-serif" font-size="6.5" fill="white" font-weight="600">U.S. Environmental</text>
-        <text x="33" y="22" font-family="Arial,sans-serif" font-size="6.5" fill="white" font-weight="600">Protection Agency</text>
-      </svg>
+      <div class="trust-pill" title="U.S. Environmental Protection Agency">
+        <img src="https://logo.clearbit.com/epa.gov?size=120" alt="EPA" class="trust-pill-img"/>
+      </div>
 
       <!-- USGS -->
-      <svg class="trust-logo" style="height:28px;width:auto;flex-shrink:0;" viewBox="0 0 88 28" xmlns="http://www.w3.org/2000/svg">
-        <rect x="0" y="0" width="40" height="28" rx="2" fill="#00A86A"/>
-        <text x="20" y="19" font-family="'Arial Black',Arial,sans-serif" font-size="14" font-weight="900" fill="white" text-anchor="middle" letter-spacing="1">USGS</text>
-        <text x="46" y="11" font-family="Arial,sans-serif" font-size="6" fill="rgba(255,255,255,0.8)">science for a</text>
-        <text x="46" y="21" font-family="Arial,sans-serif" font-size="6" fill="rgba(255,255,255,0.8)">changing world</text>
-      </svg>
+      <div class="trust-pill" title="U.S. Geological Survey">
+        <img src="https://logo.clearbit.com/usgs.gov?size=120" alt="USGS" class="trust-pill-img"/>
+      </div>
 
       <!-- DC Government -->
-      <svg class="trust-logo" style="height:28px;width:auto;flex-shrink:0;" viewBox="0 0 118 28" xmlns="http://www.w3.org/2000/svg">
-        <!-- DC flag: 2 red stripes, 3 red stars -->
-        <rect x="0" y="6"  width="28" height="5" fill="#DC143C"/>
-        <rect x="0" y="17" width="28" height="5" fill="#DC143C"/>
-        <text x="4"  y="16" font-size="8" fill="#DC143C" font-family="Arial,sans-serif">&#9733;</text>
-        <text x="11" y="16" font-size="8" fill="#DC143C" font-family="Arial,sans-serif">&#9733;</text>
-        <text x="18" y="16" font-size="8" fill="#DC143C" font-family="Arial,sans-serif">&#9733;</text>
-        <line x1="32" y1="14" x2="33" y2="14" stroke="rgba(255,255,255,0.15)" stroke-width="1"/>
-        <text x="36" y="11" font-family="Arial,sans-serif" font-size="6.5" fill="white" font-weight="700">GOVERNMENT OF THE</text>
-        <text x="36" y="22" font-family="Arial,sans-serif" font-size="6.5" fill="white" font-weight="700">DISTRICT OF COLUMBIA</text>
-      </svg>
+      <div class="trust-pill" title="Government of the District of Columbia">
+        <img src="https://logo.clearbit.com/dc.gov?size=120" alt="DC Government" class="trust-pill-img"/>
+      </div>
 
     </div>
   </div>
