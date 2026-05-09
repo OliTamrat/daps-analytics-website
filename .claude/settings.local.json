@@ -31,7 +31,25 @@
       "Bash(curl -s -o /dev/null -w \"%{http_code}\" https://stitchdapsanalyticscinematicwebexperience-7xssfz6vx.vercel.app)",
       "Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:3030)",
       "Bash(curl -s -o /dev/null -w \"%{http_code}\" \"https://stitchdapsanalyticscinematicwebexpe.vercel.app\")",
-      "Bash(git push *)"
+      "Bash(git push *)",
+      "Bash(curl -s http://localhost:3030/assets/navbar.js)",
+      "Bash(python3 -c ' *)",
+      "Bash(python3)",
+      "Bash(vercel --version)",
+      "Bash(Start-Process python *)",
+      "Bash(Start-Sleep -Seconds 2)",
+      "Bash(Invoke-WebRequest -Uri \"http://localhost:3030/projects.html\" -UseBasicParsing)",
+      "Bash(Select-Object -ExpandProperty StatusCode)",
+      "PowerShell(Start-Sleep -Seconds 2; $pages = @\\(\"projects.html\",\"services.html\",\"company.html\",\"contact.html\"\\); foreach\\($p in $pages\\){ try{$r=\\(Invoke-WebRequest \"http://localhost:3030/$p\" -UseBasicParsing -TimeoutSec 5\\); Write-Host \"$p => $\\($r.StatusCode\\)\"}catch{Write-Host \"$p => ERROR: $_\"} })",
+      "Bash(git reset *)",
+      "Bash(timeout 3)",
+      "PowerShell(Start-Sleep -Seconds 2; foreach\\($p in @\\('udc-wqis.html','hakimet.html','olink-fleet.html'\\)\\){ try{$r=\\(Invoke-WebRequest \"http://localhost:3030/$p\" -UseBasicParsing -TimeoutSec 5\\); Write-Host \"$p => $\\($r.StatusCode\\)\"}catch{Write-Host \"$p => $_\"} })",
+      "Bash(python3 _build_heroes.py)",
+      "Bash(git rm *)",
+      "Bash(python3 _fix_heroes.py)",
+      "Bash(python3 _fix2.py)",
+      "Bash(python3 _fleet_map.py)",
+      "Bash(python3 _add_social.py)"
     ]
   }
 }
