@@ -276,7 +276,7 @@
     // Redirect if already logged in
     (async function checkSession() {
       var { data: { session } } = await sb.auth.getSession();
-      if (session) window.location.href = 'dashboard.html';
+      if (session) window.location.href = '/admin/dashboard.html';
     })();
 
     async function handleLogin(e) {
@@ -299,7 +299,7 @@
         btn.disabled = false;
         btn.textContent = 'Sign In to Dashboard';
       } else {
-        window.location.href = 'dashboard.html';
+        window.location.href = '/admin/dashboard.html';
       }
     }
   </script>

@@ -1443,7 +1443,7 @@ var tableData = { insights: [], social: [] };
 // ── INIT ───────────────────────────────────────────────────────────────────
 (async function init() {
   var { data: { session } } = await sb.auth.getSession();
-  if (!session) { window.location.href = 'index.html'; return; }
+  if (!session) { window.location.href = '/admin/index.html'; return; }
 
   var email = session.user.email;
   document.getElementById('adminEmail').textContent = email;
@@ -1455,7 +1455,7 @@ var tableData = { insights: [], social: [] };
 // ── AUTH ───────────────────────────────────────────────────────────────────
 async function signOut() {
   await sb.auth.signOut();
-  window.location.href = 'index.html';
+  window.location.href = '/admin/index.html';
 }
 
 // ── TAB SWITCHING ──────────────────────────────────────────────────────────
