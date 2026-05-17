@@ -258,11 +258,11 @@
     var SUPABASE_URL = 'https://rveeelaalzowncfsekwx.supabase.co';
     var SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJ2ZWVsbGFhbHpvd25jZnNla3d4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzkwMTMzMDQsImV4cCI6MjA5NDU4OTMwNH0.6U1gGmLW9CxTjagobfy_p0Xx5QpRrY6h1u944K2ZKcE';
 
-    var supabase = Supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+    var sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
     // Redirect if already logged in
     (async function checkSession() {
-      var { data: { session } } = await supabase.auth.getSession();
+      var { data: { session } } = await sb.auth.getSession();
       if (session) window.location.href = 'dashboard.html';
     })();
 
@@ -278,7 +278,7 @@
       btn.disabled = true;
       btn.innerHTML = '<span class="spinner"></span>Signing in…';
 
-      var { error } = await supabase.auth.signInWithPassword({ email, password });
+      var { error } = await sb.auth.signInWithPassword({ email, password });
 
       if (error) {
         err.textContent = error.message || 'Invalid credentials. Please try again.';

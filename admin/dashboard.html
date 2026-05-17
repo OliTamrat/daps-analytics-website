@@ -801,7 +801,7 @@
 var SUPABASE_URL = 'https://rveeelaalzowncfsekwx.supabase.co';
 var SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJ2ZWVsbGFhbHpvd25jZnNla3d4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzkwMTMzMDQsImV4cCI6MjA5NDU4OTMwNH0.6U1gGmLW9CxTjagobfy_p0Xx5QpRrY6h1u944K2ZKcE';
 
-var supabase = Supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+var sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
 // ── STATE ──────────────────────────────────────────────────────────────────
 var currentTab = 'insights';
@@ -810,7 +810,7 @@ var tableData = { insights: [], social: [] };
 
 // ── INIT ───────────────────────────────────────────────────────────────────
 (async function init() {
-  var { data: { session } } = await supabase.auth.getSession();
+  var { data: { session } } = await sb.auth.getSession();
   if (!session) { window.location.href = 'index.html'; return; }
 
   var email = session.user.email;
@@ -822,7 +822,7 @@ var tableData = { insights: [], social: [] };
 
 // ── AUTH ───────────────────────────────────────────────────────────────────
 async function signOut() {
-  await supabase.auth.signOut();
+  await sb.auth.signOut();
   window.location.href = 'index.html';
 }
 
@@ -847,7 +847,7 @@ function switchTab(tab) {
 // ── LOAD DATA ──────────────────────────────────────────────────────────────
 async function loadTab(tab) {
   if (tab === 'insights') {
-    var { data, error } = await supabase
+    var { data, error } = await sb
       .from('insights')
       .select('*')
       .order('date', { ascending: false });
@@ -858,7 +858,7 @@ async function loadTab(tab) {
     updateCount('insights', tableData.insights.length);
 
   } else if (tab === 'social') {
-    var { data, error } = await supabase
+    var { data, error } = await sb
       .from('social_posts')
       .select('*')
       .order('scheduled_date', { ascending: false });
@@ -1089,8 +1089,8 @@ async function saveRecord() {
 
   var table = currentTab === 'insights' ? 'insights' : 'social_posts';
   var { error } = currentRecordId
-    ? await supabase.from(table).update(payload).eq('id', currentRecordId)
-    : await supabase.from(table).insert(payload);
+    ? await sb.from(table).update(payload).eq('id', currentRecordId)
+    : await sb.from(table).insert(payload);
 
   if (error) { showToast('Error: ' + error.message, 'error'); return; }
 
@@ -1138,7 +1138,7 @@ function confirmDelete() {
 async function deleteRecord(tab, id, fromModal) {
   if (!fromModal && !confirm('Delete this record?')) return;
   var table = tab === 'insights' ? 'insights' : 'social_posts';
-  var { error } = await supabase.from(table).delete().eq('id', id);
+  var { error } = await sb.from(table).delete().eq('id', id);
   if (error) { showToast('Error: ' + error.message, 'error'); return; }
   showToast('Record deleted.', 'success');
   if (fromModal) closeModal();
@@ -1148,7 +1148,7 @@ async function deleteRecord(tab, id, fromModal) {
 // ── TOGGLE ACTIVE (insights only) ──────────────────────────────────────────
 async function toggleActive(tab, id, active) {
   var table = tab === 'insights' ? 'insights' : 'social_posts';
-  var { error } = await supabase.from(table).update({ active: active }).eq('id', id);
+  var { error } = await sb.from(table).update({ active: active }).eq('id', id);
   if (error) {
     showToast('Failed to update.', 'error');
     loadTab(tab);
