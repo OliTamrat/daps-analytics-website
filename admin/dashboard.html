@@ -2113,7 +2113,7 @@ async function generateAudio(id) {
     var fileName = 'audio-' + id + '-' + Date.now() + '.mp3';
     var { error: upErr } = await sb.storage
       .from('article-images')
-      .upload(fileName, audioBlob, { cacheControl: '3600', upsert: true, contentType: 'audio/mpeg' });
+      .upload(fileName, audioBlob, { cacheControl: '3600', upsert: false, contentType: 'audio/mpeg' });
     if (upErr) throw upErr;
 
     var { data: urlData } = sb.storage.from('article-images').getPublicUrl(fileName);
