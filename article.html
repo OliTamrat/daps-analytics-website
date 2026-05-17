@@ -96,6 +96,15 @@
   }
   .pro-audio-title { font-size:13px; font-weight:600; color:#dee2ed; }
   .pro-audio-sub { font-size:11px; color:#849490; margin-top:2px; }
+  /* ── Sidebar cards ─────────────────────────────────────────────── */
+  .sidebar-card { background:#0d1117; border:1px solid rgba(255,255,255,0.08); border-radius:12px; padding:20px; }
+  .sidebar-label { font-size:10px; font-weight:700; letter-spacing:0.14em; text-transform:uppercase; color:#dee2ed; margin-bottom:14px; display:block; }
+  .toc-link { display:block; font-size:13px; color:#849490; padding:5px 0; border-left:2px solid rgba(255,255,255,0.07); padding-left:10px; transition:all 0.15s; text-decoration:none; line-height:1.35; }
+  .toc-link:hover { color:#49fde3; border-left-color:#49fde3; }
+  .toc-link.active { color:#49fde3; border-left-color:#49fde3; }
+  .share-btn { display:flex; align-items:center; gap:8px; width:100%; padding:9px 12px; border-radius:8px; border:1px solid rgba(255,255,255,0.09); background:transparent; color:#bacac5; font-family:'Inter',sans-serif; font-size:12px; font-weight:600; cursor:pointer; transition:all 0.15s; text-decoration:none; }
+  .share-btn:hover { border-color:rgba(73,253,227,0.3); color:#49fde3; background:rgba(73,253,227,0.04); }
+  .share-btn svg { flex-shrink:0; }
   .pro-audio-controls {
     display:flex; align-items:center; gap:12px; padding:14px 20px; flex-wrap:wrap;
   }
@@ -169,7 +178,7 @@
 
   <!-- Article body + sidebar -->
   <div class="max-w-[1440px] mx-auto px-6 md:px-12 mb-24">
-    <div class="grid grid-cols-1 lg:grid-cols-12 gap-16">
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-10">
 
       <!-- Main body -->
       <article class="lg:col-span-8 article-body" id="article-body">
@@ -177,21 +186,46 @@
       </article>
 
       <!-- Sidebar -->
-      <aside class="lg:col-span-4 space-y-6">
+      <aside class="lg:col-span-4 hidden lg:block">
+        <div class="sticky top-28 space-y-5">
 
-        <!-- Related articles -->
-        <div class="rounded-xl p-6 sticky top-28" style="background:#0d1117;border:1px solid rgba(255,255,255,0.08);">
-          <h3 class="mb-5" style="font-size:11px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:#dee2ed;">Related Articles</h3>
-          <div id="related-articles" class="space-y-5">
-            <!-- Populated by JS -->
+          <!-- Table of Contents -->
+          <div class="sidebar-card" id="toc-card" style="display:none!important;">
+            <span class="sidebar-label">In this article</span>
+            <nav id="toc-list" class="space-y-0.5"></nav>
           </div>
-          <div class="mt-6 pt-5 border-t border-white/5">
-            <a href="insights.html" class="inline-flex items-center gap-2 text-primary hover:text-white transition-colors" style="font-size:11px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;">
-              All Insights <span class="material-symbols-outlined text-[14px]">arrow_forward</span>
-            </a>
+
+          <!-- Share -->
+          <div class="sidebar-card">
+            <span class="sidebar-label">Share</span>
+            <div class="space-y-2">
+              <a id="share-linkedin" href="#" target="_blank" rel="noopener" class="share-btn">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg>
+                Share on LinkedIn
+              </a>
+              <a id="share-twitter" href="#" target="_blank" rel="noopener" class="share-btn">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.744l7.73-8.835L1.254 2.25H8.08l4.259 5.632 5.905-5.632zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+                Share on X / Twitter
+              </a>
+              <button id="share-copy" class="share-btn" style="width:100%;">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+                <span id="copy-label">Copy link</span>
+              </button>
+            </div>
           </div>
+
+          <!-- Related articles -->
+          <div class="sidebar-card">
+            <span class="sidebar-label">Related Articles</span>
+            <div id="related-articles" class="space-y-4"></div>
+            <div class="mt-5 pt-4" style="border-top:1px solid rgba(255,255,255,0.06);">
+              <a href="insights.html" class="inline-flex items-center gap-2 text-primary hover:text-white transition-colors" style="font-size:10px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;">
+                All Insights <span class="material-symbols-outlined text-[13px]">arrow_forward</span>
+              </a>
+            </div>
+          </div>
+
         </div>
-
       </aside>
     </div>
   </div>
@@ -352,6 +386,50 @@
         '</div></div></a>';
     });
     document.getElementById('related-articles').innerHTML = relHTML || '<p style="font-size:13px;color:#849490;">No related articles.</p>';
+
+    // Table of Contents — extract h2s from article body
+    (function() {
+      var headings = document.querySelectorAll('#article-body h2');
+      var tocCard = document.getElementById('toc-card');
+      var tocList = document.getElementById('toc-list');
+      if (headings.length >= 2) {
+        var tocHTML = '';
+        headings.forEach(function(h, i) {
+          var slug = 'section-' + i;
+          h.id = slug;
+          var label = h.textContent.trim();
+          tocHTML += '<a href="#' + slug + '" class="toc-link">' + label + '</a>';
+        });
+        tocList.innerHTML = tocHTML;
+        tocCard.style.removeProperty('display');
+        // Highlight active section on scroll
+        window.addEventListener('scroll', function() {
+          var scrollY = window.scrollY + 120;
+          var active = null;
+          headings.forEach(function(h) { if (h.offsetTop <= scrollY) active = h.id; });
+          tocList.querySelectorAll('.toc-link').forEach(function(a) {
+            a.classList.toggle('active', active && a.getAttribute('href') === '#' + active);
+          });
+        }, { passive: true });
+      }
+    })();
+
+    // Share buttons
+    (function() {
+      var pageUrl = encodeURIComponent(window.location.href);
+      var pageTitle = encodeURIComponent(article.title);
+      var li = document.getElementById('share-linkedin');
+      var tw = document.getElementById('share-twitter');
+      var cp = document.getElementById('share-copy');
+      if (li) li.href = 'https://www.linkedin.com/sharing/share-offsite/?url=' + pageUrl;
+      if (tw) tw.href = 'https://twitter.com/intent/tweet?url=' + pageUrl + '&text=' + pageTitle;
+      if (cp) cp.addEventListener('click', function() {
+        navigator.clipboard.writeText(window.location.href).then(function() {
+          document.getElementById('copy-label').textContent = 'Copied!';
+          setTimeout(function() { document.getElementById('copy-label').textContent = 'Copy link'; }, 2000);
+        });
+      });
+    })();
 
     // Reading progress bar
     var bar = document.getElementById('read-progress');
