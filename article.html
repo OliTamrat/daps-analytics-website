@@ -317,7 +317,7 @@
     var hero = document.getElementById('article-hero');
     var heroImg = article.image_url || article.image || '';
     if (heroImg) {
-      hero.innerHTML = '<div class="rounded-xl overflow-hidden" style="height:420px;"><img src="' + heroImg + '" alt="' + article.title + '" style="width:100%;height:100%;object-fit:cover;"/></div>';
+      hero.innerHTML = '<div class="rounded-xl overflow-hidden" style="max-width:760px;background:#080e17;"><img src="' + heroImg + '" alt="' + article.title + '" style="width:100%;height:auto;display:block;max-height:520px;object-fit:contain;"/></div>';
     } else if (article.icon) {
       hero.innerHTML = '<div class="rounded-xl flex items-center justify-center" style="height:280px;max-width:760px;background:linear-gradient(135deg,#0a1520,#051515);border:1px solid rgba(73,253,227,0.12);"><span class="material-symbols-outlined" style="font-size:96px;color:rgba(73,253,227,0.25);font-variation-settings:\'FILL\' 1;">' + article.icon + '</span></div>';
     }
@@ -368,7 +368,6 @@
         '<div class="pro-audio-icon">🔊</div>' +
         '<div>' +
           '<div class="pro-audio-title">Listen to this article</div>' +
-          '<div class="pro-audio-sub">AI voice &middot; Adam &middot; ElevenLabs</div>' +
         '</div>' +
       '</div>' +
       '<div class="pro-audio-controls">' +
