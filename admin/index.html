@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Login — DAPS Analytics</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --teal: #49fde3;
+      --teal-dim: rgba(73, 253, 227, 0.12);
+      --amber: #efbf71;
+      --bg: #0e141b;
+      --surface: #131c26;
+      --card: #17202c;
+      --border: rgba(73, 253, 227, 0.14);
+      --text: #dee2ed;
+      --muted: #bacac5;
+      --outline: #849490;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    /* Animated background grid */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(73,253,227,0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(73,253,227,0.04) 1px, transparent 1px);
+      background-size: 48px 48px;
+      z-index: 0;
+    }
+
+    /* Radial glow */
+    body::after {
+      content: '';
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 800px;
+      height: 600px;
+      background: radial-gradient(ellipse at center, rgba(73,253,227,0.06) 0%, transparent 70%);
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    .login-wrap {
+      position: relative;
+      z-index: 1;
+      width: 100%;
+      max-width: 420px;
+      padding: 24px;
+    }
+
+    .brand {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+
+    .brand-logo {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      margin-bottom: 8px;
+    }
+
+    .brand-icon {
+      width: 36px;
+      height: 36px;
+      background: var(--teal);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .brand-icon svg { width: 20px; height: 20px; fill: #0e141b; }
+
+    .brand-name {
+      font-size: 20px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      color: var(--text);
+      text-transform: uppercase;
+    }
+
+    .brand-sub {
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      color: var(--teal);
+      text-transform: uppercase;
+    }
+
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 40px;
+    }
+
+    .card-title {
+      font-size: 22px;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 6px;
+    }
+
+    .card-sub {
+      font-size: 14px;
+      color: var(--muted);
+      margin-bottom: 32px;
+    }
+
+    .field {
+      margin-bottom: 20px;
+    }
+
+    label {
+      display: block;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 8px;
+    }
+
+    input {
+      width: 100%;
+      padding: 12px 16px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      color: var(--text);
+      font-family: 'Inter', sans-serif;
+      font-size: 14px;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    input::placeholder { color: var(--outline); }
+
+    input:focus {
+      border-color: var(--teal);
+      box-shadow: 0 0 0 3px rgba(73,253,227,0.08);
+    }
+
+    .btn {
+      width: 100%;
+      padding: 13px;
+      background: var(--teal);
+      color: #0e141b;
+      border: none;
+      border-radius: 8px;
+      font-family: 'Inter', sans-serif;
+      font-size: 14px;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      cursor: pointer;
+      transition: opacity 0.2s, transform 0.15s;
+      margin-top: 8px;
+    }
+
+    .btn:hover { opacity: 0.88; transform: translateY(-1px); }
+    .btn:active { transform: translateY(0); }
+    .btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+
+    .error-msg {
+      display: none;
+      margin-top: 16px;
+      padding: 12px 16px;
+      background: rgba(255, 80, 80, 0.1);
+      border: 1px solid rgba(255, 80, 80, 0.25);
+      border-radius: 8px;
+      font-size: 13px;
+      color: #ff8080;
+    }
+
+    .error-msg.show { display: block; }
+
+    .footer-note {
+      text-align: center;
+      margin-top: 24px;
+      font-size: 12px;
+      color: var(--outline);
+    }
+
+    .spinner {
+      display: inline-block;
+      width: 14px;
+      height: 14px;
+      border: 2px solid rgba(14,20,27,0.4);
+      border-top-color: #0e141b;
+      border-radius: 50%;
+      animation: spin 0.7s linear infinite;
+      vertical-align: middle;
+      margin-right: 6px;
+    }
+
+    @keyframes spin { to { transform: rotate(360deg); } }
+  </style>
+</head>
+<body>
+  <div class="login-wrap">
+    <div class="brand">
+      <div class="brand-logo">
+        <div class="brand-icon">
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path d="M3 3h7v7H3V3zm11 0h7v7h-7V3zM3 14h7v7H3v-7zm14 0a3.5 3.5 0 1 1 0 7 3.5 3.5 0 0 1 0-7z"/>
+          </svg>
+        </div>
+        <span class="brand-name">DAPS Analytics</span>
+      </div>
+      <div class="brand-sub">Admin Portal</div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">Sign In</div>
+      <div class="card-sub">Access the content management dashboard</div>
+
+      <form id="loginForm" onsubmit="handleLogin(event)">
+        <div class="field">
+          <label for="email">Email Address</label>
+          <input type="email" id="email" placeholder="admin@dapsanalytics.com" required autocomplete="email">
+        </div>
+        <div class="field">
+          <label for="password">Password</label>
+          <input type="password" id="password" placeholder="••••••••" required autocomplete="current-password">
+        </div>
+        <button class="btn" id="loginBtn" type="submit">Sign In to Dashboard</button>
+        <div class="error-msg" id="errorMsg"></div>
+      </form>
+    </div>
+
+    <div class="footer-note">DAPS Analytics · Internal Use Only</div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+  <script>
+    // ── Supabase config ───────────────────────────────────────────────
+    // Replace these with your DAPS Analytics Supabase project credentials
+    var SUPABASE_URL = 'YOUR_SUPABASE_URL';
+    var SUPABASE_ANON_KEY = 'YOUR_SUPABASE_ANON_KEY';
+
+    var supabase = Supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+    // Redirect if already logged in
+    (async function checkSession() {
+      var { data: { session } } = await supabase.auth.getSession();
+      if (session) window.location.href = 'dashboard.html';
+    })();
+
+    async function handleLogin(e) {
+      e.preventDefault();
+      var btn = document.getElementById('loginBtn');
+      var err = document.getElementById('errorMsg');
+      err.classList.remove('show');
+
+      var email = document.getElementById('email').value.trim();
+      var password = document.getElementById('password').value;
+
+      btn.disabled = true;
+      btn.innerHTML = '<span class="spinner"></span>Signing in…';
+
+      var { error } = await supabase.auth.signInWithPassword({ email, password });
+
+      if (error) {
+        err.textContent = error.message || 'Invalid credentials. Please try again.';
+        err.classList.add('show');
+        btn.disabled = false;
+        btn.textContent = 'Sign In to Dashboard';
+      } else {
+        window.location.href = 'dashboard.html';
+      }
+    }
+  </script>
+</body>
+</html>

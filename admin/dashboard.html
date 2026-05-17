@@ -1,0 +1,1186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard — DAPS Analytics Admin</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --teal: #49fde3;
+      --teal-dim: rgba(73, 253, 227, 0.10);
+      --teal-border: rgba(73, 253, 227, 0.18);
+      --amber: #efbf71;
+      --amber-dim: rgba(239, 191, 113, 0.10);
+      --bg: #0e141b;
+      --surface: #111820;
+      --card: #141d27;
+      --card2: #17202c;
+      --border: rgba(255,255,255,0.07);
+      --text: #dee2ed;
+      --muted: #bacac5;
+      --outline: #849490;
+      --sidebar-w: 240px;
+    }
+
+    html, body { height: 100%; overflow: hidden; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      display: flex;
+    }
+
+    /* ── SIDEBAR ──────────────────────────────────────────── */
+    .sidebar {
+      width: var(--sidebar-w);
+      min-width: var(--sidebar-w);
+      height: 100vh;
+      background: var(--surface);
+      border-right: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    .sidebar-brand {
+      padding: 24px 20px 20px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .sidebar-brand-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 4px;
+    }
+
+    .brand-icon {
+      width: 30px;
+      height: 30px;
+      background: var(--teal);
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .brand-icon svg { width: 16px; height: 16px; fill: #0e141b; }
+
+    .brand-name {
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--text);
+    }
+
+    .brand-badge {
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--teal);
+      padding: 2px 6px;
+      background: var(--teal-dim);
+      border: 1px solid var(--teal-border);
+      border-radius: 4px;
+      margin-left: auto;
+    }
+
+    .sidebar-section-label {
+      padding: 20px 20px 6px;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--outline);
+    }
+
+    .nav-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 20px;
+      cursor: pointer;
+      border-radius: 0;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--muted);
+      transition: all 0.15s;
+      border-left: 2px solid transparent;
+      user-select: none;
+    }
+
+    .nav-item:hover { background: var(--teal-dim); color: var(--text); }
+
+    .nav-item.active {
+      background: var(--teal-dim);
+      color: var(--teal);
+      border-left-color: var(--teal);
+    }
+
+    .nav-item svg {
+      width: 16px;
+      height: 16px;
+      opacity: 0.7;
+      flex-shrink: 0;
+    }
+
+    .nav-item.active svg { opacity: 1; }
+
+    .nav-count {
+      margin-left: auto;
+      font-size: 10px;
+      font-weight: 700;
+      padding: 2px 6px;
+      border-radius: 10px;
+      background: var(--card2);
+      color: var(--muted);
+    }
+
+    .nav-item.active .nav-count {
+      background: var(--teal-dim);
+      color: var(--teal);
+    }
+
+    .sidebar-spacer { flex: 1; }
+
+    .sidebar-footer {
+      padding: 16px 20px;
+      border-top: 1px solid var(--border);
+    }
+
+    .admin-info {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 12px;
+    }
+
+    .admin-avatar {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--teal), var(--amber));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      font-weight: 700;
+      color: #0e141b;
+    }
+
+    .admin-email {
+      font-size: 12px;
+      color: var(--muted);
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .sidebar-links {
+      display: flex;
+      gap: 12px;
+    }
+
+    .sidebar-link {
+      font-size: 12px;
+      color: var(--outline);
+      text-decoration: none;
+      cursor: pointer;
+      transition: color 0.15s;
+    }
+
+    .sidebar-link:hover { color: var(--teal); }
+
+    /* ── MAIN CONTENT ─────────────────────────────────────── */
+    .main {
+      flex: 1;
+      height: 100vh;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .topbar {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 0 32px;
+      height: 64px;
+      border-bottom: 1px solid var(--border);
+      flex-shrink: 0;
+      background: var(--bg);
+    }
+
+    .topbar-title {
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--text);
+    }
+
+    .topbar-count {
+      font-size: 12px;
+      color: var(--outline);
+      padding: 2px 8px;
+      border: 1px solid var(--border);
+      border-radius: 20px;
+    }
+
+    .topbar-spacer { flex: 1; }
+
+    .topbar-search {
+      position: relative;
+    }
+
+    .topbar-search input {
+      padding: 8px 14px 8px 36px;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      color: var(--text);
+      font-family: 'Inter', sans-serif;
+      font-size: 13px;
+      outline: none;
+      width: 220px;
+      transition: border-color 0.2s;
+    }
+
+    .topbar-search input:focus { border-color: var(--teal-border); }
+    .topbar-search input::placeholder { color: var(--outline); }
+
+    .topbar-search svg {
+      position: absolute;
+      left: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 14px;
+      height: 14px;
+      opacity: 0.4;
+      pointer-events: none;
+    }
+
+    .btn-add {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 9px 18px;
+      background: var(--teal);
+      color: #0e141b;
+      border: none;
+      border-radius: 8px;
+      font-family: 'Inter', sans-serif;
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: opacity 0.15s, transform 0.15s;
+    }
+
+    .btn-add:hover { opacity: 0.88; transform: translateY(-1px); }
+
+    .btn-add svg { width: 14px; height: 14px; fill: #0e141b; }
+
+    .content-area {
+      flex: 1;
+      overflow-y: auto;
+      padding: 28px 32px;
+    }
+
+    /* ── TABLE ────────────────────────────────────────────── */
+    .table-wrap {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    thead th {
+      padding: 12px 16px;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--outline);
+      text-align: left;
+      border-bottom: 1px solid var(--border);
+      background: var(--card2);
+    }
+
+    tbody tr {
+      border-bottom: 1px solid var(--border);
+      transition: background 0.12s;
+    }
+
+    tbody tr:last-child { border-bottom: none; }
+    tbody tr:hover { background: rgba(255,255,255,0.025); }
+
+    td {
+      padding: 14px 16px;
+      font-size: 13px;
+      color: var(--text);
+      vertical-align: middle;
+    }
+
+    .td-muted { color: var(--muted); font-size: 12px; }
+
+    .badge {
+      display: inline-block;
+      padding: 3px 9px;
+      border-radius: 20px;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+    }
+
+    .badge-teal { background: var(--teal-dim); border: 1px solid var(--teal-border); color: var(--teal); }
+    .badge-amber { background: var(--amber-dim); border: 1px solid rgba(239,191,113,0.2); color: var(--amber); }
+    .badge-gray { background: rgba(255,255,255,0.05); border: 1px solid var(--border); color: var(--outline); }
+    .badge-green { background: rgba(100,220,100,0.08); border: 1px solid rgba(100,220,100,0.2); color: #80d880; }
+    .badge-red { background: rgba(255,100,100,0.08); border: 1px solid rgba(255,100,100,0.2); color: #ff8888; }
+
+    /* toggle */
+    .toggle {
+      position: relative;
+      display: inline-block;
+      width: 36px;
+      height: 20px;
+    }
+
+    .toggle input { display: none; }
+
+    .toggle-track {
+      position: absolute;
+      inset: 0;
+      background: var(--card2);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      cursor: pointer;
+      transition: background 0.2s, border-color 0.2s;
+    }
+
+    .toggle input:checked + .toggle-track {
+      background: rgba(73,253,227,0.2);
+      border-color: var(--teal);
+    }
+
+    .toggle-track::after {
+      content: '';
+      position: absolute;
+      top: 2px;
+      left: 2px;
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      background: var(--outline);
+      transition: transform 0.2s, background 0.2s;
+    }
+
+    .toggle input:checked + .toggle-track::after {
+      transform: translateX(16px);
+      background: var(--teal);
+    }
+
+    .row-actions {
+      display: flex;
+      gap: 8px;
+    }
+
+    .action-btn {
+      padding: 5px 10px;
+      border-radius: 6px;
+      border: 1px solid var(--border);
+      background: transparent;
+      color: var(--muted);
+      font-family: 'Inter', sans-serif;
+      font-size: 12px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+
+    .action-btn:hover { background: var(--card2); color: var(--text); }
+    .action-btn.del:hover { border-color: rgba(255,100,100,0.3); color: #ff8080; background: rgba(255,100,100,0.05); }
+
+    .empty-state {
+      text-align: center;
+      padding: 80px 20px;
+      color: var(--outline);
+    }
+
+    .empty-state p { font-size: 14px; margin-top: 8px; }
+
+    /* ── MODAL ────────────────────────────────────────────── */
+    .modal-backdrop {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(14, 20, 27, 0.85);
+      backdrop-filter: blur(4px);
+      z-index: 1000;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .modal-backdrop.open { display: flex; }
+
+    .modal {
+      background: var(--card);
+      border: 1px solid var(--teal-border);
+      border-radius: 16px;
+      width: 100%;
+      max-width: 600px;
+      max-height: 90vh;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      box-shadow: 0 24px 80px rgba(0,0,0,0.5);
+    }
+
+    .modal-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 22px 28px;
+      border-bottom: 1px solid var(--border);
+      flex-shrink: 0;
+    }
+
+    .modal-title {
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--text);
+    }
+
+    .modal-close {
+      width: 30px;
+      height: 30px;
+      border-radius: 6px;
+      border: 1px solid var(--border);
+      background: transparent;
+      color: var(--outline);
+      font-size: 18px;
+      line-height: 1;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.15s;
+    }
+
+    .modal-close:hover { background: var(--card2); color: var(--text); }
+
+    .modal-body {
+      flex: 1;
+      overflow-y: auto;
+      padding: 28px;
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    .form-field {
+      margin-bottom: 20px;
+    }
+
+    .form-field.full { grid-column: 1 / -1; }
+
+    .form-field label {
+      display: block;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 8px;
+    }
+
+    .form-field input,
+    .form-field select,
+    .form-field textarea {
+      width: 100%;
+      padding: 10px 14px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      color: var(--text);
+      font-family: 'Inter', sans-serif;
+      font-size: 13px;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    .form-field input::placeholder,
+    .form-field textarea::placeholder { color: var(--outline); }
+
+    .form-field input:focus,
+    .form-field select:focus,
+    .form-field textarea:focus {
+      border-color: var(--teal-border);
+      box-shadow: 0 0 0 3px rgba(73,253,227,0.06);
+    }
+
+    .form-field select option { background: var(--card2); }
+
+    .form-field textarea { resize: vertical; min-height: 100px; line-height: 1.6; }
+
+    .form-field textarea.tall { min-height: 160px; }
+
+    .char-count {
+      font-size: 11px;
+      color: var(--outline);
+      text-align: right;
+      margin-top: 4px;
+    }
+
+    .char-count.warn { color: var(--amber); }
+    .char-count.over { color: #ff8080; }
+
+    .modal-footer {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 10px;
+      padding: 18px 28px;
+      border-top: 1px solid var(--border);
+      flex-shrink: 0;
+    }
+
+    .btn-cancel {
+      padding: 9px 20px;
+      background: transparent;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      color: var(--muted);
+      font-family: 'Inter', sans-serif;
+      font-size: 13px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+
+    .btn-cancel:hover { background: var(--card2); color: var(--text); }
+
+    .btn-save {
+      padding: 9px 24px;
+      background: var(--teal);
+      color: #0e141b;
+      border: none;
+      border-radius: 8px;
+      font-family: 'Inter', sans-serif;
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: opacity 0.15s;
+    }
+
+    .btn-save:hover { opacity: 0.88; }
+
+    .btn-delete {
+      padding: 9px 20px;
+      background: rgba(255,100,100,0.08);
+      border: 1px solid rgba(255,100,100,0.2);
+      border-radius: 8px;
+      color: #ff8080;
+      font-family: 'Inter', sans-serif;
+      font-size: 13px;
+      font-weight: 500;
+      cursor: pointer;
+      margin-right: auto;
+      transition: all 0.15s;
+    }
+
+    .btn-delete:hover { background: rgba(255,100,100,0.14); }
+
+    /* ── TOAST ────────────────────────────────────────────── */
+    .toast-container {
+      position: fixed;
+      bottom: 28px;
+      right: 28px;
+      z-index: 2000;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .toast {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 12px 18px;
+      border-radius: 10px;
+      font-size: 13px;
+      font-weight: 500;
+      background: var(--card2);
+      border: 1px solid var(--border);
+      color: var(--text);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+      animation: slideUp 0.25s ease;
+      min-width: 240px;
+      max-width: 360px;
+    }
+
+    .toast.success { border-color: rgba(73,253,227,0.3); }
+    .toast.error { border-color: rgba(255,100,100,0.3); }
+
+    .toast-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    .toast.success .toast-dot { background: var(--teal); }
+    .toast.error .toast-dot { background: #ff8080; }
+
+    @keyframes slideUp {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── LOADING ──────────────────────────────────────────── */
+    .loading-row td {
+      text-align: center;
+      padding: 60px;
+      color: var(--outline);
+    }
+
+    .spinner {
+      display: inline-block;
+      width: 20px;
+      height: 20px;
+      border: 2px solid var(--border);
+      border-top-color: var(--teal);
+      border-radius: 50%;
+      animation: spin 0.7s linear infinite;
+    }
+
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* scrollbar */
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.08); border-radius: 3px; }
+  </style>
+</head>
+<body>
+
+<!-- SIDEBAR -->
+<nav class="sidebar">
+  <div class="sidebar-brand">
+    <div class="sidebar-brand-row">
+      <div class="brand-icon">
+        <svg viewBox="0 0 24 24"><path d="M3 3h7v7H3V3zm11 0h7v7h-7V3zM3 14h7v7H3v-7zm14 0a3.5 3.5 0 1 1 0 7 3.5 3.5 0 0 1 0-7z"/></svg>
+      </div>
+      <span class="brand-name">DAPS</span>
+      <span class="brand-badge">Admin</span>
+    </div>
+  </div>
+
+  <div class="sidebar-section-label">Content</div>
+
+  <div class="nav-item active" data-tab="insights" onclick="switchTab('insights')">
+    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 15v-4H7l5-8v4h4l-5 8z"/></svg>
+    Insights
+    <span class="nav-count" id="nav-count-insights">—</span>
+  </div>
+
+  <div class="nav-item" data-tab="social" onclick="switchTab('social')">
+    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92s2.92-1.31 2.92-2.92-1.31-2.92-2.92-2.92z"/></svg>
+    Social Posts
+    <span class="nav-count" id="nav-count-social">—</span>
+  </div>
+
+  <div class="sidebar-spacer"></div>
+
+  <div class="sidebar-footer">
+    <div class="admin-info">
+      <div class="admin-avatar" id="adminAvatar">A</div>
+      <div class="admin-email" id="adminEmail">Loading…</div>
+    </div>
+    <div class="sidebar-links">
+      <a class="sidebar-link" href="../index.html" target="_blank">View Site</a>
+      <a class="sidebar-link" href="../insights.html" target="_blank">Insights</a>
+      <span class="sidebar-link" onclick="signOut()">Sign Out</span>
+    </div>
+  </div>
+</nav>
+
+<!-- MAIN -->
+<div class="main">
+  <div class="topbar">
+    <div class="topbar-title" id="topbarTitle">Insights</div>
+    <div class="topbar-count" id="topbarCount">0 items</div>
+    <div class="topbar-spacer"></div>
+    <div class="topbar-search">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M15.5 14h-.79l-.28-.27A6.47 6.47 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
+      <input type="text" id="searchInput" placeholder="Search…" oninput="filterTable()">
+    </div>
+    <button class="btn-add" onclick="openAddModal()">
+      <svg viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
+      Add New
+    </button>
+  </div>
+
+  <div class="content-area">
+    <!-- INSIGHTS TABLE -->
+    <div id="tab-insights" class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Title</th>
+            <th>Category</th>
+            <th>Date</th>
+            <th>Active</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody id="tbody-insights">
+          <tr class="loading-row"><td colspan="5"><div class="spinner"></div></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- SOCIAL POSTS TABLE -->
+    <div id="tab-social" class="table-wrap" style="display:none;">
+      <table>
+        <thead>
+          <tr>
+            <th>Platform</th>
+            <th>Content Preview</th>
+            <th>Scheduled</th>
+            <th>Status</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody id="tbody-social">
+          <tr class="loading-row"><td colspan="5"><div class="spinner"></div></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL -->
+<div class="modal-backdrop" id="modalBackdrop" onclick="backdropClose(event)">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="modal-title" id="modalTitle">Add Insight</div>
+      <button class="modal-close" onclick="closeModal()">×</button>
+    </div>
+    <div class="modal-body" id="modalBody">
+      <!-- form injected here -->
+    </div>
+    <div class="modal-footer">
+      <button class="btn-delete" id="btnDelete" style="display:none;" onclick="confirmDelete()">Delete</button>
+      <button class="btn-cancel" onclick="closeModal()">Cancel</button>
+      <button class="btn-save" onclick="saveRecord()">Save</button>
+    </div>
+  </div>
+</div>
+
+<!-- TOASTS -->
+<div class="toast-container" id="toastContainer"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script>
+// ── CONFIG ─────────────────────────────────────────────────────────────────
+// Replace with your DAPS Analytics Supabase credentials
+var SUPABASE_URL = 'YOUR_SUPABASE_URL';
+var SUPABASE_ANON_KEY = 'YOUR_SUPABASE_ANON_KEY';
+
+var supabase = Supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+// ── STATE ──────────────────────────────────────────────────────────────────
+var currentTab = 'insights';
+var currentRecordId = null;
+var tableData = { insights: [], social: [] };
+
+// ── INIT ───────────────────────────────────────────────────────────────────
+(async function init() {
+  var { data: { session } } = await supabase.auth.getSession();
+  if (!session) { window.location.href = 'index.html'; return; }
+
+  var email = session.user.email;
+  document.getElementById('adminEmail').textContent = email;
+  document.getElementById('adminAvatar').textContent = email.charAt(0).toUpperCase();
+
+  loadTab('insights');
+})();
+
+// ── AUTH ───────────────────────────────────────────────────────────────────
+async function signOut() {
+  await supabase.auth.signOut();
+  window.location.href = 'index.html';
+}
+
+// ── TAB SWITCHING ──────────────────────────────────────────────────────────
+function switchTab(tab) {
+  currentTab = tab;
+
+  document.querySelectorAll('.nav-item').forEach(function(el) {
+    el.classList.toggle('active', el.dataset.tab === tab);
+  });
+
+  document.getElementById('tab-insights').style.display = tab === 'insights' ? '' : 'none';
+  document.getElementById('tab-social').style.display = tab === 'social' ? '' : 'none';
+
+  var titles = { insights: 'Insights', social: 'Social Posts' };
+  document.getElementById('topbarTitle').textContent = titles[tab];
+  document.getElementById('searchInput').value = '';
+
+  loadTab(tab);
+}
+
+// ── LOAD DATA ──────────────────────────────────────────────────────────────
+async function loadTab(tab) {
+  if (tab === 'insights') {
+    var { data, error } = await supabase
+      .from('insights')
+      .select('*')
+      .order('date', { ascending: false });
+
+    if (error) { showToast('Failed to load insights: ' + error.message, 'error'); return; }
+    tableData.insights = data || [];
+    renderInsights(tableData.insights);
+    updateCount('insights', tableData.insights.length);
+
+  } else if (tab === 'social') {
+    var { data, error } = await supabase
+      .from('social_posts')
+      .select('*')
+      .order('scheduled_date', { ascending: false });
+
+    if (error) { showToast('Failed to load social posts: ' + error.message, 'error'); return; }
+    tableData.social = data || [];
+    renderSocial(tableData.social);
+    updateCount('social', tableData.social.length);
+  }
+}
+
+function updateCount(tab, n) {
+  document.getElementById('nav-count-' + tab).textContent = n;
+  document.getElementById('topbarCount').textContent = n + ' item' + (n !== 1 ? 's' : '');
+}
+
+// ── RENDER INSIGHTS ────────────────────────────────────────────────────────
+function renderInsights(rows) {
+  var tbody = document.getElementById('tbody-insights');
+  if (!rows.length) {
+    tbody.innerHTML = '<tr><td colspan="5"><div class="empty-state"><strong>No insights yet</strong><p>Click "Add New" to create your first article.</p></div></td></tr>';
+    return;
+  }
+
+  tbody.innerHTML = rows.map(function(row) {
+    return '<tr>' +
+      '<td><strong>' + esc(row.title) + '</strong><br><span class="td-muted">' + esc(row.excerpt || '') + '</span></td>' +
+      '<td>' + categoryBadge(row.category) + '</td>' +
+      '<td class="td-muted">' + (row.date || '—') + '</td>' +
+      '<td><label class="toggle"><input type="checkbox"' + (row.active ? ' checked' : '') + ' onchange="toggleActive(\'insights\',' + row.id + ', this.checked)"><span class="toggle-track"></span></label></td>' +
+      '<td><div class="row-actions"><button class="action-btn" onclick="openEditModal(\'insights\',' + row.id + ')">Edit</button><button class="action-btn del" onclick="deleteRecord(\'insights\',' + row.id + ')">Delete</button></div></td>' +
+    '</tr>';
+  }).join('');
+}
+
+function categoryBadge(cat) {
+  var cls = { 'Market Trends': 'teal', 'Data Science': 'amber', 'Case Studies': 'green', 'Projects': 'amber', 'Product Updates': 'gray' };
+  var c = cls[cat] || 'gray';
+  return '<span class="badge badge-' + c + '">' + esc(cat || '') + '</span>';
+}
+
+// ── RENDER SOCIAL ──────────────────────────────────────────────────────────
+var PLATFORM_COLORS = {
+  'LinkedIn': 'teal', 'X / Twitter': 'gray', 'Instagram': 'amber',
+  'Facebook': 'teal', 'TikTok': 'gray', 'YouTube': 'red'
+};
+
+var STATUS_COLORS = {
+  'Draft': 'gray', 'Scheduled': 'amber', 'Posted': 'green'
+};
+
+function renderSocial(rows) {
+  var tbody = document.getElementById('tbody-social');
+  if (!rows.length) {
+    tbody.innerHTML = '<tr><td colspan="5"><div class="empty-state"><strong>No social posts yet</strong><p>Click "Add New" to schedule your first post.</p></div></td></tr>';
+    return;
+  }
+
+  tbody.innerHTML = rows.map(function(row) {
+    var preview = (row.content || '').substring(0, 80) + ((row.content || '').length > 80 ? '…' : '');
+    var pc = PLATFORM_COLORS[row.platform] || 'gray';
+    var sc = STATUS_COLORS[row.status] || 'gray';
+    return '<tr>' +
+      '<td><span class="badge badge-' + pc + '">' + esc(row.platform || '') + '</span></td>' +
+      '<td style="max-width:280px;"><span class="td-muted">' + esc(preview) + '</span></td>' +
+      '<td class="td-muted">' + (row.scheduled_date || '—') + '</td>' +
+      '<td><span class="badge badge-' + sc + '">' + esc(row.status || '') + '</span></td>' +
+      '<td><div class="row-actions"><button class="action-btn" onclick="openEditModal(\'social\',' + row.id + ')">Edit</button><button class="action-btn del" onclick="deleteRecord(\'social\',' + row.id + ')">Delete</button></div></td>' +
+    '</tr>';
+  }).join('');
+}
+
+// ── SEARCH / FILTER ────────────────────────────────────────────────────────
+function filterTable() {
+  var q = document.getElementById('searchInput').value.toLowerCase();
+  if (currentTab === 'insights') {
+    renderInsights(tableData.insights.filter(function(r) {
+      return (r.title || '').toLowerCase().includes(q) ||
+             (r.category || '').toLowerCase().includes(q) ||
+             (r.excerpt || '').toLowerCase().includes(q);
+    }));
+  } else {
+    renderSocial(tableData.social.filter(function(r) {
+      return (r.platform || '').toLowerCase().includes(q) ||
+             (r.content || '').toLowerCase().includes(q) ||
+             (r.status || '').toLowerCase().includes(q);
+    }));
+  }
+}
+
+// ── MODAL ──────────────────────────────────────────────────────────────────
+function openAddModal() {
+  currentRecordId = null;
+  document.getElementById('modalTitle').textContent = 'Add ' + (currentTab === 'insights' ? 'Insight' : 'Social Post');
+  document.getElementById('btnDelete').style.display = 'none';
+  document.getElementById('modalBody').innerHTML = buildForm(currentTab, null);
+  wireCharCounts();
+  document.getElementById('modalBackdrop').classList.add('open');
+}
+
+function openEditModal(tab, id) {
+  currentTab = tab;
+  currentRecordId = id;
+  var row = tableData[tab === 'insights' ? 'insights' : 'social'].find(function(r) { return r.id === id; });
+  if (!row) return;
+
+  document.getElementById('modalTitle').textContent = 'Edit ' + (tab === 'insights' ? 'Insight' : 'Social Post');
+  document.getElementById('btnDelete').style.display = '';
+  document.getElementById('modalBody').innerHTML = buildForm(tab, row);
+  wireCharCounts();
+  document.getElementById('modalBackdrop').classList.add('open');
+}
+
+function closeModal() {
+  document.getElementById('modalBackdrop').classList.remove('open');
+  currentRecordId = null;
+}
+
+function backdropClose(e) {
+  if (e.target === document.getElementById('modalBackdrop')) closeModal();
+}
+
+// ── FORM BUILDER ───────────────────────────────────────────────────────────
+function buildForm(tab, data) {
+  if (tab === 'insights') return buildInsightForm(data);
+  return buildSocialForm(data);
+}
+
+function buildInsightForm(d) {
+  var cats = ['Market Trends', 'Data Science', 'Case Studies', 'Projects', 'Product Updates'];
+  return '<div class="form-row">' +
+    field('Title', 'text', 'f-title', d ? d.title : '', 'Data Governance in Ethiopian Financial Markets', 'full') +
+    '</div>' +
+    '<div class="form-row">' +
+    selectField('Category', 'f-category', cats, d ? d.category : '') +
+    field('Date', 'date', 'f-date', d ? d.date : today(), '', '') +
+    '</div>' +
+    '<div class="form-row">' +
+    areaField('Excerpt', 'f-excerpt', d ? d.excerpt : '', 'One-sentence summary shown on the insights page…', 'full', 160) +
+    '</div>' +
+    '<div class="form-row">' +
+    areaField('Full Body', 'f-body', d ? d.body : '', 'Full article content — use blank lines to separate paragraphs.', 'full tall', 0) +
+    '</div>' +
+    '<div class="form-row">' +
+    field('Author', 'text', 'f-author', d ? (d.author || '') : '', 'DAPS Analytics Team', '') +
+    field('Read Time', 'text', 'f-read_time', d ? (d.read_time || '') : '', '5 min read', '') +
+    '</div>' +
+    '<div class="form-row">' +
+    checkField('Active (visible on site)', 'f-active', d ? d.active : true) +
+    '</div>';
+}
+
+function buildSocialForm(d) {
+  var platforms = ['LinkedIn', 'X / Twitter', 'Instagram', 'Facebook', 'TikTok', 'YouTube'];
+  var statuses = ['Draft', 'Scheduled', 'Posted'];
+  return '<div class="form-row">' +
+    selectField('Platform', 'f-platform', platforms, d ? d.platform : '') +
+    field('Scheduled Date', 'date', 'f-scheduled_date', d ? d.scheduled_date : today(), '', '') +
+    '</div>' +
+    '<div class="form-row">' +
+    areaField('Post Content', 'f-content', d ? d.content : '', 'Write your post here…', 'full', 280) +
+    '</div>' +
+    '<div class="form-row">' +
+    field('Hashtags', 'text', 'f-hashtags', d ? (d.hashtags || '') : '', '#DataAnalytics #AfricaTech', 'full') +
+    '</div>' +
+    '<div class="form-row">' +
+    selectField('Status', 'f-status', statuses, d ? d.status : 'Draft') +
+    field('Media URL', 'url', 'f-media_url', d ? (d.media_url || '') : '', 'https://…', '') +
+    '</div>' +
+    '<div class="form-row">' +
+    areaField('Notes', 'f-notes', d ? (d.notes || '') : '', 'Internal notes about this post…', 'full', 0) +
+    '</div>';
+}
+
+function field(label, type, id, val, placeholder, extraClass) {
+  return '<div class="form-field ' + extraClass + '">' +
+    '<label>' + label + '</label>' +
+    '<input type="' + type + '" id="' + id + '" value="' + esc(val || '') + '" placeholder="' + esc(placeholder) + '">' +
+    '</div>';
+}
+
+function selectField(label, id, options, val) {
+  return '<div class="form-field">' +
+    '<label>' + label + '</label>' +
+    '<select id="' + id + '">' +
+    options.map(function(o) {
+      return '<option value="' + esc(o) + '"' + (o === val ? ' selected' : '') + '>' + esc(o) + '</option>';
+    }).join('') +
+    '</select></div>';
+}
+
+function areaField(label, id, val, placeholder, extraClass, maxChars) {
+  var counterHtml = maxChars ? '<div class="char-count" id="' + id + '-count">0 / ' + maxChars + '</div>' : '';
+  return '<div class="form-field ' + extraClass + '">' +
+    '<label>' + label + (maxChars ? ' <span style="font-weight:400;opacity:0.6;">(max ' + maxChars + ' chars)</span>' : '') + '</label>' +
+    '<textarea id="' + id + '" class="' + (extraClass.includes('tall') ? 'tall' : '') + '" placeholder="' + esc(placeholder) + '" data-max="' + maxChars + '">' + esc(val || '') + '</textarea>' +
+    counterHtml +
+    '</div>';
+}
+
+function checkField(label, id, val) {
+  return '<div class="form-field full" style="display:flex;align-items:center;gap:10px;">' +
+    '<label class="toggle" style="margin:0;"><input type="checkbox" id="' + id + '"' + (val ? ' checked' : '') + '><span class="toggle-track"></span></label>' +
+    '<span style="font-size:13px;color:var(--muted);">' + label + '</span>' +
+    '</div>';
+}
+
+function wireCharCounts() {
+  document.querySelectorAll('textarea[data-max]').forEach(function(ta) {
+    var max = parseInt(ta.dataset.max);
+    if (!max) return;
+    var counter = document.getElementById(ta.id + '-count');
+    if (!counter) return;
+    function update() {
+      var len = ta.value.length;
+      counter.textContent = len + ' / ' + max;
+      counter.className = 'char-count' + (len > max ? ' over' : len > max * 0.85 ? ' warn' : '');
+    }
+    ta.addEventListener('input', update);
+    update();
+  });
+}
+
+// ── SAVE ───────────────────────────────────────────────────────────────────
+async function saveRecord() {
+  var payload = readForm(currentTab);
+  if (!payload) return;
+
+  var table = currentTab === 'insights' ? 'insights' : 'social_posts';
+  var { error } = currentRecordId
+    ? await supabase.from(table).update(payload).eq('id', currentRecordId)
+    : await supabase.from(table).insert(payload);
+
+  if (error) { showToast('Error: ' + error.message, 'error'); return; }
+
+  showToast(currentRecordId ? 'Saved successfully.' : 'Created successfully.', 'success');
+  closeModal();
+  loadTab(currentTab);
+}
+
+function readForm(tab) {
+  if (tab === 'insights') {
+    var title = document.getElementById('f-title').value.trim();
+    if (!title) { showToast('Title is required.', 'error'); return null; }
+    return {
+      title: title,
+      category: document.getElementById('f-category').value,
+      date: document.getElementById('f-date').value,
+      excerpt: document.getElementById('f-excerpt').value.trim(),
+      body: document.getElementById('f-body').value.trim(),
+      author: document.getElementById('f-author').value.trim(),
+      read_time: document.getElementById('f-read_time').value.trim(),
+      active: document.getElementById('f-active').checked
+    };
+  } else {
+    var content = document.getElementById('f-content').value.trim();
+    if (!content) { showToast('Post content is required.', 'error'); return null; }
+    return {
+      platform: document.getElementById('f-platform').value,
+      scheduled_date: document.getElementById('f-scheduled_date').value,
+      content: content,
+      hashtags: document.getElementById('f-hashtags').value.trim(),
+      status: document.getElementById('f-status').value,
+      media_url: document.getElementById('f-media_url').value.trim(),
+      notes: document.getElementById('f-notes').value.trim()
+    };
+  }
+}
+
+// ── DELETE ─────────────────────────────────────────────────────────────────
+function confirmDelete() {
+  if (!currentRecordId) return;
+  if (!confirm('Are you sure you want to delete this record? This cannot be undone.')) return;
+  deleteRecord(currentTab, currentRecordId, true);
+}
+
+async function deleteRecord(tab, id, fromModal) {
+  if (!fromModal && !confirm('Delete this record?')) return;
+  var table = tab === 'insights' ? 'insights' : 'social_posts';
+  var { error } = await supabase.from(table).delete().eq('id', id);
+  if (error) { showToast('Error: ' + error.message, 'error'); return; }
+  showToast('Record deleted.', 'success');
+  if (fromModal) closeModal();
+  loadTab(tab);
+}
+
+// ── TOGGLE ACTIVE (insights only) ──────────────────────────────────────────
+async function toggleActive(tab, id, active) {
+  var table = tab === 'insights' ? 'insights' : 'social_posts';
+  var { error } = await supabase.from(table).update({ active: active }).eq('id', id);
+  if (error) {
+    showToast('Failed to update.', 'error');
+    loadTab(tab);
+  } else {
+    showToast(active ? 'Published.' : 'Unpublished.', 'success');
+    var rec = tableData[tab === 'insights' ? 'insights' : 'social'].find(function(r) { return r.id === id; });
+    if (rec) rec.active = active;
+  }
+}
+
+// ── TOAST ──────────────────────────────────────────────────────────────────
+function showToast(msg, type) {
+  var c = document.getElementById('toastContainer');
+  var t = document.createElement('div');
+  t.className = 'toast ' + (type || '');
+  t.innerHTML = '<div class="toast-dot"></div>' + esc(msg);
+  c.appendChild(t);
+  setTimeout(function() { t.remove(); }, 3500);
+}
+
+// ── UTILS ──────────────────────────────────────────────────────────────────
+function today() {
+  return new Date().toISOString().split('T')[0];
+}
+
+function esc(str) {
+  return String(str)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;');
+}
+</script>
+</body>
+</html>
