@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html class="dark" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Book a Call — DAPS Analytics</title>
+<meta name="description" content="Schedule a 30-minute consultation with the DAPS Analytics team. Choose a time that works for you."/>
+<link rel="icon" href="assets/images/daps-logo-nav.svg" type="image/svg+xml"/>
+<meta property="og:type" content="website"/>
+<meta property="og:site_name" content="DAPS Analytics"/>
+<meta property="og:title" content="Book a Call — DAPS Analytics"/>
+<meta property="og:description" content="Schedule a 30-minute consultation with the DAPS Analytics team."/>
+<meta property="og:url" content="https://dapsanalytics.com/book.html"/>
+<meta property="og:image" content="https://dapsanalytics.com/assets/images/og-preview.png"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;900&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<script>
+  tailwind.config = {
+    darkMode: "class",
+    theme: {
+      extend: {
+        colors: {
+          primary: "#49fde3", "on-primary": "#003730", "primary-container": "#00504a",
+          secondary: "#efbf71", "on-secondary": "#281900",
+          background: "#0e141b", "on-surface": "#dee2ed", "on-surface-variant": "#bacac5",
+          outline: "#849490", "secondary-surface": "#111418",
+        },
+        fontFamily: { sans: ["Inter", "sans-serif"] },
+      }
+    }
+  };
+</script>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { background: #0e141b; }
+  body { background: #0e141b; color: #dee2ed; font-family: Inter, sans-serif; min-height: 100vh; display: flex; flex-direction: column; }
+  main { flex: 1; }
+
+  /* Noise overlay */
+  .noise-overlay { position: relative; }
+  .noise-overlay::after { content: ''; position: absolute; inset: 0; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E"); opacity: 0.025; pointer-events: none; mix-blend-mode: overlay; }
+
+  /* Hero */
+  .book-hero {
+    background: radial-gradient(ellipse 80% 60% at 50% 0%, rgba(73,253,227,0.07) 0%, transparent 65%), #0e141b;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+    padding: 64px 24px 48px;
+    text-align: center;
+  }
+  .eyebrow {
+    display: inline-flex; align-items: center; gap: 10px;
+    font-size: 11px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase;
+    color: #49fde3; margin-bottom: 16px;
+  }
+  .eyebrow::before, .eyebrow::after { content: ''; display: block; width: 24px; height: 1px; background: #49fde3; opacity: 0.5; }
+
+  /* Info chips */
+  .info-chip {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 999px; padding: 8px 16px;
+    font-size: 12px; font-weight: 600; color: #bacac5; letter-spacing: 0.04em;
+  }
+  .info-chip .material-symbols-outlined { font-size: 15px; color: #49fde3; font-variation-settings: 'FILL' 1; }
+
+  /* Iframe wrapper */
+  .iframe-shell {
+    background: #ffffff;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 8px 48px rgba(0,0,0,0.5), 0 0 0 1px rgba(255,255,255,0.06);
+  }
+
+  /* Fallback (shown if iframe is blocked) */
+  #booking-fallback {
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    padding: 64px 32px;
+    text-align: center;
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 16px;
+  }
+
+  /* Scroll reveal */
+  .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.7s ease, transform 0.7s ease; }
+  .reveal.visible { opacity: 1; transform: none; }
+</style>
+</head>
+<body>
+
+<main>
+  <!-- Hero -->
+  <div class="book-hero noise-overlay">
+    <div class="max-w-2xl mx-auto">
+      <div class="eyebrow">Schedule a Session</div>
+      <h1 style="font-size:clamp(28px,4vw,52px);font-weight:300;letter-spacing:-0.02em;color:#dee2ed;margin-bottom:16px;line-height:1.2;">
+        Book a call with<br/><span style="color:#49fde3;">DAPS Analytics</span>
+      </h1>
+      <p style="font-size:16px;color:#849490;line-height:1.7;max-width:480px;margin:0 auto 32px;">
+        Choose a time that works for you. We'll discuss your data challenges, explore solutions, and map a path forward.
+      </p>
+
+      <!-- Info chips -->
+      <div class="flex flex-wrap justify-center gap-3 mb-2">
+        <div class="info-chip">
+          <span class="material-symbols-outlined">schedule</span>
+          30 Minutes
+        </div>
+        <div class="info-chip">
+          <span class="material-symbols-outlined">videocam</span>
+          Microsoft Teams
+        </div>
+        <div class="info-chip">
+          <span class="material-symbols-outlined">bolt</span>
+          Instant Confirmation
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Booking Embed -->
+  <section style="background:#0a0d12;padding:48px 24px 80px;">
+    <div class="max-w-4xl mx-auto reveal">
+
+      <div class="iframe-shell">
+        <iframe
+          id="booking-iframe"
+          src="https://outlook.office.com/book/ChatwithDAPS@dapsanalytics.com/"
+          width="100%"
+          height="700"
+          scrolling="yes"
+          style="border:0;display:block;"
+          title="Book a call with DAPS Analytics"
+          onload="checkIframe(this)"
+          onerror="showFallback()">
+        </iframe>
+      </div>
+
+      <!-- Fallback if iframe is blocked by Microsoft -->
+      <div id="booking-fallback">
+        <span class="material-symbols-outlined" style="font-size:48px;color:#49fde3;font-variation-settings:'FILL' 1;">calendar_month</span>
+        <div>
+          <p style="font-size:16px;color:#dee2ed;font-weight:600;margin-bottom:8px;">Open booking calendar</p>
+          <p style="font-size:14px;color:#849490;margin-bottom:24px;">Click below to open the booking page in a new tab.</p>
+          <a href="https://outlook.office.com/book/ChatwithDAPS@dapsanalytics.com/"
+             target="_blank" rel="noopener noreferrer"
+             style="display:inline-flex;align-items:center;gap:8px;background:#49fde3;color:#003730;font-size:11px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;padding:14px 32px;border-radius:4px;text-decoration:none;box-shadow:0 0 24px rgba(73,253,227,0.25);">
+            Open Booking Page
+            <span class="material-symbols-outlined" style="font-size:15px;">open_in_new</span>
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Bottom reassurance strip -->
+  <section style="background:#090d12;border-top:1px solid rgba(255,255,255,0.05);padding:40px 24px;">
+    <div class="max-w-4xl mx-auto">
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 text-center">
+        <div>
+          <span class="material-symbols-outlined" style="font-size:28px;color:#49fde3;font-variation-settings:'FILL' 1;display:block;margin-bottom:8px;">verified_user</span>
+          <div style="font-size:13px;font-weight:600;color:#dee2ed;margin-bottom:4px;">Confidential</div>
+          <div style="font-size:12px;color:#849490;">Your information stays private</div>
+        </div>
+        <div>
+          <span class="material-symbols-outlined" style="font-size:28px;color:#49fde3;font-variation-settings:'FILL' 1;display:block;margin-bottom:8px;">reply</span>
+          <div style="font-size:13px;font-weight:600;color:#dee2ed;margin-bottom:4px;">Quick Response</div>
+          <div style="font-size:12px;color:#849490;">Confirmation sent instantly</div>
+        </div>
+        <div>
+          <span class="material-symbols-outlined" style="font-size:28px;color:#49fde3;font-variation-settings:'FILL' 1;display:block;margin-bottom:8px;">groups</span>
+          <div style="font-size:13px;font-weight:600;color:#dee2ed;margin-bottom:4px;">Expert Team</div>
+          <div style="font-size:12px;color:#849490;">Direct access to our analysts</div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<script>
+  function checkIframe(iframe) {
+    // If Microsoft blocks embedding, contentDocument will throw — show fallback
+    try {
+      var doc = iframe.contentDocument || iframe.contentWindow.document;
+      if (!doc || doc.URL === 'about:blank') showFallback();
+    } catch(e) {
+      showFallback();
+    }
+  }
+  function showFallback() {
+    document.getElementById('booking-iframe').style.display = 'none';
+    var fb = document.getElementById('booking-fallback');
+    fb.style.display = 'flex';
+  }
+
+  // Scroll reveal
+  var els = document.querySelectorAll('.reveal');
+  var obs = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('visible'); obs.unobserve(e.target); } });
+  }, { threshold: 0.1 });
+  els.forEach(function(el){ obs.observe(el); });
+</script>
+
+<script src="assets/navbar.js"></script>
+<script src="assets/daps.js"></script>
+</body>
+</html>

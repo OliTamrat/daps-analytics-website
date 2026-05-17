@@ -214,7 +214,7 @@
     /* Desktop nav */
     + '<ul class="nl">'
     + ni('Services',   'services.html',   'services')
-    + ni('Products',   'products.html',   'products')
+    /* Products hidden temporarily — restore after registration: re-add: + ni('Products', 'products.html', 'products') */
     + ni('Projects',   'projects.html',   'projects')
     + ni('Industries', 'industries.html', 'industries')
     + ni('Insights',   'insights.html',   'insights')
@@ -240,7 +240,7 @@
     + '<div id="mpanel">'
     + '<div class="msec"><span class="msl">Platform</span>'
     + mlink('settings','Services','services.html')
-    + mlink('view_kanban','Products','products.html')
+    /* Products hidden temporarily — restore after registration: re-add: + mlink('view_kanban','Products','products.html') */
     + mlink('account_tree','Projects','projects.html')
     + mlink('hub','Industries','industries.html')
     + '</div>'

@@ -1,0 +1,924 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>DAPS Analytics — Social Media Assets Generator</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&display=swap" rel="stylesheet"/>
+<style>
+  :root{--teal:#49fde3;--amber:#efbf71;--dark:#0e141b;--text:#dee2ed;--muted:#bacac5;}
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{background:#0a0f16;color:var(--text);font-family:'Inter',sans-serif;min-height:100vh;padding:0 0 80px;}
+
+  header{background:linear-gradient(135deg,#0e141b,#111d2b);border-bottom:1px solid rgba(73,253,227,0.15);padding:28px 40px;display:flex;align-items:center;justify-content:space-between;}
+  header h1{font-size:20px;font-weight:600;letter-spacing:-0.02em;}
+  header h1 span{color:var(--teal);}
+  header p{font-size:13px;color:var(--muted);margin-top:4px;}
+  .header-badge{display:flex;gap:8px;flex-wrap:wrap;}
+  .badge{font-size:10px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;padding:4px 10px;border-radius:20px;border:1px solid;}
+  .badge-teal{border-color:rgba(73,253,227,0.4);color:var(--teal);}
+  .badge-amber{border-color:rgba(239,191,113,0.4);color:var(--amber);}
+
+  .instructions{background:rgba(73,253,227,0.05);border:1px solid rgba(73,253,227,0.15);border-radius:10px;margin:32px 40px 0;padding:20px 24px;}
+  .instructions h3{font-size:13px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--teal);margin-bottom:12px;}
+  .instructions ol{padding-left:20px;font-size:13px;color:var(--muted);line-height:2;}
+
+  .section{padding:40px 40px 0;}
+  .section-title{font-size:11px;font-weight:700;letter-spacing:0.25em;text-transform:uppercase;color:var(--teal);margin-bottom:6px;}
+  .section-subtitle{font-size:22px;font-weight:600;color:#fff;margin-bottom:8px;letter-spacing:-0.01em;}
+  .section-desc{font-size:13px;color:var(--muted);margin-bottom:28px;}
+
+  .asset-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:20px;}
+  .asset-card{background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.08);border-radius:12px;overflow:hidden;transition:border-color 0.2s;}
+  .asset-card:hover{border-color:rgba(73,253,227,0.3);}
+  .asset-preview{background:#060c12;display:flex;align-items:center;justify-content:center;padding:20px;min-height:180px;overflow:hidden;}
+  .asset-preview canvas{max-width:100%;height:auto;border-radius:4px;box-shadow:0 4px 24px rgba(0,0,0,0.5);}
+  .asset-info{padding:16px 20px;}
+  .asset-name{font-size:14px;font-weight:600;color:#fff;margin-bottom:4px;}
+  .asset-meta{font-size:12px;color:var(--muted);margin-bottom:14px;display:flex;gap:12px;flex-wrap:wrap;}
+  .asset-meta span{display:flex;align-items:center;gap:4px;}
+  .platforms{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:14px;}
+  .plt{font-size:10px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;padding:3px 8px;border-radius:4px;}
+  .plt-li{background:#0077b5;color:#fff;}
+  .plt-x{background:#000;color:#fff;border:1px solid #333;}
+  .plt-ig{background:linear-gradient(135deg,#f09433,#e6683c,#dc2743,#cc2366);color:#fff;}
+  .plt-fb{background:#1877f2;color:#fff;}
+  .plt-tt{background:#010101;color:#fff;border:1px solid #333;}
+  .plt-yt{background:#ff0000;color:#fff;}
+  .plt-all{background:rgba(73,253,227,0.15);color:var(--teal);border:1px solid rgba(73,253,227,0.3);}
+  .btn-download{width:100%;padding:11px;background:var(--teal);color:#0e141b;border:none;border-radius:7px;font-family:'Inter',sans-serif;font-size:12px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;cursor:pointer;transition:background 0.2s,transform 0.1s;}
+  .btn-download:hover{background:#2de8ce;transform:translateY(-1px);}
+  .btn-download:active{transform:translateY(0);}
+
+  .divider{height:1px;background:rgba(255,255,255,0.06);margin:48px 40px 0;}
+
+  footer{margin:48px 40px 0;font-size:12px;color:var(--muted);text-align:center;padding-top:24px;border-top:1px solid rgba(255,255,255,0.06);}
+</style>
+</head>
+<body>
+
+<header>
+  <div>
+    <h1>DAPS Analytics <span>Social Assets</span></h1>
+    <p>Profile pictures &amp; cover banners — all platforms, ready to download</p>
+  </div>
+  <div class="header-badge">
+    <span class="badge badge-teal">6 Platforms</span>
+    <span class="badge badge-amber">7 Assets</span>
+  </div>
+</header>
+
+<div class="instructions">
+  <h3>How to use</h3>
+  <ol>
+    <li>Wait for all canvases to load (1–2 seconds)</li>
+    <li>Click <strong>Download</strong> on each asset to save it as a PNG</li>
+    <li>Upload each file to the corresponding platform (sizes are already correct)</li>
+    <li>For circular profile pics: platforms crop automatically — logo is centered</li>
+  </ol>
+</div>
+
+<!-- PROFILE PICTURE -->
+<div class="section" style="margin-top:40px;">
+  <div class="section-title">Profile Picture</div>
+  <div class="section-subtitle">Logo Mark — All Platforms</div>
+  <div class="section-desc">800 × 800px &nbsp;·&nbsp; Use on every platform — platforms crop to circle automatically</div>
+  <div class="asset-grid">
+    <div class="asset-card">
+      <div class="asset-preview"><canvas id="pfp" width="800" height="800" style="width:200px;height:200px;"></canvas></div>
+      <div class="asset-info">
+        <div class="asset-name">Profile Picture</div>
+        <div class="asset-meta"><span>800 × 800 px</span><span>PNG</span></div>
+        <div class="platforms">
+          <span class="plt plt-all">All 6 Platforms</span>
+        </div>
+        <button class="btn-download" onclick="dl('pfp','DAPS-Profile-Picture-800x800.png')">Download Profile Picture</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- COVER BANNERS -->
+<div class="section" style="margin-top:48px;">
+  <div class="section-title">Cover Banners</div>
+  <div class="section-subtitle">Platform-Specific Banners</div>
+  <div class="section-desc">Each banner is sized and designed for its platform. Download and upload directly — no resizing needed.</div>
+  <div class="asset-grid">
+
+    <!-- X / TWITTER -->
+    <div class="asset-card">
+      <div class="asset-preview"><canvas id="x_cover" width="1500" height="500" style="width:100%;max-width:340px;height:auto;"></canvas></div>
+      <div class="asset-info">
+        <div class="asset-name">X / Twitter Cover</div>
+        <div class="asset-meta"><span>1500 × 500 px</span><span>PNG</span></div>
+        <div class="platforms"><span class="plt plt-x">X / Twitter</span></div>
+        <button class="btn-download" onclick="dl('x_cover','DAPS-X-Cover-1500x500.png')">Download X Cover</button>
+      </div>
+    </div>
+
+    <!-- FACEBOOK -->
+    <div class="asset-card">
+      <div class="asset-preview"><canvas id="fb_cover" width="851" height="315" style="width:100%;max-width:340px;height:auto;"></canvas></div>
+      <div class="asset-info">
+        <div class="asset-name">Facebook Cover</div>
+        <div class="asset-meta"><span>851 × 315 px</span><span>PNG</span></div>
+        <div class="platforms"><span class="plt plt-fb">Facebook</span></div>
+        <button class="btn-download" onclick="dl('fb_cover','DAPS-Facebook-Cover-851x315.png')">Download Facebook Cover</button>
+      </div>
+    </div>
+
+    <!-- LINKEDIN -->
+    <div class="asset-card">
+      <div class="asset-preview"><canvas id="li_cover" width="1584" height="396" style="width:100%;max-width:340px;height:auto;"></canvas></div>
+      <div class="asset-info">
+        <div class="asset-name">LinkedIn Company Banner</div>
+        <div class="asset-meta"><span>1584 × 396 px</span><span>PNG</span></div>
+        <div class="platforms"><span class="plt plt-li">LinkedIn</span></div>
+        <button class="btn-download" onclick="dl('li_cover','DAPS-LinkedIn-Cover-1584x396.png')">Download LinkedIn Banner</button>
+      </div>
+    </div>
+
+    <!-- YOUTUBE -->
+    <div class="asset-card">
+      <div class="asset-preview"><canvas id="yt_cover" width="2560" height="1440" style="width:100%;max-width:340px;height:auto;"></canvas></div>
+      <div class="asset-info">
+        <div class="asset-name">YouTube Channel Art</div>
+        <div class="asset-meta"><span>2560 × 1440 px</span><span>PNG</span></div>
+        <div class="platforms"><span class="plt plt-yt">YouTube</span></div>
+        <button class="btn-download" onclick="dl('yt_cover','DAPS-YouTube-Art-2560x1440.png')">Download YouTube Art</button>
+      </div>
+    </div>
+
+    <!-- TIKTOK -->
+    <div class="asset-card">
+      <div class="asset-preview"><canvas id="tt_cover" width="1080" height="1920" style="width:120px;height:auto;"></canvas></div>
+      <div class="asset-info">
+        <div class="asset-name">TikTok Bio Background</div>
+        <div class="asset-meta"><span>1080 × 1920 px</span><span>PNG</span></div>
+        <div class="platforms"><span class="plt plt-tt">TikTok</span></div>
+        <button class="btn-download" onclick="dl('tt_cover','DAPS-TikTok-Background-1080x1920.png')">Download TikTok BG</button>
+      </div>
+    </div>
+
+    <!-- INSTAGRAM -->
+    <div class="asset-card">
+      <div class="asset-preview"><canvas id="ig_post" width="1080" height="1080" style="width:180px;height:180px;"></canvas></div>
+      <div class="asset-info">
+        <div class="asset-name">Instagram Launch Post</div>
+        <div class="asset-meta"><span>1080 × 1080 px</span><span>PNG</span></div>
+        <div class="platforms"><span class="plt plt-ig">Instagram</span></div>
+        <button class="btn-download" onclick="dl('ig_post','DAPS-Instagram-Post-1080x1080.png')">Download Instagram Post</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<footer>
+  DAPS Analytics &mdash; dapsanalytics.com &mdash; hello@dapsanalytics.com &mdash; All assets &copy; 2026 DAPS Analytics / Olink Technologies Inc.
+</footer>
+
+<script>
+// ─────────────────────────────────────────────
+// BRAND COLORS
+// ─────────────────────────────────────────────
+const DARK   = '#0e141b';
+const TEAL   = '#49fde3';
+const AMBER  = '#efbf71';
+const WHITE  = '#ffffff';
+const MUTED  = '#bacac5';
+const GREEN  = '#ABD054';
+
+// ─────────────────────────────────────────────
+// EMBED LOGO SVGs AS BLOB URLs
+// ─────────────────────────────────────────────
+const SVG_ICON = `<?xml version="1.0" encoding="utf-8"?>
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="155 926 740 212" xml:space="preserve">
+<style>.w{fill:#FFFFFF;}.c{fill:#49fde3;}</style>
+<g>
+  <polygon class="w" points="201.92,985.06 201.92,1014.23 169.7,1045.4 169.7,985.06"/>
+  <path class="w" d="M367.86,1029.67c0,1-0.01,2.02-0.05,3.04c-0.01,0.57-0.02,1.13-0.06,1.68c-0.04,0.81-0.07,1.6-0.13,2.4c-0.02,0.64-0.08,1.28-0.13,1.91c-3.46,42.78-31.42,75.81-70.94,83.92c-6.14,1.26-12.55,1.91-19.2,1.91h-56.44l33.54-32.46h22.89c33.5,0,58.04-25.83,58.04-60.86c0-35.04-24.54-60.09-58.04-60.09H169.7v-32.46h107.64c39.9,0,71.5,21.47,84.31,55.52c1.63,4.29,2.94,8.78,3.94,13.45c0.78,3.69,1.38,7.48,1.74,11.39c0.06,0.56,0.11,1.13,0.15,1.68c0.02,0.38,0.06,0.76,0.08,1.14c0.05,0.62,0.09,1.23,0.12,1.85c0.04,0.64,0.07,1.27,0.08,1.92c0.02,0.52,0.04,1.07,0.05,1.6C367.84,1028.03,367.86,1028.85,367.86,1029.67z"/>
+  <path class="c" d="M377.41,1092.06h101.24l-24.19-40.66h0.04l-41.42-69.54l-34.64,58.57c0.3-3.53,0.45-7.12,0.45-10.76c0-14.1-2.35-27.32-6.7-39.31l26.3-43.79c3.84-6.39,8.7-10.48,15.85-10.48c7.16,0,11.77,4.09,15.61,10.48l78.59,130.56l28.53,47.4H377.41V1092.06z"/>
+  <polygon class="w" points="537.08,985.06 537.08,1101.93 536.46,1100.89 504.87,1048.41 504.87,985.06"/>
+  <path class="w" d="M704.17,1005.12c0,0.3,0,0.59-0.01,0.89c-0.11,12.08-2.5,23-6.99,32.35c-10.23,21.35-31.36,34.51-61.02,34.51h-86.61v-31.44h86.61c20.13,0,33.06-11.22,35.77-28.31c0.36-2.23,0.54-4.56,0.54-6.97c0-7.53-1.66-14.08-4.8-19.43c-5.83-9.89-16.73-15.61-31.51-15.61H504.87v-32.47h131.28c19.29,0,34.97,5.21,46.38,14.61c9.87,8.15,16.57,19.41,19.67,33.2C703.5,992.24,704.17,998.48,704.17,1005.12z"/>
+  <path class="w" d="M858.27,938.64v32.47H724.8c-4.21,0-13.03,2.96-16.2,4.3c-4.06-11.19-10.36-20.78-18.58-28.45c8.18-3.89,23.2-8.32,34.78-8.32H858.27z"/>
+  <path class="w" d="M867.47,1070.06c0,31.2-18.93,54.47-57.79,54.47H549.64v-32.47h260.05c17.38,0,27.11-9.72,27.11-24.29c0-15.85-9.72-24.04-27.11-24.04h-85.4c-4.48,0-16.08-1.86-20.11-2.57c3.63-8.16,5.97-17.16,6.93-26.85c1.9,0.37,11.28,2.06,13.44,2.06h85.15C847.27,1016.36,867.47,1034.01,867.47,1070.06z"/>
+  <polygon class="c" points="221.87,1022.97 201.92,1042.28 169.7,1073.46 169.7,1056.96 201.92,1025.78 213.62,1014.45"/>
+  <polygon class="c" points="267.95,1008.07 201.92,1071.98 169.7,1103.16 169.7,1086.64 201.92,1055.46 259.69,999.54"/>
+  <polygon class="c" points="267.85,1037.84 211.83,1092.06 178.29,1124.53 169.7,1124.53 169.7,1116.34 201.92,1085.16 259.6,1029.33"/>
+  <polygon class="c" points="268.27,1067.13 242.5,1092.06 208.97,1124.53 191.92,1124.53 225.46,1092.06 260.02,1058.61"/>
+</g>
+</svg>`;
+
+// Teal-colored icon version (for dark backgrounds where cyan is needed)
+const SVG_ICON_TEAL = SVG_ICON; // Already using #49fde3
+
+// ─────────────────────────────────────────────
+// UTILITY FUNCTIONS
+// ─────────────────────────────────────────────
+function loadSVG(svgString) {
+  return new Promise(resolve => {
+    const blob = new Blob([svgString], {type:'image/svg+xml'});
+    const url = URL.createObjectURL(blob);
+    const img = new Image();
+    img.onload = () => { URL.revokeObjectURL(url); resolve(img); };
+    img.src = url;
+  });
+}
+
+function hexToRgba(hex, alpha) {
+  const r = parseInt(hex.slice(1,3),16);
+  const g = parseInt(hex.slice(3,5),16);
+  const b = parseInt(hex.slice(5,7),16);
+  return `rgba(${r},${g},${b},${alpha})`;
+}
+
+function drawDotGrid(ctx, w, h, spacing, dotR, color) {
+  ctx.fillStyle = color;
+  for(let x = spacing/2; x < w; x += spacing) {
+    for(let y = spacing/2; y < h; y += spacing) {
+      ctx.beginPath();
+      ctx.arc(x, y, dotR, 0, Math.PI*2);
+      ctx.fill();
+    }
+  }
+}
+
+function drawDiagonalLines(ctx, w, h, count, color, lw) {
+  ctx.save();
+  ctx.strokeStyle = color;
+  ctx.lineWidth = lw || 1;
+  const span = w + h;
+  const step = span / count;
+  for(let i = 0; i < count; i++) {
+    const x = -h + i * step;
+    ctx.beginPath();
+    ctx.moveTo(x, 0);
+    ctx.lineTo(x + h, h);
+    ctx.stroke();
+  }
+  ctx.restore();
+}
+
+function drawHexGrid(ctx, w, h, size, color) {
+  ctx.save();
+  ctx.strokeStyle = color;
+  ctx.lineWidth = 0.5;
+  const cols = Math.ceil(w / (size * 1.5)) + 2;
+  const rows = Math.ceil(h / (size * Math.sqrt(3))) + 2;
+  for(let col = -1; col < cols; col++) {
+    for(let row = -1; row < rows; row++) {
+      const cx = col * size * 1.5;
+      const cy = row * size * Math.sqrt(3) + (col % 2 === 0 ? 0 : size * Math.sqrt(3) / 2);
+      ctx.beginPath();
+      for(let i = 0; i < 6; i++) {
+        const angle = Math.PI / 3 * i - Math.PI / 6;
+        const px = cx + size * Math.cos(angle);
+        const py = cy + size * Math.sin(angle);
+        if(i === 0) ctx.moveTo(px, py); else ctx.lineTo(px, py);
+      }
+      ctx.closePath();
+      ctx.stroke();
+    }
+  }
+  ctx.restore();
+}
+
+function drawDataNodes(ctx, w, h, count) {
+  const nodes = [];
+  for(let i = 0; i < count; i++) {
+    nodes.push({x: Math.random()*w, y: Math.random()*h, r: Math.random()*2+1});
+  }
+  // Draw connections
+  ctx.strokeStyle = hexToRgba(TEAL, 0.08);
+  ctx.lineWidth = 0.5;
+  for(let i = 0; i < nodes.length; i++) {
+    for(let j = i+1; j < nodes.length; j++) {
+      const d = Math.hypot(nodes[i].x-nodes[j].x, nodes[i].y-nodes[j].y);
+      if(d < Math.min(w,h)*0.18) {
+        ctx.beginPath();
+        ctx.moveTo(nodes[i].x, nodes[i].y);
+        ctx.lineTo(nodes[j].x, nodes[j].y);
+        ctx.stroke();
+      }
+    }
+  }
+  // Draw nodes
+  nodes.forEach(n => {
+    ctx.beginPath();
+    ctx.arc(n.x, n.y, n.r, 0, Math.PI*2);
+    ctx.fillStyle = hexToRgba(TEAL, 0.25);
+    ctx.fill();
+  });
+}
+
+function setFont(ctx, size, weight, family) {
+  ctx.font = `${weight} ${size}px '${family || 'Inter'}', sans-serif`;
+}
+
+function dl(id, filename) {
+  const canvas = document.getElementById(id);
+  const link = document.createElement('a');
+  link.download = filename;
+  link.href = canvas.toDataURL('image/png');
+  link.click();
+}
+
+// ─────────────────────────────────────────────
+// DRAW FUNCTIONS
+// ─────────────────────────────────────────────
+
+function drawBg(ctx, w, h, fromColor, toColor, angle) {
+  const rad = (angle || 135) * Math.PI / 180;
+  const gx1 = w/2 - Math.cos(rad)*w/2;
+  const gy1 = h/2 - Math.sin(rad)*h/2;
+  const gx2 = w/2 + Math.cos(rad)*w/2;
+  const gy2 = h/2 + Math.sin(rad)*h/2;
+  const g = ctx.createLinearGradient(gx1,gy1,gx2,gy2);
+  g.addColorStop(0, fromColor);
+  g.addColorStop(1, toColor);
+  ctx.fillStyle = g;
+  ctx.fillRect(0,0,w,h);
+}
+
+// ── PROFILE PICTURE ──────────────────────────
+async function drawPFP(img) {
+  const c = document.getElementById('pfp');
+  const ctx = c.getContext('2d');
+  const W = 800, H = 800;
+
+  // Background radial gradient
+  const bg = ctx.createRadialGradient(W/2, H/2, 0, W/2, H/2, W*0.7);
+  bg.addColorStop(0, '#132030');
+  bg.addColorStop(0.6, '#0d1820');
+  bg.addColorStop(1, DARK);
+  ctx.fillStyle = bg;
+  ctx.fillRect(0,0,W,H);
+
+  // Hex grid subtle
+  drawHexGrid(ctx, W, H, 55, hexToRgba(TEAL, 0.06));
+
+  // Teal glow behind logo
+  const glow = ctx.createRadialGradient(W/2, H/2, 0, W/2, H/2, 260);
+  glow.addColorStop(0, hexToRgba(TEAL, 0.12));
+  glow.addColorStop(1, hexToRgba(TEAL, 0));
+  ctx.fillStyle = glow;
+  ctx.fillRect(0,0,W,H);
+
+  // Circle border
+  ctx.save();
+  ctx.beginPath();
+  ctx.arc(W/2, H/2, W/2-4, 0, Math.PI*2);
+  const borderG = ctx.createLinearGradient(0,0,W,H);
+  borderG.addColorStop(0, hexToRgba(TEAL, 0.6));
+  borderG.addColorStop(0.5, hexToRgba(TEAL, 0.15));
+  borderG.addColorStop(1, hexToRgba(AMBER, 0.3));
+  ctx.strokeStyle = borderG;
+  ctx.lineWidth = 3;
+  ctx.stroke();
+  ctx.restore();
+
+  // Draw DAPS icon (the logo mark, scaled to center)
+  // Logo viewBox: 155 926 740 212 → aspect ~3.49:1
+  // We want it centered, maybe 480px wide
+  const logoW = 520;
+  const logoH = logoW * (212/740);
+  const lx = (W - logoW) / 2;
+  const ly = (H - logoH) / 2;
+  ctx.drawImage(img, lx, ly, logoW, logoH);
+
+  // Bottom tagline
+  ctx.fillStyle = hexToRgba(MUTED, 0.5);
+  ctx.font = '500 13px Inter, sans-serif';
+  ctx.textAlign = 'center';
+  ctx.letterSpacing = '0.15em';
+  ctx.fillText('dapsanalytics.com', W/2, H - 40);
+}
+
+// ── X / TWITTER COVER ────────────────────────
+async function drawXCover(img) {
+  const c = document.getElementById('x_cover');
+  const ctx = c.getContext('2d');
+  const W = 1500, H = 500;
+
+  // Background
+  drawBg(ctx, W, H, '#0a1219', '#0e141b', 160);
+
+  // Diagonal lines (matching logo slash motif)
+  ctx.save();
+  for(let i = 0; i < 8; i++) {
+    const x = 60 + i * 180;
+    ctx.strokeStyle = hexToRgba(TEAL, 0.04 + i*0.005);
+    ctx.lineWidth = 1.5;
+    ctx.beginPath();
+    ctx.moveTo(x, 0);
+    ctx.lineTo(x + H * 0.7, H);
+    ctx.stroke();
+  }
+  ctx.restore();
+
+  // Dot grid right side
+  ctx.save();
+  ctx.globalAlpha = 0.4;
+  drawDotGrid(ctx, W, H, 36, 1.2, hexToRgba(TEAL, 0.25));
+  ctx.globalAlpha = 1;
+  ctx.restore();
+
+  // Left dark overlay
+  const leftFade = ctx.createLinearGradient(0,0,W*0.55,0);
+  leftFade.addColorStop(0, 'rgba(10,18,25,1)');
+  leftFade.addColorStop(0.4, 'rgba(10,18,25,0.95)');
+  leftFade.addColorStop(1, 'rgba(10,18,25,0)');
+  ctx.fillStyle = leftFade;
+  ctx.fillRect(0,0,W,H);
+
+  // Right teal glow
+  const rightGlow = ctx.createRadialGradient(W, H/2, 0, W, H/2, 500);
+  rightGlow.addColorStop(0, hexToRgba(TEAL, 0.08));
+  rightGlow.addColorStop(1, hexToRgba(TEAL, 0));
+  ctx.fillStyle = rightGlow;
+  ctx.fillRect(0,0,W,H);
+
+  // Logo — left side
+  const logoW = 560;
+  const logoH = logoW * (212/740);
+  ctx.drawImage(img, 72, (H - logoH) / 2, logoW, logoH);
+
+  // Vertical separator
+  ctx.strokeStyle = hexToRgba(TEAL, 0.25);
+  ctx.lineWidth = 1;
+  ctx.beginPath();
+  ctx.moveTo(700, H*0.2);
+  ctx.lineTo(700, H*0.8);
+  ctx.stroke();
+
+  // Right side text
+  ctx.textAlign = 'left';
+  ctx.fillStyle = hexToRgba(TEAL, 0.7);
+  ctx.font = '700 11px Inter, sans-serif';
+  ctx.fillText('HIGH-FIDELITY DATA INTELLIGENCE', 740, H/2 - 68);
+
+  ctx.fillStyle = WHITE;
+  ctx.font = '300 42px Inter, sans-serif';
+  ctx.fillText('Built for Africa.', 740, H/2 - 22);
+  ctx.font = '700 42px Inter, sans-serif';
+  ctx.fillText('Built to last.', 740, H/2 + 32);
+
+  ctx.fillStyle = hexToRgba(MUTED, 0.6);
+  ctx.font = '400 15px Inter, sans-serif';
+  ctx.fillText('dapsanalytics.com', 740, H/2 + 82);
+
+  // Product dots
+  const prods = ['Onekof PM','UDC-WQIS','Hakimet','Olink Fleet'];
+  prods.forEach((p, i) => {
+    const px = 740 + i * 148;
+    ctx.fillStyle = hexToRgba(TEAL, 0.15);
+    ctx.beginPath();
+    ctx.roundRect(px, H/2 + 108, 130, 24, 4);
+    ctx.fill();
+    ctx.fillStyle = hexToRgba(TEAL, 0.7);
+    ctx.font = '500 11px Inter, sans-serif';
+    ctx.textAlign = 'center';
+    ctx.fillText(p, px + 65, H/2 + 124);
+  });
+}
+
+// ── FACEBOOK COVER ───────────────────────────
+async function drawFBCover(img) {
+  const c = document.getElementById('fb_cover');
+  const ctx = c.getContext('2d');
+  const W = 851, H = 315;
+
+  drawBg(ctx, W, H, '#091118', '#0e141b', 140);
+  drawHexGrid(ctx, W, H, 38, hexToRgba(TEAL, 0.05));
+
+  // Teal accent bar at top
+  const topBar = ctx.createLinearGradient(0,0,W,0);
+  topBar.addColorStop(0, hexToRgba(TEAL, 0.8));
+  topBar.addColorStop(0.4, hexToRgba(TEAL, 0.4));
+  topBar.addColorStop(1, hexToRgba(TEAL, 0));
+  ctx.fillStyle = topBar;
+  ctx.fillRect(0, 0, W, 3);
+
+  // Amber accent bar at bottom
+  const botBar = ctx.createLinearGradient(0,0,W,0);
+  botBar.addColorStop(0, hexToRgba(AMBER, 0));
+  botBar.addColorStop(0.6, hexToRgba(AMBER, 0.5));
+  botBar.addColorStop(1, hexToRgba(AMBER, 0.9));
+  ctx.fillStyle = botBar;
+  ctx.fillRect(0, H-3, W, 3);
+
+  // Diagonal lines
+  ctx.save();
+  for(let i = 0; i < 12; i++) {
+    ctx.strokeStyle = hexToRgba(TEAL, 0.03 + i*0.004);
+    ctx.lineWidth = 1;
+    ctx.beginPath();
+    ctx.moveTo(-H*0.5 + i*80, 0);
+    ctx.lineTo(-H*0.5 + i*80 + H*0.7, H);
+    ctx.stroke();
+  }
+  ctx.restore();
+
+  // Left overlay for text legibility
+  const lOverlay = ctx.createLinearGradient(0,0,W*0.7,0);
+  lOverlay.addColorStop(0, 'rgba(9,17,24,0.97)');
+  lOverlay.addColorStop(0.55, 'rgba(9,17,24,0.9)');
+  lOverlay.addColorStop(1, 'rgba(9,17,24,0)');
+  ctx.fillStyle = lOverlay;
+  ctx.fillRect(0,0,W,H);
+
+  // Logo
+  const logoW = 340;
+  const logoH = logoW * (212/740);
+  ctx.drawImage(img, 48, (H - logoH)/2, logoW, logoH);
+
+  // Right text
+  ctx.textAlign = 'right';
+  ctx.fillStyle = hexToRgba(TEAL, 0.65);
+  ctx.font = '700 10px Inter, sans-serif';
+  ctx.fillText('DATA ANALYTICS FOR PRACTICAL SOLUTIONS', W - 40, H/2 - 44);
+
+  ctx.fillStyle = WHITE;
+  ctx.font = '300 28px Inter, sans-serif';
+  ctx.fillText('High-Fidelity', W - 40, H/2 - 8);
+  ctx.font = '700 28px Inter, sans-serif';
+  ctx.fillText('Data Intelligence', W - 40, H/2 + 30);
+
+  ctx.fillStyle = hexToRgba(MUTED, 0.55);
+  ctx.font = '400 12px Inter, sans-serif';
+  ctx.fillText('Ethiopia  ·  Washington DC  ·  dapsanalytics.com', W - 40, H/2 + 60);
+}
+
+// ── LINKEDIN COVER ───────────────────────────
+async function drawLICover(img) {
+  const c = document.getElementById('li_cover');
+  const ctx = c.getContext('2d');
+  const W = 1584, H = 396;
+
+  drawBg(ctx, W, H, '#07101a', '#0e141b', 160);
+
+  // Data network dots
+  Math.seedrandom ? Math.seedrandom(42) : null;
+  drawDataNodes(ctx, W, H, 60);
+
+  // Diagonal slash motif (logo-inspired)
+  ctx.save();
+  for(let i = 0; i < 14; i++) {
+    ctx.strokeStyle = hexToRgba(TEAL, 0.03 + i*0.003);
+    ctx.lineWidth = 1.2;
+    ctx.beginPath();
+    ctx.moveTo(-H*0.6 + i*130, 0);
+    ctx.lineTo(-H*0.6 + i*130 + H*0.8, H);
+    ctx.stroke();
+  }
+  ctx.restore();
+
+  // Center gradient overlay
+  const cOverlay = ctx.createLinearGradient(0,0,W,0);
+  cOverlay.addColorStop(0, 'rgba(7,16,26,0.97)');
+  cOverlay.addColorStop(0.35, 'rgba(7,16,26,0.93)');
+  cOverlay.addColorStop(0.65, 'rgba(7,16,26,0.93)');
+  cOverlay.addColorStop(1, 'rgba(7,16,26,0.97)');
+  ctx.fillStyle = cOverlay;
+  ctx.fillRect(0,0,W,H);
+
+  // Teal top bar
+  const topBar = ctx.createLinearGradient(0,0,W,0);
+  topBar.addColorStop(0, hexToRgba(TEAL, 0));
+  topBar.addColorStop(0.3, hexToRgba(TEAL, 0.9));
+  topBar.addColorStop(0.7, hexToRgba(TEAL, 0.9));
+  topBar.addColorStop(1, hexToRgba(TEAL, 0));
+  ctx.fillStyle = topBar;
+  ctx.fillRect(0,0,W,3);
+
+  // Green separator (matching logo)
+  const greenBar = ctx.createLinearGradient(0,0,W,0);
+  greenBar.addColorStop(0, hexToRgba(GREEN, 0));
+  greenBar.addColorStop(0.2, hexToRgba(GREEN, 0.7));
+  greenBar.addColorStop(0.8, hexToRgba(GREEN, 0.7));
+  greenBar.addColorStop(1, hexToRgba(GREEN, 0));
+  ctx.fillStyle = greenBar;
+  ctx.fillRect(0, H-3, W, 3);
+
+  // Centered layout
+  // Logo centered
+  const logoW = 600;
+  const logoH = logoW * (212/740);
+  const lx = (W - logoW) / 2;
+  const ly = (H - logoH) / 2 - 24;
+  ctx.drawImage(img, lx, ly, logoW, logoH);
+
+  // Tagline below logo
+  ctx.textAlign = 'center';
+  ctx.fillStyle = hexToRgba(MUTED, 0.5);
+  ctx.font = '400 13px Inter, sans-serif';
+  ctx.fillText('High-Fidelity Data Intelligence  ·  Ethiopia & Washington DC  ·  dapsanalytics.com', W/2, ly + logoH + 28);
+
+  // Product pills
+  const prods = ['Onekof PM','UDC-WQIS','Hakimet','Olink Fleet'];
+  const pillW = 120, pillH = 22, gap = 14;
+  const totalW = prods.length * pillW + (prods.length-1)*gap;
+  let px = (W - totalW) / 2;
+  prods.forEach(p => {
+    ctx.fillStyle = hexToRgba(TEAL, 0.1);
+    ctx.beginPath();
+    ctx.roundRect(px, ly + logoH + 48, pillW, pillH, 4);
+    ctx.fill();
+    ctx.strokeStyle = hexToRgba(TEAL, 0.2);
+    ctx.lineWidth = 0.5;
+    ctx.stroke();
+    ctx.fillStyle = hexToRgba(TEAL, 0.65);
+    ctx.font = '500 10px Inter, sans-serif';
+    ctx.textAlign = 'center';
+    ctx.fillText(p, px + pillW/2, ly + logoH + 63);
+    px += pillW + gap;
+  });
+}
+
+// ── YOUTUBE COVER ─────────────────────────────
+async function drawYTCover(img) {
+  const c = document.getElementById('yt_cover');
+  const ctx = c.getContext('2d');
+  const W = 2560, H = 1440;
+
+  drawBg(ctx, W, H, '#060d14', '#0c1822', 135);
+
+  // Large hex grid
+  drawHexGrid(ctx, W, H, 90, hexToRgba(TEAL, 0.04));
+
+  // Diagonal accents
+  ctx.save();
+  for(let i = 0; i < 18; i++) {
+    ctx.strokeStyle = hexToRgba(TEAL, 0.02 + i*0.003);
+    ctx.lineWidth = 2;
+    ctx.beginPath();
+    ctx.moveTo(-H + i*200, 0);
+    ctx.lineTo(-H + i*200 + H, H);
+    ctx.stroke();
+  }
+  ctx.restore();
+
+  // Teal glow center
+  const centerGlow = ctx.createRadialGradient(W/2, H/2, 0, W/2, H/2, 700);
+  centerGlow.addColorStop(0, hexToRgba(TEAL, 0.1));
+  centerGlow.addColorStop(1, hexToRgba(TEAL, 0));
+  ctx.fillStyle = centerGlow;
+  ctx.fillRect(0,0,W,H);
+
+  // Dark overlay to protect safe zone visibility
+  const safeOverlay = ctx.createRadialGradient(W/2, H/2, 200, W/2, H/2, 900);
+  safeOverlay.addColorStop(0, 'rgba(8,14,22,0.85)');
+  safeOverlay.addColorStop(1, 'rgba(8,14,22,0)');
+  ctx.fillStyle = safeOverlay;
+  ctx.fillRect(0,0,W,H);
+
+  // Safe zone indicator (just content inside 1546×423 centered)
+  const safeW = 1546, safeH = 423;
+  const sx = (W - safeW)/2, sy = (H - safeH)/2;
+
+  // Logo in safe zone center
+  const logoW = 900;
+  const logoH = logoW * (212/740);
+  ctx.drawImage(img, W/2 - logoW/2, sy + (safeH - logoH)/2 - 30, logoW, logoH);
+
+  // Tagline
+  ctx.textAlign = 'center';
+  ctx.fillStyle = hexToRgba(MUTED, 0.55);
+  ctx.font = '400 22px Inter, sans-serif';
+  ctx.fillText('High-Fidelity Data Intelligence for Africa & Global Enterprises', W/2, sy + (safeH - logoH)/2 + logoH + 22);
+
+  // Platform handle
+  ctx.fillStyle = hexToRgba(TEAL, 0.6);
+  ctx.font = '600 18px Inter, sans-serif';
+  ctx.fillText('@DapsAnalytics  ·  dapsanalytics.com', W/2, sy + (safeH - logoH)/2 + logoH + 56);
+
+  // Teal bar top + bottom
+  const topBar = ctx.createLinearGradient(0,0,W,0);
+  topBar.addColorStop(0, hexToRgba(TEAL, 0));
+  topBar.addColorStop(0.3, hexToRgba(TEAL, 0.8));
+  topBar.addColorStop(0.7, hexToRgba(TEAL, 0.8));
+  topBar.addColorStop(1, hexToRgba(TEAL, 0));
+  ctx.fillStyle = topBar;
+  ctx.fillRect(0,0,W,4);
+  ctx.fillRect(0,H-4,W,4);
+}
+
+// ── TIKTOK BACKGROUND ─────────────────────────
+async function drawTTCover(img) {
+  const c = document.getElementById('tt_cover');
+  const ctx = c.getContext('2d');
+  const W = 1080, H = 1920;
+
+  drawBg(ctx, W, H, '#060d14', '#0e141b', 170);
+  drawHexGrid(ctx, W, H, 55, hexToRgba(TEAL, 0.06));
+
+  // Diagonal slash motif (strong, like a data waterfall)
+  ctx.save();
+  for(let i = 0; i < 12; i++) {
+    ctx.strokeStyle = hexToRgba(TEAL, 0.04 + i*0.005);
+    ctx.lineWidth = 1.5;
+    ctx.beginPath();
+    ctx.moveTo(-H*0.3 + i*110, 0);
+    ctx.lineTo(-H*0.3 + i*110 + H*0.6, H);
+    ctx.stroke();
+  }
+  ctx.restore();
+
+  // Amber glow bottom
+  const ambGlow = ctx.createRadialGradient(W/2, H, 0, W/2, H, 600);
+  ambGlow.addColorStop(0, hexToRgba(AMBER, 0.12));
+  ambGlow.addColorStop(1, hexToRgba(AMBER, 0));
+  ctx.fillStyle = ambGlow;
+  ctx.fillRect(0,0,W,H);
+
+  // Teal glow top
+  const tealGlow = ctx.createRadialGradient(W/2, 0, 0, W/2, 0, 500);
+  tealGlow.addColorStop(0, hexToRgba(TEAL, 0.12));
+  tealGlow.addColorStop(1, hexToRgba(TEAL, 0));
+  ctx.fillStyle = tealGlow;
+  ctx.fillRect(0,0,W,H);
+
+  // Logo centered upper area
+  const logoW = 680;
+  const logoH = logoW * (212/740);
+  ctx.drawImage(img, (W-logoW)/2, H*0.3 - logoH/2, logoW, logoH);
+
+  // Tagline
+  ctx.textAlign = 'center';
+  ctx.fillStyle = WHITE;
+  ctx.font = '300 28px Inter, sans-serif';
+  ctx.fillText('Data Intelligence', W/2, H*0.3 + logoH/2 + 48);
+  ctx.font = '700 28px Inter, sans-serif';
+  ctx.fillText('for Africa', W/2, H*0.3 + logoH/2 + 88);
+
+  // Handle
+  ctx.fillStyle = hexToRgba(TEAL, 0.7);
+  ctx.font = '600 18px Inter, sans-serif';
+  ctx.fillText('@dapsanalytics', W/2, H*0.3 + logoH/2 + 132);
+
+  // Separator line
+  ctx.strokeStyle = hexToRgba(TEAL, 0.2);
+  ctx.lineWidth = 1;
+  ctx.beginPath();
+  ctx.moveTo(W*0.2, H*0.3 + logoH/2 + 156);
+  ctx.lineTo(W*0.8, H*0.3 + logoH/2 + 156);
+  ctx.stroke();
+
+  // Products vertical list
+  const prods = [
+    {icon:'📋', name:'Onekof PM', desc:'Ethiopia Enterprise PM'},
+    {icon:'💧', name:'UDC-WQIS', desc:'DC Water Intelligence'},
+    {icon:'🏥', name:'Hakimet', desc:'East Africa Telehealth'},
+    {icon:'🚛', name:'Olink Fleet', desc:'Ethiopia Fleet Management'}
+  ];
+  prods.forEach((p, i) => {
+    const py = H*0.3 + logoH/2 + 200 + i * 90;
+    ctx.fillStyle = hexToRgba(TEAL, 0.08);
+    ctx.beginPath();
+    ctx.roundRect((W - 500)/2, py, 500, 66, 8);
+    ctx.fill();
+    ctx.strokeStyle = hexToRgba(TEAL, 0.15);
+    ctx.lineWidth = 0.5;
+    ctx.stroke();
+    ctx.textAlign = 'left';
+    ctx.font = '600 18px Inter, sans-serif';
+    ctx.fillStyle = WHITE;
+    ctx.fillText(`${p.icon}  ${p.name}`, (W - 500)/2 + 24, py + 26);
+    ctx.font = '400 13px Inter, sans-serif';
+    ctx.fillStyle = hexToRgba(MUTED, 0.6);
+    ctx.fillText(p.desc, (W - 500)/2 + 54, py + 48);
+  });
+
+  // Website footer
+  ctx.textAlign = 'center';
+  ctx.fillStyle = hexToRgba(MUTED, 0.35);
+  ctx.font = '400 14px Inter, sans-serif';
+  ctx.fillText('dapsanalytics.com', W/2, H - 60);
+}
+
+// ── INSTAGRAM POST ────────────────────────────
+async function drawIGPost(img) {
+  const c = document.getElementById('ig_post');
+  const ctx = c.getContext('2d');
+  const W = 1080, H = 1080;
+
+  // Bold cinematic background
+  drawBg(ctx, W, H, '#060c12', '#0e141b', 145);
+  drawHexGrid(ctx, W, H, 52, hexToRgba(TEAL, 0.06));
+
+  // Data nodes
+  drawDataNodes(ctx, W, H, 40);
+
+  // Diagonal accent lines
+  ctx.save();
+  for(let i = 0; i < 10; i++) {
+    ctx.strokeStyle = hexToRgba(TEAL, 0.04 + i*0.005);
+    ctx.lineWidth = 1.5;
+    ctx.beginPath();
+    ctx.moveTo(-H*0.4 + i*120, 0);
+    ctx.lineTo(-H*0.4 + i*120 + H*0.7, H);
+    ctx.stroke();
+  }
+  ctx.restore();
+
+  // Radial glow center
+  const glow = ctx.createRadialGradient(W/2, H/2, 0, W/2, H/2, 500);
+  glow.addColorStop(0, hexToRgba(TEAL, 0.1));
+  glow.addColorStop(1, hexToRgba(TEAL, 0));
+  ctx.fillStyle = glow;
+  ctx.fillRect(0,0,W,H);
+
+  // Top accent bar
+  const tBar = ctx.createLinearGradient(0,0,W,0);
+  tBar.addColorStop(0, hexToRgba(TEAL, 0));
+  tBar.addColorStop(0.4, hexToRgba(TEAL, 0.9));
+  tBar.addColorStop(0.6, hexToRgba(TEAL, 0.9));
+  tBar.addColorStop(1, hexToRgba(TEAL, 0));
+  ctx.fillStyle = tBar;
+  ctx.fillRect(0, 0, W, 3);
+
+  // Bottom amber bar
+  const bBar = ctx.createLinearGradient(0,0,W,0);
+  bBar.addColorStop(0, hexToRgba(AMBER, 0));
+  bBar.addColorStop(0.4, hexToRgba(AMBER, 0.8));
+  bBar.addColorStop(0.6, hexToRgba(AMBER, 0.8));
+  bBar.addColorStop(1, hexToRgba(AMBER, 0));
+  ctx.fillStyle = bBar;
+  ctx.fillRect(0, H-3, W, 3);
+
+  // Top label
+  ctx.textAlign = 'center';
+  ctx.fillStyle = hexToRgba(TEAL, 0.6);
+  ctx.font = '700 12px Inter, sans-serif';
+  ctx.fillText('INTRODUCING', W/2, 68);
+
+  // Logo centered
+  const logoW = 720;
+  const logoH = logoW * (212/740);
+  ctx.drawImage(img, (W-logoW)/2, H/2 - logoH/2 - 40, logoW, logoH);
+
+  // Separator line (green, matching logo)
+  const sepW = 400;
+  ctx.fillStyle = GREEN;
+  ctx.fillRect((W-sepW)/2, H/2 - logoH/2 + logoH + 4, sepW, 2);
+
+  // Tagline
+  ctx.fillStyle = WHITE;
+  ctx.font = '300 22px Inter, sans-serif';
+  ctx.fillText('High-Fidelity Data Intelligence', W/2, H/2 - logoH/2 + logoH + 48);
+  ctx.font = '600 22px Inter, sans-serif';
+  ctx.fillText('for Africa & Beyond', W/2, H/2 - logoH/2 + logoH + 82);
+
+  // Stats row
+  const stats = [['4','Live Products'],['2','Countries'],['7','Co-Founders']];
+  const statW = 200;
+  const stStart = (W - stats.length * statW) / 2;
+  stats.forEach((s, i) => {
+    const sx = stStart + i * statW + statW/2;
+    const sy = H - 220;
+    ctx.fillStyle = hexToRgba(TEAL, 0.12);
+    ctx.beginPath();
+    ctx.roundRect(sx - 70, sy, 140, 80, 8);
+    ctx.fill();
+    ctx.fillStyle = TEAL;
+    ctx.font = '700 32px Inter, sans-serif';
+    ctx.textAlign = 'center';
+    ctx.fillText(s[0], sx, sy + 42);
+    ctx.fillStyle = hexToRgba(MUTED, 0.6);
+    ctx.font = '400 12px Inter, sans-serif';
+    ctx.fillText(s[1], sx, sy + 64);
+  });
+
+  // Handle + website
+  ctx.fillStyle = hexToRgba(MUTED, 0.4);
+  ctx.font = '400 13px Inter, sans-serif';
+  ctx.textAlign = 'center';
+  ctx.fillText('@dapsanalytics  ·  dapsanalytics.com', W/2, H - 44);
+}
+
+// ─────────────────────────────────────────────
+// INIT — Load SVG then draw all canvases
+// ─────────────────────────────────────────────
+(async () => {
+  try {
+    const iconImg = await loadSVG(SVG_ICON_TEAL);
+    await Promise.all([
+      drawPFP(iconImg),
+      drawXCover(iconImg),
+      drawFBCover(iconImg),
+      drawLICover(iconImg),
+      drawYTCover(iconImg),
+      drawTTCover(iconImg),
+      drawIGPost(iconImg)
+    ]);
+    console.log('All assets rendered successfully.');
+  } catch(e) {
+    console.error('Render error:', e);
+  }
+})();
+</script>
+</body>
+</html>

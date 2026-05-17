@@ -158,7 +158,8 @@
       <span class="w-8 h-px bg-secondary"></span>SaaS Products We've Built
     </h2>
     <p class="font-body-md text-body-md text-on-surface-variant max-w-2xl mb-10 reveal">Beyond consulting, we deploy production-grade software. These are the platforms running live for customers today.</p>
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+    <div style="position:relative;">
+    <div id="svc-products-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
 
       <a href="onekof-pm.html" class="group block bg-secondary-surface border border-white/10 rounded-lg p-6 hover:border-primary/40 transition-colors duration-400 reveal">
         <div class="w-10 h-10 rounded-lg flex items-center justify-center mb-5" style="background:rgba(73,253,227,0.1);border:1px solid rgba(73,253,227,0.2);">
@@ -201,6 +202,17 @@
       </a>
 
     </div>
+
+    <!-- Stakeholder overlay -->
+    <div id="svc-products-lock" style="display:none;position:absolute;inset:0;z-index:10;backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);background:rgba(14,20,27,0.55);border-radius:12px;align-items:center;justify-content:center;flex-direction:column;text-align:center;padding:40px;">
+      <div style="font-size:36px;margin-bottom:16px;opacity:0.6;">&#128274;</div>
+      <div style="font-size:11px;font-weight:700;letter-spacing:0.16em;text-transform:uppercase;color:#49fde3;margin-bottom:8px;">Stakeholder Access Only</div>
+      <p style="font-size:14px;color:#849490;margin-bottom:24px;max-width:320px;line-height:1.6;">Detailed product information is available to authorized stakeholders and partners.</p>
+      <a href="products.html" style="display:inline-flex;align-items:center;gap:8px;background:#49fde3;color:#003730;font-size:11px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;padding:12px 28px;text-decoration:none;box-shadow:0 0 24px rgba(73,253,227,0.2);transition:opacity 0.2s;" onmouseover="this.style.opacity='0.88'" onmouseout="this.style.opacity='1'">
+        Enter Access Code <span style="font-size:14px;">&#8594;</span>
+      </a>
+    </div>
+    </div><!-- end position:relative wrapper -->
   </section>
 
   <!-- ML / AI Horizon -->
@@ -299,7 +311,7 @@
     <div class="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
       <div class="md:col-span-2">
         <a href="index.html" class="block mb-4"><img src="assets/images/daps-logo-full.svg" alt="DAPS Analytics" style="height:60px;width:auto;"/></a>
-        <p class="text-sm text-zinc-500 max-w-sm mt-2">High-fidelity data solutions engineered for clarity, speed, and uncompromising accuracy.</p>
+        <p class="text-sm text-zinc-500 max-w-sm mt-2">DAPS Analytics is a data intelligence firm headquartered in Bethesda, MD. We engineer analytics infrastructure, AI-driven platforms, and data governance systems for governments, enterprises, and institutions across Africa and North America — turning complex data into clear, actionable decisions.</p>
       </div>
       <div>
         <h4 class="font-label-caps text-label-caps text-white mb-6">Platform</h4>
@@ -323,7 +335,7 @@
         <div style="display:flex;gap:14px;align-items:center;">
 
           <!-- LinkedIn -->
-          <a href="#" target="_blank" rel="noopener" title="LinkedIn — DAPS Analytics"
+          <a href="https://www.linkedin.com/company/116015383/" target="_blank" rel="noopener" title="LinkedIn — DAPS Analytics"
              style="color:#849490;transition:color 0.3s,transform 0.3s;display:inline-flex;"
              onmouseover="this.style.color='#0A66C2';this.style.transform='translateY(-2px)'"
              onmouseout="this.style.color='#849490';this.style.transform='translateY(0)'">
@@ -334,7 +346,7 @@
           </a>
 
           <!-- Facebook -->
-          <a href="#" target="_blank" rel="noopener" title="Facebook — DAPS Analytics"
+          <a href="https://www.facebook.com/profile.php?id=61589847723974" target="_blank" rel="noopener" title="Facebook — DAPS Analytics"
              style="color:#849490;transition:color 0.3s,transform 0.3s;display:inline-flex;"
              onmouseover="this.style.color='#1877F2';this.style.transform='translateY(-2px)'"
              onmouseout="this.style.color='#849490';this.style.transform='translateY(0)'">
@@ -344,7 +356,7 @@
           </a>
 
           <!-- X (Twitter) -->
-          <a href="#" target="_blank" rel="noopener" title="X — DAPS Analytics"
+          <a href="https://x.com/DapsAnalytics" target="_blank" rel="noopener" title="X — DAPS Analytics"
              style="color:#849490;transition:color 0.3s,transform 0.3s;display:inline-flex;"
              onmouseover="this.style.color='#ffffff';this.style.transform='translateY(-2px)'"
              onmouseout="this.style.color='#849490';this.style.transform='translateY(0)'">
@@ -354,7 +366,7 @@
           </a>
 
           <!-- Instagram -->
-          <a href="#" target="_blank" rel="noopener" title="Instagram — DAPS Analytics"
+          <a href="https://www.instagram.com/dapsanalytics/" target="_blank" rel="noopener" title="Instagram — DAPS Analytics"
              style="color:#849490;transition:color 0.3s,transform 0.3s;display:inline-flex;"
              onmouseover="this.style.color='#E1306C';this.style.transform='translateY(-2px)'"
              onmouseout="this.style.color='#849490';this.style.transform='translateY(0)'">
@@ -366,12 +378,23 @@
           </a>
 
           <!-- TikTok -->
-          <a href="#" target="_blank" rel="noopener" title="TikTok — DAPS Analytics"
+          <a href="https://www.tiktok.com/@dapsanalytics" target="_blank" rel="noopener" title="TikTok — DAPS Analytics"
              style="color:#849490;transition:color 0.3s,transform 0.3s;display:inline-flex;"
              onmouseover="this.style.color='#49fde3';this.style.transform='translateY(-2px)'"
              onmouseout="this.style.color='#849490';this.style.transform='translateY(0)'">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
               <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.34 6.34 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V8.75a8.16 8.16 0 0 0 4.77 1.52V6.79a4.85 4.85 0 0 1-1-.1z"/>
+            </svg>
+          </a>
+
+          <!-- YouTube -->
+          <a href="https://www.youtube.com/@DapsAnalytics" target="_blank" rel="noopener" title="YouTube — DAPS Analytics"
+             style="color:#849490;transition:color 0.3s,transform 0.3s;display:inline-flex;"
+             onmouseover="this.style.color='#FF0000';this.style.transform='translateY(-2px)'"
+             onmouseout="this.style.color='#849490';this.style.transform='translateY(0)'">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M22.54 6.42a2.78 2.78 0 0 0-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46A2.78 2.78 0 0 0 1.46 6.42 29 29 0 0 0 1 12a29 29 0 0 0 .46 5.58 2.78 2.78 0 0 0 1.95 1.96C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 0 0 1.96-1.96A29 29 0 0 0 23 12a29 29 0 0 0-.46-5.58z"/>
+              <polygon fill="#050709" points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02"/>
             </svg>
           </a>
 
@@ -385,6 +408,14 @@
   </div>
 </footer>
 
+<script>
+(function(){
+  var lock = document.getElementById('svc-products-lock');
+  if(lock && sessionStorage.getItem('daps_access') !== '1'){
+    lock.style.display = 'flex';
+  }
+})();
+</script>
 <script src="assets/navbar.js"></script>
 <script src="assets/daps.js"></script>
 </body>

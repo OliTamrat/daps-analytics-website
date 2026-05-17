@@ -1,0 +1,2013 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>DAPS Analytics — Social Media Content Pack</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+<style>
+  :root {
+    --teal: #49fde3;
+    --amber: #efbf71;
+    --dark: #0e141b;
+    --surface: #151e28;
+    --surface2: #1c2836;
+    --text: #dee2ed;
+    --muted: #bacac5;
+    --border: #2a3a4a;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: #f5f7fa;
+    color: #1a1a2e;
+    font-size: 14px;
+    line-height: 1.6;
+  }
+
+  /* COVER PAGE */
+  .cover {
+    background: var(--dark);
+    color: var(--text);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 60px 40px;
+    page-break-after: always;
+  }
+  .cover-logo {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--teal);
+    margin-bottom: 32px;
+  }
+  .cover h1 {
+    font-size: 42px;
+    font-weight: 300;
+    letter-spacing: -0.02em;
+    color: #fff;
+    margin-bottom: 16px;
+  }
+  .cover .subtitle {
+    font-size: 16px;
+    color: var(--muted);
+    margin-bottom: 48px;
+    max-width: 520px;
+  }
+  .cover-meta {
+    display: flex;
+    gap: 40px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  .cover-meta-item {
+    text-align: center;
+  }
+  .cover-meta-item .val {
+    font-size: 28px;
+    font-weight: 600;
+    color: var(--teal);
+  }
+  .cover-meta-item .lbl {
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-top: 4px;
+  }
+  .cover-divider {
+    width: 60px;
+    height: 1px;
+    background: var(--teal);
+    margin: 48px auto;
+    opacity: 0.4;
+  }
+  .cover-tagline {
+    font-size: 13px;
+    color: var(--muted);
+    letter-spacing: 0.08em;
+  }
+
+  /* NAVIGATION / TOC */
+  .toc {
+    background: white;
+    padding: 48px 56px;
+    page-break-after: always;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+  .toc h2 { font-size: 22px; font-weight: 600; margin-bottom: 24px; color: #0e141b; }
+  .toc-section { margin-bottom: 8px; }
+  .toc-section a {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 14px;
+    border-radius: 6px;
+    text-decoration: none;
+    color: #1a1a2e;
+    transition: background 0.2s;
+  }
+  .toc-section a:hover { background: #f0f4ff; }
+  .toc-platform {
+    display: inline-block;
+    width: 90px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 3px 8px;
+    border-radius: 4px;
+    text-align: center;
+    flex-shrink: 0;
+  }
+  .tag-li { background: #0077b5; color: white; }
+  .tag-x { background: #000; color: white; }
+  .tag-ig { background: linear-gradient(135deg,#f09433,#e6683c,#dc2743,#cc2366,#bc1888); color: white; }
+  .tag-fb { background: #1877f2; color: white; }
+  .tag-tt { background: #010101; color: white; }
+  .tag-cal { background: #49fde3; color: #0e141b; }
+  .toc-title { font-size: 14px; font-weight: 500; }
+  .toc-desc { font-size: 12px; color: #888; margin-left: auto; }
+
+  /* SECTION HEADERS */
+  .platform-header {
+    background: var(--dark);
+    color: white;
+    padding: 48px 56px 40px;
+    page-break-before: always;
+  }
+  .platform-header:first-of-type { page-break-before: avoid; }
+  .ph-platform {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+  .ph-title {
+    font-size: 32px;
+    font-weight: 300;
+    letter-spacing: -0.01em;
+    color: #fff;
+  }
+  .ph-meta {
+    margin-top: 16px;
+    font-size: 13px;
+    color: var(--muted);
+    display: flex;
+    gap: 24px;
+    flex-wrap: wrap;
+  }
+  .ph-meta span { display: flex; align-items: center; gap: 6px; }
+
+  /* BIO BLOCK */
+  .bio-block {
+    background: white;
+    margin: 0;
+    padding: 40px 56px;
+    border-bottom: 1px solid #eee;
+  }
+  .bio-block h3 {
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: #0077b5;
+    margin-bottom: 20px;
+  }
+  .bio-field { margin-bottom: 16px; }
+  .bio-field label {
+    display: block;
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: #888;
+    margin-bottom: 4px;
+  }
+  .bio-field .value {
+    font-size: 14px;
+    color: #1a1a2e;
+    background: #f8f9fa;
+    border: 1px solid #e5e7eb;
+    border-radius: 6px;
+    padding: 10px 14px;
+    white-space: pre-wrap;
+    line-height: 1.6;
+  }
+
+  /* POST CARD */
+  .post-card {
+    background: white;
+    margin: 0;
+    padding: 40px 56px;
+    border-bottom: 1px solid #eee;
+    page-break-inside: avoid;
+  }
+  .post-card:last-child { border-bottom: none; }
+
+  .post-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    gap: 16px;
+  }
+  .post-num {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: #888;
+  }
+  .post-title {
+    font-size: 18px;
+    font-weight: 600;
+    color: #0e141b;
+    margin-top: 4px;
+  }
+  .post-badge {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 4px 10px;
+    border-radius: 20px;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+  .badge-announcement { background: #dbeafe; color: #1d4ed8; }
+  .badge-thought { background: #ede9fe; color: #7c3aed; }
+  .badge-partnership { background: #d1fae5; color: #065f46; }
+  .badge-culture { background: #fef3c7; color: #92400e; }
+  .badge-product { background: #fee2e2; color: #991b1b; }
+  .badge-thread { background: #f0fdf4; color: #166534; }
+  .badge-educational { background: #e0f2fe; color: #0369a1; }
+  .badge-story { background: #fdf4ff; color: #7e22ce; }
+  .badge-carousel { background: #fff7ed; color: #c2410c; }
+  .badge-reel { background: #fef9c3; color: #713f12; }
+  .badge-video { background: #f0fdf4; color: #15803d; }
+
+  .post-meta {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    margin-bottom: 24px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #f0f0f0;
+  }
+  .post-meta-item {
+    font-size: 12px;
+    color: #666;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+  .post-meta-item strong { color: #333; }
+
+  .post-copy-label {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: #888;
+    margin-bottom: 12px;
+  }
+  .post-copy {
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-left: 3px solid var(--teal, #49fde3);
+    border-radius: 0 8px 8px 0;
+    padding: 20px 22px;
+    white-space: pre-wrap;
+    font-size: 14px;
+    line-height: 1.75;
+    color: #1e293b;
+    font-family: 'Inter', sans-serif;
+  }
+
+  .hashtags {
+    margin-top: 16px;
+    padding: 12px 16px;
+    background: #f1f5f9;
+    border-radius: 6px;
+    font-size: 12px;
+    color: #4f6577;
+    font-weight: 500;
+    line-height: 1.8;
+  }
+
+  .visual-note {
+    margin-top: 16px;
+    padding: 12px 16px;
+    background: #fffbeb;
+    border: 1px solid #fcd34d;
+    border-radius: 6px;
+    font-size: 12px;
+    color: #92400e;
+  }
+  .visual-note strong { display: block; margin-bottom: 4px; color: #78350f; }
+
+  .carousel-slides {
+    margin-top: 20px;
+  }
+  .carousel-slides h4 {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: #888;
+    margin-bottom: 12px;
+  }
+  .slide {
+    background: var(--dark);
+    color: var(--text);
+    padding: 16px 20px;
+    border-radius: 8px;
+    margin-bottom: 8px;
+    font-size: 13px;
+    line-height: 1.6;
+  }
+  .slide-num {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--teal);
+    margin-bottom: 6px;
+  }
+
+  .script-block {
+    margin-top: 20px;
+  }
+  .script-block h4 {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: #888;
+    margin-bottom: 12px;
+  }
+  .script-line {
+    display: flex;
+    gap: 14px;
+    margin-bottom: 10px;
+    font-size: 13px;
+    line-height: 1.6;
+  }
+  .script-time {
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--teal, #49fde3);
+    background: #0e141b;
+    color: #49fde3;
+    padding: 2px 8px;
+    border-radius: 4px;
+    white-space: nowrap;
+    align-self: flex-start;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  /* CALENDAR */
+  .calendar-page {
+    background: white;
+    padding: 48px 56px;
+    page-break-before: always;
+  }
+  .cal-header {
+    margin-bottom: 32px;
+  }
+  .cal-header h2 { font-size: 26px; font-weight: 600; color: #0e141b; }
+  .cal-header p { font-size: 14px; color: #666; margin-top: 8px; }
+
+  .cal-week {
+    margin-bottom: 32px;
+  }
+  .cal-week-title {
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: #0e141b;
+    background: #f1f5f9;
+    padding: 8px 16px;
+    border-radius: 6px;
+    margin-bottom: 12px;
+  }
+  .cal-day {
+    margin-bottom: 12px;
+    padding: 14px 16px;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+  }
+  .cal-day-title {
+    font-size: 13px;
+    font-weight: 700;
+    color: #0e141b;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .cal-day-rest {
+    font-size: 13px;
+    color: #888;
+    font-style: italic;
+  }
+  .cal-entry {
+    display: flex;
+    gap: 10px;
+    align-items: baseline;
+    margin-bottom: 6px;
+    font-size: 13px;
+  }
+  .cal-entry:last-child { margin-bottom: 0; }
+  .cal-tag {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 2px 7px;
+    border-radius: 3px;
+    flex-shrink: 0;
+  }
+  .ct-li { background: #0077b5; color: white; }
+  .ct-x { background: #000; color: white; }
+  .ct-ig { background: #e1306c; color: white; }
+  .ct-fb { background: #1877f2; color: white; }
+  .ct-tt { background: #010101; color: white; }
+  .cal-entry-text { color: #374151; }
+
+  .time-table {
+    margin-top: 24px;
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+  }
+  .time-table th {
+    background: #f1f5f9;
+    padding: 10px 14px;
+    text-align: left;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #555;
+    border-bottom: 2px solid #e5e7eb;
+  }
+  .time-table td {
+    padding: 10px 14px;
+    border-bottom: 1px solid #f0f0f0;
+    color: #374151;
+    vertical-align: top;
+  }
+  .time-table tr:last-child td { border-bottom: none; }
+
+  .hashtag-section {
+    margin-top: 32px;
+  }
+  .hashtag-section h3 {
+    font-size: 14px;
+    font-weight: 700;
+    color: #0e141b;
+    margin-bottom: 12px;
+  }
+  .hashtag-group {
+    margin-bottom: 16px;
+    padding: 14px 16px;
+    background: #f8fafc;
+    border-radius: 8px;
+    border: 1px solid #e5e7eb;
+  }
+  .hashtag-group label {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: #888;
+    display: block;
+    margin-bottom: 8px;
+  }
+  .hashtag-group p {
+    font-size: 12px;
+    color: #4f6577;
+    line-height: 1.8;
+    font-weight: 500;
+  }
+
+  /* PRINT */
+  @media print {
+    body { background: white; }
+    .cover { min-height: auto; padding: 80px 56px; }
+    .platform-header { page-break-before: always; }
+    .post-card { page-break-inside: avoid; }
+    .calendar-page { page-break-before: always; }
+    a { color: inherit; text-decoration: none; }
+  }
+
+  @page {
+    margin: 0;
+    size: A4;
+  }
+
+  /* PRINT BUTTON */
+  .print-bar {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    background: #0e141b;
+    color: white;
+    padding: 12px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    z-index: 1000;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.3);
+  }
+  .print-bar span { font-size: 13px; color: #bacac5; }
+  .print-btn {
+    background: #49fde3;
+    color: #0e141b;
+    border: none;
+    padding: 8px 20px;
+    border-radius: 6px;
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+    letter-spacing: 0.05em;
+    font-family: 'Inter', sans-serif;
+  }
+  .print-btn:hover { background: #2de8ce; }
+  body { padding-top: 48px; }
+  @media print { .print-bar { display: none; } body { padding-top: 0; } }
+
+  .section-wrapper { max-width: 900px; margin: 0 auto; }
+</style>
+</head>
+<body>
+
+<!-- PRINT BAR -->
+<div class="print-bar">
+  <span>DAPS Analytics &mdash; Social Media Content Pack &mdash; May 2026</span>
+  <button class="print-btn" onclick="window.print()">Save as PDF</button>
+</div>
+
+<!-- COVER PAGE -->
+<div class="cover">
+  <div class="cover-logo">DAPS Analytics</div>
+  <h1>Social Media<br/>Content Pack</h1>
+  <p class="subtitle">Complete launch content for LinkedIn, X/Twitter, Instagram, Facebook, and TikTok &mdash; with a 30-day posting calendar.</p>
+  <div class="cover-meta">
+    <div class="cover-meta-item">
+      <div class="val">5</div>
+      <div class="lbl">Platforms</div>
+    </div>
+    <div class="cover-meta-item">
+      <div class="val">27</div>
+      <div class="lbl">Posts &amp; Scripts</div>
+    </div>
+    <div class="cover-meta-item">
+      <div class="val">30</div>
+      <div class="lbl">Day Calendar</div>
+    </div>
+    <div class="cover-meta-item">
+      <div class="val">5</div>
+      <div class="lbl">Bios Ready</div>
+    </div>
+  </div>
+  <div class="cover-divider"></div>
+  <div class="cover-tagline">High-Fidelity Data Intelligence &bull; Ethiopia &amp; Washington DC &bull; dapsanalytics.com</div>
+</div>
+
+<!-- ═══════════════════════════════════════════ -->
+<!--  LINKEDIN                                   -->
+<!-- ═══════════════════════════════════════════ -->
+<div class="platform-header">
+  <div class="section-wrapper">
+    <div class="ph-platform" style="color:#49fde3;">LinkedIn</div>
+    <div class="ph-title">LinkedIn Company Page</div>
+    <div class="ph-meta">
+      <span>Handle: <strong>DAPS Analytics</strong></span>
+      <span>URL: <strong>linkedin.com/company/daps-analytics</strong></span>
+      <span>Posts: <strong>5</strong></span>
+      <span>Best times: <strong>Tue&ndash;Thu, 8&ndash;10am EST</strong></span>
+    </div>
+  </div>
+</div>
+
+<div class="section-wrapper">
+<div class="bio-block">
+  <h3>LinkedIn Bio / About Section</h3>
+  <div class="bio-field"><label>Page Name</label><div class="value">DAPS Analytics</div></div>
+  <div class="bio-field"><label>Tagline</label><div class="value">High-Fidelity Data Intelligence for Africa &amp; Global Enterprises</div></div>
+  <div class="bio-field"><label>About Section (2,000 character limit)</label><div class="value">DAPS Analytics (Data Analytics for Practical Solutions) engineers precision data infrastructure, predictive models, and AI-powered platforms for organizations operating in Africa's most complex environments — and beyond.
+
+We are not consultants. We build and deploy production-grade software and analytics systems used by real customers, right now.
+
+— LIVE PRODUCTS —
+
+📋 Onekof PM
+Ethiopia's #1 enterprise project management platform. Native 13-month Ethiopian calendar, Amharic, Afaan Oromoo, Tigrinya, and ETB budget tracking. Built from the ground up for Ethiopian enterprises — not adapted from Western tools.
+→ onekof.com
+
+💧 UDC-WQIS
+Unified Data Collection – Water Quality Information System. Real-time monitoring across 12 USGS Anacostia watershed stations in Washington DC, built in partnership with the University of the District of Columbia.
+
+🏥 Hakimet
+Enterprise telehealth infrastructure for East African healthcare systems. Low-bandwidth optimized, multilingual, EMR-integrated, and HIPAA-aligned.
+→ hakimet.com
+
+🚛 Olink Fleet
+AI-powered GPS fleet management built for Ethiopia's commercial transport sector. Real-time tracking, route optimization, predictive maintenance.
+
+— STRATEGIC INITIATIVES —
+
+We are the lead analytics and data engineering partner on the TDT initiative — a national-scale technology development and transfer program in strategic collaboration with MINT, Ethiopia's Ministry of Innovation and Technology.
+
+— OUR STANDARD —
+
+We do not approximate. We engineer certainty.
+
+📍 Bethesda, MD | Addis Ababa, Ethiopia
+🌐 dapsanalytics.com
+📧 hello@dapsanalytics.com</div></div>
+  <div class="bio-field"><label>Specialties (tags)</label><div class="value">Data Analytics, Predictive Analytics, Machine Learning, Artificial Intelligence, Data Infrastructure, Business Intelligence, SaaS, Ethiopia, East Africa, GovTech, Telehealth, Fleet Management, Environmental Analytics, Water Quality</div></div>
+</div>
+
+<!-- LI POST 1 -->
+<div class="post-card" id="li-1">
+  <div class="post-header">
+    <div>
+      <div class="post-num">LinkedIn &bull; Post 01</div>
+      <div class="post-title">Brand Launch</div>
+    </div>
+    <span class="post-badge badge-announcement">Announcement</span>
+  </div>
+  <div class="post-meta">
+    <div class="post-meta-item">Visual: <strong>DAPS logo on dark background or team photo</strong></div>
+    <div class="post-meta-item">Best time: <strong>Tue&ndash;Thu, 8&ndash;10am EST</strong></div>
+  </div>
+  <div class="post-copy-label">Post Copy</div>
+  <div class="post-copy">We've been building quietly. Now it's time to introduce ourselves.
+
+DAPS Analytics is a data intelligence firm engineering precision analytics, predictive AI, and high-fidelity data infrastructure for Africa and global markets.
+
+We are not consultants who deliver reports. We build and deploy platforms that run in production — today.
+
+Here is what is live right now:
+
+📋 Onekof PM — Ethiopia's first enterprise project management platform natively built for the 13-month Ethiopian calendar, Amharic, Afaan Oromoo, Tigrinya, and Ethiopian Birr. No workarounds. No conversions. Built for Ethiopia.
+→ onekof.com
+
+💧 UDC-WQIS — Real-time water quality monitoring across 12 USGS stations on the Anacostia River in Washington DC. Built in partnership with the University of the District of Columbia. Live environmental intelligence for DC's watershed.
+
+🏥 Hakimet — Enterprise telehealth infrastructure connecting patients, clinicians, and specialists across East Africa. Low-bandwidth optimized. Multi-language. EMR-integrated. HIPAA-aligned.
+→ hakimet.com
+
+🚛 Olink Fleet — AI-powered GPS fleet management for Ethiopia's commercial transport sector. Real-time tracking, predictive maintenance, driver analytics, and route optimization.
+
+And beyond our products, we are the lead analytics partner on the TDT initiative — a national-scale technology development and transfer program with MINT, Ethiopia's Ministry of Innovation and Technology.
+
+We founded DAPS Analytics because we kept encountering the same problem: the world's best data tools were not built for Africa's realities. Wrong calendar. Wrong language. Wrong infrastructure assumptions.
+
+So we built the right ones.
+
+If your organization is sitting on data you are not fully leveraging — let's have a conversation.
+
+🌐 dapsanalytics.com
+📧 hello@dapsanalytics.com</div>
+  <div class="hashtags">#DataAnalytics #Africa #Ethiopia #AI #MachineLearning #DataIntelligence #SaaS #AfricaTech #GovTech #Telehealth #FleetManagement #WaterQuality #BusinessIntelligence #PredictiveAnalytics #DAPSAnalytics</div>
+</div>
+
+<!-- LI POST 2 -->
+<div class="post-card" id="li-2">
+  <div class="post-header">
+    <div>
+      <div class="post-num">LinkedIn &bull; Post 02</div>
+      <div class="post-title">Problem / Solution</div>
+    </div>
+    <span class="post-badge badge-thought">Thought Leadership</span>
+  </div>
+  <div class="post-meta">
+    <div class="post-meta-item">Visual: <strong>Split image — chaotic data left, clean dashboard right</strong></div>
+    <div class="post-meta-item">Best time: <strong>Wednesday, 9&ndash;11am EST</strong></div>
+  </div>
+  <div class="post-copy-label">Post Copy</div>
+  <div class="post-copy">Africa generates enormous amounts of data every single day.
+
+Agricultural yields across millions of smallholder farms.
+Fleet movements across thousands of commercial vehicles.
+Patient records across hundreds of understaffed clinics.
+Water quality readings across dozens of urban watersheds.
+Financial transactions across a rapidly growing mobile economy.
+
+Most of it goes completely unused.
+
+Not because organizations do not care about their data. Not because the technology to analyze it does not exist. But because the tools built to process, visualize, and act on that data were designed for a different world entirely — one with 12 months, one dominant language, and infrastructure assumptions that simply do not apply.
+
+When your project management software cannot handle the Ethiopian calendar, your team spends hours every week manually converting dates.
+
+When your telehealth platform was not designed for 2G connectivity, your rural clinicians cannot use it at all.
+
+When your fleet management system has no context for Ethiopian road conditions, its "optimized" routes are anything but.
+
+The tools were not built for Africa. So the data sat unused.
+
+That is the problem DAPS Analytics was founded to solve.
+
+Every product we build starts with a simple question: what does this environment actually need? Not what does a Western enterprise need — what does this specific context, this specific language, this specific infrastructure require?
+
+The result is data intelligence that actually works where it is deployed.
+
+Not adapted. Not translated. Built for it.
+
+What data challenge is your organization currently sitting on?</div>
+  <div class="hashtags">#DataStrategy #Africa #AfricaTech #BusinessIntelligence #PredictiveAnalytics #Ethiopia #DataInfrastructure #DigitalTransformation #AI #MachineLearning #DAPSAnalytics</div>
+</div>
+
+<!-- LI POST 3 -->
+<div class="post-card" id="li-3">
+  <div class="post-header">
+    <div>
+      <div class="post-num">LinkedIn &bull; Post 03</div>
+      <div class="post-title">TDT &times; MINT Partnership</div>
+    </div>
+    <span class="post-badge badge-partnership">Partnership</span>
+  </div>
+  <div class="post-meta">
+    <div class="post-meta-item">Visual: <strong>DAPS &times; MINT logo side by side, or map of Ethiopia</strong></div>
+    <div class="post-meta-item">Best time: <strong>Tuesday, 8&ndash;10am EST</strong></div>
+  </div>
+  <div class="post-copy-label">Post Copy</div>
+  <div class="post-copy">We are proud to share that DAPS Analytics is the lead analytics and data engineering partner on one of Ethiopia's most significant technology initiatives.
+
+The TDT — Technology Development and Transfer program — is a national-scale initiative developed in strategic collaboration with MINT, the Federal Democratic Republic of Ethiopia's Ministry of Innovation and Technology.
+
+MINT is mandated to drive Ethiopia's digital transformation and technology adoption at a national level. The TDT framework is how that mandate becomes operational infrastructure.
+
+Here is what DAPS Analytics is delivering as the lead data partner:
+
+→ National data architecture design — building the unified data infrastructure that connects ministries, agencies, and research institutions across Ethiopia
+
+→ AI capability building — deploying machine learning models and training Ethiopian institutions in predictive analytics and data-driven decision-making
+
+→ Knowledge transfer programs — structured programs transferring international technology standards, engineering methodologies, and data governance frameworks
+
+→ Policy intelligence systems — real-time analytics dashboards informing ministerial decision-making with speed, fidelity, and transparency
+
+This is not a pilot. It is not a feasibility study. It is national-scale deployment.
+
+Ethiopia has made an extraordinary commitment to building its own technology capabilities rather than simply importing solutions built elsewhere. We are honored to be part of that vision.
+
+If you represent a government institution, international development organization, or enterprise seeking to engage on data infrastructure at scale — we would welcome a conversation.
+
+→ dapsanalytics.com/projects.html</div>
+  <div class="hashtags">#Ethiopia #GovTech #DataInfrastructure #MINT #TechTransfer #DigitalTransformation #AfricaRising #AI #PublicSector #DAPSAnalytics #NationalData #EthiopiaTech</div>
+</div>
+
+<!-- LI POST 4 -->
+<div class="post-card" id="li-4">
+  <div class="post-header">
+    <div>
+      <div class="post-num">LinkedIn &bull; Post 04</div>
+      <div class="post-title">Team Introduction</div>
+    </div>
+    <span class="post-badge badge-culture">Culture / People</span>
+  </div>
+  <div class="post-meta">
+    <div class="post-meta-item">Visual: <strong>Team photo or individual headshots in a grid</strong></div>
+    <div class="post-meta-item">Best time: <strong>Friday, 9am EST</strong></div>
+  </div>
+  <div class="post-copy-label">Post Copy</div>
+  <div class="post-copy">Every data model reflects the assumptions of the people who built it.
+
+If the people building Africa's data tools do not understand Africa's realities — the calendar systems, the languages, the infrastructure constraints, the economic contexts — the models will be wrong no matter how sophisticated the algorithm.
+
+That is why DAPS Analytics was built by the team it was.
+
+Seven co-founders. Ethiopian roots. International training. A shared conviction that Africa's data challenges deserve Africa's most precise solutions.
+
+Meet the founding team:
+
+Nigussie Gemechu — Chief Executive Officer
+Fikadu Gemechu — Deputy CEO
+Oli Tamrat Oli — Chief Technology Officer
+Shambel Gemechu — Lead Architect
+Moti Beyene Begi — Chief Operating Officer
+Halima Dullo — Project Manager
+Fenet Jima Bedaso — Senior Researcher
+
+We are headquartered in Bethesda, Maryland with active operations in Addis Ababa, Ethiopia. Two cities. One standard of excellence.
+
+The diversity of our team's experience — across data science, software engineering, research, operations, and policy — is not incidental to our products. It is the reason our products work where others have not.
+
+We are growing. If you are a data scientist, engineer, researcher, or operator who believes what we believe — we want to hear from you.
+
+📧 hello@dapsanalytics.com
+🌐 dapsanalytics.com/company.html</div>
+  <div class="hashtags">#TeamIntroduction #Founders #EthiopianEntrepreneurs #DiversityInTech #DataScience #AfricaTech #WomenInTech #Leadership #DAPSAnalytics #Hiring #BuildingInAfrica</div>
+</div>
+
+<!-- LI POST 5 -->
+<div class="post-card" id="li-5">
+  <div class="post-header">
+    <div>
+      <div class="post-num">LinkedIn &bull; Post 05</div>
+      <div class="post-title">Onekof PM Deep Dive — 400 Hours</div>
+    </div>
+    <span class="post-badge badge-product">Product Insight</span>
+  </div>
+  <div class="post-meta">
+    <div class="post-meta-item">Visual: <strong>Screenshot of Onekof PM calendar view or dashboard</strong></div>
+    <div class="post-meta-item">Best time: <strong>Thursday, 8&ndash;10am EST</strong></div>
+  </div>
+  <div class="post-copy-label">Post Copy</div>
+  <div class="post-copy">Here is a number that surprised us when we calculated it:
+
+400 hours.
+
+That is how many hours per year a 50-person Ethiopian enterprise team loses to calendar conversion alone — manually translating every project deadline, every milestone, every payment date from the Ethiopian calendar to Gregorian and back again.
+
+400 hours. That is 10 full work weeks. Every year. For a single company.
+
+Now multiply that across Ethiopia's growing enterprise sector.
+
+The root cause is straightforward: every project management tool on the market — Jira, Asana, Trello, Monday.com, Microsoft Project — was built for a 12-month Gregorian calendar. None of them natively support Ethiopia's 13-month calendar. None of them display Amharic month names. None of them handle Ethiopian Birr as a primary currency.
+
+So Ethiopian organizations do one of two things:
+① Use the tool anyway and manually convert every date (400 hours per year)
+② Avoid the tool entirely and manage projects on paper or in Excel
+
+Neither is acceptable for an enterprise operating at scale.
+
+This is why we built Onekof PM.
+
+Not an integration. Not a plugin. A purpose-built enterprise project management platform where the 13-month Ethiopian calendar is the default — not a workaround.
+
+Full Amharic, Afaan Oromoo, and Tigrinya interface. Ethiopian Birr budget tracking with live exchange rate integration. AI-powered document processing for Amharic contracts. Kanban, Gantt, and analytics dashboards. Enterprise-grade security.
+
+Onekof PM is live today at onekof.com.
+
+If your Ethiopian organization is losing weeks every year to this problem — we would like to give you those weeks back.
+
+→ onekof.com
+→ dapsanalytics.com/onekof-pm.html</div>
+  <div class="hashtags">#Onekof #Ethiopia #ProjectManagement #SaaS #EthiopianCalendar #Productivity #EnterpriseSoftware #Amharic #AfricaTech #BusinessIntelligence #DAPSAnalytics #EthiopiaBusiness</div>
+</div>
+</div>
+
+<!-- ═══════════════════════════════════════════ -->
+<!--  X / TWITTER                                -->
+<!-- ═══════════════════════════════════════════ -->
+<div class="platform-header">
+  <div class="section-wrapper">
+    <div class="ph-platform" style="color:#49fde3;">X / Twitter</div>
+    <div class="ph-title">X (Twitter) Profile</div>
+    <div class="ph-meta">
+      <span>Handle: <strong>@DAPSAnalytics</strong></span>
+      <span>URL: <strong>x.com/dapsanalytics</strong></span>
+      <span>Posts: <strong>5</strong></span>
+      <span>Best times: <strong>Mon&ndash;Fri, 8am / 12pm / 6pm EST</strong></span>
+    </div>
+  </div>
+</div>
+
+<div class="section-wrapper">
+<div class="bio-block">
+  <h3>X / Twitter Bio</h3>
+  <div class="bio-field"><label>Handle</label><div class="value">@DAPSAnalytics</div></div>
+  <div class="bio-field"><label>Display Name</label><div class="value">DAPS Analytics</div></div>
+  <div class="bio-field"><label>Bio (160 characters max)</label><div class="value">High-fidelity data intelligence for Africa & beyond. 4 live products. 2 countries. 1 mission — turn data into competitive advantage. 📍 Bethesda, MD 🌍</div></div>
+  <div class="bio-field"><label>Website</label><div class="value">https://dapsanalytics.com</div></div>
+  <div class="bio-field"><label>Location</label><div class="value">Bethesda, MD | Addis Ababa, Ethiopia</div></div>
+  <div class="bio-field"><label>Note</label><div class="value">Pin Post 01 (Launch Thread) to your profile after posting.</div></div>
+</div>
+
+<!-- X POST 1 -->
+<div class="post-card" id="x-1">
+  <div class="post-header">
+    <div>
+      <div class="post-num">X / Twitter &bull; Post 01</div>
+      <div class="post-title">Launch Thread (7 tweets) &mdash; PIN THIS</div>
+    </div>
+    <span class="post-badge badge-thread">Thread</span>
+  </div>
+  <div class="post-meta">
+    <div class="post-meta-item">Visual: <strong>DAPS logo card on Tweet 1</strong></div>
+    <div class="post-meta-item">Action: <strong>Pin to profile after posting</strong></div>
+  </div>
+  <div class="post-copy-label">Thread (post each tweet in reply to the previous)</div>
+  <div class="post-copy"><strong>Tweet 1/7</strong>
+Introducing DAPS Analytics.
+
+We engineer high-fidelity data intelligence for Africa's most complex environments.
+
+4 live products. 2 countries. 1 standard — uncompromising precision.
+
+🧵 A thread on what we've built and why it matters:
+
+---
+
+<strong>Tweet 2/7</strong>
+📋 Onekof PM
+
+Ethiopia's first enterprise project management platform built natively for the 13-month Ethiopian calendar.
+
+Amharic. Afaan Oromoo. Tigrinya. ETB.
+
+No workarounds. No manual date conversions. Built for Ethiopia.
+
+→ onekof.com
+
+---
+
+<strong>Tweet 3/7</strong>
+💧 UDC-WQIS
+
+12 USGS sensors. Anacostia River. Washington DC. Real-time.
+
+Our water quality monitoring platform gives DC environmental agencies live intelligence they never had before.
+
+Built with @UDC_edu
+
+---
+
+<strong>Tweet 4/7</strong>
+🏥 Hakimet
+
+Telehealth infrastructure built for East African healthcare realities.
+
+Low-bandwidth. Multi-language. EMR-integrated. HIPAA-aligned.
+
+Connecting patients and clinicians across the continent.
+
+→ hakimet.com
+
+---
+
+<strong>Tweet 5/7</strong>
+🚛 Olink Fleet
+
+GPS fleet management built for Ethiopia's roads.
+
+Real-time tracking. AI route optimization. Predictive maintenance. Driver analytics.
+
+Because fleet management shouldn't require morning phone calls.
+
+---
+
+<strong>Tweet 6/7</strong>
+And beyond our products — we're the lead data partner on the TDT initiative.
+
+A national-scale technology transfer program in collaboration with MINT, Ethiopia's Ministry of Innovation & Technology.
+
+National data infrastructure. At scale. Live.
+
+---
+
+<strong>Tweet 7/7</strong>
+We built DAPS Analytics because the world's best data tools weren't built for Africa.
+
+So we built the right ones.
+
+If your organization has a data challenge worth solving — let's talk.
+
+🌐 dapsanalytics.com
+📧 hello@dapsanalytics.com
+
+#DataAnalytics #AfricaTech #Ethiopia #AI #SaaS #DataScience #DAPSAnalytics</div>
+</div>
+
+<!-- X POST 2 -->
+<div class="post-card" id="x-2">
+  <div class="post-header">
+    <div>
+      <div class="post-num">X / Twitter &bull; Post 02</div>
+      <div class="post-title">13-Month Calendar</div>
+    </div>
+    <span class="post-badge badge-product">Product</span>
+  </div>
+  <div class="post-meta">
+    <div class="post-meta-item">Visual: <strong>Ethiopian calendar infographic</strong></div>
+  </div>
+  <div class="post-copy-label">Main Tweet</div>
+  <div class="post-copy">Ethiopia has 13 months in its calendar year.
+
+Most enterprise software supports exactly 0 of them.
+
+So Ethiopian businesses manually convert every deadline, every milestone, every contract date — losing hundreds of hours per year.
+
+We built Onekof PM to fix that.
+
+Native 13 months. No workarounds. → onekof.com
+
+#Ethiopia #AfricaTech #SaaS #ProductManagement</div>
+  <div class="post-copy-label" style="margin-top:16px;">Reply / Thread Follow-up</div>
+  <div class="post-copy">For context:
+
+The Ethiopian calendar (Ge'ez calendar) has 12 months of 30 days each, plus a 13th month of 5 or 6 days called Pagume.
+
+Ethiopian New Year falls in September.
+
+The difference from Gregorian is currently 7-8 years.
+
+Almost no software on earth accounts for this. We do.</div>
+</div>
+
+<!-- X POST 3 -->
+<div class="post-card" id="x-3">
+  <div class="post-header">
+    <div>
+      <div class="post-num">X / Twitter &bull; Post 03</div>
+      <div class="post-title">UDC-WQIS Water Quality</div>
+    </div>
+    <span class="post-badge badge-product">Product</span>
+  </div>
+  <div class="post-meta">
+    <div class="post-meta-item">Visual: <strong>Screenshot of live UDC-WQIS dashboard</strong></div>
+  </div>
+  <div class="post-copy-label">Tweet</div>
+  <div class="post-copy">12 sensors.
+1 river.
+Real-time water quality data.
+Washington DC.
+
+This is UDC-WQIS — our environmental intelligence platform built with @UDC_edu
+
+Every turbidity reading. Every dissolved oxygen level. Every EPA lab result.
+
+Live. Right now.
+
+#WaterQuality #WashingtonDC #EnvironmentalData #DataAnalytics</div>
+  <div class="post-copy-label" style="margin-top:16px;">Optional Follow-up Reply</div>
+  <div class="post-copy">The Anacostia River has historically been one of the most polluted urban waterways in the US.
+
+Our platform gives DC environmental agencies and researchers real-time data they never had access to before.
+
+Data that protects a community's water supply.
+
+That's why we build what we build.</div>
+</div>
+
+<!-- X POST 4 -->
+<div class="post-card" id="x-4">
+  <div class="post-header">
+    <div>
+      <div class="post-num">X / Twitter &bull; Post 04</div>
+      <div class="post-title">MINT Partnership</div>
+    </div>
+    <span class="post-badge badge-partnership">Partnership</span>
+  </div>
+  <div class="post-meta">
+    <div class="post-meta-item">Visual: <strong>DAPS &times; MINT graphic or Ethiopia map</strong></div>
+  </div>
+  <div class="post-copy-label">Tweet</div>
+  <div class="post-copy">We're the lead data partner on Ethiopia's national technology transfer program — in collaboration with MINT, the Ministry of Innovation & Technology.
+
+Not a pilot.
+Not a proposal.
+National scale. Live.
+
+Data infrastructure for an entire nation.
+
+#Ethiopia #GovTech #MINT #DataInfrastructure #AfricaRising #DAPSAnalytics</div>
+  <div class="post-copy-label" style="margin-top:16px;">Follow-up Reply</div>
+  <div class="post-copy">What does national-scale data infrastructure mean in practice?
+
+→ Unified data pipelines connecting ministries and agencies
+→ ML models informing policy decisions in real time
+→ Training Ethiopian engineers in AI and data science
+→ Technology transfer that builds local capability permanently
+
+This is what DAPS Analytics was built for.</div>
+</div>
+
+<!-- X POST 5 -->
+<div class="post-card" id="x-5">
+  <div class="post-header">
+    <div>
+      <div class="post-num">X / Twitter &bull; Post 05</div>
+      <div class="post-title">Contextual Intelligence</div>
+    </div>
+    <span class="post-badge badge-thought">Thought Leadership</span>
+  </div>
+  <div class="post-meta">
+    <div class="post-meta-item">Visual: <strong>Quote card with DAPS branding</strong></div>
+  </div>
+  <div class="post-copy-label">Primary Version</div>
+  <div class="post-copy">"Data without context is noise."
+
+Most analytics firms process your data.
+
+We understand the environment your data lives in — the economic pressures, the infrastructure constraints, the cultural context.
+
+That's the difference between an algorithm and intelligence.
+
+That's DAPS Analytics.
+
+#DataAnalytics #AI #Africa #BusinessIntelligence #DAPSAnalytics</div>
+  <div class="post-copy-label" style="margin-top:16px;">Alternative Version (more casual)</div>
+  <div class="post-copy">Hot take:
+
+The reason most analytics projects fail in Africa isn't bad data.
+
+It's tools built by people who've never operated in the environment.
+
+Wrong calendar. Wrong language. Wrong infrastructure assumptions.
+
+Context is not optional. It's the whole thing.
+
+#AfricaTech #DataAnalytics #Ethiopia</div>
+</div>
+</div>
+
+<!-- ═══════════════════════════════════════════ -->
+<!--  INSTAGRAM                                  -->
+<!-- ═══════════════════════════════════════════ -->
+<div class="platform-header">
+  <div class="section-wrapper">
+    <div class="ph-platform" style="color:#49fde3;">Instagram</div>
+    <div class="ph-title">Instagram Profile</div>
+    <div class="ph-meta">
+      <span>Handle: <strong>@dapsanalytics</strong></span>
+      <span>URL: <strong>instagram.com/dapsanalytics</strong></span>
+      <span>Posts: <strong>5</strong></span>
+      <span>Best times: <strong>Tue, Thu, Fri &mdash; 11am&ndash;1pm or 7&ndash;9pm EST</strong></span>
+    </div>
+  </div>
+</div>
+
+<div class="section-wrapper">
+<div class="bio-block">
+  <h3>Instagram Bio</h3>
+  <div class="bio-field"><label>Handle</label><div class="value">@dapsanalytics</div></div>
+  <div class="bio-field"><label>Display Name</label><div class="value">DAPS Analytics</div></div>
+  <div class="bio-field"><label>Bio (150 characters)</label><div class="value">DAPS Analytics 📊
+Data intelligence for Africa's boldest problems
+4 live products · Ethiopia 🇪🇹 & Washington DC 🇺🇸
+AI · Fleet · Telehealth · Water Quality</div></div>
+  <div class="bio-field"><label>Link in Bio</label><div class="value">https://dapsanalytics.com
+(Use Linktree or Later for multiple links)</div></div>
+  <div class="bio-field"><label>Linktree Links (recommended)</label><div class="value">1. Our Website — dapsanalytics.com
+2. Onekof PM — onekof.com
+3. Book a Call — Teams Bookings
+4. Contact Us — dapsanalytics.com/contact.html</div></div>
+  <div class="bio-field"><label>Story Highlights to Create</label><div class="value">Products · Team · Ethiopia · DC / WQIS · TDT × MINT</div></div>
+</div>
+
+<!-- IG POST 1 -->
+<div class="post-card" id="ig-1">
+  <div class="post-header">
+    <div>
+      <div class="post-num">Instagram &bull; Post 01</div>
+      <div class="post-title">Brand Launch Carousel</div>
+    </div>
+    <span class="post-badge badge-carousel">Carousel &mdash; 6 Slides</span>
+  </div>
+  <div class="post-copy-label">Caption</div>
+  <div class="post-copy">We're here. 📊🌍
+
+DAPS Analytics is a data intelligence firm building precision analytics and AI-powered platforms for Africa's most complex challenges.
+
+4 products live. 2 countries. 1 standard — uncompromising data fidelity.
+
+Swipe to meet what we've built →
+
+—
+🌐 dapsanalytics.com
+📧 hello@dapsanalytics.com
+—</div>
+  <div class="hashtags">#DAPSAnalytics #DataAnalytics #AfricaTech #Ethiopia #WashingtonDC #AI #DataScience #TechAfrica #StartupAfrica #MachineLearning #BusinessIntelligence #SaaS #EthiopiaTech #DataForAfrica #AfricaRising #Onekof #Hakimet #OlinkFleet #WaterQuality #DigitalTransformation</div>
+  <div class="carousel-slides">
+    <h4>Carousel Slide Content</h4>
+    <div class="slide"><div class="slide-num">Slide 1 — Cover</div>DAPS Analytics<br/>Data Intelligence for Africa &amp; Beyond<br/>[DAPS logo on dark background with teal accent]</div>
+    <div class="slide"><div class="slide-num">Slide 2 — Onekof PM</div>📋 Onekof PM — Ethiopia's #1 Enterprise PM Platform<br/>✓ 13-month Ethiopian calendar (native)<br/>✓ Amharic, Oromoo, Tigrinya<br/>✓ ETB budget tracking<br/>✓ AI document processing<br/>→ onekof.com</div>
+    <div class="slide"><div class="slide-num">Slide 3 — UDC-WQIS</div>💧 UDC-WQIS — Washington DC Water Quality Intelligence<br/>✓ 12 live USGS monitoring stations<br/>✓ Real-time Anacostia watershed data<br/>✓ EPA lab integration<br/>✓ Built with University of DC</div>
+    <div class="slide"><div class="slide-num">Slide 4 — Hakimet</div>🏥 Hakimet — East Africa Telehealth Platform<br/>✓ Low-bandwidth optimized<br/>✓ Multi-language (Amharic, Oromoo, Tigrinya)<br/>✓ EMR integrated<br/>✓ HIPAA-aligned<br/>→ hakimet.com</div>
+    <div class="slide"><div class="slide-num">Slide 5 — Olink Fleet</div>🚛 Olink Fleet — Ethiopia Fleet Intelligence<br/>✓ Real-time GPS tracking<br/>✓ AI route optimization<br/>✓ Predictive maintenance<br/>✓ Driver performance analytics</div>
+    <div class="slide"><div class="slide-num">Slide 6 — CTA</div>Your data challenge deserves a precise solution.<br/>Let's build it together.<br/>→ dapsanalytics.com<br/>📧 hello@dapsanalytics.com</div>
+  </div>
+</div>
+
+<!-- IG POST 2 -->
+<div class="post-card" id="ig-2">
+  <div class="post-header">
+    <div>
+      <div class="post-num">Instagram &bull; Post 02</div>
+      <div class="post-title">13-Month Calendar Infographic</div>
+    </div>
+    <span class="post-badge badge-educational">Infographic</span>
+  </div>
+  <div class="post-meta">
+    <div class="post-meta-item">Visual: <strong>Side-by-side calendar comparison (Gregorian vs Ethiopian)</strong></div>
+  </div>
+  <div class="post-copy-label">Caption</div>
+  <div class="post-copy">Did you know? 🇪🇹
+
+Ethiopia runs on a 13-month calendar — and most enterprise software completely ignores it.
+
+That forces Ethiopian businesses to manually convert every single date, deadline, and payment schedule... losing hundreds of hours every year.
+
+We built Onekof PM to end that.
+
+→ The Ethiopian calendar. Native. Default. No workarounds.
+
+Link in bio to see it live.</div>
+  <div class="hashtags">#Ethiopia #EthiopianCalendar #Onekof #AfricaTech #SaaS #ProductManagement #DataForAfrica #TechEthiopia #EthiopiaBusiness #StartupEthiopia #AfricaRising #EthiopianEntrepreneurs #DAPSAnalytics #Ge'ez #EthiopianNewYear #Pagume</div>
+  <div class="visual-note">
+    <strong>Infographic Design Brief</strong>
+    Title: "Ethiopia has 13 months. Your software has 12."<br/>
+    Left col (Gregorian): 12 months | January–December | New Year: January 1<br/>
+    Right col (Ethiopian): 13 months | Meskerem–Pagume | New Year: September 11<br/>
+    Key fact: "A 50-person Ethiopian team loses ~400 hours/year to manual date conversion. Onekof PM eliminates this."<br/>
+    Brand colors: Dark #0e141b · Teal #49fde3 · Amber #efbf71
+  </div>
+</div>
+
+<!-- IG POST 3 -->
+<div class="post-card" id="ig-3">
+  <div class="post-header">
+    <div>
+      <div class="post-num">Instagram &bull; Post 03</div>
+      <div class="post-title">UDC-WQIS Water Quality</div>
+    </div>
+    <span class="post-badge badge-reel">Image or Reel</span>
+  </div>
+  <div class="post-meta">
+    <div class="post-meta-item">Visual: <strong>UDC-WQIS dashboard screenshot or aerial Anacostia River photo</strong></div>
+  </div>
+  <div class="post-copy-label">Caption</div>
+  <div class="post-copy">12 sensors. 1 river. Real-time intelligence. 💧
+
+This is UDC-WQIS — our water quality monitoring platform built with the University of the District of Columbia.
+
+Every USGS sensor reading across the Anacostia watershed in Washington DC reports to a single, live dashboard. Turbidity. Dissolved oxygen. pH levels. Temperature. EPA lab results.
+
+All of it. Real time.
+
+Because clean water deserves precise data.
+
+Link in bio → see the live platform</div>
+  <div class="hashtags">#WaterQuality #WashingtonDC #Anacostia #CleanWater #EnvironmentalData #DataScience #UDCWQIS #EnvironmentalJustice #DC #USGSData #EPA #DataAnalytics #DAPSAnalytics #TechForGood #DataForGood #PublicHealth #Environmental #WaterScience</div>
+  <div class="script-block">
+    <h4>Reel Script (if doing video — 20 seconds)</h4>
+    <div class="script-line"><span class="script-time">0–3s</span><span>Text on screen: "12 sensors. 1 river. Washington DC."</span></div>
+    <div class="script-line"><span class="script-time">3–8s</span><span>Screen recording of dashboard loading, sensors lighting up on map</span></div>
+    <div class="script-line"><span class="script-time">8–15s</span><span>Zoom into a specific sensor reading, data updating in real time</span></div>
+    <div class="script-line"><span class="script-time">15–18s</span><span>Text: "UDC-WQIS — Water Quality Intelligence, Live"</span></div>
+    <div class="script-line"><span class="script-time">18–20s</span><span>DAPS logo + "dapsanalytics.com"</span></div>
+    <div style="margin-top:10px;font-size:13px;color:#555;font-style:italic;">Voiceover: "This is what environmental intelligence looks like. 12 USGS sensors. The Anacostia River. Real-time data that protects a community's water supply."</div>
+  </div>
+</div>
+
+<!-- IG POST 4 -->
+<div class="post-card" id="ig-4">
+  <div class="post-header">
+    <div>
+      <div class="post-num">Instagram &bull; Post 04</div>
+      <div class="post-title">Team Introduction</div>
+    </div>
+    <span class="post-badge badge-culture">People</span>
+  </div>
+  <div class="post-meta">
+    <div class="post-meta-item">Visual: <strong>Team photo or 7-grid headshot layout</strong></div>
+  </div>
+  <div class="post-copy-label">Caption</div>
+  <div class="post-copy">Meet the team behind DAPS Analytics. 🌍✊
+
+7 co-founders. Ethiopian roots. Global standards. Uncompromising data fidelity.
+
+We built DAPS Analytics because we kept seeing the same problem — the world's best data tools weren't built for African realities. Wrong calendar. Wrong language. Wrong infrastructure.
+
+So we built the right ones.
+
+From Addis Ababa to Bethesda, Maryland — this is the team turning Africa's data into competitive advantage.
+
+→ Meet us in full at the link in bio.</div>
+  <div class="hashtags">#TeamDaps #EthiopianFounders #AfricanEntrepreneurs #DiversityInTech #WomenInTech #DataScience #AfricaTech #StartupAfrica #EthiopiaTech #BlackFounders #BuildingInAfrica #DAPSAnalytics #TeamIntroduction #TechLeaders #DataLeadership #AfricaRising #Ethiopia</div>
+  <div class="visual-note">
+    <strong>Graphic Brief (if no photo available)</strong>
+    7 portrait cards in a grid: Name in teal (#49fde3) · Title in white · Background dark (#0e141b) · DAPS logo watermark bottom right<br/>
+    1. Nigussie Gemechu — CEO &nbsp; 2. Fikadu Gemechu — Deputy CEO &nbsp; 3. Oli Tamrat Oli — CTO<br/>
+    4. Shambel Gemechu — Lead Architect &nbsp; 5. Moti Beyene Begi — COO<br/>
+    6. Halima Dullo — Project Manager &nbsp; 7. Fenet Jima Bedaso — Senior Researcher
+  </div>
+</div>
+
+<!-- IG POST 5 -->
+<div class="post-card" id="ig-5">
+  <div class="post-header">
+    <div>
+      <div class="post-num">Instagram &bull; Post 05</div>
+      <div class="post-title">Olink Fleet Reel</div>
+    </div>
+    <span class="post-badge badge-reel">Reel 30–45s</span>
+  </div>
+  <div class="post-meta">
+    <div class="post-meta-item">Visual: <strong>Olink Fleet GPS map screen recording with moving vehicles</strong></div>
+  </div>
+  <div class="post-copy-label">Caption</div>
+  <div class="post-copy">GPS tracking. AI routing. Predictive maintenance. 🚛📍
+
+This is Olink Fleet — smart fleet management built specifically for Ethiopia's roads, traffic, and logistics realities.
+
+Not adapted from a system built elsewhere.
+Not "close enough."
+Built for it.
+
+→ Link in bio to explore Olink Fleet.</div>
+  <div class="hashtags">#OlinkFleet #Ethiopia #FleetManagement #GPS #AI #Logistics #AfricaTech #TransportationTech #RouteOptimization #PredictiveMaintenance #DriverAnalytics #SmartFleet #EthiopiaTech #DAPSAnalytics #TechInAfrica #FleetTracking #SupplyChain #Telematics</div>
+  <div class="script-block">
+    <h4>Reel Script (35 seconds)</h4>
+    <div class="script-line"><span class="script-time">0–4s</span><span>Hook: "How do you manage 50 trucks across Ethiopia with no real-time data?"</span></div>
+    <div class="script-line"><span class="script-time">4–8s</span><span>B-roll: Trucks on Ethiopian road or stock logistics footage</span></div>
+    <div class="script-line"><span class="script-time">8–15s</span><span>Screen recording: Olink Fleet GPS map with vehicle dots moving</span></div>
+    <div class="script-line"><span class="script-time">15–22s</span><span>Show: speed alert, route line, vehicle status panel with text overlays: "Real-time GPS ✓" · "AI Route Optimization ✓" · "Predictive Maintenance ✓" · "Driver Analytics ✓"</span></div>
+    <div class="script-line"><span class="script-time">28–33s</span><span>Text: "Olink Fleet — Built for Ethiopia"</span></div>
+    <div class="script-line"><span class="script-time">33–35s</span><span>DAPS logo + website</span></div>
+    <div style="margin-top:10px;font-size:13px;color:#555;font-style:italic;">Voiceover: "Olink Fleet gives Ethiopian fleet operators complete real-time visibility — GPS tracking, AI routing, and predictive maintenance alerts. Because fleet management shouldn't mean morning phone calls."</div>
+  </div>
+</div>
+</div>
+
+<!-- ═══════════════════════════════════════════ -->
+<!--  FACEBOOK                                   -->
+<!-- ═══════════════════════════════════════════ -->
+<div class="platform-header">
+  <div class="section-wrapper">
+    <div class="ph-platform" style="color:#49fde3;">Facebook</div>
+    <div class="ph-title">Facebook Page</div>
+    <div class="ph-meta">
+      <span>Handle: <strong>DAPS Analytics</strong></span>
+      <span>URL: <strong>facebook.com/dapsanalytics</strong></span>
+      <span>Posts: <strong>5</strong></span>
+      <span>Best times: <strong>Wed, Thu, Fri &mdash; 1&ndash;3pm EST</strong></span>
+    </div>
+  </div>
+</div>
+
+<div class="section-wrapper">
+<div class="bio-block">
+  <h3>Facebook Page Bio</h3>
+  <div class="bio-field"><label>Page Name</label><div class="value">DAPS Analytics</div></div>
+  <div class="bio-field"><label>Category</label><div class="value">Software Company / Technology Company</div></div>
+  <div class="bio-field"><label>Short Description (255 chars)</label><div class="value">High-fidelity data intelligence for Africa and global markets. 4 live products across Ethiopia and Washington DC. Predictive analytics · AI · Telehealth · Fleet Management · Water Quality.</div></div>
+  <div class="bio-field"><label>About / Long Description</label><div class="value">DAPS Analytics (Data Analytics for Practical Solutions) is a data intelligence firm engineering precision analytics, predictive models, and AI-powered platforms for organizations operating in Africa and global markets.
+
+We are headquartered in Bethesda, Maryland with active operations in Addis Ababa, Ethiopia.
+
+OUR LIVE PRODUCTS:
+
+📋 Onekof PM
+Ethiopia's first enterprise project management platform built natively for the 13-month Ethiopian calendar, Amharic, Afaan Oromoo, Tigrinya, and Ethiopian Birr.
+Visit: onekof.com
+
+💧 UDC-WQIS
+Real-time monitoring across 12 USGS stations on Washington DC's Anacostia watershed, in partnership with the University of the District of Columbia.
+
+🏥 Hakimet
+Enterprise telehealth infrastructure for East African healthcare systems.
+Visit: hakimet.com
+
+🚛 Olink Fleet
+AI-powered GPS fleet management for Ethiopia's commercial transport sector.
+
+CONTACT:
+📧 hello@dapsanalytics.com
+🌐 dapsanalytics.com
+📍 3 Pooks Hill Rd, Suite 914, Bethesda, MD 20814</div></div>
+</div>
+
+<!-- FB POST 1 -->
+<div class="post-card" id="fb-1">
+  <div class="post-header">
+    <div>
+      <div class="post-num">Facebook &bull; Post 01</div>
+      <div class="post-title">Brand Launch</div>
+    </div>
+    <span class="post-badge badge-announcement">Announcement</span>
+  </div>
+  <div class="post-meta">
+    <div class="post-meta-item">Visual: <strong>DAPS logo on branded dark background</strong></div>
+    <div class="post-meta-item">Tip: <strong>Consider $20–50 boost targeting DC + Ethiopian diaspora in US</strong></div>
+  </div>
+  <div class="post-copy-label">Post Copy</div>
+  <div class="post-copy">🚀 DAPS Analytics is officially here.
+
+We are a data intelligence firm that has spent the last several years building analytics platforms and AI-powered software designed from the ground up for Africa's real challenges. Today, we are ready to introduce ourselves.
+
+Here is what we have built and deployed — running live, serving real users right now:
+
+📋 Onekof PM — Ethiopia's first enterprise project management platform built natively for the 13-month Ethiopian calendar. Full support for Amharic, Afaan Oromoo, and Tigrinya. Ethiopian Birr budget tracking. AI document processing for Amharic contracts. No more manual date conversions.
+Live at: onekof.com
+
+💧 UDC-WQIS — A real-time water quality monitoring system across 12 USGS monitoring stations on Washington DC's Anacostia watershed, built in partnership with the University of the District of Columbia. Environmental intelligence that protects a community.
+
+🏥 Hakimet — Enterprise telehealth infrastructure for East African healthcare systems. Built to work reliably on 2G connections. Multi-language (Amharic, Oromoo, Tigrinya). EMR-integrated. HIPAA-aligned.
+Live at: hakimet.com
+
+🚛 Olink Fleet — Real-time GPS fleet management built for Ethiopia's commercial transport sector. AI route optimization, predictive maintenance alerts, driver performance analytics.
+
+Beyond our products, we are the lead analytics partner on the TDT program — a national-scale technology transfer initiative in collaboration with Ethiopia's Ministry of Innovation and Technology (MINT).
+
+We are headquartered in Bethesda, Maryland with active operations in Addis Ababa, Ethiopia. Seven co-founders. Ethiopian roots. Global standards.
+
+Our mission is simple: make data intelligence that actually works where it is deployed. Not adapted for Africa — built for it.
+
+If you are a business owner, government official, NGO leader, or enterprise decision-maker with a data challenge — we would love to connect.
+
+🌐 dapsanalytics.com
+📧 hello@dapsanalytics.com
+
+—
+👇 Tag a founder, executive, or organization leader who needs better data infrastructure.</div>
+</div>
+
+<!-- FB POST 2 -->
+<div class="post-card" id="fb-2">
+  <div class="post-header">
+    <div>
+      <div class="post-num">Facebook &bull; Post 02</div>
+      <div class="post-title">What is High-Fidelity Data?</div>
+    </div>
+    <span class="post-badge badge-educational">Educational</span>
+  </div>
+  <div class="post-meta">
+    <div class="post-meta-item">Visual: <strong>Infographic — low-fidelity vs high-fidelity data flow</strong></div>
+  </div>
+  <div class="post-copy-label">Post Copy</div>
+  <div class="post-copy">🧠 What does "high-fidelity data" actually mean — and why does it matter for your business?
+
+At DAPS Analytics, we use the phrase "high-fidelity data" constantly. But it is worth explaining clearly, because the difference between high-fidelity and low-fidelity data directly affects how well your organization makes decisions.
+
+Low-fidelity data looks like this:
+❌ Reports generated once a week — decisions based on last week's reality
+❌ Data manually exported from one system and imported into another — errors introduced at every step
+❌ KPIs that take 2 days to compile — by the time they're ready, they're outdated
+❌ Dashboards that show what happened — not what is happening, or what will happen next
+
+High-fidelity data looks like this:
+✅ Real-time ingestion — your dashboard reflects what is happening right now
+✅ Automated, validated pipelines — no manual intervention, no human error introduced
+✅ Predictive models — you see what is likely to happen next, not just what already happened
+✅ Context-aware analytics — insights calibrated to your specific environment, industry, and geography
+
+The gap between these two states is not just a technical difference. It is the difference between reacting to problems and preventing them. Between managing a business and optimizing one.
+
+At DAPS Analytics, every engagement — every product we deploy, every pipeline we architect — is held to the high-fidelity standard.
+
+Because organizations that operate on good data make better decisions. And organizations that make better decisions win.
+
+What is the biggest data gap in your organization right now? Drop it in the comments — we read every one.
+
+🌐 dapsanalytics.com/services.html</div>
+</div>
+
+<!-- FB POST 3 -->
+<div class="post-card" id="fb-3">
+  <div class="post-header">
+    <div>
+      <div class="post-num">Facebook &bull; Post 03</div>
+      <div class="post-title">Anacostia River Community Story</div>
+    </div>
+    <span class="post-badge badge-story">Community Story</span>
+  </div>
+  <div class="post-meta">
+    <div class="post-meta-item">Visual: <strong>Anacostia River aerial photo or UDC-WQIS dashboard screenshot</strong></div>
+  </div>
+  <div class="post-copy-label">Post Copy</div>
+  <div class="post-copy">Most Washington DC residents do not realize the Anacostia River has a serious water quality problem. 💧
+
+The Anacostia — one of DC's two major rivers — has been labeled one of the most polluted urban waterways in the United States for decades. Industrial runoff, combined sewer overflows during heavy rain, and limited monitoring have made it extremely difficult for environmental agencies to understand what is happening in the watershed in real time.
+
+The result: by the time a contamination event was detected, the damage was often already done.
+
+This is the problem our UDC-WQIS platform was built to solve.
+
+Built in close partnership with the University of the District of Columbia's CAUSES (Center for Aquatic and Environmental Studies) and WRRI (Water Resources Research Institute), UDC-WQIS connects 12 USGS monitoring stations spread across the Anacostia watershed into a single live intelligence platform.
+
+Every sensor reading — turbidity, dissolved oxygen, pH, water temperature, conductivity, and streamflow — reports to a real-time dashboard accessible to DC environmental researchers, government agencies, and public health officials.
+
+When a pollution event occurs, the platform shows it immediately — not after a lab report comes back three days later.
+
+This is what we mean when we talk about data for community impact. Not a nice-to-have feature. A tool that directly affects the health of a community.
+
+Clean water starts with clean data.
+
+🌐 Learn more: dapsanalytics.com/udc-wqis.html
+
+Share this post if you care about environmental intelligence for DC. 💧🌿</div>
+</div>
+
+<!-- FB POST 4 -->
+<div class="post-card" id="fb-4">
+  <div class="post-header">
+    <div>
+      <div class="post-num">Facebook &bull; Post 04</div>
+      <div class="post-title">Olink Fleet Problem / Solution Story</div>
+    </div>
+    <span class="post-badge badge-story">Story</span>
+  </div>
+  <div class="post-meta">
+    <div class="post-meta-item">Visual: <strong>Olink Fleet GPS map or Ethiopian road/logistics photo</strong></div>
+  </div>
+  <div class="post-copy-label">Post Copy</div>
+  <div class="post-copy">Here is how a fleet manager in Addis Ababa used to start every Monday morning. 📞
+
+7:00 AM — Call Driver 1. Where are you? Got it.
+7:04 AM — Call Driver 2. Where are you? Got it.
+7:08 AM — Call Driver 3...
+
+Repeat for 40 vehicles.
+
+By the time he finished, it was 9 AM. And the information he collected was already outdated — because every driver had moved since he called.
+
+Then came the manual fuel logs. The paper maintenance records. The end-of-week reconciliation that took a full day because nothing connected to anything else.
+
+And when a truck broke down unexpectedly on the Addis-Djibouti corridor — adding days to a critical delivery — there had been no warning. No signal. Nothing.
+
+This is the operational reality for most Ethiopian commercial fleet operators. Not because they lack ambition, but because no one has built the right tools for this environment.
+
+That changes with Olink Fleet.
+
+What Olink Fleet gives that manager now:
+📍 Real-time GPS location of every vehicle — on a live map, from his phone
+⚡ Automatic speed and behavior alerts — no calls needed
+🛣️ AI-optimized routes that account for Ethiopian road conditions and traffic patterns
+🔧 Predictive maintenance alerts before breakdowns happen
+⛽ Fuel consumption tracking with anomaly detection
+📊 Weekly reports generated automatically every Sunday morning
+
+Same team. Dramatically better outcomes.
+
+This is what data intelligence looks like when it is built for the environment it operates in.
+
+🚛 Explore Olink Fleet: dapsanalytics.com/olink-fleet.html
+📧 Interested in deployment? hello@dapsanalytics.com</div>
+</div>
+
+<!-- FB POST 5 -->
+<div class="post-card" id="fb-5">
+  <div class="post-header">
+    <div>
+      <div class="post-num">Facebook &bull; Post 05</div>
+      <div class="post-title">Africa's Data Moment — Thought Leadership</div>
+    </div>
+    <span class="post-badge badge-thought">Thought Leadership</span>
+  </div>
+  <div class="post-meta">
+    <div class="post-meta-item">Visual: <strong>Africa map with data visualization overlay</strong></div>
+  </div>
+  <div class="post-copy-label">Post Copy</div>
+  <div class="post-copy">Africa is generating more data than at any point in its history. 📊
+
+Mobile payment transactions. Agricultural sensor readings. Fleet telemetry from logistics networks. Hospital patient records. Government service delivery data. Environmental monitoring from rivers, soil, and air.
+
+The continent's data footprint is growing faster than almost any region on earth — driven by rapid urbanization, expanding mobile penetration, and increasing digitization of commerce, government, and healthcare.
+
+Here is the uncomfortable truth: most of that data is never analyzed.
+
+Not because the technology to analyze it does not exist. Not because organizations do not want to use their data. But because the analytics infrastructure, the trained talent, and the context-aware tools have not been built with African environments in mind.
+
+Three specific gaps hold organizations back:
+
+1. Tool mismatch
+Most enterprise analytics software was built for Western markets. Wrong calendar systems. Wrong language support. Wrong infrastructure assumptions. When your tools assume 12-month Gregorian calendars and high-bandwidth internet connections, they simply do not work in Ethiopia, Nigeria, or Kenya without significant — and expensive — workarounds.
+
+2. Talent pipeline
+World-class data talent exists across Africa. But it is often built and trained on methodologies designed for other environments. Applying those methodologies without local context adaptation produces models that are technically sophisticated but practically wrong.
+
+3. Infrastructure gaps
+Reliable electricity, consistent internet connectivity, and modern data center access cannot be assumed in most African operating environments. Solutions that do not account for this are solutions that will fail in the field.
+
+At DAPS Analytics, we have spent years working through exactly these gaps — building products and infrastructure that work where they are deployed.
+
+The result is what we believe is the beginning of a new standard for African data intelligence: high-fidelity analytics built with, for, and by people who understand the environment.
+
+The data is there. The questions worth answering are there. The talent is there.
+
+What has been missing is tools built precisely enough to connect them.
+
+That is what we are building.
+
+🌐 dapsanalytics.com
+💬 What data challenge is your organization currently navigating? We would love to hear from you.</div>
+</div>
+</div>
+
+<!-- ═══════════════════════════════════════════ -->
+<!--  TIKTOK                                     -->
+<!-- ═══════════════════════════════════════════ -->
+<div class="platform-header">
+  <div class="section-wrapper">
+    <div class="ph-platform" style="color:#49fde3;">TikTok</div>
+    <div class="ph-title">TikTok Profile</div>
+    <div class="ph-meta">
+      <span>Handle: <strong>@dapsanalytics</strong></span>
+      <span>URL: <strong>tiktok.com/@dapsanalytics</strong></span>
+      <span>Videos: <strong>5</strong></span>
+      <span>Best times: <strong>Tue&ndash;Fri, 7&ndash;9am or 7&ndash;11pm EST</strong></span>
+    </div>
+  </div>
+</div>
+
+<div class="section-wrapper">
+<div class="bio-block">
+  <h3>TikTok Bio</h3>
+  <div class="bio-field"><label>Handle</label><div class="value">@dapsanalytics</div></div>
+  <div class="bio-field"><label>Display Name</label><div class="value">DAPS Analytics 📊</div></div>
+  <div class="bio-field"><label>Bio (80 characters)</label><div class="value">Data for Africa 🌍 | 4 live products 🇪🇹🇺🇸 | AI + Analytics</div></div>
+  <div class="bio-field"><label>Content Strategy</label><div class="value">Frequency: 3–5x per week · Length: 30–45s sweet spot
+Formats: Did you know? | Behind the product | Team story | Data fact | Demo
+Tone: More casual than LinkedIn, still authoritative
+Audio: Trending sounds when relevant; original voiceover for explainer content</div></div>
+</div>
+
+<!-- TT VIDEO 1 -->
+<div class="post-card" id="tt-1">
+  <div class="post-header">
+    <div>
+      <div class="post-num">TikTok &bull; Video 01 &mdash; POST FIRST</div>
+      <div class="post-title">13-Month Calendar — Highest Priority</div>
+    </div>
+    <span class="post-badge badge-video">30s Video</span>
+  </div>
+  <div class="post-meta">
+    <div class="post-meta-item">Format: <strong>Screen recording + voiceover + text overlays</strong></div>
+    <div class="post-meta-item">Hook: <strong>"Did you know" fact reveal</strong></div>
+  </div>
+  <div class="post-copy-label">Caption</div>
+  <div class="post-copy">Did you know Ethiopia has 13 months in its calendar? 🇪🇹 Most enterprise software has 0 support for that. We built Onekof PM to change it. Native Ethiopian calendar, native language, native currency. Link in bio.</div>
+  <div class="hashtags">#Ethiopia #AfricaTech #SaaS #Software #EthiopianCalendar #TechTok #StartupLife #DataAnalytics #Onekof #DAPSAnalytics #EthiopiaTech #AfricaRising</div>
+  <div class="script-block">
+    <h4>Full Video Script</h4>
+    <div class="script-line"><span class="script-time">0–2s</span><span><strong>HOOK (text on screen, bold):</strong> "Ethiopia has 13 months in a year. 🇪🇹"</span></div>
+    <div class="script-line"><span class="script-time">2–5s</span><span><strong>Voiceover:</strong> "But almost every piece of enterprise software on earth only supports 12."<br/>Text overlay: "Jira ❌ Asana ❌ Monday.com ❌ Trello ❌"</span></div>
+    <div class="script-line"><span class="script-time">5–10s</span><span><strong>Voiceover:</strong> "So Ethiopian businesses are forced to manually convert every project deadline, every milestone, every payment date from their calendar to the Gregorian calendar — and back again."<br/>Text: "~400 hours lost per year. Per company."</span></div>
+    <div class="script-line"><span class="script-time">10–18s</span><span><strong>Screen recording of Onekof PM. Voiceover:</strong> "We built Onekof PM to end that."<br/>Show Ethiopian calendar view → Text: "Native 13-month Ethiopian calendar ✓"<br/>Show Amharic interface → Text: "Native Amharic, Oromoo, Tigrinya ✓"<br/>Show ETB currency → Text: "Ethiopian Birr — native currency ✓"</span></div>
+    <div class="script-line"><span class="script-time">18–24s</span><span><strong>Voiceover:</strong> "Not a workaround. Not a plugin. The actual default."<br/>Text: "Built FOR Ethiopia. Not adapted."</span></div>
+    <div class="script-line"><span class="script-time">24–28s</span><span><strong>Voiceover:</strong> "Onekof PM — live now at onekof.com."</span></div>
+    <div class="script-line"><span class="script-time">28–30s</span><span>DAPS Analytics logo · Text: "dapsanalytics.com"</span></div>
+  </div>
+  <div class="visual-note" style="margin-top:16px;">
+    <strong>Production Notes</strong>
+    Record Onekof PM on a clean monitor or phone. Calm, confident voiceover (not hyped). Text overlays in white on dark semi-transparent background. DAPS teal (#49fde3) for accent text. Background: subtle ambient tech sound, low volume.
+  </div>
+</div>
+
+<!-- TT VIDEO 2 -->
+<div class="post-card" id="tt-2">
+  <div class="post-header">
+    <div>
+      <div class="post-num">TikTok &bull; Video 02</div>
+      <div class="post-title">DC Water Quality Monitoring</div>
+    </div>
+    <span class="post-badge badge-video">25s Video</span>
+  </div>
+  <div class="post-meta">
+    <div class="post-meta-item">Format: <strong>Dashboard screen recording + voiceover</strong></div>
+    <div class="post-meta-item">Hook: <strong>Visual surprise / data reveal</strong></div>
+  </div>
+  <div class="post-copy-label">Caption</div>
+  <div class="post-copy">There are 12 sensors in the Anacostia River in Washington DC. They all report here — in real time. This is UDC-WQIS, our water quality intelligence platform built with UDC 💧</div>
+  <div class="hashtags">#WaterQuality #WashingtonDC #DataScience #EnvironmentalData #TechTok #DAPSAnalytics #CleanWater #Anacostia #DataAnalytics #UDCWQIS</div>
+  <div class="script-block">
+    <h4>Full Video Script</h4>
+    <div class="script-line"><span class="script-time">0–3s</span><span><strong>HOOK (text on screen):</strong> "There are 12 sensors sitting in this river right now." Show: aerial of Anacostia or open UDC-WQIS dashboard</span></div>
+    <div class="script-line"><span class="script-time">3–8s</span><span><strong>Voiceover:</strong> "And every single one of them reports to this dashboard — in real time." Show: dashboard loading, sensor dots appearing on map</span></div>
+    <div class="script-line"><span class="script-time">8–15s</span><span><strong>Voiceover:</strong> "Water temperature. pH levels. Dissolved oxygen. Turbidity. Every reading, from every station, updated live." Click through different sensor readings. Text: "Anacostia River, Washington DC 💧"</span></div>
+    <div class="script-line"><span class="script-time">15–20s</span><span><strong>Voiceover:</strong> "This is environmental intelligence. When a pollution event happens — the data shows it immediately, not three days later when the lab report comes back." Text: "Real-time data that protects a community's water supply."</span></div>
+    <div class="script-line"><span class="script-time">20–23s</span><span><strong>Voiceover:</strong> "Built with the University of the District of Columbia." Text: "UDC-WQIS | DAPS Analytics × UDC"</span></div>
+    <div class="script-line"><span class="script-time">23–25s</span><span>Text: "dapsanalytics.com" · DAPS logo</span></div>
+  </div>
+</div>
+
+<!-- TT VIDEO 3 -->
+<div class="post-card" id="tt-3">
+  <div class="post-header">
+    <div>
+      <div class="post-num">TikTok &bull; Video 03</div>
+      <div class="post-title">Team / Founder Story</div>
+    </div>
+    <span class="post-badge badge-video">45s Video</span>
+  </div>
+  <div class="post-meta">
+    <div class="post-meta-item">Format: <strong>Talking head OR photo slideshow + voiceover</strong></div>
+    <div class="post-meta-item">Hook: <strong>Personal narrative</strong></div>
+  </div>
+  <div class="post-copy-label">Caption</div>
+  <div class="post-copy">7 Ethiopian founders. 1 data company. Built because the world's best tools weren't built for Africa. This is DAPS Analytics. 🌍🇪🇹</div>
+  <div class="hashtags">#EthiopianFounders #AfricaTech #StartupStory #BlackFounders #DataAnalytics #TechTok #BuildingInAfrica #DAPSAnalytics #Ethiopia #StartupLife #AfricaRising</div>
+  <div class="script-block">
+    <h4>Full Video Script</h4>
+    <div class="script-line"><span class="script-time">0–3s</span><span><strong>HOOK:</strong> Text on screen: "7 Ethiopian founders. 1 data company. Built in America." OR spoken: "Let me tell you why we built DAPS Analytics."</span></div>
+    <div class="script-line"><span class="script-time">3–10s</span><span><strong>Voiceover:</strong> "When we were working with Ethiopian businesses and government organizations, we kept running into the same wall. Every analytics tool we tried to use had been built for a completely different world." Text: "Wrong calendar ❌ · Wrong language ❌ · Wrong infrastructure ❌"</span></div>
+    <div class="script-line"><span class="script-time">10–18s</span><span><strong>Voiceover:</strong> "So instead of adapting broken tools, we built the right ones from scratch." Show: Quick montage of product screenshots (Onekof, WQIS, Hakimet, Olink). Text: "4 products. Live in production. Today."</span></div>
+    <div class="script-line"><span class="script-time">18–28s</span><span><strong>Voiceover:</strong> "DAPS Analytics was founded by seven specialists — from Addis Ababa to Bethesda, Maryland." Text overlays: "Nigussie Gemechu — CEO" · "Oli Tamrat Oli — CTO" · "Fenet Jima Bedaso — Senior Researcher" · "...and 4 more"</span></div>
+    <div class="script-line"><span class="script-time">28–38s</span><span><strong>Voiceover:</strong> "Our mission isn't complicated. Build data tools that actually work where they're deployed. Not adapted. Built for it." Text: "Ethiopian roots. Global standards."</span></div>
+    <div class="script-line"><span class="script-time">38–43s</span><span><strong>Voiceover:</strong> "We're just getting started. Follow along."</span></div>
+    <div class="script-line"><span class="script-time">43–45s</span><span>DAPS logo + "dapsanalytics.com"</span></div>
+  </div>
+  <div class="visual-note" style="margin-top:16px;">
+    <strong>Production Notes</strong>
+    Can be talking head (founder on camera) OR voiceover over photo/slideshow. If talking head: good lighting, neutral background, professional but relaxed. Tone: proud and purposeful, not salesy. This is one of the most important videos — shows the human side of the company.
+  </div>
+</div>
+
+<!-- TT VIDEO 4 -->
+<div class="post-card" id="tt-4">
+  <div class="post-header">
+    <div>
+      <div class="post-num">TikTok &bull; Video 04</div>
+      <div class="post-title">Olink Fleet GPS Demo</div>
+    </div>
+    <span class="post-badge badge-video">30s Video</span>
+  </div>
+  <div class="post-meta">
+    <div class="post-meta-item">Format: <strong>Screen recording + voiceover</strong></div>
+    <div class="post-meta-item">Hook: <strong>Before / After</strong></div>
+  </div>
+  <div class="post-copy-label">Caption</div>
+  <div class="post-copy">Ethiopian fleet managers used to call 50 drivers every morning to find out where they were 😅 Now they have this. Olink Fleet — real-time GPS fleet management built for Ethiopia. 🚛📍</div>
+  <div class="hashtags">#Ethiopia #FleetManagement #GPS #AI #TechTok #AfricaTech #OlinkFleet #DAPSAnalytics #Logistics #TransportationTech #EthiopiaTech</div>
+  <div class="script-block">
+    <h4>Full Video Script</h4>
+    <div class="script-line"><span class="script-time">0–3s</span><span><strong>HOOK:</strong> "How do you track 50 trucks across Ethiopia with no GPS?" OR "Ethiopian fleet managers used to call every driver. Every morning."</span></div>
+    <div class="script-line"><span class="script-time">3–7s</span><span><strong>Voiceover:</strong> "Until recently, the answer was phone calls. Lots of them. Every morning." Text: "📞 Call driver 1... 📞 Call driver 2... 📞 Call driver 3..." · "By 9AM — data already outdated."</span></div>
+    <div class="script-line"><span class="script-time">7–18s</span><span><strong>Voiceover:</strong> "Now it looks like this." Show GPS map with amber vehicle dots moving → "Real-time GPS — every vehicle, live 📍" | Speed alert → "Automatic speed alerts ⚡" | Route line → "AI route optimization 🛣️" | Maintenance alert → "Predictive maintenance warnings 🔧"</span></div>
+    <div class="script-line"><span class="script-time">18–24s</span><span><strong>Voiceover:</strong> "Olink Fleet is live across commercial transport networks in Ethiopia — built specifically for Ethiopian roads and logistics realities." Text: "Built for Ethiopia. Not adapted."</span></div>
+    <div class="script-line"><span class="script-time">24–28s</span><span><strong>Voiceover:</strong> "Link in bio to see it."</span></div>
+    <div class="script-line"><span class="script-time">28–30s</span><span>DAPS logo</span></div>
+  </div>
+</div>
+
+<!-- TT VIDEO 5 -->
+<div class="post-card" id="tt-5">
+  <div class="post-header">
+    <div>
+      <div class="post-num">TikTok &bull; Video 05</div>
+      <div class="post-title">What Does DAPS Analytics Actually Do?</div>
+    </div>
+    <span class="post-badge badge-video">40s Video &mdash; PIN THIS</span>
+  </div>
+  <div class="post-meta">
+    <div class="post-meta-item">Format: <strong>Talking head OR text/visual montage</strong></div>
+    <div class="post-meta-item">Note: <strong>Evergreen explainer — pin to profile</strong></div>
+  </div>
+  <div class="post-copy-label">Caption</div>
+  <div class="post-copy">What does a data analytics company actually do? Let me break it down in 40 seconds. This is DAPS Analytics. 📊🌍</div>
+  <div class="hashtags">#DataAnalytics #WhatIDo #TechTok #DataScience #AI #BusinessIntelligence #Africa #DAPSAnalytics #Analytics #Explainer #Tech #StartupLife</div>
+  <div class="script-block">
+    <h4>Full Video Script</h4>
+    <div class="script-line"><span class="script-time">0–3s</span><span><strong>HOOK:</strong> "What does a data analytics company actually do?" OR spoken: "People ask me this all the time. Let me show you."</span></div>
+    <div class="script-line"><span class="script-time">3–8s</span><span><strong>Voiceover:</strong> "Every business has raw data sitting somewhere — in spreadsheets, in apps, in sensors, in transaction logs." Show: spreadsheet or database visual. Text: "Your business generates data every day."</span></div>
+    <div class="script-line"><span class="script-time">8–14s</span><span><strong>Voiceover:</strong> "We build the infrastructure that collects that data automatically, cleans it, validates it, and makes it available in real time." Show: data flow animation or pipeline diagram. Text: "We build the pipeline."</span></div>
+    <div class="script-line"><span class="script-time">14–20s</span><span><strong>Voiceover:</strong> "Then we layer in predictive models — algorithms that don't just show what happened, but predict what's going to happen next." Show: dashboard with forecast chart. Text: "We add prediction."</span></div>
+    <div class="script-line"><span class="script-time">20–28s</span><span><strong>Voiceover:</strong> "The result is a decision-maker who sees the whole picture — in real time, with confidence." Show: executive dashboard. Text: "You make better decisions."</span></div>
+    <div class="script-line"><span class="script-time">28–34s</span><span><strong>Voiceover:</strong> "We do this for governments, enterprises, healthcare systems, and fleets across Africa and the United States." Quick cut montage: Onekof, WQIS, Hakimet, Olink. Text: "4 products. Live. Across 2 countries."</span></div>
+    <div class="script-line"><span class="script-time">34–38s</span><span><strong>Voiceover:</strong> "That's DAPS Analytics. Link in bio."</span></div>
+    <div class="script-line"><span class="script-time">38–40s</span><span>DAPS logo</span></div>
+  </div>
+</div>
+</div>
+
+<!-- ═══════════════════════════════════════════ -->
+<!--  30-DAY CALENDAR                            -->
+<!-- ═══════════════════════════════════════════ -->
+<div class="calendar-page section-wrapper" id="calendar">
+  <div class="cal-header">
+    <h2>30-Day Social Media Launch Calendar</h2>
+    <p>Post Day 1 content across ALL platforms simultaneously for a coordinated launch. Respond to every comment and message in the first 2 weeks — algorithms reward early engagement heavily.</p>
+  </div>
+
+  <div class="cal-week">
+    <div class="cal-week-title">WEEK 1 — LAUNCH (Days 1–7)</div>
+    <div class="cal-day">
+      <div class="cal-day-title">🚀 Day 1 — LAUNCH DAY (all platforms simultaneously)</div>
+      <div class="cal-entry"><span class="cal-tag ct-li">LinkedIn</span><span class="cal-entry-text">Post 01 — Brand Launch</span></div>
+      <div class="cal-entry"><span class="cal-tag ct-x">X</span><span class="cal-entry-text">Post 01 — Launch Thread (7 tweets) — PIN THIS</span></div>
+      <div class="cal-entry"><span class="cal-tag ct-ig">Instagram</span><span class="cal-entry-text">Post 01 — Launch Carousel (6 slides)</span></div>
+      <div class="cal-entry"><span class="cal-tag ct-fb">Facebook</span><span class="cal-entry-text">Post 01 — Brand Launch</span></div>
+      <div class="cal-entry"><span class="cal-tag ct-tt">TikTok</span><span class="cal-entry-text">Video 01 — 13-Month Calendar (highest priority)</span></div>
+    </div>
+    <div class="cal-day">
+      <div class="cal-day-title">Day 2 — Rest &amp; Engage</div>
+      <div class="cal-day-rest">Respond to all comments from Day 1. Do not post new content.</div>
+    </div>
+    <div class="cal-day">
+      <div class="cal-day-title">Day 3 — Educational</div>
+      <div class="cal-entry"><span class="cal-tag ct-li">LinkedIn</span><span class="cal-entry-text">Post 02 — Problem/Solution</span></div>
+      <div class="cal-entry"><span class="cal-tag ct-ig">Instagram</span><span class="cal-entry-text">Post 02 — 13-Month Calendar Infographic</span></div>
+      <div class="cal-entry"><span class="cal-tag ct-fb">Facebook</span><span class="cal-entry-text">Post 02 — What is High-Fidelity Data?</span></div>
+    </div>
+    <div class="cal-day">
+      <div class="cal-day-title">Day 4 — Product Spotlight</div>
+      <div class="cal-entry"><span class="cal-tag ct-x">X</span><span class="cal-entry-text">Post 02 — 13 Months tweet</span></div>
+      <div class="cal-entry"><span class="cal-tag ct-tt">TikTok</span><span class="cal-entry-text">Video 02 — DC Water Monitoring</span></div>
+    </div>
+    <div class="cal-day">
+      <div class="cal-day-title">Day 5 — Partnership</div>
+      <div class="cal-entry"><span class="cal-tag ct-li">LinkedIn</span><span class="cal-entry-text">Post 03 — TDT × MINT Partnership</span></div>
+      <div class="cal-entry"><span class="cal-tag ct-fb">Facebook</span><span class="cal-entry-text">Post 03 — Anacostia River Community Story</span></div>
+    </div>
+    <div class="cal-day">
+      <div class="cal-day-title">Day 6 — Rest &amp; Engage</div>
+      <div class="cal-day-rest">Respond to all week's comments. Save/reshare any user engagement.</div>
+    </div>
+    <div class="cal-day">
+      <div class="cal-day-title">Day 7 — Team</div>
+      <div class="cal-entry"><span class="cal-tag ct-ig">Instagram</span><span class="cal-entry-text">Post 04 — Team Introduction</span></div>
+      <div class="cal-entry"><span class="cal-tag ct-tt">TikTok</span><span class="cal-entry-text">Video 03 — Team/Founder Story</span></div>
+      <div class="cal-entry"><span class="cal-tag ct-x">X</span><span class="cal-entry-text">Post 04 — MINT Partnership tweet</span></div>
+    </div>
+  </div>
+
+  <div class="cal-week">
+    <div class="cal-week-title">WEEK 2 — DEPTH (Days 8–14)</div>
+    <div class="cal-day">
+      <div class="cal-day-title">Day 8</div>
+      <div class="cal-entry"><span class="cal-tag ct-li">LinkedIn</span><span class="cal-entry-text">Post 04 — Team Introduction</span></div>
+      <div class="cal-entry"><span class="cal-tag ct-x">X</span><span class="cal-entry-text">Post 03 — UDC-WQIS tweet</span></div>
+    </div>
+    <div class="cal-day">
+      <div class="cal-day-title">Day 9</div>
+      <div class="cal-entry"><span class="cal-tag ct-ig">Instagram</span><span class="cal-entry-text">Post 03 — UDC-WQIS Visual/Reel</span></div>
+      <div class="cal-entry"><span class="cal-tag ct-tt">TikTok</span><span class="cal-entry-text">Video 04 — Olink Fleet Demo</span></div>
+    </div>
+    <div class="cal-day">
+      <div class="cal-day-title">Day 10</div>
+      <div class="cal-entry"><span class="cal-tag ct-li">LinkedIn</span><span class="cal-entry-text">Post 05 — Onekof PM Deep Dive (400 hours)</span></div>
+      <div class="cal-entry"><span class="cal-tag ct-fb">Facebook</span><span class="cal-entry-text">Post 04 — Olink Fleet Problem/Solution</span></div>
+    </div>
+    <div class="cal-day">
+      <div class="cal-day-title">Day 11</div>
+      <div class="cal-entry"><span class="cal-tag ct-x">X</span><span class="cal-entry-text">Post 05 — Contextual Intelligence</span></div>
+      <div class="cal-entry"><span class="cal-tag ct-ig">Instagram</span><span class="cal-entry-text">Post 05 — Olink Fleet Reel</span></div>
+    </div>
+    <div class="cal-day"><div class="cal-day-title">Day 12 — Rest &amp; Engage</div><div class="cal-day-rest">Respond to all comments.</div></div>
+    <div class="cal-day">
+      <div class="cal-day-title">Day 13</div>
+      <div class="cal-entry"><span class="cal-tag ct-tt">TikTok</span><span class="cal-entry-text">Video 05 — What We Do Explainer (PIN THIS)</span></div>
+      <div class="cal-entry"><span class="cal-tag ct-li">LinkedIn</span><span class="cal-entry-text">Repost an existing website insight article</span></div>
+    </div>
+    <div class="cal-day">
+      <div class="cal-day-title">Day 14</div>
+      <div class="cal-entry"><span class="cal-tag ct-fb">Facebook</span><span class="cal-entry-text">Post 05 — Thought Leadership (Africa Data Economy)</span></div>
+      <div class="cal-entry"><span class="cal-tag ct-x">X</span><span class="cal-entry-text">New data fact tweet (Hakimet stat)</span></div>
+      <div class="cal-entry"><span class="cal-tag ct-ig">Instagram</span><span class="cal-entry-text">Team behind-the-scenes photo (if available)</span></div>
+    </div>
+  </div>
+
+  <div class="cal-week">
+    <div class="cal-week-title">WEEK 3 — COMMUNITY &amp; ENGAGEMENT (Days 15–21)</div>
+    <div class="cal-day">
+      <div class="cal-day-title">Day 15</div>
+      <div class="cal-entry"><span class="cal-tag ct-li">LinkedIn</span><span class="cal-entry-text">Hakimet case study post — Product deep dive</span></div>
+      <div class="cal-entry"><span class="cal-tag ct-ig">Instagram</span><span class="cal-entry-text">Hakimet infographic — "East Africa's telehealth gap"</span></div>
+    </div>
+    <div class="cal-day">
+      <div class="cal-day-title">Day 16</div>
+      <div class="cal-entry"><span class="cal-tag ct-x">X</span><span class="cal-entry-text">Thread: "Why we built in Ethiopia" (5 tweets)</span></div>
+      <div class="cal-entry"><span class="cal-tag ct-tt">TikTok</span><span class="cal-entry-text">New video: "What is Telehealth in East Africa?"</span></div>
+    </div>
+    <div class="cal-day">
+      <div class="cal-day-title">Day 17</div>
+      <div class="cal-entry"><span class="cal-tag ct-fb">Facebook</span><span class="cal-entry-text">"Ask us anything" post — Engagement</span></div>
+      <div class="cal-entry"><span class="cal-tag ct-li">LinkedIn</span><span class="cal-entry-text">Industry post: Data analytics in African banking</span></div>
+    </div>
+    <div class="cal-day"><div class="cal-day-title">Day 18 — Rest</div></div>
+    <div class="cal-day">
+      <div class="cal-day-title">Day 19</div>
+      <div class="cal-entry"><span class="cal-tag ct-ig">Instagram</span><span class="cal-entry-text">Data visualization infographic — industries we serve</span></div>
+      <div class="cal-entry"><span class="cal-tag ct-x">X</span><span class="cal-entry-text">Fleet management stat tweet</span></div>
+      <div class="cal-entry"><span class="cal-tag ct-tt">TikTok</span><span class="cal-entry-text">"Day in the life at DAPS" — Culture</span></div>
+    </div>
+    <div class="cal-day">
+      <div class="cal-day-title">Day 20</div>
+      <div class="cal-entry"><span class="cal-tag ct-li">LinkedIn</span><span class="cal-entry-text">Founder spotlight post</span></div>
+      <div class="cal-entry"><span class="cal-tag ct-fb">Facebook</span><span class="cal-entry-text">Ethiopian tech ecosystem post</span></div>
+    </div>
+    <div class="cal-day">
+      <div class="cal-day-title">Day 21</div>
+      <div class="cal-entry"><span class="cal-tag ct-li">LinkedIn</span><span class="cal-entry-text">Week 3 recap / milestone — all platforms</span></div>
+      <div class="cal-entry"><span class="cal-tag ct-ig">Instagram</span><span class="cal-entry-text">Week 3 recap post</span></div>
+    </div>
+  </div>
+
+  <div class="cal-week">
+    <div class="cal-week-title">WEEK 4 — AUTHORITY &amp; CONVERSION (Days 22–30)</div>
+    <div class="cal-day">
+      <div class="cal-day-title">Day 22</div>
+      <div class="cal-entry"><span class="cal-tag ct-li">LinkedIn</span><span class="cal-entry-text">TDT update / project milestone</span></div>
+      <div class="cal-entry"><span class="cal-tag ct-ig">Instagram</span><span class="cal-entry-text">"Data fact Friday" infographic</span></div>
+    </div>
+    <div class="cal-day">
+      <div class="cal-day-title">Day 23</div>
+      <div class="cal-entry"><span class="cal-tag ct-x">X</span><span class="cal-entry-text">Thread: 5 signs your organization needs better data</span></div>
+      <div class="cal-entry"><span class="cal-tag ct-tt">TikTok</span><span class="cal-entry-text">"You need better data if..." — Relatable content</span></div>
+    </div>
+    <div class="cal-day">
+      <div class="cal-day-title">Day 24</div>
+      <div class="cal-entry"><span class="cal-tag ct-fb">Facebook</span><span class="cal-entry-text">Client story / use case — Social proof</span></div>
+      <div class="cal-entry"><span class="cal-tag ct-li">LinkedIn</span><span class="cal-entry-text">AI/ML horizon announcement (Ethiopian NLP)</span></div>
+    </div>
+    <div class="cal-day"><div class="cal-day-title">Day 25 — Rest</div></div>
+    <div class="cal-day">
+      <div class="cal-day-title">Day 26</div>
+      <div class="cal-entry"><span class="cal-tag ct-ig">Instagram</span><span class="cal-entry-text">Olink Fleet route map visual</span></div>
+      <div class="cal-entry"><span class="cal-tag ct-x">X</span><span class="cal-entry-text">USGS / EPA partnership tweet</span></div>
+      <div class="cal-entry"><span class="cal-tag ct-tt">TikTok</span><span class="cal-entry-text">"How we monitor DC water" — Behind the scenes</span></div>
+    </div>
+    <div class="cal-day">
+      <div class="cal-day-title">Day 27</div>
+      <div class="cal-entry"><span class="cal-tag ct-li">LinkedIn</span><span class="cal-entry-text">"Consulting vs building — why we chose building"</span></div>
+      <div class="cal-entry"><span class="cal-tag ct-fb">Facebook</span><span class="cal-entry-text">Community Q&amp;A responses</span></div>
+    </div>
+    <div class="cal-day">
+      <div class="cal-day-title">Day 28 — Month 1 Milestone</div>
+      <div class="cal-entry"><span class="cal-tag ct-li">LinkedIn</span><span class="cal-entry-text">Month 1 milestone post — all platforms</span></div>
+      <div class="cal-entry"><span class="cal-tag ct-ig">Instagram</span><span class="cal-entry-text">Month 1 milestone post</span></div>
+    </div>
+    <div class="cal-day">
+      <div class="cal-day-title">Day 29</div>
+      <div class="cal-entry"><span class="cal-tag ct-li">LinkedIn</span><span class="cal-entry-text">"What's coming next at DAPS" — Teaser</span></div>
+      <div class="cal-entry"><span class="cal-tag ct-ig">Instagram</span><span class="cal-entry-text">Month 1 stats carousel — Accountability</span></div>
+    </div>
+    <div class="cal-day">
+      <div class="cal-day-title">Day 30 — Month 1 Wrap</div>
+      <div class="cal-entry"><span class="cal-tag ct-li">LinkedIn</span><span class="cal-entry-text">Month recap + next 30 days preview — all platforms</span></div>
+      <div class="cal-entry"><span class="cal-tag ct-ig">Instagram</span><span class="cal-entry-text">Month recap post</span></div>
+      <div class="cal-entry"><span class="cal-tag ct-fb">Facebook</span><span class="cal-entry-text">Month recap post</span></div>
+    </div>
+  </div>
+
+  <!-- POSTING TIMES -->
+  <h3 style="font-size:16px;font-weight:700;margin:32px 0 12px;color:#0e141b;">Best Posting Times (EST)</h3>
+  <table class="time-table">
+    <thead>
+      <tr>
+        <th>Platform</th>
+        <th>Best Days</th>
+        <th>Best Times</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td><strong>LinkedIn</strong></td><td>Tuesday – Thursday</td><td>8–10am, 12pm</td></tr>
+      <tr><td><strong>X / Twitter</strong></td><td>Monday – Friday</td><td>8am, 12pm, 6pm</td></tr>
+      <tr><td><strong>Instagram</strong></td><td>Tuesday, Thursday, Friday</td><td>11am–1pm, 7–9pm</td></tr>
+      <tr><td><strong>Facebook</strong></td><td>Wednesday, Thursday, Friday</td><td>1–3pm</td></tr>
+      <tr><td><strong>TikTok</strong></td><td>Tuesday – Friday</td><td>7–9am, 7–11pm</td></tr>
+    </tbody>
+  </table>
+
+  <!-- HASHTAGS -->
+  <div class="hashtag-section">
+    <h3>Hashtag Master List</h3>
+    <div class="hashtag-group">
+      <label>LinkedIn (use 3–5 per post)</label>
+      <p>#DataAnalytics #Africa #Ethiopia #AI #MachineLearning #DataIntelligence #SaaS #AfricaTech #GovTech #Telehealth #FleetManagement #WaterQuality #BusinessIntelligence #PredictiveAnalytics #DAPSAnalytics #DigitalTransformation #DataScience #EthiopiaTech</p>
+    </div>
+    <div class="hashtag-group">
+      <label>X / Twitter (use 2–3 per tweet)</label>
+      <p>#DataAnalytics #AfricaTech #Ethiopia #AI #SaaS #DataScience #DAPSAnalytics #GovTech #AfricaRising</p>
+    </div>
+    <div class="hashtag-group">
+      <label>Instagram (use 20–25 per post — already in each post above)</label>
+      <p>Full hashtag sets are included in each Instagram post above.</p>
+    </div>
+    <div class="hashtag-group">
+      <label>Facebook (no hashtags needed — not hashtag-driven)</label>
+      <p>Facebook organic reach is not hashtag-driven. Focus on compelling copy and engagement prompts instead.</p>
+    </div>
+    <div class="hashtag-group">
+      <label>TikTok (use 5–8 per video)</label>
+      <p>#TechTok #AfricaTech #Ethiopia #DataAnalytics #DAPSAnalytics #AI #SaaS #StartupLife #AfricaRising #DataScience</p>
+    </div>
+  </div>
+
+  <!-- TOOLS -->
+  <div style="margin-top:32px;padding:20px 24px;background:#f1f5f9;border-radius:8px;">
+    <h3 style="font-size:14px;font-weight:700;margin-bottom:12px;color:#0e141b;">Recommended Tools</h3>
+    <div style="font-size:13px;color:#374151;line-height:2;">
+      <strong>Scheduling:</strong> Buffer (free plan) or Later.com — schedule across all 5 platforms from one place<br/>
+      <strong>Graphics:</strong> Canva — create a brand kit with DAPS colors (teal #49fde3, amber #efbf71, dark #0e141b)<br/>
+      <strong>Screen recording:</strong> OBS Studio (free) or Loom<br/>
+      <strong>Analytics:</strong> Native analytics on each platform (check weekly)
+    </div>
+  </div>
+
+  <div style="margin-top:48px;padding-top:24px;border-top:1px solid #e5e7eb;text-align:center;font-size:12px;color:#9ca3af;">
+    DAPS Analytics &mdash; Social Media Content Pack &mdash; Confidential &mdash; dapsanalytics.com
+  </div>
+</div>
+
+</body>
+</html>
