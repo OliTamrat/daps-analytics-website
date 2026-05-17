@@ -1,0 +1,10 @@
+{
+  "functions": {
+    "api/generate-audio.js": {
+      "maxDuration": 60
+    },
+    "api/contact.js": {
+      "maxDuration": 30
+    }
+  }
+}
