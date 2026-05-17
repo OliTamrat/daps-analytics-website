@@ -42,6 +42,83 @@
   .cat-product { background:rgba(171,208,84,0.1);color:#abd054;border:1px solid rgba(171,208,84,0.25); }
   /* Progress bar */
   #read-progress { position:fixed;top:0;left:0;height:2px;background:#49fde3;z-index:200;width:0;transition:width 0.1s linear; }
+  /* ── TTS Audio Player ──────────────────────────────────────────── */
+  #ttsBar {
+    display:flex; align-items:center; gap:14px; flex-wrap:wrap;
+    padding:14px 20px; margin-bottom:2.2em;
+    background:#090f18; border:1px solid rgba(73,253,227,0.14);
+    border-radius:12px; max-width:720px;
+  }
+  .tts-left { display:flex; align-items:center; gap:8px; flex-shrink:0; }
+  .tts-play-btn {
+    display:flex; align-items:center; gap:7px; padding:8px 18px;
+    background:rgba(73,253,227,0.1); border:1px solid rgba(73,253,227,0.28);
+    border-radius:8px; color:#49fde3; font-family:'Inter',sans-serif;
+    font-size:13px; font-weight:600; cursor:pointer; transition:all 0.2s;
+  }
+  .tts-play-btn:hover { background:rgba(73,253,227,0.18); }
+  .tts-play-btn.playing { background:rgba(239,191,113,0.1); border-color:rgba(239,191,113,0.3); color:#efbf71; }
+  .tts-stop-btn {
+    width:30px; height:30px; display:flex; align-items:center; justify-content:center;
+    background:transparent; border:1px solid rgba(255,255,255,0.1);
+    border-radius:6px; color:#849490; font-size:11px; cursor:pointer; transition:all 0.15s;
+  }
+  .tts-stop-btn:hover { border-color:rgba(255,80,80,0.3); color:#ff8080; }
+  .tts-progress-wrap { flex:1; min-width:80px; }
+  .tts-progress-track { height:4px; background:rgba(255,255,255,0.07); border-radius:2px; overflow:hidden; }
+  .tts-progress-fill { height:100%; background:#49fde3; width:0; border-radius:2px; transition:width 0.4s; }
+  .tts-timer { font-size:12px; color:#849490; font-weight:600; font-variant-numeric:tabular-nums; flex-shrink:0; min-width:34px; }
+  .tts-speeds { display:flex; gap:4px; flex-shrink:0; }
+  .tts-speed-btn {
+    padding:4px 9px; background:transparent;
+    border:1px solid rgba(255,255,255,0.1); border-radius:5px;
+    color:#849490; font-family:'Inter',sans-serif; font-size:11px; font-weight:600;
+    cursor:pointer; transition:all 0.15s;
+  }
+  .tts-speed-btn:hover { border-color:rgba(73,253,227,0.3); color:#49fde3; }
+  .tts-speed-btn.active { border-color:rgba(73,253,227,0.4); color:#49fde3; background:rgba(73,253,227,0.08); }
+  @media (max-width:600px) { #ttsBar { padding:12px 14px; gap:10px; } .tts-speeds { gap:3px; } }
+  /* ── Professional Audio Player (ElevenLabs) ─────────────────────── */
+  #proAudioBar {
+    max-width:720px; margin-bottom:2.2em;
+    background:#090f18; border:1px solid rgba(73,253,227,0.14);
+    border-radius:12px; overflow:hidden;
+  }
+  .pro-audio-head {
+    display:flex; align-items:center; gap:12px;
+    padding:14px 20px 10px; border-bottom:1px solid rgba(255,255,255,0.05);
+  }
+  .pro-audio-icon {
+    width:36px; height:36px; border-radius:8px; flex-shrink:0;
+    background:rgba(73,253,227,0.1); border:1px solid rgba(73,253,227,0.2);
+    display:flex; align-items:center; justify-content:center; font-size:16px;
+  }
+  .pro-audio-title { font-size:13px; font-weight:600; color:#dee2ed; }
+  .pro-audio-sub { font-size:11px; color:#849490; margin-top:2px; }
+  .pro-audio-controls {
+    display:flex; align-items:center; gap:12px; padding:14px 20px; flex-wrap:wrap;
+  }
+  .pro-play-btn {
+    width:36px; height:36px; border-radius:50%; flex-shrink:0;
+    background:#49fde3; border:none; color:#0e141b;
+    font-size:13px; cursor:pointer; display:flex; align-items:center; justify-content:center;
+    transition:opacity 0.2s, transform 0.15s; box-shadow:0 0 16px rgba(73,253,227,0.2);
+  }
+  .pro-play-btn:hover { opacity:0.88; transform:scale(1.05); }
+  .pro-progress-wrap { flex:1; min-width:80px; cursor:pointer; }
+  .pro-progress-track { height:4px; background:rgba(255,255,255,0.07); border-radius:2px; }
+  .pro-progress-fill { height:100%; background:#49fde3; width:0; border-radius:2px; transition:width 0.2s; }
+  .pro-timer { font-size:12px; color:#849490; font-weight:600; font-variant-numeric:tabular-nums; flex-shrink:0; min-width:70px; }
+  .pro-speeds { display:flex; gap:4px; flex-shrink:0; }
+  .pro-speed-btn {
+    padding:4px 9px; background:transparent;
+    border:1px solid rgba(255,255,255,0.1); border-radius:5px;
+    color:#849490; font-family:'Inter',sans-serif; font-size:11px; font-weight:600;
+    cursor:pointer; transition:all 0.15s;
+  }
+  .pro-speed-btn:hover { border-color:rgba(73,253,227,0.3); color:#49fde3; }
+  .pro-speed-btn.active { border-color:rgba(73,253,227,0.4); color:#49fde3; background:rgba(73,253,227,0.08); }
+  @media (max-width:600px) { .pro-audio-controls { gap:10px; padding:12px 14px; } }
 </style>
 </head>
 <body class="antialiased selection:bg-primary/20 selection:text-primary min-h-screen flex flex-col">
@@ -149,86 +226,341 @@
   </div>
 </footer>
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
 <script src="assets/navbar.js"></script>
 <script src="assets/daps.js"></script>
 <script>
 (function(){
-  /* Read ?id= from URL */
-  function getParam(name){
-    var url=new URLSearchParams(window.location.search);
-    return url.get(name);
+  var SUPABASE_URL     = 'https://rveellaalzowncfsekwx.supabase.co';
+  var SUPABASE_ANON_KEY= 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJ2ZWVsbGFhbHpvd25jZnNla3d4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzkwMTMzMDQsImV4cCI6MjA5NDU4OTMwNH0.6U1gGmLW9CxTjagobfy_p0Xx5QpRrY6h1u944K2ZKcE';
+
+  function getParam(n){ return new URLSearchParams(window.location.search).get(n); }
+
+  var staticId = parseInt(getParam('id'), 10) || 0;
+  var adminId  = parseInt(getParam('aid'), 10) || 0;
+
+  if (adminId) {
+    loadFromSupabase(adminId);
+  } else {
+    var id = staticId || 1;
+    var articles = window.DAPS_ARTICLES || [];
+    var article = null;
+    for (var i = 0; i < articles.length; i++) { if (articles[i].id === id) { article = articles[i]; break; } }
+    if (!article) { showNotFound(); return; }
+    renderArticle(article, true, articles);
   }
 
-  var id=parseInt(getParam('id'),10)||1;
-  var articles=window.DAPS_ARTICLES||[];
-  var article=null;
-  for(var i=0;i<articles.length;i++){ if(articles[i].id===id){article=articles[i];break;} }
+  // ── Load admin article from Supabase ──────────────────────────────
+  async function loadFromSupabase(id) {
+    var sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+    var { data, error } = await sb.from('insights').select('*').eq('id', id).single();
+    if (error || !data) { showNotFound(); return; }
 
-  if(!article){
-    document.getElementById('article-title').textContent='Article not found.';
-    document.getElementById('article-body').textContent='Please return to the Insights page.';
-    return;
+    var catMap = {
+      'Market Trends':   { label:'Market Trends',   cls:'cat-market'  },
+      'Data Science':    { label:'Data Science',     cls:'cat-data'    },
+      'Case Studies':    { label:'Case Studies',     cls:'cat-case'    },
+      'Projects':        { label:'Projects',         cls:'cat-project' },
+      'Product Updates': { label:'Product Updates',  cls:'cat-product' }
+    };
+    var cat = catMap[data.category] || { label: data.category || '', cls: 'cat-case' };
+
+    // Convert plain-text body (blank-line paragraphs) → HTML
+    var bodyHtml = (data.body || '').split(/\n\n+/).map(function(p) {
+      return '<p>' + p.replace(/\n/g, '<br>') + '</p>';
+    }).join('');
+
+    var article = {
+      id: data.id,
+      title:         data.title,
+      excerpt:       data.excerpt   || '',
+      date:          data.date      || '',
+      readTime:      data.read_time || '5 min read',
+      author:        data.author    || 'DAPS Analytics Team',
+      category:      data.category,
+      categoryLabel: cat.label,
+      catClass:      cat.cls,
+      body:          bodyHtml,
+      image_url:     data.image_url || '',
+      enable_audio:  data.enable_audio !== false
+    };
+    renderArticle(article, article.enable_audio, []);
   }
 
-  /* Set page title + meta */
-  document.getElementById('page-title').textContent=article.title+' — DAPS Analytics';
-  document.getElementById('page-desc').content=article.excerpt;
-  document.getElementById('article-title').textContent=article.title;
-  document.getElementById('article-excerpt').textContent=article.excerpt;
-  document.getElementById('article-date-display').textContent=article.date+' · '+article.readTime;
-
-  /* Meta badges */
-  var meta=document.getElementById('article-meta');
-  meta.innerHTML='<span class="'+article.catClass+'" style="font-size:10px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;padding:4px 12px;border-radius:20px;">'+article.categoryLabel+'</span>'
-    +'<span style="color:#849490;font-size:12px;font-weight:600;">'+article.readTime+'</span>'
-    +'<span style="color:#849490;font-size:12px;font-weight:600;">'+article.date+'</span>';
-
-  /* Hero image or icon */
-  var hero=document.getElementById('article-hero');
-  if(article.image){
-    hero.innerHTML='<div class="rounded-xl overflow-hidden" style="height:420px;"><img src="'+article.image+'" alt="'+article.title+'" style="width:100%;height:100%;object-fit:cover;"/></div>';
-  } else if(article.icon){
-    hero.innerHTML='<div class="rounded-xl flex items-center justify-center" style="height:280px;max-width:760px;background:linear-gradient(135deg,#0a1520,#051515);border:1px solid rgba(73,253,227,0.12);"><span class="material-symbols-outlined" style="font-size:96px;color:rgba(73,253,227,0.25);font-variation-settings:\'FILL\' 1;">'+article.icon+'</span></div>';
+  // ── Render ────────────────────────────────────────────────────────
+  function showNotFound() {
+    document.getElementById('article-title').textContent = 'Article not found.';
+    document.getElementById('article-body').textContent  = 'Please return to the Insights page.';
   }
 
-  /* Body */
-  document.getElementById('article-body').innerHTML=article.body;
+  function renderArticle(article, showAudio, allArticles) {
+    document.getElementById('page-title').textContent  = article.title + ' — DAPS Analytics';
+    document.getElementById('page-desc').content       = article.excerpt;
+    document.getElementById('article-title').textContent   = article.title;
+    document.getElementById('article-excerpt').textContent = article.excerpt;
+    document.getElementById('article-date-display').textContent = (article.date || '') + ' · ' + (article.readTime || '');
 
-  /* Related articles (same category, different id) */
-  var related=articles.filter(function(a){ return a.id!==id && a.category===article.category; }).slice(0,3);
-  if(related.length<2){
-    related=articles.filter(function(a){ return a.id!==id; }).slice(0,3);
-  }
-  var relHTML='';
-  related.forEach(function(r){
-    relHTML+='<a href="article.html?id='+r.id+'" class="block group">'
-      +'<div class="flex gap-3 items-start">'
-      +'<div class="w-8 h-8 rounded flex-shrink-0 flex items-center justify-center mt-0.5" style="background:rgba(73,253,227,0.06);border:1px solid rgba(73,253,227,0.15);">'
-      +'<span class="material-symbols-outlined text-primary" style="font-size:14px;font-variation-settings:\'FILL\' 1;">article</span>'
-      +'</div>'
-      +'<div>'
-      +'<p class="text-white group-hover:text-primary transition-colors" style="font-size:13px;font-weight:600;line-height:1.4;margin-bottom:3px;">'+r.title+'</p>'
-      +'<span style="font-size:10px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:#849490;">'+r.categoryLabel+' · '+r.readTime+'</span>'
-      +'</div></div></a>';
-  });
-  document.getElementById('related-articles').innerHTML=relHTML;
+    // Author name
+    var authorEl = document.querySelector('#article-header .font-semibold');
+    if (authorEl && article.author) authorEl.textContent = article.author;
 
-  /* Reading progress bar */
-  var bar=document.getElementById('read-progress');
-  window.addEventListener('scroll',function(){
-    var h=document.documentElement.scrollHeight-window.innerHeight;
-    var pct=h>0?(window.scrollY/h*100):0;
-    bar.style.width=Math.min(pct,100)+'%';
-  });
+    // Meta badges
+    var meta = document.getElementById('article-meta');
+    meta.innerHTML =
+      '<span class="' + article.catClass + '" style="font-size:10px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;padding:4px 12px;border-radius:20px;">' + article.categoryLabel + '</span>' +
+      '<span style="color:#849490;font-size:12px;font-weight:600;">' + article.readTime + '</span>' +
+      '<span style="color:#849490;font-size:12px;font-weight:600;">' + article.date + '</span>';
 
-  /* Mobile menu */
-  var btn=document.getElementById('mobile-menu-btn');
-  var menu=document.getElementById('mobile-menu');
-  if(btn&&menu){
-    btn.addEventListener('click',function(){
-      menu.classList.toggle('hidden');
+    // Hero image (supports both static .image and Supabase .image_url)
+    var hero = document.getElementById('article-hero');
+    var heroImg = article.image_url || article.image || '';
+    if (heroImg) {
+      hero.innerHTML = '<div class="rounded-xl overflow-hidden" style="height:420px;"><img src="' + heroImg + '" alt="' + article.title + '" style="width:100%;height:100%;object-fit:cover;"/></div>';
+    } else if (article.icon) {
+      hero.innerHTML = '<div class="rounded-xl flex items-center justify-center" style="height:280px;max-width:760px;background:linear-gradient(135deg,#0a1520,#051515);border:1px solid rgba(73,253,227,0.12);"><span class="material-symbols-outlined" style="font-size:96px;color:rgba(73,253,227,0.25);font-variation-settings:\'FILL\' 1;">' + article.icon + '</span></div>';
+    }
+
+    // Body + audio player
+    var bodyEl = document.getElementById('article-body');
+    var bodyContent = article.body || '';
+    if (article.audio_url) {
+      // Professional ElevenLabs audio player
+      bodyEl.innerHTML = buildProAudioPlayer(article.audio_url) + bodyContent;
+      wireProPlayer(article.audio_url);
+    } else if (showAudio && window.speechSynthesis) {
+      // Fallback: browser TTS
+      var plainText = stripHtml(bodyContent);
+      initTts(plainText);
+      bodyEl.innerHTML = buildTtsBar() + bodyContent;
+    } else {
+      bodyEl.innerHTML = bodyContent;
+    }
+
+    // Related articles
+    var related = (allArticles || []).filter(function(a) { return a.id !== article.id && a.category === article.category; }).slice(0, 3);
+    if (related.length < 2) related = (allArticles || []).filter(function(a) { return a.id !== article.id; }).slice(0, 3);
+    var relHTML = '';
+    related.forEach(function(r) {
+      relHTML += '<a href="article.html?id=' + r.id + '" class="block group">' +
+        '<div class="flex gap-3 items-start">' +
+        '<div class="w-8 h-8 rounded flex-shrink-0 flex items-center justify-center mt-0.5" style="background:rgba(73,253,227,0.06);border:1px solid rgba(73,253,227,0.15);">' +
+        '<span class="material-symbols-outlined text-primary" style="font-size:14px;font-variation-settings:\'FILL\' 1;">article</span></div>' +
+        '<div><p class="text-white group-hover:text-primary transition-colors" style="font-size:13px;font-weight:600;line-height:1.4;margin-bottom:3px;">' + r.title + '</p>' +
+        '<span style="font-size:10px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:#849490;">' + r.categoryLabel + ' · ' + r.readTime + '</span>' +
+        '</div></div></a>';
+    });
+    document.getElementById('related-articles').innerHTML = relHTML || '<p style="font-size:13px;color:#849490;">No related articles.</p>';
+
+    // Reading progress bar
+    var bar = document.getElementById('read-progress');
+    window.addEventListener('scroll', function() {
+      var h = document.documentElement.scrollHeight - window.innerHeight;
+      bar.style.width = Math.min(h > 0 ? (window.scrollY / h * 100) : 0, 100) + '%';
     });
   }
+
+  // ── Professional Audio Player (ElevenLabs MP3) ───────────────────
+  function buildProAudioPlayer(audioUrl) {
+    return '<div id="proAudioBar">' +
+      '<div class="pro-audio-head">' +
+        '<div class="pro-audio-icon">🔊</div>' +
+        '<div>' +
+          '<div class="pro-audio-title">Listen to this article</div>' +
+          '<div class="pro-audio-sub">AI voice &middot; Adam &middot; ElevenLabs</div>' +
+        '</div>' +
+      '</div>' +
+      '<div class="pro-audio-controls">' +
+        '<button class="pro-play-btn" id="proPlayBtn" title="Play / Pause">&#9654;</button>' +
+        '<div class="pro-progress-wrap" id="proProgressWrap">' +
+          '<div class="pro-progress-track"><div class="pro-progress-fill" id="proProgressFill"></div></div>' +
+        '</div>' +
+        '<span class="pro-timer" id="proTimer">0:00 / 0:00</span>' +
+        '<div class="pro-speeds">' +
+          '<button class="pro-speed-btn" data-rate="0.75">0.75&times;</button>' +
+          '<button class="pro-speed-btn active" data-rate="1">1&times;</button>' +
+          '<button class="pro-speed-btn" data-rate="1.25">1.25&times;</button>' +
+          '<button class="pro-speed-btn" data-rate="1.5">1.5&times;</button>' +
+        '</div>' +
+      '</div>' +
+      '<audio id="proAudio" src="' + audioUrl + '" preload="metadata"></audio>' +
+    '</div>';
+  }
+
+  function wireProPlayer(audioUrl) {
+    var audio = document.getElementById('proAudio');
+    var playBtn = document.getElementById('proPlayBtn');
+    var fill = document.getElementById('proProgressFill');
+    var timer = document.getElementById('proTimer');
+    var progressWrap = document.getElementById('proProgressWrap');
+    if (!audio || !playBtn) return;
+
+    function fmtTime(s) {
+      if (isNaN(s)) return '0:00';
+      var m = Math.floor(s / 60); var sec = Math.floor(s % 60);
+      return m + ':' + (sec < 10 ? '0' : '') + sec;
+    }
+
+    playBtn.addEventListener('click', function() {
+      if (audio.paused) { audio.play(); } else { audio.pause(); }
+    });
+
+    audio.addEventListener('play', function() {
+      playBtn.innerHTML = '&#9646;&#9646;';
+      playBtn.style.fontSize = '10px';
+    });
+    audio.addEventListener('pause', function() {
+      playBtn.innerHTML = '&#9654;';
+      playBtn.style.fontSize = '13px';
+    });
+    audio.addEventListener('ended', function() {
+      playBtn.innerHTML = '&#9654;';
+      playBtn.style.fontSize = '13px';
+      fill.style.width = '0';
+    });
+
+    audio.addEventListener('timeupdate', function() {
+      if (!audio.duration) return;
+      fill.style.width = (audio.currentTime / audio.duration * 100) + '%';
+      timer.textContent = fmtTime(audio.currentTime) + ' / ' + fmtTime(audio.duration);
+    });
+    audio.addEventListener('loadedmetadata', function() {
+      timer.textContent = '0:00 / ' + fmtTime(audio.duration);
+    });
+
+    // Click to seek
+    progressWrap.addEventListener('click', function(e) {
+      if (!audio.duration) return;
+      var rect = progressWrap.getBoundingClientRect();
+      var pct = (e.clientX - rect.left) / rect.width;
+      audio.currentTime = pct * audio.duration;
+    });
+
+    // Speed buttons
+    document.querySelectorAll('.pro-speed-btn').forEach(function(btn) {
+      btn.addEventListener('click', function() {
+        audio.playbackRate = parseFloat(btn.dataset.rate);
+        document.querySelectorAll('.pro-speed-btn').forEach(function(b) {
+          b.classList.toggle('active', b === btn);
+        });
+      });
+    });
+  }
+
+  // ── TTS Engine ────────────────────────────────────────────────────
+  var ttsText = '', ttsTotalChars = 0, ttsCharIndex = 0;
+  var ttsPlaying = false, ttsRate = 1;
+  var ttsUtterance = null, ttsTimerInterval = null;
+  var ttsStartTime = 0, ttsElapsed = 0;
+
+  function stripHtml(html) {
+    var d = document.createElement('div');
+    d.innerHTML = html;
+    return (d.textContent || d.innerText || '').replace(/\s+/g, ' ').trim();
+  }
+
+  function initTts(text) {
+    ttsText = text;
+    ttsTotalChars = text.length;
+  }
+
+  function buildTtsBar() {
+    return '<div id="ttsBar">' +
+      '<div class="tts-left">' +
+        '<button id="ttsPlayBtn" class="tts-play-btn" onclick="toggleTts()"><span>&#9654;</span> Listen</button>' +
+        '<button class="tts-stop-btn" onclick="stopTts()" title="Stop">&#9724;</button>' +
+      '</div>' +
+      '<div class="tts-progress-wrap"><div class="tts-progress-track"><div class="tts-progress-fill" id="ttsProgressBar"></div></div></div>' +
+      '<span class="tts-timer" id="ttsTimer">0:00</span>' +
+      '<div class="tts-speeds">' +
+        '<button class="tts-speed-btn" data-rate="0.75" onclick="setTtsSpeed(0.75)">0.75&times;</button>' +
+        '<button class="tts-speed-btn active" data-rate="1" onclick="setTtsSpeed(1)">1&times;</button>' +
+        '<button class="tts-speed-btn" data-rate="1.25" onclick="setTtsSpeed(1.25)">1.25&times;</button>' +
+        '<button class="tts-speed-btn" data-rate="1.5" onclick="setTtsSpeed(1.5)">1.5&times;</button>' +
+      '</div>' +
+    '</div>';
+  }
+
+  function fmtTime(s) { var m = Math.floor(s / 60); s = Math.floor(s % 60); return m + ':' + (s < 10 ? '0' : '') + s; }
+
+  function updateBar(idx) {
+    var fill = document.getElementById('ttsProgressBar');
+    if (fill) fill.style.width = (ttsTotalChars > 0 ? Math.min(idx / ttsTotalChars * 100, 100) : 0) + '%';
+  }
+
+  function startTimer() {
+    ttsStartTime = Date.now() - ttsElapsed * 1000;
+    ttsTimerInterval = setInterval(function() {
+      ttsElapsed = (Date.now() - ttsStartTime) / 1000;
+      var el = document.getElementById('ttsTimer');
+      if (el) el.textContent = fmtTime(ttsElapsed);
+    }, 500);
+  }
+
+  function stopTimer() { if (ttsTimerInterval) { clearInterval(ttsTimerInterval); ttsTimerInterval = null; } }
+
+  function setBtn(playing) {
+    var btn = document.getElementById('ttsPlayBtn');
+    if (!btn) return;
+    btn.innerHTML = playing ? '<span>&#9646;&#9646;</span> Pause' : '<span>&#9654;</span> Listen';
+    btn.classList.toggle('playing', playing);
+  }
+
+  window.toggleTts = function() {
+    if (!window.speechSynthesis) { alert('Text-to-speech is not supported in your browser.'); return; }
+    if (ttsPlaying) {
+      window.speechSynthesis.pause(); ttsPlaying = false; stopTimer(); setBtn(false); return;
+    }
+    if (window.speechSynthesis.paused) {
+      window.speechSynthesis.resume(); ttsPlaying = true; startTimer(); setBtn(true); return;
+    }
+    // Fresh start
+    window.speechSynthesis.cancel();
+    ttsElapsed = 0; ttsCharIndex = 0;
+    speakFrom(0);
+  };
+
+  function speakFrom(offset) {
+    ttsUtterance = new SpeechSynthesisUtterance(ttsText.slice(offset));
+    ttsUtterance.rate = ttsRate;
+    ttsUtterance.lang = 'en-US';
+    ttsUtterance.onboundary = function(e) {
+      if (e.name === 'word') { ttsCharIndex = offset + e.charIndex; updateBar(ttsCharIndex); }
+    };
+    ttsUtterance.onend = function() {
+      ttsPlaying = false; stopTimer(); ttsElapsed = 0; ttsCharIndex = 0;
+      updateBar(0); setBtn(false);
+      var el = document.getElementById('ttsTimer'); if (el) el.textContent = '0:00';
+    };
+    ttsUtterance.onerror = function(e) {
+      if (e.error !== 'interrupted') { ttsPlaying = false; stopTimer(); setBtn(false); }
+    };
+    window.speechSynthesis.speak(ttsUtterance);
+    ttsPlaying = true; startTimer(); setBtn(true);
+  }
+
+  window.stopTts = function() {
+    window.speechSynthesis.cancel(); ttsPlaying = false; stopTimer();
+    ttsElapsed = 0; ttsCharIndex = 0; updateBar(0); setBtn(false);
+    var el = document.getElementById('ttsTimer'); if (el) el.textContent = '0:00';
+  };
+
+  window.setTtsSpeed = function(rate) {
+    ttsRate = rate;
+    document.querySelectorAll('.tts-speed-btn').forEach(function(b) {
+      b.classList.toggle('active', parseFloat(b.dataset.rate) === rate);
+    });
+    if (ttsPlaying || window.speechSynthesis.paused) {
+      var saved = ttsCharIndex, wasPlaying = ttsPlaying;
+      window.speechSynthesis.cancel(); stopTimer();
+      ttsUtterance = null; ttsPlaying = false;
+      if (wasPlaying) speakFrom(saved);
+    }
+  };
+
+  // Mobile menu
+  var btn = document.getElementById('mobile-menu-btn');
+  var menu = document.getElementById('mobile-menu');
+  if (btn && menu) btn.addEventListener('click', function() { menu.classList.toggle('hidden'); });
 })();
 </script>
 </body>

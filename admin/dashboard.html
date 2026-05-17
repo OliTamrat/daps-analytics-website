@@ -569,6 +569,85 @@
     .char-count.warn { color: var(--amber); }
     .char-count.over { color: #ff8080; }
 
+    /* ── IMAGE UPLOAD ──────────────────────────────────────────────── */
+    .upload-zone {
+      border: 2px dashed var(--border);
+      border-radius: 10px;
+      background: var(--surface);
+      overflow: hidden;
+      transition: border-color 0.2s, background 0.2s;
+    }
+    .upload-zone.drag-over { border-color: var(--teal); background: var(--teal-dim); }
+    .upload-placeholder {
+      display: flex; flex-direction: column; align-items: center;
+      justify-content: center; gap: 6px;
+      padding: 24px 16px; text-align: center; cursor: pointer;
+    }
+    .upload-icon { font-size: 30px; line-height: 1; opacity: 0.35; }
+    .upload-label { font-size: 13px; color: var(--muted); }
+    .upload-sub { font-size: 11px; color: var(--outline); }
+    .upload-choose-btn {
+      margin-top: 6px; padding: 6px 14px;
+      background: var(--card2); border: 1px solid var(--border);
+      border-radius: 6px; color: var(--text); font-size: 12px; font-weight: 600;
+      cursor: pointer; font-family: 'Inter', sans-serif; transition: border-color 0.2s;
+    }
+    .upload-choose-btn:hover { border-color: var(--teal); color: var(--teal); }
+    .upload-preview { position: relative; }
+    .upload-preview img { width: 100%; max-height: 180px; object-fit: cover; display: block; }
+    .upload-rm-btn {
+      position: absolute; top: 8px; right: 8px;
+      padding: 4px 10px; background: rgba(14,20,27,0.88);
+      border: 1px solid rgba(255,80,80,0.35); border-radius: 5px;
+      color: #ff8080; font-size: 11px; font-weight: 600;
+      cursor: pointer; font-family: 'Inter', sans-serif; transition: background 0.15s;
+    }
+    .upload-rm-btn:hover { background: rgba(255,80,80,0.18); }
+    .upload-prog {
+      display: none; align-items: center; gap: 8px;
+      padding: 12px 16px; font-size: 12px; color: var(--teal);
+    }
+    .upload-spin {
+      width: 14px; height: 14px; flex-shrink: 0;
+      border: 2px solid rgba(73,253,227,0.25); border-top-color: var(--teal);
+      border-radius: 50%; animation: spin 0.7s linear infinite;
+    }
+    /* ── TABLE TITLE CELL WITH THUMBNAIL ───────────────────────────── */
+    .td-title-wrap { display: flex; align-items: center; gap: 10px; }
+    .row-thumb {
+      width: 44px; height: 32px; border-radius: 5px;
+      object-fit: cover; border: 1px solid var(--border); flex-shrink: 0;
+    }
+    .row-thumb-ph {
+      width: 44px; height: 32px; border-radius: 5px;
+      background: var(--card2); border: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 14px; opacity: 0.3; flex-shrink: 0;
+    }
+    .badge-audio {
+      display: inline-flex; align-items: center; gap: 3px;
+      font-size: 9px; font-weight: 700; letter-spacing: 0.07em;
+      padding: 2px 7px; border-radius: 20px;
+      background: rgba(239,191,113,0.08); color: var(--amber);
+      border: 1px solid rgba(239,191,113,0.2); text-transform: uppercase;
+      margin-left: 4px; vertical-align: middle;
+    }
+    .badge-audio-ready {
+      display: inline-flex; align-items: center; gap: 3px;
+      font-size: 9px; font-weight: 700; letter-spacing: 0.07em;
+      padding: 2px 7px; border-radius: 20px;
+      background: rgba(73,253,227,0.08); color: var(--teal);
+      border: 1px solid rgba(73,253,227,0.2); text-transform: uppercase;
+      vertical-align: middle;
+    }
+    .action-btn.gen-audio {
+      background: rgba(239,191,113,0.08);
+      border-color: rgba(239,191,113,0.25);
+      color: var(--amber);
+    }
+    .action-btn.gen-audio:hover { background: rgba(239,191,113,0.16); }
+    .action-btn.gen-audio:disabled { opacity: 0.5; cursor: not-allowed; }
+
     .modal-footer {
       display: flex;
       align-items: center;
@@ -1692,12 +1771,28 @@ function renderInsights(rows) {
   }
 
   tbody.innerHTML = rows.map(function(row) {
+    var thumb = row.image_url
+      ? '<img class="row-thumb" src="' + esc(row.image_url) + '" alt="">'
+      : '<span class="row-thumb-ph">🖼</span>';
+    var audioStatus = row.audio_url
+      ? '<span class="badge-audio-ready">✓ Audio</span>'
+      : (row.enable_audio !== false ? '<span class="badge-audio">🔊 TTS</span>' : '');
+    var excerpt = esc((row.excerpt || '').substring(0, 72)) + ((row.excerpt || '').length > 72 ? '…' : '');
+    var genBtnLabel = row.audio_url ? '↺ Regen' : '🔊 Generate';
+    var genBtn = (row.enable_audio !== false)
+      ? '<button class="action-btn gen-audio" id="genbtn-' + row.id + '" onclick="generateAudio(' + row.id + ')"><span id="genlabel-' + row.id + '">' + genBtnLabel + '</span></button>'
+      : '';
     return '<tr>' +
-      '<td><strong>' + esc(row.title) + '</strong><br><span class="td-muted">' + esc(row.excerpt || '') + '</span></td>' +
+      '<td><div class="td-title-wrap">' + thumb + '<div><strong>' + esc(row.title) + '</strong>' + audioStatus + '<br><span class="td-muted">' + excerpt + '</span></div></div></td>' +
       '<td>' + categoryBadge(row.category) + '</td>' +
       '<td class="td-muted">' + (row.date || '—') + '</td>' +
       '<td><label class="toggle"><input type="checkbox"' + (row.active ? ' checked' : '') + ' onchange="toggleActive(\'insights\',' + row.id + ', this.checked)"><span class="toggle-track"></span></label></td>' +
-      '<td><div class="row-actions"><button class="action-btn" onclick="openEditModal(\'insights\',' + row.id + ')">Edit</button><button class="action-btn del" onclick="deleteRecord(\'insights\',' + row.id + ')">Delete</button></div></td>' +
+      '<td><div class="row-actions">' +
+        genBtn +
+        '<button class="action-btn" onclick="window.open(\'../article.html?aid=' + row.id + '\',\'_blank\')">View</button>' +
+        '<button class="action-btn" onclick="openEditModal(\'insights\',' + row.id + ')">Edit</button>' +
+        '<button class="action-btn del" onclick="deleteRecord(\'insights\',' + row.id + ')">Delete</button>' +
+      '</div></td>' +
     '</tr>';
   }).join('');
 }
@@ -1765,6 +1860,7 @@ function openAddModal() {
   document.getElementById('btnDelete').style.display = 'none';
   document.getElementById('modalBody').innerHTML = buildForm(formTab, null);
   wireCharCounts();
+  if (formTab === 'insights') wireInsightForm();
   document.getElementById('modalBackdrop').classList.add('open');
 }
 
@@ -1778,6 +1874,7 @@ function openEditModal(tab, id) {
   document.getElementById('btnDelete').style.display = '';
   document.getElementById('modalBody').innerHTML = buildForm(tab, row);
   wireCharCounts();
+  if (tab === 'insights') wireInsightForm();
   document.getElementById('modalBackdrop').classList.add('open');
 }
 
@@ -1798,6 +1895,8 @@ function buildForm(tab, data) {
 
 function buildInsightForm(d) {
   var cats = ['Market Trends', 'Data Science', 'Case Studies', 'Projects', 'Product Updates'];
+  var existImg = d ? (d.image_url || '') : '';
+  var audioOn  = d ? (d.enable_audio !== false) : true;
   return '<div class="form-row">' +
     field('Title', 'text', 'f-title', d ? d.title : '', 'Data Governance in Ethiopian Financial Markets', 'full') +
     '</div>' +
@@ -1806,17 +1905,39 @@ function buildInsightForm(d) {
     field('Date', 'date', 'f-date', d ? d.date : today(), '', '') +
     '</div>' +
     '<div class="form-row">' +
-    areaField('Excerpt', 'f-excerpt', d ? d.excerpt : '', 'One-sentence summary shown on the insights page…', 'full', 160) +
+    areaField('Excerpt', 'f-excerpt', d ? d.excerpt : '', 'One-sentence summary shown on the insights page\u2026', 'full', 160) +
     '</div>' +
     '<div class="form-row">' +
-    areaField('Full Body', 'f-body', d ? d.body : '', 'Full article content — use blank lines to separate paragraphs.', 'full tall', 0) +
+    areaField('Full Body', 'f-body', d ? d.body : '', 'Full article content \u2014 use blank lines to separate paragraphs.', 'full tall', 0) +
     '</div>' +
+    // ── Cover Image ────────────────────────────────────────────────────
+    '<div class="form-row"><div class="form-field full">' +
+    '<label>Cover Image</label>' +
+    '<input type="hidden" id="f-image_url" value="' + esc(existImg) + '">' +
+    '<input type="file" id="f-img-file" accept="image/jpeg,image/png,image/webp" style="display:none">' +
+    '<div class="upload-zone" id="uploadZone">' +
+      '<div class="upload-placeholder" id="uploadPlaceholder"' + (existImg ? ' style="display:none"' : '') + '>' +
+        '<div class="upload-icon">🖼</div>' +
+        '<div class="upload-label">Drop image here or click to upload</div>' +
+        '<div class="upload-sub">JPEG · PNG · WebP &mdash; max 5 MB</div>' +
+        '<button type="button" class="upload-choose-btn" id="uploadChooseBtn">Choose File</button>' +
+      '</div>' +
+      '<div class="upload-preview" id="uploadPreview"' + (!existImg ? ' style="display:none"' : '') + '>' +
+        '<img id="uploadPreviewImg"' + (existImg ? ' src="' + esc(existImg) + '"' : '') + ' alt="Cover">' +
+        '<button type="button" class="upload-rm-btn" id="uploadRmBtn">\u2715 Remove</button>' +
+      '</div>' +
+      '<div class="upload-prog" id="uploadProg"><div class="upload-spin"></div>Uploading image\u2026</div>' +
+    '</div>' +
+    '</div></div>' +
+    // ── Author + Read Time ──────────────────────────────────────────────
     '<div class="form-row">' +
     field('Author', 'text', 'f-author', d ? (d.author || '') : '', 'DAPS Analytics Team', '') +
     field('Read Time', 'text', 'f-read_time', d ? (d.read_time || '') : '', '5 min read', '') +
     '</div>' +
+    // ── Toggles ─────────────────────────────────────────────────────────
     '<div class="form-row">' +
     checkField('Active (visible on site)', 'f-active', d ? d.active : true) +
+    checkField('\uD83D\uDD0A Enable \u201cListen to Article\u201d audio player', 'f-enable_audio', audioOn) +
     '</div>';
 }
 
@@ -1891,6 +2012,143 @@ function wireCharCounts() {
   });
 }
 
+// ── IMAGE UPLOAD WIRING ─────────────────────────────────────────────────────
+function wireInsightForm() {
+  var zone = document.getElementById('uploadZone');
+  var fileInput = document.getElementById('f-img-file');
+  var chooseBtn = document.getElementById('uploadChooseBtn');
+  var rmBtn = document.getElementById('uploadRmBtn');
+  var placeholder = document.getElementById('uploadPlaceholder');
+  if (!zone) return;
+
+  // Click on zone placeholder area → open file picker
+  placeholder.addEventListener('click', function() { fileInput.click(); });
+  if (chooseBtn) chooseBtn.addEventListener('click', function(e) { e.stopPropagation(); fileInput.click(); });
+
+  // Remove button
+  if (rmBtn) rmBtn.addEventListener('click', function(e) { e.stopPropagation(); clearArticleImage(); });
+
+  // File input change
+  fileInput.addEventListener('change', function() {
+    if (fileInput.files && fileInput.files[0]) handleUpload(fileInput.files[0]);
+  });
+
+  // Drag & drop
+  zone.addEventListener('dragover', function(e) { e.preventDefault(); zone.classList.add('drag-over'); });
+  zone.addEventListener('dragleave', function() { zone.classList.remove('drag-over'); });
+  zone.addEventListener('drop', function(e) {
+    e.preventDefault(); zone.classList.remove('drag-over');
+    var f = e.dataTransfer.files[0];
+    if (f && f.type.startsWith('image/')) handleUpload(f);
+  });
+}
+
+async function handleUpload(file) {
+  if (file.size > 5 * 1024 * 1024) { showToast('Image too large — max 5 MB.', 'error'); return; }
+  var placeholder = document.getElementById('uploadPlaceholder');
+  var preview    = document.getElementById('uploadPreview');
+  var prog       = document.getElementById('uploadProg');
+
+  placeholder.style.display = 'none';
+  preview.style.display = 'none';
+  prog.style.display = 'flex';
+
+  try {
+    var url = await uploadToStorage(file);
+    document.getElementById('f-image_url').value = url;
+    document.getElementById('uploadPreviewImg').src = url;
+    prog.style.display = 'none';
+    preview.style.display = '';
+    showToast('Image uploaded.', 'success');
+  } catch (err) {
+    prog.style.display = 'none';
+    placeholder.style.display = '';
+    showToast('Upload failed: ' + err.message, 'error');
+  }
+}
+
+async function uploadToStorage(file) {
+  var ext = file.name.split('.').pop().toLowerCase();
+  var name = 'cover-' + Date.now() + '-' + Math.random().toString(36).slice(2) + '.' + ext;
+  var { error } = await sb.storage.from('article-images').upload(name, file, {
+    cacheControl: '3600', upsert: false, contentType: file.type
+  });
+  if (error) throw error;
+  var { data } = sb.storage.from('article-images').getPublicUrl(name);
+  return data.publicUrl;
+}
+
+// ── AI AUDIO GENERATION ─────────────────────────────────────────────────────
+async function generateAudio(id) {
+  var row = tableData.insights.find(function(r) { return r.id === id; });
+  if (!row) return;
+
+  var btn = document.getElementById('genbtn-' + id);
+  var label = document.getElementById('genlabel-' + id);
+  if (btn) { btn.disabled = true; }
+  if (label) label.textContent = 'Generating…';
+
+  // Build plain text from title + excerpt + body
+  var plainText = (row.title || '') + '.\n\n' +
+    (row.excerpt || '') + '\n\n' +
+    stripBodyHtml(row.body || '');
+
+  try {
+    // 1. Call serverless function → get MP3 binary
+    var resp = await fetch('/api/generate-audio', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ text: plainText })
+    });
+
+    if (!resp.ok) {
+      var errData = await resp.json().catch(function() { return {}; });
+      throw new Error(errData.error || 'Generation failed (' + resp.status + ')');
+    }
+
+    var audioBlob = await resp.blob();
+
+    // 2. Upload MP3 to Supabase Storage
+    if (label) label.textContent = 'Uploading…';
+    var fileName = 'audio-' + id + '-' + Date.now() + '.mp3';
+    var { error: upErr } = await sb.storage
+      .from('article-images')
+      .upload(fileName, audioBlob, { cacheControl: '3600', upsert: true, contentType: 'audio/mpeg' });
+    if (upErr) throw upErr;
+
+    var { data: urlData } = sb.storage.from('article-images').getPublicUrl(fileName);
+    var audioUrl = urlData.publicUrl;
+
+    // 3. Save audio_url to insights row
+    var { error: dbErr } = await sb.from('insights').update({ audio_url: audioUrl }).eq('id', id);
+    if (dbErr) throw dbErr;
+
+    // 4. Update local state + re-render
+    row.audio_url = audioUrl;
+    renderInsights(tableData.insights);
+    showToast('Audio generated successfully — Adam (ElevenLabs)', 'success');
+
+  } catch (err) {
+    showToast('Audio generation failed: ' + err.message, 'error');
+    if (btn) btn.disabled = false;
+    if (label) label.textContent = row.audio_url ? '↺ Regen' : '🔊 Generate';
+  }
+}
+
+function stripBodyHtml(html) {
+  var d = document.createElement('div');
+  d.innerHTML = html;
+  return (d.textContent || d.innerText || '').replace(/\s+/g, ' ').trim();
+}
+
+function clearArticleImage() {
+  document.getElementById('f-image_url').value = '';
+  document.getElementById('uploadPreviewImg').src = '';
+  document.getElementById('uploadPreview').style.display = 'none';
+  document.getElementById('uploadPlaceholder').style.display = '';
+  document.getElementById('f-img-file').value = '';
+}
+
 // ── SAVE ───────────────────────────────────────────────────────────────────
 async function saveRecord() {
   var payload = readForm(currentTab);
@@ -1914,15 +2172,18 @@ function readForm(tab) {
   if (tab === 'insights') {
     var title = document.getElementById('f-title').value.trim();
     if (!title) { showToast('Title is required.', 'error'); return null; }
+    var imgUrl = document.getElementById('f-image_url').value.trim();
     return {
       title: title,
       category: document.getElementById('f-category').value,
       date: document.getElementById('f-date').value,
       excerpt: document.getElementById('f-excerpt').value.trim(),
       body: document.getElementById('f-body').value.trim(),
+      image_url: imgUrl || null,
       author: document.getElementById('f-author').value.trim(),
       read_time: document.getElementById('f-read_time').value.trim(),
-      active: document.getElementById('f-active').checked
+      active: document.getElementById('f-active').checked,
+      enable_audio: document.getElementById('f-enable_audio').checked
     };
   } else {
     var content = document.getElementById('f-content').value.trim();
