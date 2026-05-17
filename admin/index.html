@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Admin Login — DAPS Analytics</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&display=swap" rel="stylesheet">
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -15,7 +15,7 @@
       --bg: #0e141b;
       --surface: #131c26;
       --card: #17202c;
-      --border: rgba(73, 253, 227, 0.14);
+      --border: rgba(132,148,144,0.18);
       --text: #dee2ed;
       --muted: #bacac5;
       --outline: #849490;
@@ -32,30 +32,45 @@
       overflow: hidden;
     }
 
-    /* Animated background grid */
+    /* cinematic grid */
     body::before {
       content: '';
       position: fixed;
       inset: 0;
       background-image:
-        linear-gradient(rgba(73,253,227,0.04) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(73,253,227,0.04) 1px, transparent 1px);
-      background-size: 48px 48px;
+        linear-gradient(rgba(73,253,227,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(73,253,227,0.03) 1px, transparent 1px);
+      background-size: 56px 56px;
       z-index: 0;
+      pointer-events: none;
     }
 
-    /* Radial glow */
+    /* teal glow centre */
     body::after {
       content: '';
       position: fixed;
-      top: 50%;
+      top: 45%;
       left: 50%;
       transform: translate(-50%, -50%);
-      width: 800px;
-      height: 600px;
-      background: radial-gradient(ellipse at center, rgba(73,253,227,0.06) 0%, transparent 70%);
+      width: 900px;
+      height: 700px;
+      background: radial-gradient(ellipse at center,
+        rgba(73,253,227,0.07) 0%,
+        rgba(73,253,227,0.02) 40%,
+        transparent 70%);
       z-index: 0;
       pointer-events: none;
+    }
+
+    /* amber accent top-right */
+    .bg-amber {
+      position: fixed;
+      top: -80px; right: -80px;
+      width: 480px; height: 480px;
+      background: radial-gradient(ellipse at center,
+        rgba(239,191,113,0.06) 0%, transparent 65%);
+      pointer-events: none;
+      z-index: 0;
     }
 
     .login-wrap {
@@ -112,6 +127,7 @@
       border: 1px solid var(--border);
       border-radius: 16px;
       padding: 40px;
+      box-shadow: 0 32px 80px rgba(0,0,0,0.4), 0 0 0 1px rgba(73,253,227,0.04) inset;
     }
 
     .card-title {
@@ -133,11 +149,11 @@
 
     label {
       display: block;
-      font-size: 12px;
+      font-size: 11px;
       font-weight: 600;
-      letter-spacing: 0.08em;
+      letter-spacing: 0.1em;
       text-transform: uppercase;
-      color: var(--muted);
+      color: var(--outline);
       margin-bottom: 8px;
     }
 
@@ -173,13 +189,14 @@
       font-weight: 700;
       letter-spacing: 0.04em;
       cursor: pointer;
-      transition: opacity 0.2s, transform 0.15s;
+      transition: opacity 0.2s, transform 0.15s, box-shadow 0.2s;
       margin-top: 8px;
+      box-shadow: 0 0 24px rgba(73,253,227,0.18);
     }
 
-    .btn:hover { opacity: 0.88; transform: translateY(-1px); }
+    .btn:hover { opacity: 0.9; transform: translateY(-1px); box-shadow: 0 0 32px rgba(73,253,227,0.28); }
     .btn:active { transform: translateY(0); }
-    .btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+    .btn:disabled { opacity: 0.45; cursor: not-allowed; transform: none; box-shadow: none; }
 
     .error-msg {
       display: none;
@@ -217,16 +234,12 @@
   </style>
 </head>
 <body>
+  <div class="bg-amber"></div>
   <div class="login-wrap">
     <div class="brand">
-      <div class="brand-logo">
-        <div class="brand-icon">
-          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-            <path d="M3 3h7v7H3V3zm11 0h7v7h-7V3zM3 14h7v7H3v-7zm14 0a3.5 3.5 0 1 1 0 7 3.5 3.5 0 0 1 0-7z"/>
-          </svg>
-        </div>
-        <span class="brand-name">DAPS Analytics</span>
-      </div>
+      <img src="../assets/images/daps-logo-nav.svg" alt="DAPS Analytics"
+           style="height:26px;width:auto;margin-bottom:20px;display:block;margin-left:auto;margin-right:auto;">
+      <div style="width:36px;height:1px;background:linear-gradient(90deg,transparent,var(--teal),transparent);margin:0 auto 14px;"></div>
       <div class="brand-sub">Admin Portal</div>
     </div>
 
