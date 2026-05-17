@@ -282,7 +282,8 @@
       categoryLabel: cat.label,
       catClass:      cat.cls,
       body:          bodyHtml,
-      image_url:     data.image_url || '',
+      image_url:     data.image_url  || '',
+      audio_url:     data.audio_url  || '',
       enable_audio:  data.enable_audio !== false
     };
     renderArticle(article, article.enable_audio, []);
