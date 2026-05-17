@@ -520,6 +520,7 @@
   </div>
 </footer>
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
 <script src="assets/navbar.js"></script>
 <script src="assets/daps.js"></script>
 <script>
@@ -590,6 +591,71 @@ if (loadMoreBtn) {
     this.style.opacity = '0.4';
   });
 }
+
+// ── Load dynamic articles from Supabase ──────────────────────────
+(async function loadDynamicArticles() {
+  var SUPABASE_URL     = 'https://rveellaalzowncfsekwx.supabase.co';
+  var SUPABASE_ANON_KEY= 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJ2ZWVsbGFhbHpvd25jZnNla3d4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzkwMTMzMDQsImV4cCI6MjA5NDU4OTMwNH0.6U1gGmLW9CxTjagobfy_p0Xx5QpRrY6h1u944K2ZKcE';
+
+  var catMap = {
+    'Market Trends':   { cls: 'cat-market',  slug: 'market-trends',   label: 'Market Trends'   },
+    'Data Science':    { cls: 'cat-data',    slug: 'data-science',     label: 'Data Science'    },
+    'Case Studies':    { cls: 'cat-case',    slug: 'case-studies',     label: 'Case Studies'    },
+    'Projects':        { cls: 'cat-project', slug: 'projects',         label: 'Projects'        },
+    'Product Updates': { cls: 'cat-product', slug: 'product-updates',  label: 'Product Updates' }
+  };
+
+  try {
+    var sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+    var { data, error } = await sb
+      .from('insights')
+      .select('id, title, excerpt, category, date, read_time, image_url, audio_url, active')
+      .eq('active', true)
+      .order('date', { ascending: false });
+
+    if (error || !data || !data.length) return;
+
+    var grid = document.getElementById('articles-grid');
+    var frag = '';
+
+    data.forEach(function(row) {
+      var cat = catMap[row.category] || { cls: 'cat-case', slug: 'case-studies', label: row.category || '' };
+      var audioTag = row.audio_url
+        ? '<span style="font-size:9px;font-weight:700;letter-spacing:0.07em;padding:2px 7px;border-radius:20px;background:rgba(73,253,227,0.08);color:#49fde3;border:1px solid rgba(73,253,227,0.2);text-transform:uppercase;">&#9654; Audio</span>'
+        : '';
+      var heroHtml = row.image_url
+        ? '<img class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 opacity-75 group-hover:opacity-100 grayscale group-hover:grayscale-0" src="' + row.image_url + '" alt="' + (row.title || '') + '">'
+        : '<div class="absolute inset-0 flex items-center justify-center"><span class="material-symbols-outlined" style="font-size:64px;color:rgba(73,253,227,0.18);font-variation-settings:\'FILL\' 1;">article</span></div>';
+      var heroWrap = row.image_url
+        ? '<div class="overflow-hidden rounded-lg mb-5 aspect-video">' + heroHtml + '</div>'
+        : '<div class="overflow-hidden rounded-lg mb-5 aspect-video" style="background:linear-gradient(135deg,#0a1520,#051515);position:relative;">' + heroHtml + '</div>';
+
+      frag +=
+        '<a href="article.html?aid=' + row.id + '" class="block article-card group" data-category="' + cat.slug + '" data-title="' + (row.title || '').toLowerCase() + '">' +
+          heroWrap +
+          '<div class="flex flex-wrap items-center gap-3 mb-3">' +
+            '<span class="' + cat.cls + ' read-badge px-2 py-1 rounded" style="font-size:10px;">' + cat.label + '</span>' +
+            '<span class="font-label-caps text-label-caps text-on-surface-variant/50" style="font-size:10px;">' + (row.read_time || '5 min read') + '</span>' +
+            audioTag +
+          '</div>' +
+          '<h3 class="text-white font-semibold leading-snug mb-2 group-hover:text-primary transition-colors" style="font-size:16px;line-height:1.5;">' + (row.title || '') + '</h3>' +
+          '<p class="text-on-surface-variant line-clamp-2" style="font-size:14px;line-height:1.65;">' + (row.excerpt || '') + '</p>' +
+        '</a>';
+    });
+
+    // Prepend dynamic articles (most recent first) before static ones
+    grid.insertAdjacentHTML('afterbegin', frag);
+    // Re-apply any active filter so new cards obey it
+    applyFilters();
+
+    // Update total count
+    var countEl = document.getElementById('total-count');
+    if (countEl) countEl.textContent = document.querySelectorAll('.article-card:not([style*="display: none"])').length;
+
+  } catch (e) {
+    console.warn('Dynamic articles load failed:', e);
+  }
+})();
 
 // Newsletter
 function handleNewsletterSubmit(e) {
