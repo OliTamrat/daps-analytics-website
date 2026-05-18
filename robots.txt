@@ -1,4 +1,5 @@
 User-agent: *
 Allow: /
+Disallow: /api/
 
-Sitemap: https://dapsanalytics.vercel.app/sitemap.xml
+Sitemap: https://dapsanalytics.com/sitemap.xml
