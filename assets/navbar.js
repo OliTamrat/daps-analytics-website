@@ -171,6 +171,7 @@
       + di('groups','nc','Leadership','Meet the DAPS Analytics team','company.html')
       + di('timeline','ac','Our Journey','Ethiopia → East Africa → Global','company.html')
       + di('forum','tc','Contact Us','Initiate a project conversation','contact.html')
+      + di('link','nc','All Links','Find DAPS across every platform','linktree.html')
       + '</div>'
       + '<div class="dfr"><a href="company.html">Company overview →</a></div>',
     'r'),
@@ -247,6 +248,7 @@
     + '<div class="msec"><span class="msl">Resources</span>'
     + mlink('article','Insights','insights.html')
     + mlink('info','Company','company.html')
+    + mlink('link','All Links','linktree.html')
     + '</div>'
     + '<a href="contact.html" class="mctab">Book a Call</a>'
     + '</div>';
