@@ -223,30 +223,41 @@ After pulling changes or editing files, do a **hard refresh** (`Ctrl+Shift+R`) �
 
 ## Pre-Launch Checklist & Next Phase Tasks
 
-### DONE (as of 2026-05-04)
+### DONE (as of 2026-05-17)
 - [x] Contact form wired → Resend via Vercel serverless function (`api/contact.js`). Needs `RESEND_API_KEY` env var set in Vercel dashboard.
-- [x] Calendly button wired → `https://calendly.com/olitamrat/30min` (temporary — replacing with Teams/Zoom, see below)
+- [x] Teams Bookings calendar wired → `https://outlook.office.com/book/ChatwithDAPS@dapsanalytics.com/`
 - [x] Privacy Policy page (`privacy.html`) — 10-section legal policy
 - [x] Favicon (SVG) on all pages
-- [x] Open Graph + Twitter Card meta tags on all 13 pages — `og:image` refs `assets/images/og-preview.png`
-- [x] `robots.txt` and `sitemap.xml` (14 pages)
-- [x] Privacy Policy link in footer of all 14 pages
+- [x] Open Graph + Twitter Card meta tags on all 15 pages
+- [x] `robots.txt` and `sitemap.xml` — updated to `dapsanalytics.com` domain
+- [x] Privacy Policy link in footer of all pages
+- [x] Admin dashboard — Insights CMS with image upload (Supabase Storage) and ElevenLabs AI audio generation
+- [x] `api/generate-audio.js` — ElevenLabs serverless function (Adam voice, `eleven_turbo_v2_5`, maxDuration 60s)
+- [x] `article.html` — pro audio player (ElevenLabs MP3), browser TTS fallback, sidebar ToC + Share + Related Articles
+- [x] `insights.html` — dynamic Supabase article loading (admin articles prepended to grid)
+- [x] Linktree globe camera matched to homepage (half-circle on right)
+- [x] Linktree added to navbar Company dropdown + all footers
+- [x] Footer text brightness fixed across all 14 pages (#3b4a46 → #bacac5)
+- [x] **SEO overhaul** — canonical URLs, JSON-LD (Organization/WebSite/LocalBusiness/BreadcrumbList), keyword titles, 150-160 char descriptions, OG/Twitter synced, all URLs → dapsanalytics.com
+- [x] **Google Search Console** — verified, sitemap submitted, indexing requested (2026-05-17)
+- [x] **Bing Webmaster Tools** — verified via GSC import, sitemap submitted (2026-05-17)
+- [x] **Google Analytics 4** — `G-F4MDXMW8KB` on all 15 pages (2026-05-17)
 
 ### TODO — Pending your action
 
 | Task | What Claude needs / what you do | File to touch |
 |------|--------------------------------|---------------|
-| **Add RESEND_API_KEY to Vercel** | Vercel dashboard → daps-analytics-website → Settings → Env Vars → add `RESEND_API_KEY` | Vercel UI only |
-| **Replace Calendly with Teams or Zoom scheduler** | Provide your Teams Bookings URL or Zoom Scheduler link — Claude updates one line | `contact.html` line with `calendly.com/olitamrat/30min` |
-| **OG preview image** | Run `og-generator.html` via local server → click Download → save PNG to `assets/images/og-preview.png` → push | `assets/images/og-preview.png` |
-| **Set up hello@dapsanalytics.com** | Google Workspace ($6/mo) or Zoho Mail (free) — then update `CONTACT_TO_EMAIL` env var in Vercel | Vercel UI + one line in `api/contact.js` |
-| **Update Resend from-address** | Once hello@dapsanalytics.com verified in Resend dashboard, change one line: `from: 'DAPS Analytics <hello@dapsanalytics.com>'` | `api/contact.js` line 44 |
+| **Add RESEND_API_KEY to Vercel** | Vercel dashboard → Settings → Env Vars → add `RESEND_API_KEY` | Vercel UI only |
+| **OG preview image** | Open `og-generator.html` locally → click Download → save PNG to `assets/images/og-preview.png` → push | `assets/images/og-preview.png` |
+| **Set up hello@dapsanalytics.com** | Google Workspace ($6/mo) or Zoho Mail (free) → update `CONTACT_TO_EMAIL` in Vercel | Vercel UI + `api/contact.js` line 44 |
 | **Founder photos** | 7 gradient placeholders on `company.html` — provide photo files, Claude wires them | `company.html` |
-| **Google Analytics** | Create GA4 property → get Measurement ID (G-XXXXXXXXXX) → Claude adds script to all pages | All HTML pages |
+| **WhatsApp link** | Provide WhatsApp number → Claude updates one line | `contact.html` |
 | **Real trust logos** | Provide partner/client logo files or SVGs | `index.html` trust bar section |
+| **Re-enable product content** | After EIPA receipt — follow 8-step checklist in `Project_Briefing.md` | Multiple files |
+| **Month 3 content plan** | Marketing decision → Claude creates new content library | `assets/month3-posts.js` |
 
-### After custom domain (dapsanalytics.com) lands
-1. Find-replace `dapsanalytics.vercel.app` → `www.dapsanalytics.com` across all HTML files (Claude does this in one pass)
+### After custom domain (dapsanalytics.com) — DONE ✅
+All canonical URLs, OG tags, sitemap, and robots.txt already point to `dapsanalytics.com` (updated 2026-05-17).
 2. Re-run `og-generator.html` → save new `og-preview.png` with updated URL text → push
 3. Update Vercel domain settings
 4. Update Resend verified domain if using hello@dapsanalytics.com

@@ -1,6 +1,6 @@
 # DAPS Analytics — Complete Project Handoff
 **Document type:** Founder & Stakeholder Reference
-**Last updated:** 2026-05-17
+**Last updated:** 2026-05-17 (Session 2)
 **Status:** Live — Pre-registration mode
 **Prepared by:** Olink Technologies Inc.
 
@@ -48,14 +48,17 @@ Highlights:
 ### Part 2 — Linktree (`dapsanalytics.com/linktree.html`)
 A single branded page that consolidates all social handles, website links, services, and contact options. Used as the link-in-bio across all social platforms.
 
-- Live WebGL rotating globe as the background (same globe engine as homepage)
+- Live WebGL rotating globe as the background — **camera matched to homepage** (half-circle on right, not full sphere)
 - 3 sections: Follow Us (6 social handles) · Website Links · Get In Touch
 - Footer: "Built by Olink Technologies"
+- Accessible from **every page** via the Company dropdown in the navbar and the Company column in the footer
 
 ### Part 3 — Admin Dashboard (`dapsanalytics.com/admin/`)
 A password-protected content management system (CMS) for managing the website's Insights articles and social media content.
 
 - **Insights tab** — create, edit, activate/deactivate articles that appear on `insights.html`
+  - **Image upload** — drag-and-drop cover image upload to Supabase Storage (`article-images` bucket); image shown in article hero
+  - **AI Audio generation** — one-click ElevenLabs AI voice generation (Adam, American male); stored as MP3 in Supabase Storage; article.html auto-plays professional audio player when present
 - **Social Posts tab** — track every social media post with platform, date, content, status
 - **Calendar tab** — monthly visual calendar of all scheduled social posts
 - **Monthly Plans tab** — complete 30-day content library (Month 2) with copy and auto-schedule
@@ -114,7 +117,7 @@ Pages: Products, Onekof PM, UDC-WQIS, Hakimet, Olink Fleet
 | Industries | `industries.html` | Sector-specific hover-reveal cards |
 | Company | `company.html` | Founding story, timeline, 7-founder team section |
 | Insights | `insights.html` | Article library — filterable by category, live search, 12 articles |
-| Article Reader | `article.html` | Individual article view (`?id=1` through `?id=12`) with progress bar |
+| Article Reader | `article.html` | Static articles (`?id=1–12`) + Supabase admin articles (`?aid=ROW_ID`); ElevenLabs audio player or browser TTS fallback; auto-generated Table of Contents sidebar; Share buttons (LinkedIn, X, copy link); Related Articles |
 | Projects | `projects.html` | TDT×MINT flagship + 6-project portfolio grid + partnership CTA |
 | Contact | `contact.html` | Qualification form + Teams booking calendar |
 | Onekof PM | `onekof-pm.html` | Onekof product detail page — gated |
@@ -381,15 +384,18 @@ Vercel auto-deploys in ~60 seconds.
 
 ## 13. Pending Tasks Before Full Launch
 
-| Task | Who | What to do |
-|------|-----|-----------|
-| Add `RESEND_API_KEY` to Vercel | Oli | Vercel dashboard → project → Settings → Environment Variables → add key |
-| Founder photos | Founders | Provide 7 photo files → Claude wires them into `company.html` |
-| OG preview image | Oli | Open `og-generator.html` locally → click Download → save as `assets/images/og-preview.png` → push |
-| Google Analytics | Oli | Create GA4 property → get Measurement ID (G-XXXXXXXXXX) → Claude adds to all pages |
-| WhatsApp link | Oli | Provide WhatsApp number → Claude updates `contact.html` |
-| Re-enable product content | Oli | Do steps in Section 12 above after EIPA receipt arrives |
-| Month 3 content plan | Marketing | Plan next 30 days → Claude creates new content library |
+| Task | Status | Who | What to do |
+|------|--------|-----|-----------|
+| Add `RESEND_API_KEY` to Vercel | ⏳ Pending | Oli | Vercel dashboard → project → Settings → Environment Variables → add key |
+| Founder photos | ⏳ Pending | Founders | Provide 7 photo files → Claude wires them into `company.html` |
+| OG preview image | ⏳ Pending | Oli | Open `og-generator.html` locally → click Download → save as `assets/images/og-preview.png` → push |
+| WhatsApp link | ⏳ Pending | Oli | Provide WhatsApp number → Claude updates `contact.html` |
+| Re-enable product content | ⏳ Pending | Oli | Do steps in Section 12 above after EIPA receipt arrives |
+| Month 3 content plan | ⏳ Pending | Marketing | Plan next 30 days → Claude creates new content library |
+| Google Analytics GA4 | ✅ Done | — | `G-F4MDXMW8KB` live on all 15 pages (2026-05-17) |
+| Google Search Console | ✅ Done | — | Verified, sitemap submitted, indexing requested (2026-05-17) |
+| Bing Webmaster Tools | ✅ Done | — | Verified, sitemap submitted via Google SC import (2026-05-17) |
+| SEO overhaul | ✅ Done | — | Canonical URLs, JSON-LD schema, keyword titles, meta descriptions (2026-05-17) |
 
 ---
 
@@ -471,7 +477,67 @@ daps-analytics-website/
 
 ---
 
-## 16. IP & Ownership
+## 16. Session Change Log
+
+### Session 2 — 2026-05-17
+
+#### Article Reader (`article.html`)
+- **Image cropping fixed** — hero image switched from `object-fit:cover` (cut off top/bottom) to `object-fit:contain` with dark background fill; full image now visible
+- **Audio player subtitle removed** — "AI voice · Adam · ElevenLabs" label removed from the audio bar header
+- **Sidebar redesigned** — replaced the large empty right column with three functional cards:
+  - **In this article** — Table of Contents auto-generated from article `<h2>` headings; active section highlighted teal as you scroll
+  - **Share** — LinkedIn share, X/Twitter share, Copy link (with "Copied!" confirmation)
+  - **Related Articles** — unchanged, now properly fills the sidebar
+
+#### Linktree (`linktree.html`)
+- **Globe camera aligned to homepage** — changed from centered full-sphere `(0, 0.2, 8.0)` to same offset as homepage `(-1.8, 0.4, 5.8)`; now shows right-side half-circle matching the hero section
+- **Added to navbar** — appears in the Company dropdown as "All Links" entry
+- **Added to footer** — appears in the Company column on all 13 pages
+
+#### Footer (all 14 pages)
+- **Text brightness fixed** — replaced near-invisible `#3b4a46` and `#1e2a26` with readable `#bacac5` and `#849490` across all footer sections
+- **Nav link brightness** — footer navigation links bumped from `#849490` to `#bacac5` for better contrast on dark `#050709` footer background
+
+#### SEO — Comprehensive Overhaul (all 13 pages)
+| Item | Detail |
+|------|--------|
+| Canonical URLs | `<link rel="canonical">` added pointing to `dapsanalytics.com` |
+| Organization schema | JSON-LD with name, address, logo, contactPoint, all 6 social sameAs links |
+| WebSite schema | Homepage only — associates brand name with domain for Knowledge Panel |
+| LocalBusiness schema | Contact page — geo-coordinates (Bethesda, MD 38.9818, -77.0953) |
+| BreadcrumbList schema | All inner pages — shows as "DAPS Analytics > Services" in search results |
+| Page titles | Rewritten with primary keywords (55–76 chars, unique per page) |
+| Meta descriptions | Expanded to 150-160 chars with CTAs and keywords |
+| OG + Twitter tags | Synced to new titles/descriptions |
+| Asset URLs | All `dapsanalytics.vercel.app` → `dapsanalytics.com` |
+| `og:locale` | `en_US` added to all pages |
+| Geo meta tags | `geo.region: US-MD`, `geo.placename: Bethesda, Maryland` |
+| sitemap.xml | Updated to `dapsanalytics.com` URLs + `lastmod: 2026-05-17` |
+| robots.txt | Sitemap URL updated; `/api/` disallowed |
+
+#### Analytics & Search Engine Registration
+| Platform | Action | Status |
+|----------|--------|--------|
+| Google Search Console | Domain verified, sitemap submitted, indexing requested on homepage | ✅ Complete |
+| Bing Webmaster Tools | Site verified via Google SC import, sitemap submitted | ✅ Complete |
+| Google Analytics 4 | `G-F4MDXMW8KB` script added to all 15 pages | ✅ Complete |
+
+#### Admin Dashboard (`admin/dashboard.html`)
+- Image upload: drag-and-drop zone added to article form; uploads to `article-images` Supabase Storage bucket; preview shown; `image_url` saved to `insights` table
+- ElevenLabs AI audio: "Generate Audio" button per article row; calls `/api/generate-audio` serverless function → ElevenLabs Adam voice → MP3 uploaded to `article-images` bucket → `audio_url` saved to row
+- Audio badge in article list: shows `✓ Audio` (green) when MP3 exists, `🔊 TTS` when audio enabled without MP3
+- Supabase RLS policies: authenticated INSERT + ALL operations on `article-images` bucket; anon SELECT on `insights` table (active rows only)
+
+#### Vercel Serverless Function (`api/generate-audio.js`)
+- New function: calls ElevenLabs `/v1/text-to-speech/{voiceId}` → returns `audio/mpeg` binary
+- Voice: Adam (`pNInz6obpgDQGcFmaJgB`) — American male, authoritative
+- Model: `eleven_turbo_v2_5`
+- `vercel.json` configured with `maxDuration: 60` to handle ElevenLabs generation time (15–20s)
+- Environment variables in Vercel: `ELEVENLABS_API_KEY`, `ELEVENLABS_VOICE_ID`
+
+---
+
+## 17. IP & Ownership
 
 - **Author & Moral Rights:** Oli Tamrat
 - **Commercial Rights:** DAPS Analytics / Olink Technologies Inc.
