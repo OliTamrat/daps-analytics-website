@@ -547,10 +547,10 @@
     renderer.setSize(W, H);
     renderer.setClearColor(0x000000, 0);
 
-    /* Scene / Camera — centered, pulled back for background feel */
+    /* Scene / Camera — shifted left so globe appears on right side, matching homepage hero */
     var scene  = new THREE.Scene();
     var camera = new THREE.PerspectiveCamera(42, W / H, 0.1, 1000);
-    camera.position.set(0, 0.2, 8.0);
+    camera.position.set(-1.8, 0.4, 5.8);
     camera.lookAt(0, 0, 0);
 
     /* Lights */
