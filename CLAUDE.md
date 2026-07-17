@@ -284,6 +284,75 @@ All canonical URLs, OG tags, sitemap, and robots.txt already point to `dapsanaly
 
 ---
 
+## Session 3 — Website Redesign & Onekof Launch (2026-07-16)
+
+### Changes deployed to production
+
+**Product visibility overhaul:**
+- Onekof PM: gate removed, flagship badge + "Certified Secure" badge, fully public
+- UDC-WQIS: visible with clean stakeholder access bar (no blur), detail page still gated
+- Hakimet + Olink Fleet: temporarily hidden (`display:none`) across all pages, pending EIPA/INSA
+- Products navbar dropdown: shows only Onekof + WQIS (Hakimet/Fleet hidden)
+- `products.html`: rebuilt as clean 2-product page (Onekof featured + WQIS gated)
+- `products-archive.html`: backup of original 4-product gated page
+
+**New pages:**
+- `careers.html` — dedicated careers page (Why Join, 3 open positions, CTA)
+
+**Homepage (`index.html`):**
+- Hero eyebrow: "Advanced Analytics · AI · Enterprise Software"
+- Hero subtitle updated for US + Africa markets
+- Stats: 4 Platforms, 2 Countries, 7 Capabilities, 8+ Sectors
+- Product section: flagship Onekof badge, WQIS stakeholder bar (no blur)
+- New "Why DAPS" section (4 differentiator cards)
+- Footer description updated
+- Mobile fix: product card badges wrap on narrow screens (flex-wrap)
+
+**Company (`company.html`):**
+- Hero: full-bleed Three.js globe (exact copy of homepage globe renderer)
+- Mission/Vision: updated with deck content
+- Trajectory: US first (Phase 1) → Ethiopia (Phase 2) → East Africa & Global (Phase 3)
+- Team: replaced 7 founder photo cards with faceless 8-role card grid
+- Careers section with CTA linking to careers.html
+- Added breathing room (padding-top:64px) between all sections
+- Animation keyframes (fadeUp, hero-animate) added to style block
+
+**Services (`services.html`):**
+- SaaS products blur overlay + gate script removed
+
+**Contact (`contact.html`):**
+- Dual locations: Bethesda, MD + Addis Ababa, Ethiopia
+- Phone placeholders: US +1 (301) 000-0000, Ethiopia +251 00 000 0000
+- Telegram link added alongside WhatsApp
+- Grid updated to 4 columns for new phone card
+
+**Insights (`insights.html`):**
+- Onekof article + Product Updates filter pill unhidden
+- Hakimet article stays hidden
+
+**Projects (`projects.html`):**
+- Onekof project card unhidden; others stay hidden
+
+**Navbar (`assets/navbar.js`):**
+- Products dropdown: only Onekof PM + UDC-WQIS shown
+- Hakimet + Olink Fleet commented out with "pending EIPA/INSA" note
+
+**All pages:**
+- Copyright 2025 → 2026
+- Onekof PM footer link restored
+
+### TODO — Updated pending tasks
+| Task | Detail |
+|------|--------|
+| Real phone numbers | Replace placeholders in contact.html when US + Ethiopia numbers ready |
+| WhatsApp number | Update href="#" in contact.html |
+| Unlock WQIS | After EIPA/INSA: remove stakeholder bars from index.html + products.html, remove gate.js from udc-wqis.html |
+| Unlock Hakimet/Fleet | After EIPA/INSA: remove display:none from all pages, uncomment in navbar.js, remove gate.js from detail pages |
+| sitemap.xml | Add careers.html |
+| RESEND_API_KEY | Add to Vercel env vars for contact form |
+
+---
+
 ## IP Notice
 
 This website is proprietary to **DAPS Analytics** and **Olink Technologies Inc.**  
@@ -293,4 +362,4 @@ Do not redistribute without authorization.
 
 ---
 
-*Last updated: 2026-05-03*
+*Last updated: 2026-07-16*
