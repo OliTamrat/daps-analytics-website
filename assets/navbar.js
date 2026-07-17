@@ -122,9 +122,8 @@
       '<span class="dsl">Live Products</span>'
       + '<div class="dg dg2">'
       + di('view_kanban','tc','Onekof PM','Project management built for Ethiopia','onekof-pm.html','live')
-      + di('water_drop','ac','UDC-WQIS','Water quality intelligence, Washington DC','products.html','live')
-      + di('ecg_heart','tc','Hakimet','Telehealth platform for East Africa','products.html','live')
-      + di('local_shipping','ac','Olink Fleet','Smart fleet management for Ethiopia','products.html','live')
+      + di('water_drop','ac','UDC-WQIS','Water quality intelligence, Washington DC','udc-wqis.html','live')
+      /* Hakimet + Olink Fleet hidden — pending EIPA/INSA */
       + '</div>'
       + '<div class="dfr"><a href="products.html">Explore full platform →</a></div>',
     'l'),
@@ -215,7 +214,7 @@
     /* Desktop nav */
     + '<ul class="nl">'
     + ni('Services',   'services.html',   'services')
-    /* Products hidden temporarily — restore after registration: re-add: + ni('Products', 'products.html', 'products') */
+    + ni('Products', 'products.html', 'products')
     + ni('Projects',   'projects.html',   'projects')
     + ni('Industries', 'industries.html', 'industries')
     + ni('Insights',   'insights.html',   'insights')
@@ -241,7 +240,7 @@
     + '<div id="mpanel">'
     + '<div class="msec"><span class="msl">Platform</span>'
     + mlink('settings','Services','services.html')
-    /* Products hidden temporarily — restore after registration: re-add: + mlink('view_kanban','Products','products.html') */
+    + mlink('view_kanban','Products','products.html')
     + mlink('account_tree','Projects','projects.html')
     + mlink('hub','Industries','industries.html')
     + '</div>'
