@@ -345,8 +345,8 @@
         </div>
       </div>
 
-      <!-- UDC-WQIS — stakeholder gated -->
-      <div class="product-card amber card-glow reveal reveal-delay-1" style="position:relative;">
+      <!-- UDC-WQIS — stakeholder gated (no blur, access bar at bottom) -->
+      <div class="product-card amber card-glow reveal reveal-delay-1">
         <div class="flex items-start justify-between mb-7">
           <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border" style="border-color:rgba(239,191,113,0.3);background:rgba(239,191,113,0.06);">
             <span class="w-1.5 h-1.5 rounded-full" style="background:#efbf71;"></span>
@@ -358,11 +358,30 @@
         <p style="font-size:15px;line-height:1.7;color:#bacac5;flex:1;margin-bottom:28px;">
           Unified Data Collection – Water Quality Information System. Real-time USGS sensor integration across 12 Anacostia watershed stations — environmental intelligence for DC stakeholders.
         </p>
-        <!-- Stakeholder gate overlay -->
-        <div style="position:absolute;inset:0;z-index:10;backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);background:rgba(14,20,27,0.6);border-radius:12px;display:flex;align-items:center;justify-content:center;flex-direction:column;text-align:center;padding:40px;">
-          <span class="material-symbols-outlined" style="font-size:28px;color:#efbf71;margin-bottom:12px;opacity:0.7;">lock</span>
-          <div style="font-size:10px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:#efbf71;margin-bottom:6px;">Stakeholder Access</div>
-          <p style="font-size:13px;color:#849490;max-width:260px;line-height:1.5;">Available to authorized partners and stakeholders.</p>
+        <div class="flex gap-8 mb-8 pl-5" style="border-left:1px solid rgba(255,255,255,0.08);">
+          <div><div class="metric-num" style="color:#efbf71;">12</div><div class="metric-label">Stations</div></div>
+          <div><div class="metric-num" style="color:#efbf71;">78%</div><div class="metric-label">Water Quality</div></div>
+          <div><div class="metric-num" style="color:#efbf71;">Live</div><div class="metric-label">EPA Data</div></div>
+        </div>
+        <!-- Stakeholder access bar — same as products page -->
+        <div style="padding:20px 24px;background:rgba(239,191,113,0.04);border:1px solid rgba(239,191,113,0.12);border-radius:12px;">
+          <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+            <div class="flex items-center gap-3">
+              <div style="width:36px;height:36px;border-radius:8px;background:rgba(239,191,113,0.1);border:1px solid rgba(239,191,113,0.2);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+                <span class="material-symbols-outlined" style="font-size:18px;color:#efbf71;font-variation-settings:'FILL' 1;">lock</span>
+              </div>
+              <div>
+                <div style="font-size:12px;font-weight:700;color:#dee2ed;">Stakeholder Access</div>
+                <div style="font-size:11px;color:#849490;">Dashboard access requires authorization.</div>
+              </div>
+            </div>
+            <a href="products-archive.html"
+              class="inline-flex items-center gap-2"
+              style="padding:8px 18px;border:1px solid rgba(239,191,113,0.4);color:#efbf71;font-size:10px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;border-radius:6px;text-decoration:none;transition:background 0.3s;white-space:nowrap;flex-shrink:0;"
+              onmouseover="this.style.background='rgba(239,191,113,0.1)'" onmouseout="this.style.background='transparent'">
+              Enter Access Code <span class="material-symbols-outlined" style="font-size:14px;">arrow_forward</span>
+            </a>
+          </div>
         </div>
       </div>
 
