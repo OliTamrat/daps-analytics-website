@@ -36,6 +36,11 @@
   body { font-family: var(--daps-font); }
   /* Form controls don't inherit font-family from body — make them. */
   button, input, select, textarea { font-family: inherit; }
+  /* navbar.js injects its stylesheet at run time and then inserts the nav.
+     Until the nav carries data-nav-ready it stays out of layout entirely, so
+     it can never paint half-styled — unstyled it balloons to ~2000px because
+     all five dropdown panels and the mobile menu render as stacked blocks. */
+  #daps-nav:not([data-nav-ready]) { display: none !important; }
 
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
   html { background: #0e141b; }

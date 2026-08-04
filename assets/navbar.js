@@ -269,6 +269,9 @@
     var nav = document.createElement('nav');
     nav.id = 'daps-nav';
     nav.innerHTML = NAV;
+    /* Stamped before insertion: the nav is never in the document without it,
+       so it cannot paint before the stylesheet above has been applied. */
+    nav.setAttribute('data-nav-ready', '');
     document.body.insertAdjacentElement('afterbegin', nav);
 
     /* ── Page offset logic ────────────────────────────────────────
