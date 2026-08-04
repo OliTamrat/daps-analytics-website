@@ -215,9 +215,12 @@ After pulling changes or editing files, do a **hard refresh** (`Ctrl+Shift+R`) �
 3. Link the card to `article.html?id=YOUR_ID`
 
 ### Logo Files
-- Navbar: `daps-logo-nav.svg` — icon mark + "DAPS ANALYTICS" wordmark, transparent background, viewBox `155 926 1380 205`
-- Footer: `daps-logo-full.svg` — full logo with second text row + green separator, transparent background, viewBox `155 926 1760 212`
-- Both derived from official Adobe Illustrator SVG exports
+- Navbar **and footer**: `daps-logo-nav.svg` — icon mark + "DAPS" wordmark, transparent background, viewBox `155 926 740 212`. Navbar renders at `height:36px`, footers at `height:60px` (`50px` on `article.html`). Both surfaces intentionally use the **same** logo.
+- `daps-logo-full.svg` — full logo with second text row + green separator, viewBox `155 926 1760 212`. No longer used in footers; still referenced as the `logo` in JSON-LD Organization schema and by `assets/gate.js`.
+- `daps-logo-original.svg` — original with blue background (archived).
+- All derived from official Adobe Illustrator SVG exports.
+
+> **Brand naming:** visible UI text says **"DAPS"**. The legal entity name "DAPS Analytics / Olink Technologies Inc." is retained in copyright/IP notices, and "DAPS Analytics" is retained in SEO titles, meta tags, and JSON-LD schema so search identity is preserved.
 
 ---
 

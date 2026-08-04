@@ -25,13 +25,13 @@
   gate.id = 'daps-gate';
   gate.innerHTML = [
     '<div class="g-box">',
-    '  <img class="g-logo" src="/assets/images/daps-logo-full.svg" alt="DAPS Analytics"/>',
+    '  <img class="g-logo" src="/assets/images/daps-logo-full.svg" alt="DAPS"/>',
     '  <div class="g-title">Stakeholder Access</div>',
     '  <div class="g-sub">This section is restricted to authorized stakeholders.<br/>Enter your access code to continue.</div>',
     '  <input class="g-input" id="g-code" type="password" placeholder="Enter access code" autocomplete="off"/>',
     '  <button class="g-btn" id="g-submit">Verify &amp; Continue</button>',
     '  <div class="g-err" id="g-err"></div>',
-    '  <div class="g-footer">DAPS Analytics &mdash; Confidential Preview</div>',
+    '  <div class="g-footer">DAPS &mdash; Confidential Preview</div>',
     '</div>'
   ].join('');
 

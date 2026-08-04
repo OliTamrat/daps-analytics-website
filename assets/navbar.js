@@ -165,10 +165,10 @@
     'r'),
 
     company: dd(
-      '<span class="dsl">About DAPS Analytics</span>'
+      '<span class="dsl">About DAPS</span>'
       + '<div class="dg">'
       + di('info','tc','About Us','Our story, mission, and trajectory','company.html')
-      + di('groups','nc','Leadership','Meet the DAPS Analytics team','company.html')
+      + di('groups','nc','Leadership','Meet the DAPS team','company.html')
       + di('timeline','ac','Our Journey','Ethiopia → East Africa → Global','company.html')
       + di('forum','tc','Contact Us','Initiate a project conversation','contact.html')
       + di('link','nc','All Links','Find DAPS across every platform','linktree.html')
@@ -210,7 +210,7 @@
   var NAV = '<div class="ni">'
     /* Logo */
     + '<a href="index.html" style="display:flex;align-items:center;flex-shrink:0;text-decoration:none;">'
-    + '<img src="assets/images/daps-logo-nav.svg" alt="DAPS Analytics" style="height:36px;width:auto;"/></a>'
+    + '<img src="assets/images/daps-logo-nav.svg" alt="DAPS" style="height:36px;width:auto;"/></a>'
 
     /* Desktop nav */
     + '<ul class="nl">'
