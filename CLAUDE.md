@@ -241,7 +241,7 @@ After pulling changes or editing files, do a **hard refresh** (`Ctrl+Shift+R`) �
 ## Pre-Launch Checklist & Next Phase Tasks
 
 ### DONE (as of 2026-05-17)
-- [x] Contact form wired → Resend via Vercel serverless function (`api/contact.js`). Needs `RESEND_API_KEY` env var set in Vercel dashboard.
+- [x] Contact form wired → Resend via Vercel serverless function (`api/contact.js`). `RESEND_API_KEY` is set in Vercel and delivery is verified.
 - [x] Teams Bookings calendar wired → `https://outlook.office.com/book/ChatwithDAPS@dapsanalytics.com/`
 - [x] Privacy Policy page (`privacy.html`) — 10-section legal policy
 - [x] Favicon (SVG) on all pages
@@ -259,16 +259,28 @@ After pulling changes or editing files, do a **hard refresh** (`Ctrl+Shift+R`) �
 - [x] **Google Search Console** — verified, sitemap submitted, indexing requested (2026-05-17)
 - [x] **Bing Webmaster Tools** — verified via GSC import, sitemap submitted (2026-05-17)
 - [x] **Google Analytics 4** — `G-F4MDXMW8KB` on all 15 pages (2026-05-17)
+- [x] **Sitemap completeness** (2026-08-04) — `careers.html` (live and uncrawled since 2026-07-16) and `linktree.html` added; the 12 static articles listed individually as `article.html?id=1..12`. `robots.txt` now disallows `og-generator.html` (internal tool) and `products-archive.html` (gated).
+- [x] **Per-article share metadata** (2026-08-04) — `article.html` set one `og:url`/`og:title` for every id and had no canonical, so all 12 articles looked like one page to crawlers and every social share previewed as "DAPS Analytics Insights". `renderArticle()` now sets `og:url`, `og:title`, `og:description`, `twitter:*` and `rel=canonical` per article. A bare `article.html` renders article 1, so it canonicalises to `?id=1` rather than self-canonicalising as a duplicate. Stale `dapsanalytics.vercel.app` URLs in `article.html` and `privacy.html` corrected to `dapsanalytics.com`.
+
+### Environment — CONFIGURED ✅ (2026-08-04)
+
+`RESEND_API_KEY`, `SUPABASE_URL` and `SUPABASE_ANON_KEY` are all set in Vercel and
+verified end to end: the contact form delivers, careers loads live roles from
+Supabase, applications write through with resume upload, and the admin dashboard
+authenticates. **Do not re-list these as pending.**
+
+Contact details are live too — `support@dapsanalytics.com`, WhatsApp, Telegram and
+`tel:` all point at **+251 94 588 6655**. The only open contact items are a **US
+number** and the **department aliases**.
 
 ### TODO — Pending your action
 
 | Task | What Claude needs / what you do | File to touch |
 |------|--------------------------------|---------------|
-| **Add RESEND_API_KEY to Vercel** | Vercel dashboard → Settings → Env Vars → add `RESEND_API_KEY` | Vercel UI only |
+| **US phone number** | Not yet acquired. `contact.html` carries the Ethiopia number only — there is no US placeholder to replace, so a number needs adding, not swapping | `contact.html` |
+| **Department email aliases** | Once Google Workspace aliases exist, route `careers@` (and per-department addresses) instead of the single `support@` | `contact.html`, `careers.html`, admin |
 | **OG preview image** | Open `og-generator.html` locally → click Download → save PNG to `assets/images/og-preview.png` → push | `assets/images/og-preview.png` |
-| **Set up hello@dapsanalytics.com** | Google Workspace ($6/mo) or Zoho Mail (free) → update `CONTACT_TO_EMAIL` in Vercel | Vercel UI + `api/contact.js` line 44 |
 | **Founder photos** | 7 gradient placeholders on `company.html` — provide photo files, Claude wires them | `company.html` |
-| **WhatsApp link** | Provide WhatsApp number → Claude updates one line | `contact.html` |
 | **Real trust logos** | Provide partner/client logo files or SVGs | `index.html` trust bar section |
 | **Re-enable product content** | After EIPA receipt — follow 8-step checklist in `Project_Briefing.md` | Multiple files |
 | **Month 3 content plan** | Marketing decision → Claude creates new content library | `assets/month3-posts.js` |
@@ -277,14 +289,13 @@ After pulling changes or editing files, do a **hard refresh** (`Ctrl+Shift+R`) �
 All canonical URLs, OG tags, sitemap, and robots.txt already point to `dapsanalytics.com` (updated 2026-05-17).
 2. Re-run `og-generator.html` → save new `og-preview.png` with updated URL text → push
 3. Update Vercel domain settings
-4. Update Resend verified domain if using hello@dapsanalytics.com
+4. Resend verified domain is live for `support@dapsanalytics.com`
 
 ### Medium priority — Before marketing push
 
 | Task | Detail |
 |------|--------|
 | **Real trust logos** | Homepage trust bar uses placeholder CDN images — replace with real partner/client logos |
-| **WhatsApp link** | Replace `href="#"` on Secure WhatsApp in `contact.html` with `href="https://wa.me/1YOURNUMBER"` |
 
 ### Marketing — Post-launch
 
@@ -361,12 +372,11 @@ All canonical URLs, OG tags, sitemap, and robots.txt already point to `dapsanaly
 ### TODO — Updated pending tasks
 | Task | Detail |
 |------|--------|
-| Real phone numbers | Replace placeholders in contact.html when US + Ethiopia numbers ready |
-| WhatsApp number | Update href="#" in contact.html |
+| US phone number | Ethiopia number is live everywhere; a US number still needs adding to contact.html |
+| Department email aliases | `support@` is the single route today — split to `careers@` etc. once Workspace aliases exist |
 | Unlock WQIS | After EIPA/INSA: remove stakeholder bars from index.html + products.html, remove gate.js from udc-wqis.html |
 | Unlock Hakimet/Fleet | After EIPA/INSA: remove display:none from all pages, uncomment in navbar.js, remove gate.js from detail pages |
-| sitemap.xml | Add careers.html |
-| RESEND_API_KEY | Add to Vercel env vars for contact form |
+| sitemap.xml — hidden products | `hakimet.html` and `olink-fleet.html` are still listed even though both products are `display:none` sitewide and their detail pages sit behind `gate.js`, so search engines are pointed at gated pages. Removing them from the sitemap does **not** deindex — that needs `noindex`. Left as-is pending a call on whether to drop them until EIPA/INSA clears or keep them for SEO continuity. |
 
 ---
 
@@ -384,7 +394,7 @@ All canonical URLs, OG tags, sitemap, and robots.txt already point to `dapsanaly
 - **Job Postings** — full CRUD, live/unlisted toggle, "featured" flag. Multi-line fields (responsibilities, requirements, nice-to-have) are **one bullet per line**.
 - **Applications** — read-only intake with status workflow (New → Screening → Interview → Offer → Hired / Rejected), detail modal, and resume download. "Add New" is hidden here by design: applications arrive from the site, they are never authored.
 
-**Runtime config:** **No Supabase key literal exists anywhere in the repo.** Every page that talks to Supabase (`careers.html`, `insights.html`, `article.html`, `admin/index.html`, `admin/dashboard.html`) loads `assets/supabase-client.js` and calls `await dapsSupabase()`, which fetches the URL + anon key from **`/api/config`** (Vercel serverless). Set `SUPABASE_URL` and `SUPABASE_ANON_KEY` in the Vercel project environment variables. Until they are set the endpoint returns 503 and each page degrades gracefully: careers shows the general-application flow, insights still renders its 12 static articles, and the admin login shows a clear "not configured" message rather than failing silently. **Never expose `SUPABASE_SERVICE_ROLE_KEY` from this endpoint** — it bypasses RLS.
+**Runtime config:** **No Supabase key literal exists anywhere in the repo.** Every page that talks to Supabase (`careers.html`, `insights.html`, `article.html`, `admin/index.html`, `admin/dashboard.html`) loads `assets/supabase-client.js` and calls `await dapsSupabase()`, which fetches the URL + anon key from **`/api/config`** (Vercel serverless). `SUPABASE_URL` and `SUPABASE_ANON_KEY` **are set** and the whole path is verified end to end — this is configuration history, not an open task. If they are ever unset the endpoint returns 503 and each page degrades gracefully instead of breaking: careers shows the general-application flow, insights still renders its 12 static articles, and the admin login shows a clear "not configured" message rather than failing silently. **Never expose `SUPABASE_SERVICE_ROLE_KEY` from this endpoint** — it bypasses RLS.
 
 **Schema:** run the Careers block at the bottom of `admin/schema.sql` in the Supabase SQL Editor, then create the private `resumes` bucket and its policies (commented at the end of that file).
 
