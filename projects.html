@@ -48,6 +48,29 @@
      all five dropdown panels and the mobile menu render as stacked blocks. */
   #daps-nav:not([data-nav-ready]) { display: none !important; }
 
+  /* ── Hero: keep the headline clear of the fixed navbar ──────────
+     These heroes are `min-h-screen flex items-center`. Plain `center`
+     knows nothing about the 71px fixed nav overlaying the top of the
+     section, so on a short viewport the centred block rides up under it,
+     and `overflow:hidden` clips whatever crosses y=0 — unreachable,
+     because this section is already the top of the scroll.
+
+     Two changes, each a no-op whenever the layout already fits:
+       - symmetric 71px padding: the midpoint of [71, 100vh-71] is still
+         50vh, so a block with room to spare stays exactly where it was
+         (box-sizing is border-box sitewide, so 100vh is unchanged too);
+       - `safe center`: identical to `center` until the item would
+         overflow its box, then falls back to `start` rather than clip.
+
+     Nothing here touches type size, leading, or any non-hero section.
+     Browsers without `safe` discard the declaration and inherit
+     Tailwind's plain `items-center` — today's behaviour. */
+  section.min-h-screen, section.h-screen {
+    padding-top: 71px;
+    padding-bottom: 71px;
+    align-items: safe center;
+  }
+
   /* ── Small screens (Android phones start at 360px) ───────────────
      Most micro-labels are set with inline styles, which cannot carry a
      media query, so they stayed at 9-10px on phones — below comfortable
