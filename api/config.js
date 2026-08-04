@@ -29,6 +29,26 @@ module.exports = async function handler(req, res) {
   const supabaseUrl = process.env.SUPABASE_URL;
   const supabaseAnonKey = process.env.SUPABASE_ANON_KEY;
 
+  // Guard: never serve a privileged key to the browser. Accepts the modern
+  // publishable key (sb_publishable_...) or a legacy anon JWT (role: anon).
+  // Rejects sb_secret_... and any service_role JWT, which bypass RLS.
+  if (supabaseAnonKey) {
+    let privileged = /^sb_secret_/i.test(supabaseAnonKey);
+    if (!privileged && supabaseAnonKey.split('.').length === 3) {
+      try {
+        const part = supabaseAnonKey.split('.')[1].replace(/-/g, '+').replace(/_/g, '/');
+        const claims = JSON.parse(Buffer.from(part, 'base64').toString('utf8'));
+        privileged = claims.role === 'service_role';
+      } catch (_) { /* not a JWT we can read — fall through */ }
+    }
+    if (privileged) {
+      console.error('[api/config] Refusing to serve a privileged Supabase key.');
+      return res.status(500).json({
+        error: 'Server misconfigured: SUPABASE_ANON_KEY holds a privileged key. Use the publishable (sb_publishable_...) or anon key instead.'
+      });
+    }
+  }
+
   if (!supabaseUrl || !supabaseAnonKey) {
     // Callers degrade gracefully rather than breaking the page.
     return res.status(503).json({
