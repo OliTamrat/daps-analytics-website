@@ -79,6 +79,31 @@
      it can never paint half-styled — unstyled it balloons to ~2000px because
      all five dropdown panels and the mobile menu render as stacked blocks. */
   #daps-nav:not([data-nav-ready]) { display: none !important; }
+  /* Hero CTAs stack on phones; give them equal width so they read as a pair */
+  @media (max-width: 640px) {
+    .hero-cta > a { flex: 1 1 100%; justify-content: center; }
+  }
+
+  /* ── Small screens (Android phones start at 360px) ───────────────
+     Most micro-labels are set with inline styles, which cannot carry a
+     media query, so they stayed at 9-10px on phones — below comfortable
+     reading size. Lift them here. Icon glyphs are excluded: their
+     font-size controls how large the icon renders. */
+  @media (max-width: 640px) {
+    [style*="font-size:9px"]:not(.material-symbols-outlined),
+    [style*="font-size:10px"]:not(.material-symbols-outlined),
+    [style*="font-size:10.5px"]:not(.material-symbols-outlined) {
+      font-size: 11.5px !important;
+    }
+    /* uppercase micro-labels get cramped once lifted */
+    [style*="text-transform:uppercase"]:not(.material-symbols-outlined) { letter-spacing: 0.08em; }
+    /* footer link rows were ~15px tall — well under a comfortable tap target */
+    footer li > a { display: inline-block; padding: 7px 0; }
+    /* class-based micro-labels the attribute selector above cannot reach */
+    .cap-sub, .wwo-label, .rp-sec, .ap-label, .sidebar-label { font-size: 11.5px; }
+    /* long CTA pills (px-8 + a long label) could exceed a 360px viewport */
+    a.inline-flex, button.inline-flex { max-width: 100%; flex-wrap: wrap; justify-content: center; }
+  }
 
   *, *::before, *::after { box-sizing: border-box; }
   html { scroll-behavior: smooth; }
@@ -229,7 +254,7 @@
       </p>
 
       <!-- CTAs -->
-      <div class="hero-animate-4 flex flex-wrap gap-4 items-center">
+      <div class="hero-animate-4 flex flex-wrap gap-4 items-center hero-cta">
         <a href="products.html"
            class="inline-flex items-center gap-2 bg-primary text-on-primary px-8 py-4 font-label-caps text-label-caps hover:bg-primary-container transition-all duration-300 rounded-full glow-teal"
            style="font-size:11px;font-weight:700;letter-spacing:0.12em;">
@@ -244,7 +269,7 @@
       </div>
 
       <!-- Micro stats -->
-      <div class="hero-animate-4 flex gap-10 mt-8 pt-5 border-t border-white/[0.08]">
+      <div class="hero-animate-4 grid grid-cols-2 gap-x-6 gap-y-5 sm:flex sm:gap-10 mt-8 pt-5 border-t border-white/[0.08]">
         <div>
           <div class="metric-num" style="color:#dee2ed;">4</div>
           <div class="metric-label">Platforms Shipped</div>
@@ -266,7 +291,7 @@
   </div>
 
   <!-- Scroll hint -->
-  <div class="absolute bottom-8 left-1/2 -translate-x-1/2 z-20 flex flex-col items-center gap-2 opacity-40">
+  <div class="absolute bottom-8 left-1/2 -translate-x-1/2 z-20 hidden sm:flex flex-col items-center gap-2 opacity-40">
     <span style="font-size:10px;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;color:#849490;">Scroll</span>
     <div style="width:1px;height:40px;background:linear-gradient(to bottom,#849490,transparent);"></div>
   </div>

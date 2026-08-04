@@ -79,6 +79,27 @@
      all five dropdown panels and the mobile menu render as stacked blocks. */
   #daps-nav:not([data-nav-ready]) { display: none !important; }
 
+  /* ── Small screens (Android phones start at 360px) ───────────────
+     Most micro-labels are set with inline styles, which cannot carry a
+     media query, so they stayed at 9-10px on phones — below comfortable
+     reading size. Lift them here. Icon glyphs are excluded: their
+     font-size controls how large the icon renders. */
+  @media (max-width: 640px) {
+    [style*="font-size:9px"]:not(.material-symbols-outlined),
+    [style*="font-size:10px"]:not(.material-symbols-outlined),
+    [style*="font-size:10.5px"]:not(.material-symbols-outlined) {
+      font-size: 11.5px !important;
+    }
+    /* uppercase micro-labels get cramped once lifted */
+    [style*="text-transform:uppercase"]:not(.material-symbols-outlined) { letter-spacing: 0.08em; }
+    /* footer link rows were ~15px tall — well under a comfortable tap target */
+    footer li > a { display: inline-block; padding: 7px 0; }
+    /* class-based micro-labels the attribute selector above cannot reach */
+    .cap-sub, .wwo-label, .rp-sec, .ap-label, .sidebar-label { font-size: 11.5px; }
+    /* long CTA pills (px-8 + a long label) could exceed a 360px viewport */
+    a.inline-flex, button.inline-flex { max-width: 100%; flex-wrap: wrap; justify-content: center; }
+  }
+
   body { background-color: #0e141b; color: #dee2ed; }
   .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.7s cubic-bezier(0.4,0,0.2,1), transform 0.7s cubic-bezier(0.4,0,0.2,1); }
   .reveal.revealed { opacity: 1; transform: translateY(0); }
@@ -358,7 +379,7 @@
         <p style="font-size:17px;line-height:1.75;color:#bacac5;margin-bottom:32px;">
           We're always looking for talented engineers, data scientists, and strategic thinkers who want to build technology that matters. If you're passionate about AI, data, and digital transformation — we'd love to hear from you.
         </p>
-        <a href="careers.html" style="display:inline-flex;align-items:center;gap:8px;background:#49fde3;color:#00201b;font-size:13px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;padding:14px 32px;border-radius:8px;text-decoration:none;transition:background 0.3s,transform 0.3s;" onmouseover="this.style.background='#6ffee9';this.style.transform='translateY(-2px)'" onmouseout="this.style.background='#49fde3';this.style.transform='translateY(0)'">
+        <a href="careers.html" style="display:inline-flex;align-items:center;justify-content:center;flex-wrap:wrap;max-width:100%;gap:8px;background:#49fde3;color:#00201b;font-size:13px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;padding:14px 32px;border-radius:8px;text-decoration:none;transition:background 0.3s,transform 0.3s;" onmouseover="this.style.background='#6ffee9';this.style.transform='translateY(-2px)'" onmouseout="this.style.background='#49fde3';this.style.transform='translateY(0)'">
           View Open Positions <span class="material-symbols-outlined" style="font-size:18px;">arrow_forward</span>
         </a>
       </div>

@@ -111,7 +111,7 @@ Teams booking is live: `https://outlook.office.com/book/ChatwithDAPS@dapsanalyti
 
 ### Step 7 — Deploy
 ```bash
-cd "C:/Users/olita/Downloads/stitch_daps_analytics_cinematic_web_experience"
+cd daps-analytics-website
 vercel --prod --yes
 ```
 
@@ -119,7 +119,8 @@ vercel --prod --yes
 
 ## Vercel Deployment
 - **Account:** `olitamrat` (`oli-olis-projects` scope)
-- **Project name:** `stitch_daps_analytics_cinematic_web_experience`
+- **Project name:** `stitch_daps_analytics_cinematic_web_experience` — **being renamed to `dapsanalytics`** in Vercel → Settings → General.
+  Renaming changes only the `*.vercel.app` preview subdomain; the `dapsanalytics.com` custom domain stays attached and production is unaffected. Old preview links stop resolving.
 - **Deploy command:** `vercel --prod --yes` from project folder
 - **No build step** — pure static HTML, deploys in ~15 seconds
 
