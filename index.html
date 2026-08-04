@@ -91,85 +91,18 @@
      font-size controls how large the icon renders. */
   @media (max-width: 640px) {
     [style*="font-size:9px"]:not(.material-symbols-outlined),
-    [style*="font-size: 9px"]:not(.material-symbols-outlined),
-    [style*="font-size:9.5px"]:not(.material-symbols-outlined),
-    [style*="font-size: 9.5px"]:not(.material-symbols-outlined),
     [style*="font-size:10px"]:not(.material-symbols-outlined),
-    [style*="font-size: 10px"]:not(.material-symbols-outlined),
-    [style*="font-size:10.5px"]:not(.material-symbols-outlined),
-    [style*="font-size: 10.5px"]:not(.material-symbols-outlined),
-    [style*="font-size:11px"]:not(.material-symbols-outlined),
-    [style*="font-size: 11px"]:not(.material-symbols-outlined) {
+    [style*="font-size:10.5px"]:not(.material-symbols-outlined) {
       font-size: 11.5px !important;
     }
     /* uppercase micro-labels get cramped once lifted */
     [style*="text-transform:uppercase"]:not(.material-symbols-outlined) { letter-spacing: 0.08em; }
-    /* footer links were ~15px tall — well under a comfortable tap target.
-       Not every footer link sits in an <li> (Privacy Policy does not), so
-       target them all rather than just the list rows. */
-    footer a { display: inline-block; padding: 7px 0; }
-    /* phone / email links are single short strings and end up ~16px tall */
-    a[href^="tel:"], a[href^="mailto:"] { display: inline-block; padding: 6px 0; }
+    /* footer link rows were ~15px tall — well under a comfortable tap target */
+    footer li > a { display: inline-block; padding: 7px 0; }
     /* class-based micro-labels the attribute selector above cannot reach */
-    .cap-sub, .wwo-label, .rp-sec, .ap-label, .sidebar-label,
-    .metric-label, .eyebrow, .cap-tick, .cap-chip, .f-label, .stat-label,
-    .read-badge, .btn-primary, .tts-speed-btn, .tts-stop-btn {
-      /* !important: these classes are defined LATER in this same stylesheet,
-         at equal specificity, so without it the original size wins */
-      font-size: 11.5px !important;
-    }
+    .cap-sub, .wwo-label, .rp-sec, .ap-label, .sidebar-label { font-size: 11.5px; }
     /* long CTA pills (px-8 + a long label) could exceed a 360px viewport */
     a.inline-flex, button.inline-flex { max-width: 100%; flex-wrap: wrap; justify-content: center; }
-
-    /* ── Full-viewport heroes ────────────────────────────────────
-       `min-h-screen flex items-center overflow-hidden` centres the hero
-       content vertically. On a phone the headline wraps to more lines and
-       the content grows TALLER than the viewport, so `align-items:center`
-       pushes its top edge above y=0 — where the section's own
-       `overflow:hidden` clips it. The eyebrow and the first line of the
-       headline are then unreachable: this section is already the top of the
-       scroll, so there is nothing to scroll up to.
-
-       Anchor the content to the top instead, clear the 71px fixed nav, and
-       let the section grow to fit rather than forcing a 100vh box. */
-    section.min-h-screen, section.h-screen {
-      align-items: flex-start !important;
-      min-height: auto !important;
-      padding-top: 92px !important;
-      padding-bottom: 44px !important;
-    }
-    /* index/company wrappers carry their own pt-16, which would stack on top
-       of the 92px above and push the headline back off the first screen */
-    section.min-h-screen > .relative,
-    section.h-screen > .relative { padding-top: 0 !important; }
-
-    /* Hero headlines are sized with clamp(); the FLOOR is what a phone gets,
-       and those floors (32-44px) were calibrated on desktop widths. At 360px
-       a 44px headline eats the whole screen. Scale with the viewport instead. */
-    h1 { font-size: clamp(26px, 7.4vw, 34px) !important; line-height: 1.18 !important; }
-    /* <br> in a headline forces breaks chosen for a wide screen ("The
-       intelligence / layer for African & / global enterprises."). Let the
-       text reflow to the width the phone actually has. */
-    h1 br { display: none; }
-
-    /* ── Body copy ───────────────────────────────────────────────
-       Line-height ratios run 1.6-1.85 across the site. That is comfortable
-       on a wide column, but on a 360px phone the same paragraph wraps to
-       roughly twice as many lines, so the leading is paid twice over and
-       the text block balloons. Tighten it for phones. */
-    p, li, blockquote { line-height: 1.55 !important; }
-
-    /* Lead paragraphs are set at 17-20px for desktop. At 360px that is
-       oversized body copy: it forces more wrapping, which costs far more
-       vertical space than the larger type buys back in readability.
-       Scoped to <p> so stat numbers and badges at the same size are
-       untouched. */
-    p[style*="font-size:17px"], p[style*="font-size: 17px"],
-    p[style*="font-size:18px"], p[style*="font-size: 18px"] { font-size: 16px !important; }
-    p[style*="font-size:19px"], p[style*="font-size: 19px"],
-    p[style*="font-size:20px"], p[style*="font-size: 20px"] { font-size: 17px !important; }
-    /* the same lead size applied by class rather than inline */
-    p.text-body-lg, .article-body { font-size: 16px !important; }
   }
 
   *, *::before, *::after { box-sizing: border-box; }
@@ -310,8 +243,8 @@
       <!-- Headline -->
       <h1 class="hero-animate-2 font-display-xl text-display-xl text-on-surface mb-5"
           style="font-size: clamp(32px, 3.5vw, 56px); line-height: 1.12;">
-        The intelligence <br/>
-        layer for African &amp; <br/>global enterprises.
+        The intelligence<br/>
+        layer for African &amp;<br/>global enterprises.
       </h1>
 
       <!-- Sub -->
