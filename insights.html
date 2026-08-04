@@ -560,6 +560,7 @@
 </footer>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script src="assets/supabase-client.js"></script>
 <script src="assets/navbar.js"></script>
 <script src="assets/daps.js"></script>
 <script>
@@ -633,8 +634,6 @@ if (loadMoreBtn) {
 
 // ── Load dynamic articles from Supabase ──────────────────────────
 (async function loadDynamicArticles() {
-  var SUPABASE_URL     = 'https://rveellaalzowncfsekwx.supabase.co';
-  var SUPABASE_ANON_KEY= 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJ2ZWVsbGFhbHpvd25jZnNla3d4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzkwMTMzMDQsImV4cCI6MjA5NDU4OTMwNH0.6U1gGmLW9CxTjagobfy_p0Xx5QpRrY6h1u944K2ZKcE';
 
   var catMap = {
     'Market Trends':   { cls: 'cat-market',  slug: 'market-trends',   label: 'Market Trends'   },
@@ -645,7 +644,7 @@ if (loadMoreBtn) {
   };
 
   try {
-    var sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+    var sb = await dapsSupabase();
     var { data, error } = await sb
       .from('insights')
       .select('id, title, excerpt, category, date, read_time, image_url, audio_url, active')

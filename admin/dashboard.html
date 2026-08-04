@@ -1696,13 +1696,11 @@
 
 <script src="../assets/month2-posts.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script src="../assets/supabase-client.js"></script>
 <script>
 // ── CONFIG ─────────────────────────────────────────────────────────────────
-// Replace with your DAPS Analytics Supabase credentials
-var SUPABASE_URL = 'https://rveellaalzowncfsekwx.supabase.co';
-var SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJ2ZWVsbGFhbHpvd25jZnNla3d4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzkwMTMzMDQsImV4cCI6MjA5NDU4OTMwNH0.6U1gGmLW9CxTjagobfy_p0Xx5QpRrY6h1u944K2ZKcE';
 
-var sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+var sb = null;   // resolved in init() from /api/config
 
 // ── STATE ──────────────────────────────────────────────────────────────────
 var currentTab = 'insights';
@@ -1711,6 +1709,17 @@ var tableData = { insights: [], social: [], jobs: [], applications: [] };
 
 // ── INIT ───────────────────────────────────────────────────────────────────
 (async function init() {
+  try {
+    sb = await dapsSupabase();
+  } catch (e) {
+    document.body.innerHTML =
+      '<div style="max-width:520px;margin:18vh auto;padding:28px;font-family:var(--daps-font);'
+      + 'background:#111418;border:1px solid rgba(255,255,255,0.1);border-radius:12px;color:#bacac5;text-align:center;">'
+      + '<h1 style="font-size:18px;color:#dee2ed;margin-bottom:10px;">Dashboard unavailable</h1>'
+      + '<p style="font-size:14px;line-height:1.6;">' + e.message + '</p></div>';
+    return;
+  }
+
   var { data: { session } } = await sb.auth.getSession();
   if (!session) { window.location.href = '/admin/index.html'; return; }
 

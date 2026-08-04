@@ -572,21 +572,15 @@
 </footer>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script src="assets/supabase-client.js"></script>
 <script>
 (function(){
-  // Supabase config is served by /api/config from Vercel environment variables,
+  // Supabase config comes from /api/config via assets/supabase-client.js,
   // so no key literal lives in the repository. If it is unavailable the page
   // degrades to the general-application flow rather than breaking.
   var sb = null;
   async function initSupabase(){
-    if (!window.supabase) return null;
-    try {
-      var r = await fetch('/api/config', { headers: { 'Accept': 'application/json' } });
-      if (!r.ok) return null;
-      var cfg = await r.json();
-      if (!cfg || !cfg.supabaseUrl || !cfg.supabaseAnonKey) return null;
-      return supabase.createClient(cfg.supabaseUrl, cfg.supabaseAnonKey);
-    } catch (e) { return null; }
+    try { return await dapsSupabase(); } catch (e) { return null; }
   }
 
   var JOBS = [], DEPT = 'All', Q = '', CURRENT = null, RESUME = null;
