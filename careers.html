@@ -72,6 +72,11 @@
   body { font-family: var(--daps-font); }
   /* Form controls don't inherit font-family from body — make them. */
   button, input, select, textarea { font-family: inherit; }
+  /* navbar.js injects its stylesheet at run time and then inserts the nav.
+     Until the nav carries data-nav-ready it stays out of layout entirely, so
+     it can never paint half-styled — unstyled it balloons to ~2000px because
+     all five dropdown panels and the mobile menu render as stacked blocks. */
+  #daps-nav:not([data-nav-ready]) { display: none !important; }
 
   body { background-color: #0e141b; color: #dee2ed; }
   .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.7s cubic-bezier(0.4,0,0.2,1), transform 0.7s cubic-bezier(0.4,0,0.2,1); }
@@ -498,7 +503,7 @@
 
           <!-- LinkedIn -->
           <a href="https://www.linkedin.com/company/116015383/" target="_blank" rel="noopener" title="LinkedIn — DAPS Analytics"
-             style="color:#849490;transition:color 0.3s,transform 0.3s;display:inline-flex;"
+             style="color:#bacac5;transition:color 0.3s,transform 0.3s;display:inline-flex;"
              onmouseover="this.style.color='#0A66C2';this.style.transform='translateY(-2px)'"
              onmouseout="this.style.color='#849490';this.style.transform='translateY(0)'">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
@@ -509,7 +514,7 @@
 
           <!-- Facebook -->
           <a href="https://www.facebook.com/profile.php?id=61589847723974" target="_blank" rel="noopener" title="Facebook — DAPS Analytics"
-             style="color:#849490;transition:color 0.3s,transform 0.3s;display:inline-flex;"
+             style="color:#bacac5;transition:color 0.3s,transform 0.3s;display:inline-flex;"
              onmouseover="this.style.color='#1877F2';this.style.transform='translateY(-2px)'"
              onmouseout="this.style.color='#849490';this.style.transform='translateY(0)'">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
@@ -519,7 +524,7 @@
 
           <!-- X (Twitter) -->
           <a href="https://x.com/DapsAnalytics" target="_blank" rel="noopener" title="X — DAPS Analytics"
-             style="color:#849490;transition:color 0.3s,transform 0.3s;display:inline-flex;"
+             style="color:#bacac5;transition:color 0.3s,transform 0.3s;display:inline-flex;"
              onmouseover="this.style.color='#ffffff';this.style.transform='translateY(-2px)'"
              onmouseout="this.style.color='#849490';this.style.transform='translateY(0)'">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
@@ -529,7 +534,7 @@
 
           <!-- Instagram -->
           <a href="https://www.instagram.com/dapsanalytics/" target="_blank" rel="noopener" title="Instagram — DAPS Analytics"
-             style="color:#849490;transition:color 0.3s,transform 0.3s;display:inline-flex;"
+             style="color:#bacac5;transition:color 0.3s,transform 0.3s;display:inline-flex;"
              onmouseover="this.style.color='#E1306C';this.style.transform='translateY(-2px)'"
              onmouseout="this.style.color='#849490';this.style.transform='translateY(0)'">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -541,7 +546,7 @@
 
           <!-- TikTok -->
           <a href="https://www.tiktok.com/@dapsanalytics" target="_blank" rel="noopener" title="TikTok — DAPS Analytics"
-             style="color:#849490;transition:color 0.3s,transform 0.3s;display:inline-flex;"
+             style="color:#bacac5;transition:color 0.3s,transform 0.3s;display:inline-flex;"
              onmouseover="this.style.color='#49fde3';this.style.transform='translateY(-2px)'"
              onmouseout="this.style.color='#849490';this.style.transform='translateY(0)'">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
@@ -551,7 +556,7 @@
 
           <!-- YouTube -->
           <a href="https://www.youtube.com/@DapsAnalytics" target="_blank" rel="noopener" title="YouTube — DAPS Analytics"
-             style="color:#849490;transition:color 0.3s,transform 0.3s;display:inline-flex;"
+             style="color:#bacac5;transition:color 0.3s,transform 0.3s;display:inline-flex;"
              onmouseover="this.style.color='#FF0000';this.style.transform='translateY(-2px)'"
              onmouseout="this.style.color='#849490';this.style.transform='translateY(0)'">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
@@ -565,8 +570,8 @@
       </div>
     </div>
     <div style="border-top:1px solid rgba(255,255,255,0.04);padding-top:28px;display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:12px;">
-      <p style="font-size:12px;color:#849490;">© 2026 DAPS Analytics. All rights reserved. &middot; <a href="privacy.html" style="color:#bacac5;text-decoration:none;" onmouseover="this.style.color='#49fde3'" onmouseout="this.style.color='#bacac5'">Privacy Policy</a></p>
-      <p style="font-size:12px;color:#849490;">Built by <span style="color:#bacac5;">Olink Technologies Inc.</span> &amp; <span style="color:#bacac5;">DAPS Analytics</span></p>
+      <p style="font-size:12px;color:#bacac5;">© 2026 DAPS Analytics. All rights reserved. &middot; <a href="privacy.html" style="color:#bacac5;text-decoration:none;" onmouseover="this.style.color='#49fde3'" onmouseout="this.style.color='#bacac5'">Privacy Policy</a></p>
+      <p style="font-size:12px;color:#bacac5;">Built by <span style="color:#bacac5;">Olink Technologies Inc.</span> &amp; <span style="color:#bacac5;">DAPS Analytics</span></p>
     </div>
   </div>
 </footer>
