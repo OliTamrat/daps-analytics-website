@@ -204,7 +204,7 @@ if (!isHero) { mainEl.style.paddingTop = '70px'; }
 
 ### Local Server
 ```bash
-cd stitch_daps_analytics_cinematic_web_experience
+cd daps-analytics-website
 python -m http.server 3030
 # open http://localhost:3030
 ```

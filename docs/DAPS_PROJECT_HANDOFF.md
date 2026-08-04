@@ -76,7 +76,7 @@ A password-protected content management system (CMS) for managing the website's 
 | Admin login | https://dapsanalytics.com/admin/ |
 | Admin dashboard | https://dapsanalytics.com/admin/dashboard.html |
 | GitHub repository | https://github.com/OliTamrat/daps-analytics-website |
-| Vercel project | https://vercel.com (account: olitamrat, project: stitch_daps_analytics_cinematic_web_experience) |
+| Vercel project | https://vercel.com (account: olitamrat) — project still named `stitch_daps_analytics_cinematic_web_experience`; rename to `daps-website` in Settings → General |
 | Supabase project | https://supabase.com (project ref: rveellaalzowncfsekwx) |
 
 ### Stakeholder Access Gate
@@ -426,7 +426,7 @@ Vercel auto-deploys in ~60 seconds.
 Any push to the `master` branch automatically triggers a Vercel deployment.
 
 ```bash
-cd "C:/Users/olita/Downloads/stitch_daps_analytics_cinematic_web_experience"
+cd daps-analytics-website
 git add -A
 git commit -m "Description of changes"
 git push origin master
@@ -435,7 +435,7 @@ git push origin master
 
 ### Local Preview
 ```bash
-cd "C:/Users/olita/Downloads/stitch_daps_analytics_cinematic_web_experience"
+cd daps-analytics-website
 python -m http.server 3030
 # Open http://localhost:3030
 ```
