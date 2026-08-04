@@ -1,7 +1,7 @@
 # DAPS Analytics — Complete Project Handoff
 **Document type:** Founder & Stakeholder Reference
-**Last updated:** 2026-05-17 (Session 2)
-**Status:** Live — Pre-registration mode
+**Last updated:** 2026-07-16 (Session 3)
+**Status:** Live — Onekof PM launched, partial product visibility
 **Prepared by:** Olink Technologies Inc.
 
 ---
@@ -31,7 +31,7 @@
 DAPS Analytics has a complete, production-grade web presence consisting of three connected parts:
 
 ### Part 1 — The Main Website (`dapsanalytics.com`)
-A 14-page cinematic website presenting DAPS Analytics as a high-fidelity data intelligence and software development firm. It serves enterprise decision-makers, government partners, African tech community, and software buyers.
+A 17-page cinematic website presenting DAPS Analytics as an advanced analytics, AI, and enterprise software solutions company. It serves enterprise decision-makers, government partners, African tech community, and software buyers.
 
 Highlights:
 - **Three.js WebGL globe** on the homepage — 420 animated node particles, 75 data arcs, 2,800-star starfield
@@ -80,9 +80,17 @@ A password-protected content management system (CMS) for managing the website's 
 | Supabase project | https://supabase.com (project ref: rveellaalzowncfsekwx) |
 
 ### Stakeholder Access Gate
-Some product pages require an access code until IP registration is complete.
+Some product detail pages require an access code until IP registration (EIPA) and security certification (INSA) are complete.
 **Code:** `SPAD2026`
-Pages: Products, Onekof PM, UDC-WQIS, Hakimet, Olink Fleet
+
+| Product | Public? | Gate Status |
+|---------|---------|-------------|
+| Onekof PM | Yes — fully public | Gate removed (EIPA + INSA complete) |
+| UDC-WQIS | Visible with access bar | Detail page gated (`udc-wqis.html`) |
+| Hakimet | Hidden | Detail page gated (`hakimet.html`) |
+| Olink Fleet | Hidden | Detail page gated (`olink-fleet.html`) |
+
+**Backup:** `products-archive.html` — original 4-product gated page (access code: `SPAD2026`)
 
 ---
 
@@ -111,19 +119,21 @@ Pages: Products, Onekof PM, UDC-WQIS, Hakimet, Olink Fleet
 
 | Page | File | Purpose |
 |------|------|---------|
-| Homepage | `index.html` | Hero globe, product suite preview, services preview, industries, trust bar, CTA |
-| Products | `products.html` | Detailed product suite (Onekof, UDC-WQIS, Hakimet, Olink Fleet) — gated |
-| Services | `services.html` | Service offerings in bento grid layout |
+| Homepage | `index.html` | Hero globe, Onekof flagship + WQIS (stakeholder access bar), Why DAPS section, services, industries, CTA |
+| Products | `products.html` | Clean 2-product page: Onekof PM featured + UDC-WQIS with stakeholder access bar |
+| Products Archive | `products-archive.html` | Backup of original 4-product gated page (access code: `SPAD2026`) |
+| Services | `services.html` | Service offerings in bento grid + SaaS products (visible) |
 | Industries | `industries.html` | Sector-specific hover-reveal cards |
-| Company | `company.html` | Founding story, timeline, 7-founder team section |
-| Insights | `insights.html` | Article library — filterable by category, live search, 12 articles |
-| Article Reader | `article.html` | Static articles (`?id=1–12`) + Supabase admin articles (`?aid=ROW_ID`); ElevenLabs audio player or browser TTS fallback; auto-generated Table of Contents sidebar; Share buttons (LinkedIn, X, copy link); Related Articles |
-| Projects | `projects.html` | TDT×MINT flagship + 6-project portfolio grid + partnership CTA |
-| Contact | `contact.html` | Qualification form + Teams booking calendar |
-| Onekof PM | `onekof-pm.html` | Onekof product detail page — gated |
+| Company | `company.html` | Full-bleed Three.js globe hero, mission/vision, US-first trajectory, faceless team (8 role cards), careers section, values |
+| Careers | `careers.html` | Dedicated careers page: Why Join DAPS, 3 open positions, CTA |
+| Insights | `insights.html` | Article library — filterable, live search; Onekof article visible, Hakimet hidden |
+| Article Reader | `article.html` | Static articles (`?id=1–12`) + Supabase admin articles (`?aid=ROW_ID`); audio player; ToC sidebar |
+| Projects | `projects.html` | TDT×MINT flagship + Onekof project card visible, others hidden |
+| Contact | `contact.html` | Qualification form, dual locations (Bethesda + Addis Ababa), phone placeholders, WhatsApp + Telegram |
+| Onekof PM | `onekof-pm.html` | Onekof product detail — **PUBLIC** (gate removed) |
 | UDC-WQIS | `udc-wqis.html` | Water quality platform detail — gated |
-| Hakimet | `hakimet.html` | Telehealth platform detail — gated |
-| Olink Fleet | `olink-fleet.html` | Fleet management platform detail — gated |
+| Hakimet | `hakimet.html` | Telehealth platform detail — gated + hidden |
+| Olink Fleet | `olink-fleet.html` | Fleet management platform detail — gated + hidden |
 | Privacy Policy | `privacy.html` | 10-section legal privacy policy |
 | Linktree | `linktree.html` | Social bio link page |
 
@@ -323,27 +333,32 @@ The Month 2 content library — 30 days of pre-written post content across all 6
 
 ---
 
-## 11. Pre-Registration Lock — What Is Hidden & Why
+## 11. Product Visibility — Current State (Updated 2026-07-16)
 
-DAPS Analytics is currently in pre-registration mode pending IP/copyright filing. Certain product content is intentionally restricted to prevent unauthorized reproduction before the registration is stamped.
+Onekof PM has completed EIPA registration (2026-05-26) and INSA security certification (2026-07-03). It is now fully public. Other products remain restricted pending their own IP and security processes.
 
-### What Is Locked
+### Visibility Matrix
+| Product | Homepage | Products Page | Detail Page | Navbar | Footer | Projects | Insights |
+|---------|----------|--------------|-------------|--------|--------|----------|----------|
+| **Onekof PM** | Visible + flagship badge | Featured | PUBLIC | In dropdown | Linked | Visible | Article visible |
+| **UDC-WQIS** | Visible + access bar | Visible + access bar | Gated (`SPAD2026`) | In dropdown | Not linked | Hidden | N/A |
+| **Hakimet** | Hidden | Hidden | Gated | Hidden | Not linked | Hidden | Article hidden |
+| **Olink Fleet** | Hidden | Hidden | Gated | Hidden | Not linked | Hidden | N/A |
+
+### What Is Still Locked
 | Location | What | How |
 |----------|------|-----|
-| `products.html` | Entire page | Stakeholder gate (`SPAD2026`) |
-| `onekof-pm.html` | Entire page | Stakeholder gate |
-| `udc-wqis.html` | Entire page | Stakeholder gate |
-| `hakimet.html` | Entire page | Stakeholder gate |
-| `olink-fleet.html` | Entire page | Stakeholder gate |
-| `index.html` | Product suite grid | Blur overlay |
-| `services.html` | "SaaS Products" section | Blur overlay |
-| `insights.html` | Product Updates articles (4 items) | `display:none` |
-| `projects.html` | 4 product project cards | `display:none` |
-| All pages footer | Product platform links row | `display:none` |
-| `assets/navbar.js` | Products nav item | Commented out |
+| `udc-wqis.html` | Full detail page | Stakeholder gate (`SPAD2026`) |
+| `hakimet.html` | Full detail page | Stakeholder gate + hidden from nav |
+| `olink-fleet.html` | Full detail page | Stakeholder gate + hidden from nav |
+| `index.html` | Hakimet + Olink Fleet cards | `display:none` |
+| `products.html` (archive) | All 4 products | Stakeholder gate (backup page) |
+| `insights.html` | Hakimet article | `display:none` |
+| `projects.html` | WQIS, Hakimet, Fleet cards | `display:none` |
+| `assets/navbar.js` | Hakimet + Fleet in dropdown | Commented out |
 
-### What Remains Public
-Homepage hero, services overview, industries, company story, team, TDT×MINT flagship project, Pan-African Data Grid concept, contact, all 12 insights articles (non-product), privacy policy, linktree.
+### What Is Fully Public
+Homepage (with Onekof flagship + WQIS access bar), products page (Onekof + WQIS), services, industries, company (faceless team + globe hero), careers, Onekof PM detail page, all insights articles (except Hakimet), TDT×MINT project, contact, privacy policy, linktree.
 
 ---
 
@@ -386,16 +401,22 @@ Vercel auto-deploys in ~60 seconds.
 
 | Task | Status | Who | What to do |
 |------|--------|-----|-----------|
-| Add `RESEND_API_KEY` to Vercel | ⏳ Pending | Oli | Vercel dashboard → project → Settings → Environment Variables → add key |
-| Founder photos | ⏳ Pending | Founders | Provide 7 photo files → Claude wires them into `company.html` |
-| OG preview image | ⏳ Pending | Oli | Open `og-generator.html` locally → click Download → save as `assets/images/og-preview.png` → push |
-| WhatsApp link | ⏳ Pending | Oli | Provide WhatsApp number → Claude updates `contact.html` |
-| Re-enable product content | ⏳ Pending | Oli | Do steps in Section 12 above after EIPA receipt arrives |
-| Month 3 content plan | ⏳ Pending | Marketing | Plan next 30 days → Claude creates new content library |
-| Google Analytics GA4 | ✅ Done | — | `G-F4MDXMW8KB` live on all 15 pages (2026-05-17) |
-| Google Search Console | ✅ Done | — | Verified, sitemap submitted, indexing requested (2026-05-17) |
-| Bing Webmaster Tools | ✅ Done | — | Verified, sitemap submitted via Google SC import (2026-05-17) |
-| SEO overhaul | ✅ Done | — | Canonical URLs, JSON-LD schema, keyword titles, meta descriptions (2026-05-17) |
+| Add `RESEND_API_KEY` to Vercel | ⏳ Pending | Oli | Vercel dashboard → Settings → Env Vars → add key |
+| Real phone numbers | ⏳ Pending | Oli | Replace placeholders in `contact.html` when US + Ethiopia numbers ready |
+| WhatsApp number | ⏳ Pending | Oli | Update `href="#"` in `contact.html` with `href="https://wa.me/NUMBER"` |
+| OG preview image | ⏳ Pending | Oli | Open `og-generator.html` → save PNG to `assets/images/og-preview.png` → push |
+| Update `sitemap.xml` | ⏳ Pending | Oli | Add `careers.html` and `products-archive.html` |
+| Unlock UDC-WQIS | ⏳ Pending | — | After EIPA/INSA: remove access bars from homepage + products, remove gate.js from `udc-wqis.html` |
+| Unlock Hakimet | ⏳ Pending | — | After EIPA/INSA: remove `display:none` from all pages, uncomment in navbar.js, remove gate.js |
+| Unlock Olink Fleet | ⏳ Pending | — | After EIPA/INSA: remove `display:none` from all pages, uncomment in navbar.js, remove gate.js |
+| Month 3 content plan | ⏳ Pending | Marketing | Plan next 30 days → create content library |
+| Onekof PM launch | ✅ Done | — | Gate removed, flagship badge, Certified Secure, publicly accessible (2026-07-16) |
+| Website redesign | ✅ Done | — | Why DAPS section, real stats, faceless team, careers page, updated content (2026-07-16) |
+| Copyright 2026 | ✅ Done | — | Updated across all pages (2026-07-16) |
+| Google Analytics GA4 | ✅ Done | — | `G-F4MDXMW8KB` live on all pages (2026-05-17) |
+| Google Search Console | ✅ Done | — | Verified, sitemap submitted (2026-05-17) |
+| Bing Webmaster Tools | ✅ Done | — | Verified, sitemap submitted (2026-05-17) |
+| SEO overhaul | ✅ Done | — | Canonical URLs, JSON-LD, keyword titles, meta descriptions (2026-05-17) |
 
 ---
 
@@ -427,19 +448,21 @@ After changes: hard refresh with `Ctrl+Shift+R` (browsers cache static files agg
 ```
 daps-analytics-website/
 │
-├── index.html              ← Homepage (Three.js globe hero)
-├── products.html           ← Products — GATED
+├── index.html              ← Homepage (Three.js globe hero, Onekof flagship)
+├── products.html           ← Products (Onekof + WQIS only, clean)
+├── products-archive.html   ← Original 4-product page (gated backup)
 ├── services.html           ← Services bento grid
 ├── industries.html         ← Industries hover cards
-├── company.html            ← Founding story + team
+├── company.html            ← Globe hero, faceless team, trajectory, careers
+├── careers.html            ← Dedicated careers page
 ├── insights.html           ← Article library (filterable)
 ├── article.html            ← Article reader (?id=1–12)
 ├── projects.html           ← Portfolio + TDT×MINT
 ├── contact.html            ← Form + Teams booking
-├── onekof-pm.html          ← Onekof detail — GATED
+├── onekof-pm.html          ← Onekof detail — PUBLIC
 ├── udc-wqis.html           ← WQIS detail — GATED
-├── hakimet.html            ← Hakimet detail — GATED
-├── olink-fleet.html        ← Olink Fleet detail — GATED
+├── hakimet.html            ← Hakimet detail — GATED + HIDDEN
+├── olink-fleet.html        ← Olink Fleet detail — GATED + HIDDEN
 ├── privacy.html            ← Privacy policy
 ├── linktree.html           ← Social bio link page
 │
@@ -497,6 +520,64 @@ daps-analytics-website/
 #### Footer (all 14 pages)
 - **Text brightness fixed** — replaced near-invisible `#3b4a46` and `#1e2a26` with readable `#bacac5` and `#849490` across all footer sections
 - **Nav link brightness** — footer navigation links bumped from `#849490` to `#bacac5` for better contrast on dark `#050709` footer background
+
+---
+
+### Session 3 — 2026-07-16: Onekof PM Launch & Website Redesign
+
+#### Product Visibility Overhaul
+- **Onekof PM:** Gate removed from `onekof-pm.html`, flagship badge + "Certified Secure" badge added to homepage card, fully public and accessible
+- **UDC-WQIS:** Visible on homepage and products page with clean stakeholder access bar (no blur), detail page still gated
+- **Hakimet + Olink Fleet:** Temporarily hidden (`display:none`) across all pages — pending EIPA/INSA
+- **Products navbar dropdown:** Now shows only Onekof PM + UDC-WQIS; Hakimet/Fleet commented out
+- **`products.html`:** Rebuilt as clean 2-product page (Onekof featured + WQIS with access bar)
+- **`products-archive.html`:** Original 4-product gated page preserved as backup
+
+#### New Pages
+- **`careers.html`** — dedicated careers page: Why Join DAPS (4 value cards), 3 open positions (Full-Stack Engineer, Data Scientist, AI/ML Engineer), CTA to contact
+
+#### Homepage (`index.html`)
+- Hero eyebrow changed to "Advanced Analytics · AI · Enterprise Software"
+- Hero subtitle updated for US + Africa markets
+- Stats updated to real numbers: 4 Platforms, 2 Countries, 7 Capabilities, 8+ Sectors
+- Onekof card: flagship badge ("Flagship: Onekof PM — Now Public") + "Certified Secure" badge
+- UDC-WQIS card: clean stakeholder access bar at bottom (no blur overlay)
+- New **"Why DAPS"** section with 4 differentiator cards (Proven Expertise, End-to-End, Local+Global, Cost-Saving)
+- Footer description updated to reflect both US + Ethiopia markets
+- Mobile fix: product card status badges use `flex-wrap` to prevent overlap on narrow screens (S21, iPhone)
+
+#### Company (`company.html`)
+- **Hero completely rebuilt** — full-bleed Three.js globe (exact copy of homepage globe renderer: same camera position, atmosphere shader, arcs, particles, starfield). Replaces previous AI-generated portrait and SVG placeholder
+- Mission/Vision text updated with content from Siket Bank briefing deck
+- **Trajectory reordered:** Phase 1 = United States (headquarters), Phase 2 = Ethiopia (operations), Phase 3 = East Africa & Global
+- **Team section:** 7 founder photo cards replaced with faceless team description + 8 role cards (AI/ML, Data Science, Software, Architecture, DevOps, Security, PM, Research) using Material Symbols icons
+- **Careers section** added with CTA linking to `careers.html`
+- Added `padding-top:64px` between all sections for breathing room
+- Hero animation keyframes (fadeUp) added to style block
+
+#### Services (`services.html`)
+- SaaS Products blur overlay and gate script removed — all product cards visible
+
+#### Contact (`contact.html`)
+- Address updated: dual locations (Bethesda, Maryland + Addis Ababa, Ethiopia)
+- Phone placeholders added: US +1 (301) 000-0000, Ethiopia +251 00 000 0000
+- Telegram link added alongside existing WhatsApp
+- Contact strip grid updated to 4 columns
+
+#### Insights (`insights.html`)
+- Onekof PM article + Product Updates filter pill unhidden
+- Hakimet article remains hidden
+
+#### Projects (`projects.html`)
+- Onekof PM project card unhidden; WQIS, Hakimet, Fleet stay hidden
+
+#### Navbar (`assets/navbar.js`)
+- Products link restored in both desktop and mobile nav
+- Products dropdown: only Onekof PM + UDC-WQIS shown (Hakimet/Fleet commented out)
+
+#### All Pages
+- Copyright updated 2025 → 2026 across all HTML files
+- Onekof PM footer link restored and visible
 
 #### SEO — Comprehensive Overhaul (all 13 pages)
 | Item | Detail |

@@ -26,6 +26,7 @@
 <meta name="twitter:description" content="DAPS Analytics is a data intelligence firm headquartered in Bethesda, Maryland, building analytics infrastructure and AI platforms from Ethiopia to global markets."/>
 <meta name="twitter:image" content="https://dapsanalytics.com/assets/images/og-preview.png"/>
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script src="https://unpkg.com/three@0.160.1/build/three.min.js"></script>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;900&display=swap" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
 <script>
@@ -74,6 +75,13 @@
   .reveal-delay-1 { transition-delay: 0.1s; }
   .reveal-delay-2 { transition-delay: 0.2s; }
   .reveal-delay-3 { transition-delay: 0.3s; }
+  .eyebrow { display:flex;align-items:center;gap:12px;font-size:11px;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;color:#49fde3;margin-bottom:20px; }
+  .eyebrow::before { content:'';display:block;width:32px;height:1px;background:#49fde3;flex-shrink:0; }
+  @keyframes fadeUp { from { opacity:0;transform:translateY(32px); } to { opacity:1;transform:translateY(0); } }
+  .hero-animate-1 { animation:fadeUp 0.9s cubic-bezier(0.4,0,0.2,1) 0.2s both; }
+  .hero-animate-2 { animation:fadeUp 0.9s cubic-bezier(0.4,0,0.2,1) 0.4s both; }
+  .hero-animate-3 { animation:fadeUp 0.9s cubic-bezier(0.4,0,0.2,1) 0.6s both; }
+  .hero-animate-4 { animation:fadeUp 0.9s cubic-bezier(0.4,0,0.2,1) 0.8s both; }
 </style>
 
 <!-- SEO -->
@@ -90,28 +98,43 @@
 
 <main class="pb-32">
 
-  <!-- Hero / Founder Story -->
-  <section class="px-6 md:px-12 max-w-[1440px] mx-auto mt-xl mb-2xl">
-    <div class="grid grid-cols-1 md:grid-cols-12 gap-8 items-center">
-      <div class="md:col-span-7 z-10 reveal">
-        <p class="font-label-caps text-label-caps text-primary mb-6">Our Story</p>
-        <h1 class="font-display-lg text-display-lg text-on-surface mb-8" style="font-size: clamp(36px, 5vw, 56px);">Origins of Clarity.</h1>
-        <p class="font-body-lg text-body-lg text-on-surface-variant max-w-2xl mb-8">
+  <!-- Hero / Our Story — full-width globe background matching homepage -->
+  <section class="relative min-h-screen flex items-center overflow-hidden" style="background:#080c11;">
+
+    <!-- WebGL Globe (fills the right ~60% visually via camera offset) -->
+    <canvas id="company-globe" style="position:absolute;top:0;right:0;width:100%;height:100%;pointer-events:none;"></canvas>
+
+    <!-- Left gradient so text stays legible -->
+    <div class="absolute inset-0 z-10 pointer-events-none"
+         style="background: linear-gradient(90deg, #080c11 0%, #080c11 38%, rgba(8,12,17,0.85) 58%, rgba(8,12,17,0.2) 75%, transparent 100%);"></div>
+    <!-- Bottom fade -->
+    <div class="absolute inset-x-0 bottom-0 h-40 z-10 pointer-events-none"
+         style="background: linear-gradient(to top, #0e141b, transparent);"></div>
+
+    <!-- Hero content -->
+    <div class="relative z-20 max-w-[1440px] mx-auto w-full px-6 md:px-12 pt-16 pb-8 grid grid-cols-12 gap-6">
+      <div class="col-span-12 md:col-span-7 lg:col-span-6 flex flex-col justify-center">
+
+        <p class="font-label-caps text-label-caps text-primary mb-6 hero-animate-1">Our Story</p>
+        <h1 class="hero-animate-2 font-display-xl text-display-xl text-on-surface mb-6"
+            style="font-size: clamp(36px, 5vw, 56px); line-height: 1.12;">
+          Origins of Clarity.
+        </h1>
+        <p class="hero-animate-3 font-body-lg text-body-lg text-on-surface-variant max-w-xl mb-8">
           Founded on the belief that complex data shouldn't be opaque. Our journey started with a simple question: How do we transform noise into signal?
         </p>
-        <div class="w-16 h-[1px] bg-primary mb-8"></div>
-        <blockquote class="font-body-md text-body-md text-on-surface-variant max-w-xl italic">
+        <div class="w-16 h-[1px] bg-primary mb-8 hero-animate-3"></div>
+        <blockquote class="hero-animate-4 font-body-md text-body-md text-on-surface-variant max-w-xl italic">
           "We built DAPS to be the lens through which visionary leaders see the future. From our early days analyzing nascent markets to our current global footprint, our core principle remains: uncompromising fidelity."
         </blockquote>
-        <p class="font-label-caps text-label-caps text-primary mt-4">— Founder &amp; CEO</p>
+        <p class="font-label-caps text-label-caps text-primary mt-4 hero-animate-4">— Founder &amp; CEO</p>
       </div>
-      <div class="md:col-span-5 relative reveal">
-        <div class="w-full aspect-[3/4] bg-surface-container rounded-lg overflow-hidden border border-white/5 relative group">
-          <img class="object-cover w-full h-full opacity-80 group-hover:opacity-100 transition-opacity duration-700"
-               src="https://lh3.googleusercontent.com/aida-public/AB6AXuCwl6iWNh1mPVfrcpWN77DHjHtCkUuRFKopc7FkWyJOQsU9eKDBj5DZQVQGTzV10Xbyumbc36oGU_UoWDjoTRewYD_l6UwEPJYGaVpewz4A63-v4qvmH7i43Qswg3tR5dBDAjAuQcecUAKPuAUT6MPoSgx9b4crw6Q1Q517jEWw3gfx4aGQnXjgTOsfiCpS4kP6HBMo5GTnjTtcgXIovyAooUVqnwsnkha5ZlBAG-9fuOOThfGPu-dnhRiAUiEr9KzUimyurCxzOf93"
-               alt="DAPS founder portrait"/>
-        </div>
-      </div>
+    </div>
+
+    <!-- Scroll hint -->
+    <div class="absolute bottom-8 left-1/2 -translate-x-1/2 z-20 flex flex-col items-center gap-2 opacity-40">
+      <span style="font-size:10px;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;color:#849490;">Scroll</span>
+      <div style="width:1px;height:40px;background:linear-gradient(to bottom,#849490,transparent);"></div>
     </div>
   </section>
 
@@ -150,10 +173,7 @@
         <div style="font-size:10px;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;color:#49fde3;margin-bottom:12px;">Our Mission</div>
         <h3 style="font-size:clamp(20px,2.5vw,28px);font-weight:300;letter-spacing:-0.02em;color:#dee2ed;margin-bottom:16px;">Empowering smarter decisions through data</h3>
         <p style="font-size:15px;line-height:1.75;color:#849490;">
-          We believe that data analytics is not just about having the right tools — it's about using those tools in alignment with your business goals to unlock real, measurable growth. Our mission is to empower businesses with data-driven insights that guide smarter decisions and foster innovation.
-        </p>
-        <p style="font-size:15px;line-height:1.75;color:#849490;margin-top:12px;">
-          We aim to be more than a service provider — we want to be an extension of your team, working alongside you to achieve success.
+          Empower organizations with best-in-class data analytics, artificial intelligence, and enterprise software solutions that drive innovation, efficiency, and measurable business outcomes.
         </p>
       </div>
 
@@ -164,10 +184,7 @@
         <div style="font-size:10px;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;color:#efbf71;margin-bottom:12px;">Our Vision</div>
         <h3 style="font-size:clamp(20px,2.5vw,28px);font-weight:300;letter-spacing:-0.02em;color:#dee2ed;margin-bottom:16px;">Making data accessible and actionable for all</h3>
         <p style="font-size:15px;line-height:1.75;color:#849490;">
-          Our vision is to make data accessible and actionable for businesses of all sizes. With our expertise in data management, governance, visualization, and advanced analytics, we help organizations understand their data and use it to create powerful impact.
-        </p>
-        <p style="font-size:15px;line-height:1.75;color:#849490;margin-top:12px;">
-          Whether your business is looking to improve internal processes, optimize customer experiences, or predict future trends — we have the experience and tools to turn your data into a strategic asset.
+          Be the trusted partner for governments, enterprises, and institutions leveraging data and AI to transform operations — scaling from the United States to Ethiopia, East Africa, and global markets.
         </p>
       </div>
     </div>
@@ -206,153 +223,122 @@
   </section>
 
   <!-- Timeline -->
-  <section class="px-6 md:px-12 max-w-[1440px] mx-auto mb-2xl">
+  <section class="px-6 md:px-12 max-w-[1440px] mx-auto mb-2xl" style="padding-top:64px;">
     <h2 class="font-headline-md text-headline-md text-on-surface mb-16 border-b border-white/10 pb-4 reveal">Our Trajectory</h2>
     <div class="relative border-l border-white/10 ml-4 pl-8 space-y-16">
       <div class="relative reveal">
         <div class="absolute -left-[37px] top-1 w-2 h-2 bg-primary rounded-full shadow-[0_0_10px_rgba(73,253,227,0.5)]"></div>
-        <h3 class="font-label-caps text-label-caps text-primary mb-2">Phase 01 — Ethiopia</h3>
-        <p class="font-body-lg text-body-lg text-on-surface mb-2">Inception &amp; Groundwork</p>
-        <p class="font-body-md text-body-md text-on-surface-variant max-w-lg">Establishing the core algorithmic models. Analyzing raw demographic and agricultural data sets to find hidden market efficiencies in emerging economies.</p>
+        <h3 class="font-label-caps text-label-caps text-primary mb-2">Phase 01 — United States</h3>
+        <p class="font-body-lg text-body-lg text-on-surface mb-2">Headquarters &amp; Foundation</p>
+        <p class="font-body-md text-body-md text-on-surface-variant max-w-lg">Incorporated in the United States with headquarters in Bethesda, Maryland. Delivering advanced analytics, AI solutions, and enterprise software for government and institutional clients including UDC and federal partners.</p>
       </div>
       <div class="relative reveal">
         <div class="absolute -left-[37px] top-1 w-2 h-2 bg-secondary rounded-full"></div>
-        <h3 class="font-label-caps text-label-caps text-secondary mb-2">Phase 02 — East Africa</h3>
-        <p class="font-body-lg text-body-lg text-on-surface mb-2">Regional Expansion</p>
-        <p class="font-body-md text-body-md text-on-surface-variant max-w-lg">Scaling our architecture to handle cross-border economic data. Partnering with regional institutions to provide predictive infrastructure modeling across the continent.</p>
+        <h3 class="font-label-caps text-label-caps text-secondary mb-2">Phase 02 — Ethiopia</h3>
+        <p class="font-body-lg text-body-lg text-on-surface mb-2">Operations &amp; Product Development</p>
+        <p class="font-body-md text-body-md text-on-surface-variant max-w-lg">Established delivery operations in Addis Ababa. Building and shipping production platforms — Onekof PM, Hakimet, and Olink Fleet — localized for Ethiopian languages, calendar, currency, and compliance.</p>
       </div>
       <div class="relative reveal">
         <div class="absolute -left-[37px] top-1 w-2 h-2 bg-white rounded-full"></div>
-        <h3 class="font-label-caps text-label-caps text-on-surface mb-2">Phase 03 — USA &amp; Global</h3>
-        <p class="font-body-lg text-body-lg text-on-surface mb-2">Global Operations</p>
-        <p class="font-body-md text-body-md text-on-surface-variant max-w-lg">Expanding headquarters to serve global enterprise clients. Launching high-fidelity, real-time data streaming platforms for international markets across every sector.</p>
+        <h3 class="font-label-caps text-label-caps text-on-surface mb-2">Phase 03 — East Africa &amp; Global</h3>
+        <p class="font-body-lg text-body-lg text-on-surface mb-2">Regional &amp; Global Scale</p>
+        <p class="font-body-md text-body-md text-on-surface-variant max-w-lg">Expanding our platform reach across East Africa and international markets — bringing certified, production-grade data intelligence and enterprise SaaS to governments, banks, and enterprises globally.</p>
       </div>
     </div>
   </section>
 
-  <!-- Founders -->
-  <section class="px-6 md:px-12 max-w-[1440px] mx-auto mb-2xl">
-    <div class="flex justify-between items-end mb-16 border-b border-white/10 pb-4 reveal">
-      <div>
-        <h2 class="font-headline-md text-headline-md text-on-surface">Co-Founders</h2>
-        <p class="font-body-md text-body-md text-on-surface-variant mt-2">The seven minds behind DAPS.</p>
-      </div>
-      <a href="contact.html" class="font-label-caps text-label-caps text-primary hover:text-white transition-colors flex items-center gap-2">
-        Join Us <span class="material-symbols-outlined text-[16px]">arrow_forward</span>
-      </a>
+  <!-- Team -->
+  <section class="px-6 md:px-12 max-w-[1440px] mx-auto mb-2xl" style="padding-top:64px;">
+    <div class="mb-16 border-b border-white/10 pb-4 reveal">
+      <div style="font-size:10px;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;color:#49fde3;margin-bottom:12px;">Our Team</div>
+      <h2 class="font-headline-md text-headline-md text-on-surface">A Multidisciplinary Force</h2>
     </div>
-    <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-6 lg:gap-8">
+    <div class="reveal" style="max-width:900px;margin-bottom:48px;">
+      <p style="font-size:17px;line-height:1.75;color:#bacac5;">
+        DAPS brings together a multidisciplinary team of experienced professionals specializing in Artificial Intelligence, Machine Learning, Data Science, Software Engineering, Solution Architecture, DevOps, Cybersecurity, Project Management, and Research. Our collaborative approach combines deep technical expertise with strategic and industry knowledge to design, develop, and deliver innovative, scalable, and secure digital solutions. From enterprise software and advanced analytics to AI-driven platforms and cloud technologies, our team is committed to helping organizations accelerate digital transformation and achieve measurable business outcomes.
+      </p>
+    </div>
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
 
-      <!-- Nigussie Gemechu — CEO -->
-      <div class="group reveal">
-        <div class="w-full aspect-[4/5] mb-4 overflow-hidden border border-white/5 relative flex items-center justify-center" style="background:linear-gradient(135deg,#0d1a24,#081812);">
-          <div class="absolute inset-0 flex items-center justify-center">
-            <span style="font-size:52px;font-weight:300;letter-spacing:-0.03em;color:rgba(73,253,227,0.35);">NG</span>
-          </div>
-          <div class="absolute bottom-0 inset-x-0 h-1/3" style="background:linear-gradient(to top,rgba(13,26,36,0.9),transparent);"></div>
-          <div class="absolute top-4 right-4">
-            <span style="font-size:9px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:rgba(73,253,227,0.6);background:rgba(73,253,227,0.08);border:1px solid rgba(73,253,227,0.15);padding:3px 8px;border-radius:4px;">Add Photo</span>
-          </div>
-        </div>
-        <h4 class="font-body-lg text-body-lg text-on-surface" style="font-size:15px;">Nigussie Gemechu</h4>
-        <p class="font-label-caps text-label-caps text-primary mt-1">Chief Executive Officer</p>
+      <!-- AI / ML Engineers -->
+      <div class="reveal" style="background:#111418;border:1px solid rgba(255,255,255,0.07);border-radius:14px;padding:32px 28px;">
+        <span class="material-symbols-outlined" style="font-size:32px;color:#49fde3;display:block;margin-bottom:16px;font-variation-settings:'FILL' 0;">smart_toy</span>
+        <h4 style="font-size:15px;font-weight:600;color:#dee2ed;margin-bottom:8px;">AI / ML Engineers</h4>
+        <p style="font-size:14px;line-height:1.6;color:#849490;">Scalable model design, build & deployment</p>
       </div>
 
-      <!-- Fikadu Gemechu — Deputy CEO -->
-      <div class="group reveal reveal-delay-1">
-        <div class="w-full aspect-[4/5] mb-4 overflow-hidden border border-white/5 relative flex items-center justify-center" style="background:linear-gradient(135deg,#1a120d,#180d0a);">
-          <div class="absolute inset-0 flex items-center justify-center">
-            <span style="font-size:52px;font-weight:300;letter-spacing:-0.03em;color:rgba(239,191,113,0.35);">FG</span>
-          </div>
-          <div class="absolute bottom-0 inset-x-0 h-1/3" style="background:linear-gradient(to top,rgba(26,18,13,0.9),transparent);"></div>
-          <div class="absolute top-4 right-4">
-            <span style="font-size:9px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:rgba(239,191,113,0.6);background:rgba(239,191,113,0.08);border:1px solid rgba(239,191,113,0.15);padding:3px 8px;border-radius:4px;">Add Photo</span>
-          </div>
-        </div>
-        <h4 class="font-body-lg text-body-lg text-on-surface" style="font-size:15px;">Fikadu Gemechu</h4>
-        <p class="font-label-caps text-label-caps text-secondary mt-1">Deputy CEO</p>
+      <!-- Data Scientists -->
+      <div class="reveal reveal-delay-1" style="background:#111418;border:1px solid rgba(255,255,255,0.07);border-radius:14px;padding:32px 28px;">
+        <span class="material-symbols-outlined" style="font-size:32px;color:#49fde3;display:block;margin-bottom:16px;font-variation-settings:'FILL' 0;">query_stats</span>
+        <h4 style="font-size:15px;font-weight:600;color:#dee2ed;margin-bottom:8px;">Data Scientists</h4>
+        <p style="font-size:14px;line-height:1.6;color:#849490;">Analytical models, dashboards & insight</p>
       </div>
 
-      <!-- Oli Tamrat Oli — CTO -->
-      <div class="group reveal reveal-delay-2">
-        <div class="w-full aspect-[4/5] mb-4 overflow-hidden border border-white/5 relative flex items-center justify-center" style="background:linear-gradient(135deg,#0d1a24,#081812);">
-          <div class="absolute inset-0 flex items-center justify-center">
-            <span style="font-size:52px;font-weight:300;letter-spacing:-0.03em;color:rgba(73,253,227,0.35);">OT</span>
-          </div>
-          <div class="absolute bottom-0 inset-x-0 h-1/3" style="background:linear-gradient(to top,rgba(13,26,36,0.9),transparent);"></div>
-          <div class="absolute top-4 right-4">
-            <span style="font-size:9px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:rgba(73,253,227,0.6);background:rgba(73,253,227,0.08);border:1px solid rgba(73,253,227,0.15);padding:3px 8px;border-radius:4px;">Add Photo</span>
-          </div>
-        </div>
-        <h4 class="font-body-lg text-body-lg text-on-surface" style="font-size:15px;">Oli Tamrat Oli</h4>
-        <p class="font-label-caps text-label-caps text-primary mt-1">Chief Technology Officer</p>
+      <!-- Software Engineers -->
+      <div class="reveal reveal-delay-2" style="background:#111418;border:1px solid rgba(255,255,255,0.07);border-radius:14px;padding:32px 28px;">
+        <span class="material-symbols-outlined" style="font-size:32px;color:#49fde3;display:block;margin-bottom:16px;font-variation-settings:'FILL' 0;">code</span>
+        <h4 style="font-size:15px;font-weight:600;color:#dee2ed;margin-bottom:8px;">Software Engineers</h4>
+        <p style="font-size:14px;line-height:1.6;color:#849490;">Clean, maintainable systems, APIs & apps</p>
       </div>
 
-      <!-- Shambel Gemechu — Lead Architect -->
-      <div class="group reveal reveal-delay-3">
-        <div class="w-full aspect-[4/5] mb-4 overflow-hidden border border-white/5 relative flex items-center justify-center" style="background:linear-gradient(135deg,#1a120d,#180d0a);">
-          <div class="absolute inset-0 flex items-center justify-center">
-            <span style="font-size:52px;font-weight:300;letter-spacing:-0.03em;color:rgba(239,191,113,0.35);">SG</span>
-          </div>
-          <div class="absolute bottom-0 inset-x-0 h-1/3" style="background:linear-gradient(to top,rgba(26,18,13,0.9),transparent);"></div>
-          <div class="absolute top-4 right-4">
-            <span style="font-size:9px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:rgba(239,191,113,0.6);background:rgba(239,191,113,0.08);border:1px solid rgba(239,191,113,0.15);padding:3px 8px;border-radius:4px;">Add Photo</span>
-          </div>
-        </div>
-        <h4 class="font-body-lg text-body-lg text-on-surface" style="font-size:15px;">Shambel Gemechu</h4>
-        <p class="font-label-caps text-label-caps text-secondary mt-1">Lead Architect</p>
+      <!-- Solutions Architects -->
+      <div class="reveal reveal-delay-3" style="background:#111418;border:1px solid rgba(255,255,255,0.07);border-radius:14px;padding:32px 28px;">
+        <span class="material-symbols-outlined" style="font-size:32px;color:#49fde3;display:block;margin-bottom:16px;font-variation-settings:'FILL' 0;">architecture</span>
+        <h4 style="font-size:15px;font-weight:600;color:#dee2ed;margin-bottom:8px;">Solutions Architects</h4>
+        <p style="font-size:14px;line-height:1.6;color:#849490;">End-to-end solution design aligned to needs</p>
       </div>
 
-      <!-- Moti Beyene Begi — COO -->
-      <div class="group reveal">
-        <div class="w-full aspect-[4/5] mb-4 overflow-hidden border border-white/5 relative flex items-center justify-center" style="background:linear-gradient(135deg,#0d1a24,#081812);">
-          <div class="absolute inset-0 flex items-center justify-center">
-            <span style="font-size:52px;font-weight:300;letter-spacing:-0.03em;color:rgba(73,253,227,0.35);">MB</span>
-          </div>
-          <div class="absolute bottom-0 inset-x-0 h-1/3" style="background:linear-gradient(to top,rgba(13,26,36,0.9),transparent);"></div>
-          <div class="absolute top-4 right-4">
-            <span style="font-size:9px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:rgba(73,253,227,0.6);background:rgba(73,253,227,0.08);border:1px solid rgba(73,253,227,0.15);padding:3px 8px;border-radius:4px;">Add Photo</span>
-          </div>
-        </div>
-        <h4 class="font-body-lg text-body-lg text-on-surface" style="font-size:15px;">Moti Beyene Begi</h4>
-        <p class="font-label-caps text-label-caps text-primary mt-1">Chief Operating Officer</p>
+      <!-- DevOps Engineers -->
+      <div class="reveal" style="background:#111418;border:1px solid rgba(255,255,255,0.07);border-radius:14px;padding:32px 28px;">
+        <span class="material-symbols-outlined" style="font-size:32px;color:#49fde3;display:block;margin-bottom:16px;font-variation-settings:'FILL' 0;">cloud_sync</span>
+        <h4 style="font-size:15px;font-weight:600;color:#dee2ed;margin-bottom:8px;">DevOps Engineers</h4>
+        <p style="font-size:14px;line-height:1.6;color:#849490;">Secure, automated infrastructure & operations</p>
       </div>
 
-      <!-- Halima Dullo — Project Manager -->
-      <div class="group reveal reveal-delay-1">
-        <div class="w-full aspect-[4/5] mb-4 overflow-hidden border border-white/5 relative flex items-center justify-center" style="background:linear-gradient(135deg,#1a120d,#180d0a);">
-          <div class="absolute inset-0 flex items-center justify-center">
-            <span style="font-size:52px;font-weight:300;letter-spacing:-0.03em;color:rgba(239,191,113,0.35);">HD</span>
-          </div>
-          <div class="absolute bottom-0 inset-x-0 h-1/3" style="background:linear-gradient(to top,rgba(26,18,13,0.9),transparent);"></div>
-          <div class="absolute top-4 right-4">
-            <span style="font-size:9px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:rgba(239,191,113,0.6);background:rgba(239,191,113,0.08);border:1px solid rgba(239,191,113,0.15);padding:3px 8px;border-radius:4px;">Add Photo</span>
-          </div>
-        </div>
-        <h4 class="font-body-lg text-body-lg text-on-surface" style="font-size:15px;">Halima Dullo</h4>
-        <p class="font-label-caps text-label-caps text-secondary mt-1">Project Manager</p>
+      <!-- Cybersecurity Experts -->
+      <div class="reveal reveal-delay-1" style="background:#111418;border:1px solid rgba(255,255,255,0.07);border-radius:14px;padding:32px 28px;">
+        <span class="material-symbols-outlined" style="font-size:32px;color:#49fde3;display:block;margin-bottom:16px;font-variation-settings:'FILL' 0;">shield</span>
+        <h4 style="font-size:15px;font-weight:600;color:#dee2ed;margin-bottom:8px;">Cybersecurity Experts</h4>
+        <p style="font-size:14px;line-height:1.6;color:#849490;">Vulnerability analysis, monitoring & response</p>
       </div>
 
-      <!-- Fenet Jima Bedaso — Senior Researcher -->
-      <div class="group reveal reveal-delay-2">
-        <div class="w-full aspect-[4/5] mb-4 overflow-hidden border border-white/5 relative flex items-center justify-center" style="background:linear-gradient(135deg,#0d1a24,#081812);">
-          <div class="absolute inset-0 flex items-center justify-center">
-            <span style="font-size:52px;font-weight:300;letter-spacing:-0.03em;color:rgba(73,253,227,0.35);">FJ</span>
-          </div>
-          <div class="absolute bottom-0 inset-x-0 h-1/3" style="background:linear-gradient(to top,rgba(13,26,36,0.9),transparent);"></div>
-          <div class="absolute top-4 right-4">
-            <span style="font-size:9px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:rgba(73,253,227,0.6);background:rgba(73,253,227,0.08);border:1px solid rgba(73,253,227,0.15);padding:3px 8px;border-radius:4px;">Add Photo</span>
-          </div>
-        </div>
-        <h4 class="font-body-lg text-body-lg text-on-surface" style="font-size:15px;">Fenet Jima Bedaso</h4>
-        <p class="font-label-caps text-label-caps text-primary mt-1">Senior Researcher</p>
+      <!-- Project Managers -->
+      <div class="reveal reveal-delay-2" style="background:#111418;border:1px solid rgba(255,255,255,0.07);border-radius:14px;padding:32px 28px;">
+        <span class="material-symbols-outlined" style="font-size:32px;color:#49fde3;display:block;margin-bottom:16px;font-variation-settings:'FILL' 0;">assignment</span>
+        <h4 style="font-size:15px;font-weight:600;color:#dee2ed;margin-bottom:8px;">Project Managers</h4>
+        <p style="font-size:14px;line-height:1.6;color:#849490;">Planning, coordination & stakeholder comms</p>
       </div>
 
+      <!-- Researchers -->
+      <div class="reveal reveal-delay-3" style="background:#111418;border:1px solid rgba(255,255,255,0.07);border-radius:14px;padding:32px 28px;">
+        <span class="material-symbols-outlined" style="font-size:32px;color:#49fde3;display:block;margin-bottom:16px;font-variation-settings:'FILL' 0;">science</span>
+        <h4 style="font-size:15px;font-weight:600;color:#dee2ed;margin-bottom:8px;">Researchers</h4>
+        <p style="font-size:14px;line-height:1.6;color:#849490;">Applied inquiry to solve complex problems</p>
+      </div>
+
+    </div>
+    <!-- Extra breathing room after team cards -->
+    <div style="height:48px;"></div>
+  </section>
+
+  <!-- Careers -->
+  <section style="background:#0a0d12;padding-top:64px;" class="px-6 md:px-12 mb-2xl">
+    <div class="max-w-[1440px] mx-auto py-2xl">
+      <div class="reveal" style="max-width:720px;">
+        <div style="font-size:10px;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;color:#49fde3;margin-bottom:12px;">Careers</div>
+        <h2 style="font-size:clamp(24px,3vw,40px);font-weight:300;letter-spacing:-0.02em;color:#dee2ed;line-height:1.2;margin-bottom:20px;">Build the Future With Us</h2>
+        <p style="font-size:17px;line-height:1.75;color:#bacac5;margin-bottom:32px;">
+          We're always looking for talented engineers, data scientists, and strategic thinkers who want to build technology that matters. If you're passionate about AI, data, and digital transformation — we'd love to hear from you.
+        </p>
+        <a href="careers.html" style="display:inline-flex;align-items:center;gap:8px;background:#49fde3;color:#00201b;font-size:13px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;padding:14px 32px;border-radius:8px;text-decoration:none;transition:background 0.3s,transform 0.3s;" onmouseover="this.style.background='#6ffee9';this.style.transform='translateY(-2px)'" onmouseout="this.style.background='#49fde3';this.style.transform='translateY(0)'">
+          View Open Positions <span class="material-symbols-outlined" style="font-size:18px;">arrow_forward</span>
+        </a>
+      </div>
     </div>
   </section>
 
   <!-- Values -->
-  <section class="px-6 md:px-12 max-w-[1440px] mx-auto mb-2xl">
+  <section class="px-6 md:px-12 max-w-[1440px] mx-auto mb-2xl" style="padding-top:64px;">
     <h2 class="font-headline-md text-headline-md text-on-surface mb-16 border-b border-white/10 pb-4 reveal">Our Principles</h2>
     <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
       <div class="reveal">
@@ -490,12 +476,106 @@
       </div>
     </div>
     <div class="border-t border-white/5 pt-8">
-      <p style="font-size:12px;color:#849490;">© 2025 DAPS Analytics. All rights reserved. &middot; <a href="privacy.html" style="color:#bacac5;text-decoration:none;" onmouseover="this.style.color='#49fde3'" onmouseout="this.style.color='#bacac5'">Privacy Policy</a></p>
+      <p style="font-size:12px;color:#849490;">© 2026 DAPS Analytics. All rights reserved. &middot; <a href="privacy.html" style="color:#bacac5;text-decoration:none;" onmouseover="this.style.color='#49fde3'" onmouseout="this.style.color='#bacac5'">Privacy Policy</a></p>
     </div>
   </div>
 </footer>
 
 <script src="assets/navbar.js"></script>
 <script src="assets/daps.js"></script>
+
+<!-- Company Globe — exact copy of homepage globe renderer -->
+<script>
+(function () {
+  'use strict';
+  function boot() {
+    if (typeof THREE === 'undefined') { setTimeout(boot, 80); return; }
+    initGlobe();
+  }
+  function initGlobe() {
+    var canvas = document.getElementById('company-globe');
+    if (!canvas) return;
+    var section = canvas.parentElement;
+    var W = section.clientWidth || window.innerWidth;
+    var H = section.clientHeight || window.innerHeight;
+
+    var renderer = new THREE.WebGLRenderer({ canvas: canvas, antialias: true, alpha: true, powerPreference: 'high-performance' });
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    renderer.setSize(W, H);
+    renderer.setClearColor(0x000000, 0);
+
+    var scene = new THREE.Scene();
+    var camera = new THREE.PerspectiveCamera(42, W / H, 0.1, 1000);
+    camera.position.set(-1.8, 0.4, 5.8);
+    camera.lookAt(0, 0, 0);
+
+    scene.add(new THREE.AmbientLight(0x001a15, 2));
+    var key = new THREE.PointLight(0x49fde3, 5, 25);
+    key.position.set(6, 4, 6);
+    scene.add(key);
+    var fill = new THREE.PointLight(0x003730, 2, 25);
+    fill.position.set(-5, -3, -5);
+    scene.add(fill);
+
+    var G = new THREE.Group();
+    scene.add(G);
+    var R = 2;
+
+    G.add(new THREE.Mesh(new THREE.SphereGeometry(R, 72, 72),
+      new THREE.MeshPhongMaterial({color:0x050a10,emissive:0x001208,specular:0x49fde3,shininess:6,transparent:true,opacity:0.97})));
+    G.add(new THREE.Mesh(new THREE.SphereGeometry(R+0.003, 24, 16),
+      new THREE.MeshBasicMaterial({color:0x49fde3,wireframe:true,transparent:true,opacity:0.035,blending:THREE.AdditiveBlending,depthWrite:false})));
+    G.add(new THREE.Mesh(new THREE.SphereGeometry(R+0.28, 64, 64),
+      new THREE.ShaderMaterial({
+        vertexShader:'varying vec3 vN;void main(){vN=normalize(normalMatrix*normal);gl_Position=projectionMatrix*modelViewMatrix*vec4(position,1.);}',
+        fragmentShader:'varying vec3 vN;void main(){float i=pow(max(0.,0.70-dot(vN,vec3(0,0,1))),2.2);gl_FragColor=vec4(0.286,0.992,0.890,i*0.85);}',
+        blending:THREE.AdditiveBlending,side:THREE.BackSide,transparent:true,depthWrite:false})));
+    G.add(new THREE.Mesh(new THREE.SphereGeometry(R+0.65, 64, 64),
+      new THREE.ShaderMaterial({
+        vertexShader:'varying vec3 vN;void main(){vN=normalize(normalMatrix*normal);gl_Position=projectionMatrix*modelViewMatrix*vec4(position,1.);}',
+        fragmentShader:'varying vec3 vN;void main(){float i=pow(max(0.,0.82-dot(vN,vec3(0,0,1))),5.0);gl_FragColor=vec4(0.286,0.992,0.890,i*0.12);}',
+        blending:THREE.AdditiveBlending,side:THREE.BackSide,transparent:true,depthWrite:false})));
+
+    function rnd(r){var phi=Math.acos(2*Math.random()-1);var theta=2*Math.PI*Math.random();return new THREE.Vector3(r*Math.sin(phi)*Math.cos(theta),r*Math.cos(phi),r*Math.sin(phi)*Math.sin(theta));}
+
+    var N_NODES=420,nodePts=[],nPos=[];
+    for(var i=0;i<N_NODES;i++){var p=rnd(R+0.013);nodePts.push(p);nPos.push(p.x,p.y,p.z);}
+    var nGeo=new THREE.BufferGeometry();nGeo.setAttribute('position',new THREE.Float32BufferAttribute(nPos,3));
+    G.add(new THREE.Points(nGeo,new THREE.PointsMaterial({color:0x49fde3,size:0.022,sizeAttenuation:true,transparent:true,opacity:0.72,blending:THREE.AdditiveBlending,depthWrite:false})));
+
+    var hPos=[];for(var j=0;j<65;j++){var q=rnd(R+0.018);hPos.push(q.x,q.y,q.z);}
+    var hGeo=new THREE.BufferGeometry();hGeo.setAttribute('position',new THREE.Float32BufferAttribute(hPos,3));
+    G.add(new THREE.Points(hGeo,new THREE.PointsMaterial({color:0xffffff,size:0.06,sizeAttenuation:true,transparent:true,opacity:0.9,blending:THREE.AdditiveBlending,depthWrite:false})));
+
+    var N_ARCS=75,arcs=[];
+    for(var k=0;k<N_ARCS;k++){
+      var a=nodePts[Math.floor(Math.random()*N_NODES)];var b=nodePts[Math.floor(Math.random()*N_NODES)];
+      var mid=a.clone().add(b).multiplyScalar(0.5);var lift=R*(0.10+0.28*Math.random());mid.normalize().multiplyScalar(mid.length()+lift);
+      var curve=new THREE.QuadraticBezierCurve3(a,mid,b);
+      var aGeo=new THREE.BufferGeometry().setFromPoints(curve.getPoints(60));
+      G.add(new THREE.Line(aGeo,new THREE.LineBasicMaterial({color:0x49fde3,transparent:true,opacity:0.07+Math.random()*0.09,blending:THREE.AdditiveBlending,depthWrite:false})));
+      var dGeo=new THREE.BufferGeometry();dGeo.setAttribute('position',new THREE.Float32BufferAttribute([0,0,0],3));
+      var dot=new THREE.Points(dGeo,new THREE.PointsMaterial({color:0x49fde3,size:0.075,sizeAttenuation:true,transparent:true,opacity:0.95,blending:THREE.AdditiveBlending,depthWrite:false}));
+      G.add(dot);arcs.push({curve:curve,dot:dot,t:Math.random(),spd:0.0022+Math.random()*0.003});
+    }
+
+    var sPos=[];for(var s=0;s<2800;s++){var sp=rnd(90+Math.random()*140);sPos.push(sp.x,sp.y,sp.z);}
+    var sGeo=new THREE.BufferGeometry();sGeo.setAttribute('position',new THREE.Float32BufferAttribute(sPos,3));
+    scene.add(new THREE.Points(sGeo,new THREE.PointsMaterial({color:0xffffff,size:0.18,sizeAttenuation:true,transparent:true,opacity:0.22,blending:THREE.AdditiveBlending,depthWrite:false})));
+
+    function tick(){
+      requestAnimationFrame(tick);
+      G.rotation.y+=0.0013;G.rotation.x=Math.sin(Date.now()*0.00008)*0.06;
+      var t=Date.now()*0.00025;key.position.x=Math.cos(t)*7;key.position.z=Math.sin(t)*7;
+      for(var i=0;i<arcs.length;i++){var arc=arcs[i];arc.t=(arc.t+arc.spd)%1;var pt=arc.curve.getPoint(arc.t);arc.dot.geometry.attributes.position.setXYZ(0,pt.x,pt.y,pt.z);arc.dot.geometry.attributes.position.needsUpdate=true;}
+      renderer.render(scene,camera);
+    }
+    tick();
+
+    window.addEventListener('resize',function(){W=section.clientWidth||window.innerWidth;H=section.clientHeight||window.innerHeight;camera.aspect=W/H;camera.updateProjectionMatrix();renderer.setSize(W,H);});
+  }
+  boot();
+})();
+</script>
 </body>
 </html>
