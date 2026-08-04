@@ -109,6 +109,25 @@
        intelligence / layer for African & / global enterprises."). Let the
        text reflow to the width the phone actually has. */
     h1 br { display: none; }
+
+    /* ── Body copy ───────────────────────────────────────────────
+       Line-height ratios run 1.6-1.85 across the site. That is comfortable
+       on a wide column, but on a 360px phone the same paragraph wraps to
+       roughly twice as many lines, so the leading is paid twice over and
+       the text block balloons. Tighten it for phones. */
+    p, li, blockquote { line-height: 1.55 !important; }
+
+    /* Lead paragraphs are set at 17-20px for desktop. At 360px that is
+       oversized body copy: it forces more wrapping, which costs far more
+       vertical space than the larger type buys back in readability.
+       Scoped to <p> so stat numbers and badges at the same size are
+       untouched. */
+    p[style*="font-size:17px"], p[style*="font-size: 17px"],
+    p[style*="font-size:18px"], p[style*="font-size: 18px"] { font-size: 16px !important; }
+    p[style*="font-size:19px"], p[style*="font-size: 19px"],
+    p[style*="font-size:20px"], p[style*="font-size: 20px"] { font-size: 17px !important; }
+    /* the same lead size applied by class rather than inline */
+    p.text-body-lg, .article-body { font-size: 16px !important; }
   }
 
   body { background-color: #0e141b; color: #dee2ed; }
