@@ -92,6 +92,20 @@ Full-stack frontend website for **DAPS Analytics** (Data Analytics Processing So
 | `services.html` | `clamp(36px, 4.5vw, 68px)` | 68px |
 | `company.html` | `clamp(36px, 5vw, 56px)` | 56px |
 
+### Section Rhythm (normalised 2026-08-04)
+Sections had drifted to ~192–256px of dead space between them. The site now uses
+**~128px on desktop, ~64–96px on mobile**, in one of two equivalent forms:
+
+| Form | Pages | Value |
+|------|-------|-------|
+| `mb-lg md:mb-xl` | services, industries, insights | 64px → 128px |
+| `py-12 md:py-16` | careers, projects, products, products-archive | 96px → 128px between adjacent sections |
+| `mb-lg` + `padding-top:64px` | company | 128px |
+
+**Do not reintroduce `mb-2xl` (192px) or stacked `py-24` between sections** — two
+adjacent `py-24` sections produce a 192px gap, which is what made the careers and
+projects pages feel empty.
+
 ### Spacing Scale
 ```
 xs: 0.5rem | sm: 1rem | md: 2rem | lg: 4rem | xl: 8rem | 2xl: 12rem
