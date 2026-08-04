@@ -48,6 +48,27 @@
      all five dropdown panels and the mobile menu render as stacked blocks. */
   #daps-nav:not([data-nav-ready]) { display: none !important; }
 
+  /* ── Small screens (Android phones start at 360px) ───────────────
+     Most micro-labels are set with inline styles, which cannot carry a
+     media query, so they stayed at 9-10px on phones — below comfortable
+     reading size. Lift them here. Icon glyphs are excluded: their
+     font-size controls how large the icon renders. */
+  @media (max-width: 640px) {
+    [style*="font-size:9px"]:not(.material-symbols-outlined),
+    [style*="font-size:10px"]:not(.material-symbols-outlined),
+    [style*="font-size:10.5px"]:not(.material-symbols-outlined) {
+      font-size: 11.5px !important;
+    }
+    /* uppercase micro-labels get cramped once lifted */
+    [style*="text-transform:uppercase"]:not(.material-symbols-outlined) { letter-spacing: 0.08em; }
+    /* footer link rows were ~15px tall — well under a comfortable tap target */
+    footer li > a { display: inline-block; padding: 7px 0; }
+    /* class-based micro-labels the attribute selector above cannot reach */
+    .cap-sub, .wwo-label, .rp-sec, .ap-label, .sidebar-label { font-size: 11.5px; }
+    /* long CTA pills (px-8 + a long label) could exceed a 360px viewport */
+    a.inline-flex, button.inline-flex { max-width: 100%; flex-wrap: wrap; justify-content: center; }
+  }
+
   body { background-color: #0e141b; color: #dee2ed; }
   .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.8s cubic-bezier(0.4,0,0.2,1), transform 0.8s cubic-bezier(0.4,0,0.2,1); }
   .reveal.revealed { opacity: 1; transform: translateY(0); }
