@@ -5,6 +5,9 @@
     },
     "api/contact.js": {
       "maxDuration": 30
+    },
+    "api/config.js": {
+      "maxDuration": 10
     }
   }
 }

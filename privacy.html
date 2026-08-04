@@ -44,7 +44,12 @@
   }
 </script>
 <style>
-  body { background-color: #0e141b; color: #dee2ed; font-family: 'Inter', sans-serif; }
+  :root { --daps-font: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, 'Noto Sans Ethiopic', sans-serif; }
+  body { font-family: var(--daps-font); }
+  /* Form controls don't inherit font-family from body — make them. */
+  button, input, select, textarea { font-family: inherit; }
+
+  body { background-color: #0e141b; color: #dee2ed; font-family: var(--daps-font); }
   .eyebrow { display:flex;align-items:center;gap:12px;font-size:11px;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;color:#49fde3;margin-bottom:20px; }
   .eyebrow::before { content:'';display:block;width:32px;height:1px;background:#49fde3;flex-shrink:0; }
   .policy-section { border-top: 1px solid rgba(255,255,255,0.06); padding-top: 2rem; margin-top: 2rem; }
@@ -217,6 +222,7 @@
         <h4 style="font-size:10px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:#dee2ed;margin-bottom:20px;">Company</h4>
         <ul class="space-y-3" style="font-size:13px;list-style:none;padding:0;">
           <li><a href="company.html"  style="color:#bacac5;" class="hover:text-teal-400 transition-colors">About Us</a></li>
+          <li><a href="careers.html"  style="color:#bacac5;" class="hover:text-teal-400 transition-colors">Careers</a></li>
           <li><a href="contact.html"  style="color:#bacac5;" class="hover:text-teal-400 transition-colors">Contact</a></li>
           <li><a href="insights.html" style="color:#bacac5;" class="hover:text-teal-400 transition-colors">Resources</a></li>
           <li><a href="linktree.html" style="color:#bacac5;" class="hover:text-teal-400 transition-colors">All Links</a></li>

@@ -55,7 +55,7 @@
         },
         borderRadius:{DEFAULT:"0.25rem",lg:"0.5rem",xl:"0.75rem",full:"9999px"},
         spacing:{lg:"4rem",xl:"8rem",xs:"0.5rem",md: "2rem","2xl":"12rem",gutter:"24px",margin:"64px",unit:"4px",sm:"1rem"},
-        fontFamily:{"display-lg":["Inter"],"label-caps":["Inter"],"headline-md":["Inter"],"display-2xl":["Inter"],"body-md":["Inter"],"display-xl":["Inter"],"body-lg":["Inter"]},
+        fontFamily:{"display-lg":["Inter","system-ui","-apple-system","Segoe UI","Roboto","Helvetica","Arial","Noto Sans Ethiopic","sans-serif"],"label-caps":["Inter","system-ui","-apple-system","Segoe UI","Roboto","Helvetica","Arial","Noto Sans Ethiopic","sans-serif"],"headline-md":["Inter","system-ui","-apple-system","Segoe UI","Roboto","Helvetica","Arial","Noto Sans Ethiopic","sans-serif"],"display-2xl":["Inter","system-ui","-apple-system","Segoe UI","Roboto","Helvetica","Arial","Noto Sans Ethiopic","sans-serif"],"body-md":["Inter","system-ui","-apple-system","Segoe UI","Roboto","Helvetica","Arial","Noto Sans Ethiopic","sans-serif"],"display-xl":["Inter","system-ui","-apple-system","Segoe UI","Roboto","Helvetica","Arial","Noto Sans Ethiopic","sans-serif"],"body-lg":["Inter","system-ui","-apple-system","Segoe UI","Roboto","Helvetica","Arial","Noto Sans Ethiopic","sans-serif"]},
         fontSize:{
           "display-lg":["56px",{lineHeight:"115%",letterSpacing:"-0.02em",fontWeight:"400"}],
           "label-caps":["12px",{lineHeight:"100%",letterSpacing:"0.1em",fontWeight:"600"}],
@@ -70,6 +70,11 @@
   }
 </script>
 <style>
+  :root { --daps-font: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, 'Noto Sans Ethiopic', sans-serif; }
+  body { font-family: var(--daps-font); }
+  /* Form controls don't inherit font-family from body — make them. */
+  button, input, select, textarea { font-family: inherit; }
+
   *, *::before, *::after { box-sizing: border-box; }
   html { scroll-behavior: smooth; }
   body { background-color: #0e141b; color: #dee2ed; margin: 0; }
@@ -701,6 +706,7 @@
         <h4 style="font-size:10px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:#dee2ed;margin-bottom:20px;">Company</h4>
         <ul class="space-y-3" style="font-size:13px;">
           <li><a href="company.html" style="color:#bacac5;" class="hover:text-teal-400 transition-colors">About Us</a></li>
+          <li><a href="careers.html" style="color:#bacac5;" class="hover:text-teal-400 transition-colors">Careers</a></li>
           <li><a href="contact.html" style="color:#bacac5;" class="hover:text-teal-400 transition-colors">Contact</a></li>
           <li><a href="insights.html" style="color:#bacac5;" class="hover:text-teal-400 transition-colors">Resources</a></li>
           <li><a href="linktree.html" style="color:#bacac5;" class="hover:text-teal-400 transition-colors">All Links</a></li>

@@ -53,7 +53,7 @@
         },
         borderRadius: { DEFAULT: "0.25rem", lg:"0.5rem", xl: "0.75rem", full: "9999px" },
         spacing: { lg:"4rem", xl: "8rem", xs: "0.5rem", md: "2rem", "2xl": "12rem", gutter: "24px", margin: "64px", unit: "4px", sm: "1rem" },
-        fontFamily: { "display-lg": ["Inter"], "label-caps": ["Inter"], "headline-md": ["Inter"], "display-2xl": ["Inter"], "body-md": ["Inter"], "display-xl": ["Inter"], "body-lg": ["Inter"] },
+        fontFamily: { "display-lg": ["Inter","system-ui","-apple-system","Segoe UI","Roboto","Helvetica","Arial","Noto Sans Ethiopic","sans-serif"], "label-caps": ["Inter","system-ui","-apple-system","Segoe UI","Roboto","Helvetica","Arial","Noto Sans Ethiopic","sans-serif"], "headline-md": ["Inter","system-ui","-apple-system","Segoe UI","Roboto","Helvetica","Arial","Noto Sans Ethiopic","sans-serif"], "display-2xl": ["Inter","system-ui","-apple-system","Segoe UI","Roboto","Helvetica","Arial","Noto Sans Ethiopic","sans-serif"], "body-md": ["Inter","system-ui","-apple-system","Segoe UI","Roboto","Helvetica","Arial","Noto Sans Ethiopic","sans-serif"], "display-xl": ["Inter","system-ui","-apple-system","Segoe UI","Roboto","Helvetica","Arial","Noto Sans Ethiopic","sans-serif"], "body-lg": ["Inter","system-ui","-apple-system","Segoe UI","Roboto","Helvetica","Arial","Noto Sans Ethiopic","sans-serif"] },
         fontSize: {
           "display-lg": ["56px", { lineHeight: "115%", letterSpacing: "-0.02em", fontWeight: "400" }],
           "label-caps": ["12px", { lineHeight: "100%", letterSpacing: "0.1em", fontWeight: "600" }],
@@ -68,6 +68,11 @@
   }
 </script>
 <style>
+  :root { --daps-font: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, 'Noto Sans Ethiopic', sans-serif; }
+  body { font-family: var(--daps-font); }
+  /* Form controls don't inherit font-family from body — make them. */
+  button, input, select, textarea { font-family: inherit; }
+
   body { background-color: #0e141b; color: #dee2ed; }
   .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.7s cubic-bezier(0.4,0,0.2,1), transform 0.7s cubic-bezier(0.4,0,0.2,1); }
   .reveal.revealed { opacity: 1; transform: translateY(0); }
@@ -103,6 +108,77 @@
   .role-card:hover {
     border-color: rgba(73,253,227,0.2);
   }
+
+  /* ── Careers: offer + process ──────────────────────────────── */
+  .offer-card { background:#111418; border:1px solid rgba(255,255,255,0.07); border-radius:12px; padding:22px; transition:border-color .4s; }
+  .offer-card:hover { border-color:rgba(73,253,227,0.28); }
+  .step { position:relative; padding-left:52px; padding-bottom:34px; }
+  .step:last-child { padding-bottom:0; }
+  .step::before { content:''; position:absolute; left:15px; top:34px; bottom:0; width:1px; background:rgba(255,255,255,0.09); }
+  .step:last-child::before { display:none; }
+  .step-num { position:absolute; left:0; top:0; width:32px; height:32px; border-radius:50%; display:flex; align-items:center; justify-content:center;
+              background:rgba(73,253,227,0.08); border:1px solid rgba(73,253,227,0.28); color:#49fde3; font-size:12px; font-weight:700; }
+
+  /* ── Roles: filters + list ─────────────────────────────────── */
+  .filter-bar { display:flex; flex-wrap:wrap; gap:10px; align-items:center; margin-bottom:26px; }
+  .role-search { flex:1; min-width:220px; background:#0d1117; border:1px solid rgba(255,255,255,0.1); border-radius:9px;
+                 padding:11px 15px; color:#dee2ed; font-family: var(--daps-font); font-size:14px; }
+  .role-search::placeholder { color:#5d6d68; }
+  .role-search:focus { outline:none; border-color:rgba(73,253,227,0.45); }
+  .fpill { background:transparent; border:1px solid rgba(255,255,255,0.12); color:#849490; border-radius:999px;
+           padding:7px 15px; font-family: var(--daps-font); font-size:12px; font-weight:600; cursor:pointer; transition:all .25s; }
+  .fpill:hover { border-color:rgba(73,253,227,0.4); color:#49fde3; }
+  .fpill.on { background:rgba(73,253,227,0.1); border-color:rgba(73,253,227,0.5); color:#49fde3; }
+  .fpill:focus-visible { outline:2px solid #49fde3; outline-offset:2px; }
+
+  .role-card { cursor:pointer; }
+  .role-tags { display:flex; flex-wrap:wrap; gap:7px; margin-top:10px; }
+  .rtag { font-size:11px; font-weight:600; padding:3px 9px; border-radius:5px;
+          background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.09); color:#849490; }
+  .rtag.hot { background:rgba(239,191,113,0.1); border-color:rgba(239,191,113,0.3); color:#efbf71; }
+  .roles-note { font-size:13px; color:#5d6d68; margin-top:18px; }
+
+  /* ── Slide-out role detail ─────────────────────────────────── */
+  #roleBackdrop { position:fixed; inset:0; background:rgba(4,8,12,0.72); backdrop-filter:blur(3px);
+                  opacity:0; pointer-events:none; transition:opacity .35s; z-index:9998; }
+  #roleBackdrop.on { opacity:1; pointer-events:auto; }
+  #rolePanel { position:fixed; top:0; right:0; height:100%; width:min(660px,100%); background:#0b1016;
+               border-left:1px solid rgba(255,255,255,0.09); transform:translateX(102%); transition:transform .42s cubic-bezier(.4,0,.2,1);
+               z-index:9999; display:flex; flex-direction:column; }
+  #rolePanel.on { transform:translateX(0); }
+  .rp-head { padding:26px 30px; border-bottom:1px solid rgba(255,255,255,0.07); display:flex; align-items:flex-start; gap:16px; }
+  .rp-body { padding:26px 30px 40px; overflow-y:auto; flex:1; }
+  .rp-close { background:transparent; border:1px solid rgba(255,255,255,0.12); color:#849490; border-radius:8px;
+              width:34px; height:34px; cursor:pointer; flex-shrink:0; font-size:16px; line-height:1; transition:all .25s; }
+  .rp-close:hover { border-color:rgba(255,255,255,0.3); color:#dee2ed; }
+  .rp-sec { font-size:10px; font-weight:700; letter-spacing:.14em; text-transform:uppercase; color:#49fde3; margin:26px 0 12px; }
+  .rp-list { list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:9px; }
+  .rp-list li { display:flex; gap:10px; font-size:14.5px; line-height:1.62; color:#bacac5; }
+  .rp-list li::before { content:'▸'; color:#49fde3; flex-shrink:0; font-size:11px; line-height:1.9; }
+  .rp-meta { display:flex; flex-wrap:wrap; gap:8px; margin-top:12px; }
+
+  /* ── Application form ──────────────────────────────────────── */
+  .ap-grid { display:grid; grid-template-columns:1fr; gap:16px; }
+  @media (min-width:620px){ .ap-grid { grid-template-columns:1fr 1fr; } .ap-full { grid-column:1/-1; } }
+  .ap-label { display:block; font-size:10px; font-weight:700; letter-spacing:.1em; text-transform:uppercase; color:#849490; margin-bottom:6px; }
+  .ap-in, .ap-ta { width:100%; background:#0d1117; border:1px solid rgba(255,255,255,0.1); border-radius:8px;
+                   padding:11px 13px; color:#dee2ed; font-family: var(--daps-font); font-size:14px; }
+  .ap-in:focus, .ap-ta:focus { outline:none; border-color:rgba(73,253,227,0.45); }
+  .ap-ta { resize:vertical; min-height:110px; }
+  .ap-file { border:1px dashed rgba(255,255,255,0.16); border-radius:8px; padding:16px; text-align:center; cursor:pointer; transition:border-color .25s; }
+  .ap-file:hover { border-color:rgba(73,253,227,0.45); }
+  .ap-file input { display:none; }
+  .btn-primary { background:#49fde3; color:#003730; border:none; border-radius:8px; padding:13px 30px; cursor:pointer;
+                 font-family: var(--daps-font); font-size:11px; font-weight:700; letter-spacing:.12em; text-transform:uppercase; transition:opacity .25s; }
+  .btn-primary:hover { opacity:.88; }
+  .btn-primary:disabled { opacity:.5; cursor:not-allowed; }
+  .ap-msg { margin-top:14px; padding:13px; border-radius:8px; font-size:13px; line-height:1.6; display:none; }
+  .ap-msg.ok  { display:block; background:rgba(73,253,227,0.07); border:1px solid rgba(73,253,227,0.25); color:#49fde3; }
+  .ap-msg.err { display:block; background:rgba(255,107,107,0.07); border:1px solid rgba(255,107,107,0.28); color:#ff8f8f; }
+  .skeleton { height:86px; border-radius:12px; background:linear-gradient(90deg,#111418 25%,#161c23 50%,#111418 75%);
+              background-size:200% 100%; animation:sk 1.4s infinite; }
+  @keyframes sk { 0%{background-position:200% 0} 100%{background-position:-200% 0} }
+  @media (prefers-reduced-motion: reduce){ #rolePanel,#roleBackdrop,.skeleton{transition:none;animation:none} }
 </style>
 
 <!-- SEO -->
@@ -181,84 +257,134 @@
   </div>
 </section>
 
-<!-- ── Open Positions ────────────────────────────────────────────────── -->
+<!-- ── What We Offer ─────────────────────────────────────────────────── -->
 <section class="px-6 md:px-12 py-24" style="background:#0e141b;">
   <div class="max-w-[1440px] mx-auto">
+    <div class="mb-14 reveal">
+      <div class="eyebrow">What We Offer</div>
+      <h2 style="font-size:clamp(24px,3vw,40px);font-weight:300;letter-spacing:-0.02em;color:#dee2ed;margin-bottom:12px;">More than a job description</h2>
+      <p style="font-size:16px;line-height:1.7;color:#bacac5;max-width:620px;">The things that actually shape a working life — pay, flexibility, growth, and whether your work reaches anyone.</p>
+    </div>
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+      <div class="offer-card reveal">
+        <div style="width:40px;height:40px;border-radius:9px;background:rgba(73,253,227,0.08);border:1px solid rgba(73,253,227,0.18);display:flex;align-items:center;justify-content:center;margin-bottom:16px;">
+          <span class="material-symbols-outlined" style="font-size:20px;color:#49fde3;font-variation-settings:'FILL' 1;">payments</span>
+        </div>
+        <h3 style="font-size:15px;font-weight:600;color:#dee2ed;margin-bottom:8px;">Competitive pay</h3>
+        <p style="font-size:13.5px;line-height:1.65;color:#849490;">Benchmarked against the market you work in — US or Ethiopian — and reviewed annually, not whenever you ask.</p>
+      </div>
+      <div class="offer-card reveal reveal-delay-1">
+        <div style="width:40px;height:40px;border-radius:9px;background:rgba(239,191,113,0.08);border:1px solid rgba(239,191,113,0.18);display:flex;align-items:center;justify-content:center;margin-bottom:16px;">
+          <span class="material-symbols-outlined" style="font-size:20px;color:#efbf71;font-variation-settings:'FILL' 1;">schedule</span>
+        </div>
+        <h3 style="font-size:15px;font-weight:600;color:#dee2ed;margin-bottom:8px;">Flexible & remote-first</h3>
+        <p style="font-size:13.5px;line-height:1.65;color:#849490;">Work from Addis, Bethesda, or anywhere. We coordinate across time zones by default, not as an exception.</p>
+      </div>
+      <div class="offer-card reveal reveal-delay-2">
+        <div style="width:40px;height:40px;border-radius:9px;background:rgba(73,253,227,0.08);border:1px solid rgba(73,253,227,0.18);display:flex;align-items:center;justify-content:center;margin-bottom:16px;">
+          <span class="material-symbols-outlined" style="font-size:20px;color:#49fde3;font-variation-settings:'FILL' 1;">school</span>
+        </div>
+        <h3 style="font-size:15px;font-weight:600;color:#dee2ed;margin-bottom:8px;">Real learning budget</h3>
+        <p style="font-size:13.5px;line-height:1.65;color:#849490;">Conferences, certifications, and courses. Our Research & Training practice means teaching is part of the job.</p>
+      </div>
+      <div class="offer-card reveal reveal-delay-3">
+        <div style="width:40px;height:40px;border-radius:9px;background:rgba(239,191,113,0.08);border:1px solid rgba(239,191,113,0.18);display:flex;align-items:center;justify-content:center;margin-bottom:16px;">
+          <span class="material-symbols-outlined" style="font-size:20px;color:#efbf71;font-variation-settings:'FILL' 1;">rocket_launch</span>
+        </div>
+        <h3 style="font-size:15px;font-weight:600;color:#dee2ed;margin-bottom:8px;">Ownership from day one</h3>
+        <p style="font-size:13.5px;line-height:1.65;color:#849490;">Small teams, production systems, live users. Your work ships to governments and enterprises, not a backlog.</p>
+      </div>
+      <div class="offer-card reveal">
+        <div style="width:40px;height:40px;border-radius:9px;background:rgba(73,253,227,0.08);border:1px solid rgba(73,253,227,0.18);display:flex;align-items:center;justify-content:center;margin-bottom:16px;">
+          <span class="material-symbols-outlined" style="font-size:20px;color:#49fde3;font-variation-settings:'FILL' 1;">diversity_3</span>
+        </div>
+        <h3 style="font-size:15px;font-weight:600;color:#dee2ed;margin-bottom:8px;">Multidisciplinary team</h3>
+        <p style="font-size:13.5px;line-height:1.65;color:#849490;">Engineers, architects, data scientists, and researchers across two continents — with genuinely different perspectives.</p>
+      </div>
+      <div class="offer-card reveal reveal-delay-1">
+        <div style="width:40px;height:40px;border-radius:9px;background:rgba(239,191,113,0.08);border:1px solid rgba(239,191,113,0.18);display:flex;align-items:center;justify-content:center;margin-bottom:16px;">
+          <span class="material-symbols-outlined" style="font-size:20px;color:#efbf71;font-variation-settings:'FILL' 1;">health_and_safety</span>
+        </div>
+        <h3 style="font-size:15px;font-weight:600;color:#dee2ed;margin-bottom:8px;">Health & wellbeing</h3>
+        <p style="font-size:13.5px;line-height:1.65;color:#849490;">Medical coverage, paid leave that people actually take, and no glorification of burnout.</p>
+      </div>
+    </div>
+  </div>
+</section>
 
-    <div class="mb-6 reveal">
+<!-- ── How We Hire ───────────────────────────────────────────────────── -->
+<section class="px-6 md:px-12 py-24" style="background:#0e141b;">
+  <div class="max-w-[1440px] mx-auto">
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-14">
+      <div class="reveal">
+        <div class="eyebrow">How We Hire</div>
+        <h2 style="font-size:clamp(24px,3vw,36px);font-weight:300;letter-spacing:-0.02em;color:#dee2ed;margin-bottom:14px;">No black boxes</h2>
+        <p style="font-size:15px;line-height:1.7;color:#849490;">
+          Hiring processes are usually opaque and slow. Ours is written down so you know exactly where you stand at every stage — and how long it should take.
+        </p>
+      </div>
+      <div class="lg:col-span-2">
+      <div class="step reveal">
+        <div class="step-num">1</div>
+        <h3 style="font-size:15.5px;font-weight:600;color:#dee2ed;margin-bottom:6px;">Apply</h3>
+        <p style="font-size:14px;line-height:1.65;color:#849490;max-width:560px;">Send your application through the role below. A CV is enough to start — a short note on why this role interests you helps a lot.</p>
+      </div>
+      <div class="step reveal">
+        <div class="step-num">2</div>
+        <h3 style="font-size:15.5px;font-weight:600;color:#dee2ed;margin-bottom:6px;">First response</h3>
+        <p style="font-size:14px;line-height:1.65;color:#849490;max-width:560px;">We reply to every applicant within <strong style="color:#bacac5;">5 business days</strong>, including when the answer is no. You will never be left guessing.</p>
+      </div>
+      <div class="step reveal">
+        <div class="step-num">3</div>
+        <h3 style="font-size:15.5px;font-weight:600;color:#dee2ed;margin-bottom:6px;">Intro conversation</h3>
+        <p style="font-size:14px;line-height:1.65;color:#849490;max-width:560px;">A 30-minute call about your experience, what you want to build, and how DAPS actually works day to day. Ask us anything.</p>
+      </div>
+      <div class="step reveal">
+        <div class="step-num">4</div>
+        <h3 style="font-size:15.5px;font-weight:600;color:#dee2ed;margin-bottom:6px;">Practical session</h3>
+        <p style="font-size:14px;line-height:1.65;color:#849490;max-width:560px;">A focused technical or domain conversation grounded in real problems we face — no whiteboard trivia, no unpaid take-home marathons.</p>
+      </div>
+      <div class="step reveal">
+        <div class="step-num">5</div>
+        <h3 style="font-size:15.5px;font-weight:600;color:#dee2ed;margin-bottom:6px;">Decision & offer</h3>
+        <p style="font-size:14px;line-height:1.65;color:#849490;max-width:560px;">Final conversation with the team you would join, then a written offer with the full package explained. Typically 2–3 weeks end to end.</p>
+      </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Open Positions ────────────────────────────────────────────────── -->
+<section id="open-roles" class="px-6 md:px-12 py-24" style="background:#0e141b;">
+  <div class="max-w-[1440px] mx-auto">
+
+    <div class="mb-8 reveal">
       <div class="eyebrow">Open Positions</div>
       <h2 style="font-size:clamp(24px,3vw,40px);font-weight:300;letter-spacing:-0.02em;color:#dee2ed;margin-bottom:12px;">Current Opportunities</h2>
       <p style="font-size:16px;line-height:1.7;color:#bacac5;max-width:640px;">
-        We're building our team across both US and Ethiopian operations. If you don't see a role that fits but believe you can contribute, reach out — we're always interested in exceptional talent.
+        We're building across our US and Ethiopian operations. If nothing below fits but you believe you can contribute, send a general application — we read every one.
       </p>
     </div>
 
-    <div class="space-y-4 mt-12">
-
-      <!-- Role 1 -->
-      <div class="role-card reveal">
-        <div class="flex-grow">
-          <h3 style="font-size:17px;font-weight:600;color:#dee2ed;margin-bottom:8px;">Full-Stack Software Engineer</h3>
-          <div class="flex flex-wrap items-center gap-4">
-            <span class="flex items-center gap-1.5" style="font-size:13px;color:#849490;">
-              <span class="material-symbols-outlined" style="font-size:16px;color:#849490;">location_on</span>
-              Remote / Addis Ababa
-            </span>
-            <span class="flex items-center gap-1.5" style="font-size:13px;color:#849490;">
-              <span class="material-symbols-outlined" style="font-size:16px;color:#849490;">schedule</span>
-              Full-time
-            </span>
-          </div>
-        </div>
-        <a href="contact.html" class="flex-shrink-0 inline-flex items-center gap-2" style="padding:10px 24px;border:1px solid rgba(73,253,227,0.5);color:#49fde3;font-size:11px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;border-radius:8px;text-decoration:none;transition:background 0.3s,border-color 0.3s;" onmouseover="this.style.background='rgba(73,253,227,0.08)';this.style.borderColor='#49fde3'" onmouseout="this.style.background='transparent';this.style.borderColor='rgba(73,253,227,0.5)'">
-          Apply
-          <span class="material-symbols-outlined" style="font-size:14px;">arrow_forward</span>
-        </a>
-      </div>
-
-      <!-- Role 2 -->
-      <div class="role-card reveal reveal-delay-1">
-        <div class="flex-grow">
-          <h3 style="font-size:17px;font-weight:600;color:#dee2ed;margin-bottom:8px;">Data Scientist</h3>
-          <div class="flex flex-wrap items-center gap-4">
-            <span class="flex items-center gap-1.5" style="font-size:13px;color:#849490;">
-              <span class="material-symbols-outlined" style="font-size:16px;color:#849490;">location_on</span>
-              Remote / Bethesda, MD
-            </span>
-            <span class="flex items-center gap-1.5" style="font-size:13px;color:#849490;">
-              <span class="material-symbols-outlined" style="font-size:16px;color:#849490;">schedule</span>
-              Full-time
-            </span>
-          </div>
-        </div>
-        <a href="contact.html" class="flex-shrink-0 inline-flex items-center gap-2" style="padding:10px 24px;border:1px solid rgba(73,253,227,0.5);color:#49fde3;font-size:11px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;border-radius:8px;text-decoration:none;transition:background 0.3s,border-color 0.3s;" onmouseover="this.style.background='rgba(73,253,227,0.08)';this.style.borderColor='#49fde3'" onmouseout="this.style.background='transparent';this.style.borderColor='rgba(73,253,227,0.5)'">
-          Apply
-          <span class="material-symbols-outlined" style="font-size:14px;">arrow_forward</span>
-        </a>
-      </div>
-
-      <!-- Role 3 -->
-      <div class="role-card reveal reveal-delay-2">
-        <div class="flex-grow">
-          <h3 style="font-size:17px;font-weight:600;color:#dee2ed;margin-bottom:8px;">AI / ML Engineer</h3>
-          <div class="flex flex-wrap items-center gap-4">
-            <span class="flex items-center gap-1.5" style="font-size:13px;color:#849490;">
-              <span class="material-symbols-outlined" style="font-size:16px;color:#849490;">location_on</span>
-              Remote / Addis Ababa
-            </span>
-            <span class="flex items-center gap-1.5" style="font-size:13px;color:#849490;">
-              <span class="material-symbols-outlined" style="font-size:16px;color:#849490;">schedule</span>
-              Full-time
-            </span>
-          </div>
-        </div>
-        <a href="contact.html" class="flex-shrink-0 inline-flex items-center gap-2" style="padding:10px 24px;border:1px solid rgba(73,253,227,0.5);color:#49fde3;font-size:11px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;border-radius:8px;text-decoration:none;transition:background 0.3s,border-color 0.3s;" onmouseover="this.style.background='rgba(73,253,227,0.08)';this.style.borderColor='#49fde3'" onmouseout="this.style.background='transparent';this.style.borderColor='rgba(73,253,227,0.5)'">
-          Apply
-          <span class="material-symbols-outlined" style="font-size:14px;">arrow_forward</span>
-        </a>
-      </div>
-
+    <div class="filter-bar reveal">
+      <input id="roleSearch" class="role-search" type="search" placeholder="Search roles, skills, or locations…" aria-label="Search open roles"/>
+      <div id="deptFilters" style="display:flex;flex-wrap:wrap;gap:8px;"></div>
     </div>
+
+    <div id="rolesList" class="space-y-4">
+      <div class="skeleton"></div><div class="skeleton"></div><div class="skeleton"></div>
+    </div>
+
+    <div id="rolesEmpty" style="display:none;background:#111418;border:1px solid rgba(255,255,255,0.07);border-radius:12px;padding:44px;text-align:center;">
+      <span class="material-symbols-outlined" style="font-size:34px;color:#49fde3;opacity:.65;">work_history</span>
+      <h3 style="font-size:17px;font-weight:600;color:#dee2ed;margin:14px 0 8px;">No matching roles right now</h3>
+      <p style="font-size:14px;line-height:1.65;color:#849490;max-width:430px;margin:0 auto 22px;">
+        We hire continuously and new roles open often. Send a general application and we'll reach out when something fits your background.
+      </p>
+      <button class="btn-primary" onclick="openGeneral()">Send a general application</button>
+    </div>
+
+    <p class="roles-note" id="rolesCount"></p>
   </div>
 </section>
 
@@ -280,6 +406,62 @@
     </div>
   </div>
 </section>
+
+
+<!-- ── Role detail slide-out + application ───────────────────────────── -->
+<div id="roleBackdrop" onclick="closeRole()"></div>
+<aside id="rolePanel" role="dialog" aria-modal="true" aria-labelledby="rpTitle" aria-hidden="true">
+  <div class="rp-head">
+    <div style="flex:1;min-width:0;">
+      <div id="rpDept" style="font-size:10px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:#49fde3;margin-bottom:7px;"></div>
+      <h2 id="rpTitle" style="font-size:22px;font-weight:600;color:#dee2ed;line-height:1.25;"></h2>
+      <div class="rp-meta" id="rpMeta"></div>
+    </div>
+    <button class="rp-close" onclick="closeRole()" aria-label="Close">&#10005;</button>
+  </div>
+  <div class="rp-body">
+    <div id="rpDetail"></div>
+
+    <div id="rpApplyWrap" style="margin-top:32px;padding-top:26px;border-top:1px solid rgba(255,255,255,0.08);">
+      <button id="rpApplyBtn" class="btn-primary" onclick="showForm()">Apply for this role</button>
+
+      <form id="applyForm" style="display:none;" onsubmit="submitApplication(event)">
+        <p class="rp-sec" style="margin-top:0;">Your application</p>
+        <div class="ap-grid">
+          <div><label class="ap-label" for="apName">Full name *</label><input class="ap-in" id="apName" name="full_name" required/></div>
+          <div><label class="ap-label" for="apEmail">Email *</label><input class="ap-in" id="apEmail" name="email" type="email" required/></div>
+          <div><label class="ap-label" for="apPhone">Phone</label><input class="ap-in" id="apPhone" name="phone"/></div>
+          <div><label class="ap-label" for="apLoc">Location</label><input class="ap-in" id="apLoc" name="location" placeholder="City, country"/></div>
+          <div><label class="ap-label" for="apLinked">LinkedIn</label><input class="ap-in" id="apLinked" name="linkedin_url" placeholder="linkedin.com/in/…"/></div>
+          <div><label class="ap-label" for="apPort">Portfolio / GitHub</label><input class="ap-in" id="apPort" name="portfolio_url"/></div>
+          <div class="ap-full">
+            <label class="ap-label" for="apExp">Years of relevant experience</label>
+            <select class="ap-in" id="apExp" name="years_experience">
+              <option value="">Select…</option><option>0–2</option><option>3–5</option><option>6–9</option><option>10+</option>
+            </select>
+          </div>
+          <div class="ap-full">
+            <label class="ap-label" for="apCover">Why this role?</label>
+            <textarea class="ap-ta" id="apCover" name="cover_letter" placeholder="A short note on why this role interests you and what you'd bring."></textarea>
+          </div>
+          <div class="ap-full">
+            <label class="ap-label">Resume / CV</label>
+            <label class="ap-file" for="apResume">
+              <span class="material-symbols-outlined" style="font-size:22px;color:#849490;">upload_file</span>
+              <div id="apResumeName" style="font-size:13px;color:#849490;margin-top:6px;">PDF, DOC, or DOCX — max 5&nbsp;MB</div>
+              <input id="apResume" name="resume" type="file" accept=".pdf,.doc,.docx" onchange="pickResume(this)"/>
+            </label>
+          </div>
+        </div>
+        <button type="submit" id="apSubmit" class="btn-primary" style="margin-top:20px;">Submit application</button>
+        <div id="apMsg" class="ap-msg"></div>
+        <p style="font-size:11.5px;line-height:1.6;color:#5d6d68;margin-top:14px;">
+          Your details are used only to assess this application. See our <a href="privacy.html" style="color:#849490;">Privacy Policy</a>.
+        </p>
+      </form>
+    </div>
+  </div>
+</aside>
 
 </main>
 
@@ -389,6 +571,242 @@
   </div>
 </footer>
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script>
+(function(){
+  // Supabase config is served by /api/config from Vercel environment variables,
+  // so no key literal lives in the repository. If it is unavailable the page
+  // degrades to the general-application flow rather than breaking.
+  var sb = null;
+  async function initSupabase(){
+    if (!window.supabase) return null;
+    try {
+      var r = await fetch('/api/config', { headers: { 'Accept': 'application/json' } });
+      if (!r.ok) return null;
+      var cfg = await r.json();
+      if (!cfg || !cfg.supabaseUrl || !cfg.supabaseAnonKey) return null;
+      return supabase.createClient(cfg.supabaseUrl, cfg.supabaseAnonKey);
+    } catch (e) { return null; }
+  }
+
+  var JOBS = [], DEPT = 'All', Q = '', CURRENT = null, RESUME = null;
+
+  function esc(t){ return String(t == null ? '' : t).replace(/[&<>"']/g, function(c){
+    return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]; }); }
+  function lines(t){ return String(t || '').split('\n').map(function(l){ return l.replace(/^[-•*]\s*/, '').trim(); }).filter(Boolean); }
+
+  function tagList(j){
+    var t = [];
+    function add(v){
+      if (!v) return;
+      v = esc(v);
+      // location and work_type are often both "Remote" — show it once.
+      if (t.indexOf(v) === -1) t.push(v);
+    }
+    add(j.location);
+    add(j.work_type);
+    add(j.employment_type);
+    if (j.experience_level) add(j.experience_level + ' level');
+    add(j.salary_range);
+    return t;
+  }
+
+  window.renderRoles = function(){
+    var list = document.getElementById('rolesList');
+    var empty = document.getElementById('rolesEmpty');
+    var count = document.getElementById('rolesCount');
+    var q = Q.toLowerCase();
+    var rows = JOBS.filter(function(j){
+      if (DEPT !== 'All' && j.department !== DEPT) return false;
+      if (!q) return true;
+      return [j.title, j.department, j.location, j.summary, j.work_type, j.employment_type]
+        .join(' ').toLowerCase().indexOf(q) !== -1;
+    });
+
+    if (!rows.length){ list.innerHTML = ''; empty.style.display = 'block'; count.textContent = ''; return; }
+    empty.style.display = 'none';
+    count.textContent = rows.length + (rows.length === 1 ? ' open role' : ' open roles');
+
+    list.innerHTML = rows.map(function(j){
+      return '<div class="role-card reveal revealed" role="button" tabindex="0" onclick="openRole(' + j.id + ')"'
+        + ' onkeydown="if(event.key===\'Enter\'||event.key===\' \'){event.preventDefault();openRole(' + j.id + ')}">'
+        + '<div class="flex-grow">'
+        +   '<h3 style="font-size:17px;font-weight:600;color:#dee2ed;margin-bottom:6px;">' + esc(j.title)
+        +     (j.featured ? ' <span class="rtag hot">Featured</span>' : '') + '</h3>'
+        +   (j.summary ? '<p style="font-size:13.5px;line-height:1.6;color:#849490;max-width:560px;">' + esc(j.summary) + '</p>' : '')
+        +   '<div class="role-tags">' + tagList(j).map(function(t){ return '<span class="rtag">' + t + '</span>'; }).join('') + '</div>'
+        + '</div>'
+        + '<span class="flex-shrink-0 inline-flex items-center gap-2" style="padding:10px 24px;border:1px solid rgba(73,253,227,0.5);color:#49fde3;font-size:11px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;border-radius:8px;">'
+        +   'View role <span class="material-symbols-outlined" style="font-size:14px;">arrow_forward</span></span>'
+        + '</div>';
+    }).join('');
+  };
+
+  function renderDeptFilters(){
+    var wrap = document.getElementById('deptFilters');
+    var depts = ['All'].concat(JOBS.map(function(j){ return j.department; })
+      .filter(function(d,i,a){ return d && a.indexOf(d) === i; }).sort());
+    wrap.innerHTML = depts.map(function(d){
+      return '<button type="button" class="fpill' + (d === DEPT ? ' on' : '') + '" onclick="setDept(this,\'' + esc(d) + '\')">' + esc(d) + '</button>';
+    }).join('');
+  }
+  window.setDept = function(btn, d){
+    DEPT = d;
+    Array.prototype.forEach.call(document.querySelectorAll('#deptFilters .fpill'), function(b){ b.classList.toggle('on', b === btn); });
+    renderRoles();
+  };
+
+  window.openRole = function(id){
+    var j = JOBS.filter(function(x){ return x.id === id; })[0];
+    if (!j) return;
+    CURRENT = j;
+    document.getElementById('rpDept').textContent = j.department || 'Open role';
+    document.getElementById('rpTitle').textContent = j.title;
+    document.getElementById('rpMeta').innerHTML = tagList(j).map(function(t){ return '<span class="rtag">' + t + '</span>'; }).join('');
+
+    var html = '';
+    if (j.description)      html += '<p style="font-size:15px;line-height:1.75;color:#bacac5;">' + esc(j.description).replace(/\n/g,'<br/>') + '</p>';
+    function block(title, body){
+      var items = lines(body);
+      if (!items.length) return '';
+      return '<p class="rp-sec">' + title + '</p><ul class="rp-list">'
+           + items.map(function(x){ return '<li>' + esc(x) + '</li>'; }).join('') + '</ul>';
+    }
+    html += block('What you\'ll do', j.responsibilities);
+    html += block('What we\'re looking for', j.requirements);
+    html += block('Nice to have', j.nice_to_have);
+    if (j.apply_deadline) html += '<p style="font-size:13px;color:#849490;margin-top:22px;">Applications close <strong style="color:#bacac5;">' + esc(j.apply_deadline) + '</strong></p>';
+    document.getElementById('rpDetail').innerHTML = html || '<p style="color:#849490;">Full details will be shared on the intro call.</p>';
+
+    resetForm();
+    document.getElementById('rolePanel').classList.add('on');
+    document.getElementById('rolePanel').setAttribute('aria-hidden','false');
+    document.getElementById('roleBackdrop').classList.add('on');
+    document.body.style.overflow = 'hidden';
+    document.querySelector('.rp-close').focus();
+  };
+
+  window.openGeneral = function(){
+    CURRENT = { id: null, title: 'General application' };
+    document.getElementById('rpDept').textContent = 'Open application';
+    document.getElementById('rpTitle').textContent = 'General application';
+    document.getElementById('rpMeta').innerHTML = '';
+    document.getElementById('rpDetail').innerHTML =
+      '<p style="font-size:15px;line-height:1.75;color:#bacac5;">Tell us what you do well and where you want to grow. '
+      + 'We keep general applications on file and reach out when a role matches your background.</p>';
+    resetForm();
+    document.getElementById('rolePanel').classList.add('on');
+    document.getElementById('rolePanel').setAttribute('aria-hidden','false');
+    document.getElementById('roleBackdrop').classList.add('on');
+    document.body.style.overflow = 'hidden';
+    showForm();
+  };
+
+  window.closeRole = function(){
+    document.getElementById('rolePanel').classList.remove('on');
+    document.getElementById('rolePanel').setAttribute('aria-hidden','true');
+    document.getElementById('roleBackdrop').classList.remove('on');
+    document.body.style.overflow = '';
+  };
+  document.addEventListener('keydown', function(e){ if (e.key === 'Escape') closeRole(); });
+
+  function resetForm(){
+    var f = document.getElementById('applyForm');
+    f.reset(); f.style.display = 'none';
+    RESUME = null;
+    document.getElementById('apResumeName').textContent = 'PDF, DOC, or DOCX — max 5 MB';
+    document.getElementById('apMsg').className = 'ap-msg';
+    document.getElementById('rpApplyBtn').style.display = '';
+    document.getElementById('apSubmit').disabled = false;
+    document.getElementById('apSubmit').textContent = 'Submit application';
+  }
+  window.showForm = function(){
+    document.getElementById('rpApplyBtn').style.display = 'none';
+    document.getElementById('applyForm').style.display = 'block';
+    document.getElementById('apName').focus();
+  };
+  window.pickResume = function(input){
+    var f = input.files && input.files[0];
+    if (!f) return;
+    if (f.size > 5 * 1024 * 1024){
+      msg('That file is larger than 5 MB. Please upload a smaller copy.', 'err');
+      input.value = ''; RESUME = null; return;
+    }
+    RESUME = f;
+    document.getElementById('apResumeName').textContent = f.name;
+  };
+  function msg(text, kind){
+    var el = document.getElementById('apMsg');
+    el.textContent = text; el.className = 'ap-msg ' + kind;
+  }
+
+  window.submitApplication = async function(e){
+    e.preventDefault();
+    var btn = document.getElementById('apSubmit');
+    if (!sb){ msg('Applications are temporarily unavailable. Please email support@dapsanalytics.com.', 'err'); return; }
+    btn.disabled = true; btn.textContent = 'Submitting…';
+
+    try {
+      var resumePath = null;
+      if (RESUME){
+        var safe = RESUME.name.replace(/[^a-zA-Z0-9.\-_]/g, '_');
+        resumePath = Date.now() + '-' + Math.random().toString(36).slice(2,8) + '-' + safe;
+        var up = await sb.storage.from('resumes').upload(resumePath, RESUME, { cacheControl: '3600', upsert: false });
+        if (up.error) throw up.error;
+      }
+      var f = document.getElementById('applyForm');
+      var row = {
+        job_id: CURRENT ? CURRENT.id : null,
+        job_title: CURRENT ? CURRENT.title : 'General application',
+        full_name: f.full_name.value.trim(),
+        email: f.email.value.trim(),
+        phone: f.phone.value.trim() || null,
+        location: f.location.value.trim() || null,
+        linkedin_url: f.linkedin_url.value.trim() || null,
+        portfolio_url: f.portfolio_url.value.trim() || null,
+        years_experience: f.years_experience.value || null,
+        cover_letter: f.cover_letter.value.trim() || null,
+        resume_url: resumePath,
+        status: 'New'
+      };
+      var ins = await sb.from('job_applications').insert([row]);
+      if (ins.error) throw ins.error;
+
+      f.style.display = 'none';
+      document.getElementById('rpDetail').innerHTML =
+        '<div style="text-align:center;padding:26px 0;">'
+        + '<span class="material-symbols-outlined" style="font-size:40px;color:#49fde3;">task_alt</span>'
+        + '<h3 style="font-size:19px;font-weight:600;color:#dee2ed;margin:14px 0 10px;">Application received</h3>'
+        + '<p style="font-size:14.5px;line-height:1.7;color:#849490;max-width:400px;margin:0 auto;">'
+        + 'Thank you. We review every application and will respond within <strong style="color:#bacac5;">5 business days</strong> — including if the answer is no.</p></div>';
+      document.getElementById('rpApplyWrap').style.display = 'none';
+    } catch (err){
+      msg('Something went wrong: ' + (err.message || 'please try again, or email support@dapsanalytics.com.'), 'err');
+      btn.disabled = false; btn.textContent = 'Submit application';
+    }
+  };
+
+  async function load(){
+    var list = document.getElementById('rolesList');
+    sb = await initSupabase();
+    if (!sb){ list.innerHTML = ''; document.getElementById('rolesEmpty').style.display = 'block'; return; }
+    try {
+      var res = await sb.from('job_postings').select('*').eq('active', true)
+        .order('featured', { ascending: false }).order('posted_date', { ascending: false });
+      if (res.error) throw res.error;
+      JOBS = res.data || [];
+      renderDeptFilters();
+      renderRoles();
+    } catch (err){
+      list.innerHTML = '';
+      document.getElementById('rolesEmpty').style.display = 'block';
+    }
+  }
+
+  document.getElementById('roleSearch').addEventListener('input', function(e){ Q = e.target.value; renderRoles(); });
+  load();
+})();
+</script>
 <script src="assets/navbar.js"></script>
 <script src="assets/daps.js"></script>
 </body>

@@ -6,6 +6,11 @@
   <title>Dashboard — DAPS Analytics Admin</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&display=swap" rel="stylesheet">
   <style>
+  :root { --daps-font: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, 'Noto Sans Ethiopic', sans-serif; }
+  body { font-family: var(--daps-font); }
+  /* Form controls don't inherit font-family from body — make them. */
+  button, input, select, textarea { font-family: inherit; }
+
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
@@ -28,7 +33,7 @@
     html, body { height: 100%; overflow: hidden; }
 
     body {
-      font-family: 'Inter', sans-serif;
+      font-family: var(--daps-font);
       background: var(--bg);
       color: var(--text);
       display: flex;
@@ -260,7 +265,7 @@
       border: 1px solid var(--border);
       border-radius: 8px;
       color: var(--text);
-      font-family: 'Inter', sans-serif;
+      font-family: var(--daps-font);
       font-size: 13px;
       outline: none;
       width: 220px;
@@ -290,7 +295,7 @@
       color: #0e141b;
       border: none;
       border-radius: 8px;
-      font-family: 'Inter', sans-serif;
+      font-family: var(--daps-font);
       font-size: 13px;
       font-weight: 700;
       cursor: pointer;
@@ -422,7 +427,7 @@
       border: 1px solid var(--border);
       background: transparent;
       color: var(--muted);
-      font-family: 'Inter', sans-serif;
+      font-family: var(--daps-font);
       font-size: 12px;
       font-weight: 500;
       cursor: pointer;
@@ -537,7 +542,7 @@
       border: 1px solid var(--border);
       border-radius: 8px;
       color: var(--text);
-      font-family: 'Inter', sans-serif;
+      font-family: var(--daps-font);
       font-size: 13px;
       outline: none;
       transition: border-color 0.2s;
@@ -590,7 +595,7 @@
       margin-top: 6px; padding: 6px 14px;
       background: var(--card2); border: 1px solid var(--border);
       border-radius: 6px; color: var(--text); font-size: 12px; font-weight: 600;
-      cursor: pointer; font-family: 'Inter', sans-serif; transition: border-color 0.2s;
+      cursor: pointer; font-family: var(--daps-font); transition: border-color 0.2s;
     }
     .upload-choose-btn:hover { border-color: var(--teal); color: var(--teal); }
     .upload-preview { position: relative; }
@@ -600,7 +605,7 @@
       padding: 4px 10px; background: rgba(14,20,27,0.88);
       border: 1px solid rgba(255,80,80,0.35); border-radius: 5px;
       color: #ff8080; font-size: 11px; font-weight: 600;
-      cursor: pointer; font-family: 'Inter', sans-serif; transition: background 0.15s;
+      cursor: pointer; font-family: var(--daps-font); transition: background 0.15s;
     }
     .upload-rm-btn:hover { background: rgba(255,80,80,0.18); }
     .upload-prog {
@@ -664,7 +669,7 @@
       border: 1px solid var(--border);
       border-radius: 8px;
       color: var(--muted);
-      font-family: 'Inter', sans-serif;
+      font-family: var(--daps-font);
       font-size: 13px;
       font-weight: 500;
       cursor: pointer;
@@ -679,7 +684,7 @@
       color: #0e141b;
       border: none;
       border-radius: 8px;
-      font-family: 'Inter', sans-serif;
+      font-family: var(--daps-font);
       font-size: 13px;
       font-weight: 700;
       cursor: pointer;
@@ -694,7 +699,7 @@
       border: 1px solid rgba(255,100,100,0.2);
       border-radius: 8px;
       color: #ff8080;
-      font-family: 'Inter', sans-serif;
+      font-family: var(--daps-font);
       font-size: 13px;
       font-weight: 500;
       cursor: pointer;
@@ -806,7 +811,7 @@
       border: 1px solid var(--border);
       border-radius: 8px;
       color: var(--muted);
-      font-family: 'Inter', sans-serif;
+      font-family: var(--daps-font);
       font-size: 12px;
       font-weight: 600;
       letter-spacing: 0.04em;
@@ -990,7 +995,7 @@
       border: 1px solid var(--border);
       border-radius: 6px;
       color: var(--text);
-      font-family: 'Inter', sans-serif;
+      font-family: var(--daps-font);
       font-size: 12px;
       outline: none;
     }
@@ -1003,7 +1008,7 @@
       border: 1px solid var(--teal-border);
       border-radius: 6px;
       color: var(--teal);
-      font-family: 'Inter', sans-serif;
+      font-family: var(--daps-font);
       font-size: 11px;
       font-weight: 600;
       cursor: pointer;
@@ -1200,7 +1205,7 @@
       border: 1px solid var(--border);
       background: transparent;
       color: var(--muted);
-      font-family: 'Inter', sans-serif;
+      font-family: var(--daps-font);
       font-size: 11px;
       font-weight: 600;
       cursor: pointer;
@@ -1236,7 +1241,7 @@
       border: 1px solid var(--border);
       border-radius: 8px;
       color: var(--text);
-      font-family: 'Inter', sans-serif;
+      font-family: var(--daps-font);
       font-size: 13px;
       line-height: 1.7;
       padding: 14px;
@@ -1255,7 +1260,7 @@
       border: 1px solid var(--border);
       border-radius: 8px;
       color: var(--teal);
-      font-family: 'Inter', sans-serif;
+      font-family: var(--daps-font);
       font-size: 11px;
       line-height: 1.6;
       padding: 10px 14px;
@@ -1297,7 +1302,7 @@
       border: 1px solid var(--teal-border);
       border-radius: 8px;
       color: var(--teal);
-      font-family: 'Inter', sans-serif;
+      font-family: var(--daps-font);
       font-size: 12px;
       font-weight: 600;
       cursor: pointer;
@@ -1312,7 +1317,7 @@
       border: none;
       border-radius: 8px;
       color: #0e141b;
-      font-family: 'Inter', sans-serif;
+      font-family: var(--daps-font);
       font-size: 12px;
       font-weight: 700;
       cursor: pointer;
@@ -1493,6 +1498,20 @@
     <span class="nav-count" id="nav-count-social">—</span>
   </div>
 
+  <div class="sidebar-section-label" style="margin-top:8px;">Careers</div>
+
+  <div class="nav-item" data-tab="jobs" onclick="switchTab('jobs')">
+    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20 6h-4V4c0-1.11-.89-2-2-2h-4c-1.11 0-2 .89-2 2v2H4c-1.11 0-1.99.89-1.99 2L2 19c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V8c0-1.11-.89-2-2-2zm-6 0h-4V4h4v2z"/></svg>
+    Job Postings
+    <span class="nav-count" id="nav-count-jobs">—</span>
+  </div>
+
+  <div class="nav-item" data-tab="applications" onclick="switchTab('applications')">
+    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M14 2H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/></svg>
+    Applications
+    <span class="nav-count" id="nav-count-applications">—</span>
+  </div>
+
   <div class="nav-item" data-tab="calendar" onclick="switchTab('calendar')">
     <svg viewBox="0 0 24 24" fill="currentColor"><path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zM7 10h5v5H7z"/></svg>
     Calendar
@@ -1559,6 +1578,30 @@
     </div>
 
     <!-- CALENDAR -->
+    <!-- JOB POSTINGS TABLE -->
+    <div id="tab-jobs" class="table-wrap" style="display:none;">
+      <table>
+        <thead>
+          <tr><th>Role</th><th>Department</th><th>Location</th><th>Type</th><th>Active</th><th>Actions</th></tr>
+        </thead>
+        <tbody id="tbody-jobs">
+          <tr class="loading-row"><td colspan="6"><div class="spinner"></div></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- APPLICATIONS TABLE -->
+    <div id="tab-applications" class="table-wrap" style="display:none;">
+      <table>
+        <thead>
+          <tr><th>Applicant</th><th>Role</th><th>Received</th><th>Status</th><th>Actions</th></tr>
+        </thead>
+        <tbody id="tbody-applications">
+          <tr class="loading-row"><td colspan="5"><div class="spinner"></div></td></tr>
+        </tbody>
+      </table>
+    </div>
+
     <div id="tab-calendar" style="display:none;height:100%;">
       <div class="cal-wrap">
         <div class="cal-header">
@@ -1664,7 +1707,7 @@ var sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 // ── STATE ──────────────────────────────────────────────────────────────────
 var currentTab = 'insights';
 var currentRecordId = null;
-var tableData = { insights: [], social: [] };
+var tableData = { insights: [], social: [], jobs: [], applications: [] };
 
 // ── INIT ───────────────────────────────────────────────────────────────────
 (async function init() {
@@ -1709,15 +1752,17 @@ function switchTab(tab) {
   document.getElementById('tab-insights').style.display = tab === 'insights' ? '' : 'none';
   document.getElementById('tab-social').style.display   = tab === 'social'    ? '' : 'none';
   document.getElementById('tab-calendar').style.display = tab === 'calendar'  ? 'block' : 'none';
+  document.getElementById('tab-jobs').style.display         = tab === 'jobs'      ? '' : 'none';
+  document.getElementById('tab-applications').style.display = tab === 'applications' ? '' : 'none';
   document.getElementById('tab-plans').style.display    = tab === 'plans'     ? 'block' : 'none';
 
   // show/hide search + count + add button for data tabs only
-  var isDataTab = (tab === 'insights' || tab === 'social');
+  var isDataTab = (tab === 'insights' || tab === 'social' || tab === 'jobs' || tab === 'applications');
   document.querySelector('.topbar-search').style.display = isDataTab ? '' : 'none';
   document.getElementById('topbarCount').style.display   = isDataTab ? '' : 'none';
-  document.querySelector('.btn-add').style.display        = isDataTab ? '' : 'none';
+  document.querySelector('.btn-add').style.display        = (isDataTab && tab !== 'applications') ? '' : 'none';
 
-  var titles = { insights: 'Insights', social: 'Social Posts', calendar: 'Content Calendar', plans: 'Month 2 — Content Library' };
+  var titles = { insights: 'Insights', social: 'Social Posts', calendar: 'Content Calendar', plans: 'Month 2 — Content Library', jobs: 'Job Postings', applications: 'Applications' };
   document.getElementById('topbarTitle').textContent = titles[tab] || tab;
   document.getElementById('searchInput').value = '';
 
@@ -1736,6 +1781,22 @@ async function loadTab(tab) {
     tableData.insights = data || [];
     renderInsights(tableData.insights);
     updateCount('insights', tableData.insights.length);
+
+  } else if (tab === 'jobs') {
+    var jr = await sb.from('job_postings').select('*').order('posted_date', { ascending: false });
+    if (jr.error) { showToast('Failed to load job postings: ' + jr.error.message, 'error'); return; }
+    tableData.jobs = jr.data || [];
+    renderJobs(tableData.jobs);
+    updateCount('jobs', tableData.jobs.length);
+    return;
+
+  } else if (tab === 'applications') {
+    var ar = await sb.from('job_applications').select('*').order('created_at', { ascending: false });
+    if (ar.error) { showToast('Failed to load applications: ' + ar.error.message, 'error'); return; }
+    tableData.applications = ar.data || [];
+    renderApplications(tableData.applications);
+    updateCount('applications', tableData.applications.length);
+    return;
 
   } else if (tab === 'plans') {
     renderPlans();
@@ -1834,9 +1895,134 @@ function renderSocial(rows) {
   }).join('');
 }
 
+
+// ── RENDER JOB POSTINGS ────────────────────────────────────────────────────
+function renderJobs(rows) {
+  var tbody = document.getElementById('tbody-jobs');
+  if (!rows.length) {
+    tbody.innerHTML = '<tr><td colspan="6"><div class="empty-state"><strong>No job postings yet</strong><p>Click "Add New" to publish your first role on the careers page.</p></div></td></tr>';
+    return;
+  }
+  tbody.innerHTML = rows.map(function(row) {
+    var feat = row.featured ? ' <span class="badge badge-amber">Featured</span>' : '';
+    return '<tr>' +
+      '<td><strong>' + esc(row.title || '') + '</strong>' + feat + '</td>' +
+      '<td class="td-muted">' + esc(row.department || '—') + '</td>' +
+      '<td class="td-muted">' + esc(row.location || '—') + '</td>' +
+      '<td><span class="badge badge-gray">' + esc(row.employment_type || '—') + '</span></td>' +
+      '<td><label class="toggle"><input type="checkbox"' + (row.active !== false ? ' checked' : '') +
+        ' onchange="toggleActive(\'jobs\',' + row.id + ', this.checked)"><span class="toggle-track"></span></label></td>' +
+      '<td><div class="row-actions">' +
+        '<button class="action-btn" onclick="openEditModal(\'jobs\',' + row.id + ')">Edit</button>' +
+        '<button class="action-btn del" onclick="deleteRecord(\'jobs\',' + row.id + ')">Delete</button>' +
+      '</div></td>' +
+    '</tr>';
+  }).join('');
+}
+
+// ── RENDER APPLICATIONS ────────────────────────────────────────────────────
+var APP_STATUSES = ['New','Screening','Interview','Offer','Hired','Rejected'];
+var APP_STATUS_COLOR = { 'New':'teal', 'Screening':'amber', 'Interview':'amber', 'Offer':'green', 'Hired':'green', 'Rejected':'red' };
+
+function renderApplications(rows) {
+  var tbody = document.getElementById('tbody-applications');
+  if (!rows.length) {
+    tbody.innerHTML = '<tr><td colspan="5"><div class="empty-state"><strong>No applications yet</strong><p>Applications submitted from the careers page appear here.</p></div></td></tr>';
+    return;
+  }
+  tbody.innerHTML = rows.map(function(row) {
+    var when = row.created_at ? String(row.created_at).substring(0, 10) : '—';
+    var sc = APP_STATUS_COLOR[row.status] || 'gray';
+    var opts = APP_STATUSES.map(function(st) {
+      return '<option value="' + st + '"' + (row.status === st ? ' selected' : '') + '>' + st + '</option>';
+    }).join('');
+    return '<tr>' +
+      '<td><strong>' + esc(row.full_name || '') + '</strong><div class="td-muted" style="font-size:12px;">' + esc(row.email || '') + '</div></td>' +
+      '<td class="td-muted">' + esc(row.job_title || 'General application') + '</td>' +
+      '<td class="td-muted">' + when + '</td>' +
+      '<td><span class="badge badge-' + sc + '" style="margin-right:6px;">' + esc(row.status || 'New') + '</span>' +
+        '<select onchange="setAppStatus(' + row.id + ',this.value)" style="background:#0d1117;border:1px solid rgba(255,255,255,0.12);color:#bacac5;border-radius:6px;padding:4px 6px;font-size:12px;">' + opts + '</select></td>' +
+      '<td><div class="row-actions">' +
+        '<button class="action-btn" onclick="viewApplication(' + row.id + ')">View</button>' +
+        '<button class="action-btn del" onclick="deleteRecord(\'applications\',' + row.id + ')">Delete</button>' +
+      '</div></td>' +
+    '</tr>';
+  }).join('');
+}
+
+async function setAppStatus(id, status) {
+  var r = await sb.from('job_applications').update({ status: status }).eq('id', id);
+  if (r.error) { showToast('Failed to update status.', 'error'); return; }
+  showToast('Status set to ' + status + '.', 'success');
+  var rec = tableData.applications.find(function(x) { return x.id === id; });
+  if (rec) rec.status = status;
+  renderApplications(tableData.applications);
+}
+
+// Resumes live in a PRIVATE bucket — mint a short-lived signed URL on demand.
+async function openResume(path) {
+  var r = await sb.storage.from('resumes').createSignedUrl(path, 300);
+  if (r.error || !r.data) { showToast('Could not open resume: ' + ((r.error && r.error.message) || 'not found'), 'error'); return; }
+  window.open(r.data.signedUrl, '_blank');
+}
+
+function viewApplication(id) {
+  var a = tableData.applications.find(function(x) { return x.id === id; });
+  if (!a) return;
+  currentRecordId = id;
+  currentTab = 'applications';
+  document.getElementById('modalTitle').textContent = a.full_name || 'Application';
+  document.getElementById('btnDelete').style.display = '';
+
+  function row(label, val, link) {
+    if (!val) return '';
+    var v = link ? '<a href="' + esc(link) + '" target="_blank" rel="noopener" style="color:#49fde3;">' + esc(val) + '</a>' : esc(val);
+    return '<div style="margin-bottom:14px;"><div style="font-size:10px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:#849490;margin-bottom:4px;">' +
+      label + '</div><div style="font-size:14px;color:#dee2ed;line-height:1.6;">' + v + '</div></div>';
+  }
+  var html = ''
+    + row('Applied for', a.job_title || 'General application')
+    + row('Email', a.email, 'mailto:' + a.email)
+    + row('Phone', a.phone, a.phone ? 'tel:' + a.phone : null)
+    + row('Location', a.location)
+    + row('Experience', a.years_experience)
+    + row('LinkedIn', a.linkedin_url, a.linkedin_url)
+    + row('Portfolio', a.portfolio_url, a.portfolio_url)
+    + row('Received', a.created_at ? String(a.created_at).substring(0, 19).replace('T', ' ') : '');
+  if (a.cover_letter) {
+    html += '<div style="margin-bottom:14px;"><div style="font-size:10px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:#849490;margin-bottom:6px;">Cover note</div>' +
+      '<div style="font-size:14px;color:#bacac5;line-height:1.7;white-space:pre-wrap;background:#0d1117;border:1px solid rgba(255,255,255,0.08);border-radius:8px;padding:14px;">' +
+      esc(a.cover_letter) + '</div></div>';
+  }
+  if (a.resume_url) {
+    html += '<button class="action-btn" style="margin-top:8px;" onclick="openResume(\'' + esc(a.resume_url) + '\')">Download resume</button>';
+  } else {
+    html += '<p style="font-size:13px;color:#849490;margin-top:8px;">No resume attached.</p>';
+  }
+  document.getElementById('modalBody').innerHTML = html;
+  document.getElementById('modalBackdrop').classList.add('open');
+}
+
 // ── SEARCH / FILTER ────────────────────────────────────────────────────────
 function filterTable() {
   var q = document.getElementById('searchInput').value.toLowerCase();
+  if (currentTab === 'jobs') {
+    renderJobs(tableData.jobs.filter(function(r) {
+      return (r.title || '').toLowerCase().includes(q) ||
+             (r.department || '').toLowerCase().includes(q) ||
+             (r.location || '').toLowerCase().includes(q);
+    }));
+    return;
+  }
+  if (currentTab === 'applications') {
+    renderApplications(tableData.applications.filter(function(r) {
+      return (r.full_name || '').toLowerCase().includes(q) ||
+             (r.email || '').toLowerCase().includes(q) ||
+             (r.job_title || '').toLowerCase().includes(q) ||
+             (r.status || '').toLowerCase().includes(q);
+    }));
+    return;
+  }
   if (currentTab === 'insights') {
     renderInsights(tableData.insights.filter(function(r) {
       return (r.title || '').toLowerCase().includes(q) ||
@@ -1856,7 +2042,7 @@ function filterTable() {
 function openAddModal() {
   currentRecordId = null;
   var formTab = currentTab === 'calendar' ? 'social' : currentTab;
-  document.getElementById('modalTitle').textContent = 'Add ' + (formTab === 'insights' ? 'Insight' : 'Social Post');
+  document.getElementById('modalTitle').textContent = 'Add ' + (formTab === 'insights' ? 'Insight' : (formTab === 'jobs' ? 'Job Posting' : 'Social Post'));
   document.getElementById('btnDelete').style.display = 'none';
   document.getElementById('modalBody').innerHTML = buildForm(formTab, null);
   wireCharCounts();
@@ -1867,10 +2053,10 @@ function openAddModal() {
 function openEditModal(tab, id) {
   currentTab = tab;
   currentRecordId = id;
-  var row = tableData[tab === 'insights' ? 'insights' : 'social'].find(function(r) { return r.id === id; });
+  var row = tableData[dataKeyFor(tab)].find(function(r) { return r.id === id; });
   if (!row) return;
 
-  document.getElementById('modalTitle').textContent = 'Edit ' + (tab === 'insights' ? 'Insight' : 'Social Post');
+  document.getElementById('modalTitle').textContent = 'Edit ' + (tab === 'insights' ? 'Insight' : (tab === 'jobs' ? 'Job Posting' : 'Social Post'));
   document.getElementById('btnDelete').style.display = '';
   document.getElementById('modalBody').innerHTML = buildForm(tab, row);
   wireCharCounts();
@@ -1888,7 +2074,77 @@ function backdropClose(e) {
 }
 
 // ── FORM BUILDER ───────────────────────────────────────────────────────────
+function buildJobForm(d) {
+  d = d || {};
+  var perLine = 'One item per line — each line becomes a bullet on the careers page.';
+  function note(t) { return '<div class="form-field full" style="margin-top:-12px;"><div style="font-size:11px;color:var(--muted);">' + t + '</div></div>'; }
+  return ''
+    + '<div class="form-row">'
+      + field('Role title', 'text', 'f-title', d.title, 'Senior Data Engineer', 'full')
+    + '</div>'
+    + '<div class="form-row">'
+      + selectField('Department', 'f-department', ['Engineering','Data Science','Analytics','Design','Operations','Research'], d.department || 'Engineering')
+      + field('Location', 'text', 'f-location', d.location, 'Addis Ababa / Bethesda, MD / Remote', '')
+    + '</div>'
+    + '<div class="form-row">'
+      + selectField('Work type', 'f-work_type', ['Remote','Hybrid','On-site'], d.work_type || 'Remote')
+      + selectField('Employment type', 'f-employment_type', ['Full-time','Part-time','Contract','Internship'], d.employment_type || 'Full-time')
+    + '</div>'
+    + '<div class="form-row">'
+      + selectField('Experience level', 'f-experience_level', ['Entry','Mid','Senior','Lead'], d.experience_level || 'Mid')
+      + field('Salary range (optional)', 'text', 'f-salary_range', d.salary_range, 'Competitive', '')
+    + '</div>'
+    + '<div class="form-row">'
+      + field('One-line summary', 'text', 'f-summary', d.summary, 'Shown under the role title in the list', 'full')
+    + '</div>'
+    + '<div class="form-row">'
+      + areaField('Role overview', 'f-description', d.description, 'What this role is and why it matters.', 'full', 0)
+    + '</div>'
+    + '<div class="form-row">'
+      + areaField("What you'll do", 'f-responsibilities', d.responsibilities, 'Design and run ETL pipelines', 'full tall', 0)
+    + '</div>' + note(perLine)
+    + '<div class="form-row">'
+      + areaField("What we're looking for", 'f-requirements', d.requirements, '5+ years in data engineering', 'full tall', 0)
+    + '</div>' + note(perLine)
+    + '<div class="form-row">'
+      + areaField('Nice to have', 'f-nice_to_have', d.nice_to_have, 'dbt or Airflow experience', 'full', 0)
+    + '</div>' + note(perLine)
+    + '<div class="form-row">'
+      + field('Applications close', 'date', 'f-apply_deadline', d.apply_deadline, '', '')
+      + field('Posted date', 'date', 'f-posted_date', d.posted_date || new Date().toISOString().substring(0, 10), '', '')
+    + '</div>'
+    + '<div class="form-row">'
+      + checkField('Feature this role at the top of the list', 'f-featured', !!d.featured)
+      + checkField('Live on the careers page', 'f-active', d.active !== false)
+    + '</div>';
+}
+
+function readJobForm() {
+  var title = document.getElementById('f-title').value.trim();
+  if (!title) { showToast('Role title is required.', 'error'); return null; }
+  function v(id) { var el = document.getElementById('f-' + id); return el ? el.value.trim() : ''; }
+  return {
+    title: title,
+    department: v('department'),
+    location: v('location'),
+    work_type: v('work_type'),
+    employment_type: v('employment_type'),
+    experience_level: v('experience_level'),
+    salary_range: v('salary_range') || null,
+    summary: v('summary') || null,
+    description: v('description') || null,
+    responsibilities: v('responsibilities') || null,
+    requirements: v('requirements') || null,
+    nice_to_have: v('nice_to_have') || null,
+    apply_deadline: v('apply_deadline') || null,
+    posted_date: v('posted_date') || null,
+    featured: document.getElementById('f-featured').checked,
+    active: document.getElementById('f-active').checked
+  };
+}
+
 function buildForm(tab, data) {
+  if (tab === 'jobs') return buildJobForm(data);
   if (tab === 'insights') return buildInsightForm(data);
   return buildSocialForm(data);
 }
@@ -2150,11 +2406,24 @@ function clearArticleImage() {
 }
 
 // ── SAVE ───────────────────────────────────────────────────────────────────
+function tableFor(tab) {
+  if (tab === 'insights') return 'insights';
+  if (tab === 'jobs') return 'job_postings';
+  if (tab === 'applications') return 'job_applications';
+  return 'social_posts';
+}
+function dataKeyFor(tab) {
+  if (tab === 'insights') return 'insights';
+  if (tab === 'jobs') return 'jobs';
+  if (tab === 'applications') return 'applications';
+  return 'social';
+}
+
 async function saveRecord() {
   var payload = readForm(currentTab);
   if (!payload) return;
 
-  var table = currentTab === 'insights' ? 'insights' : 'social_posts';
+  var table = tableFor(currentTab);
   var { error } = currentRecordId
     ? await sb.from(table).update(payload).eq('id', currentRecordId)
     : await sb.from(table).insert(payload);
@@ -2169,6 +2438,7 @@ async function saveRecord() {
 }
 
 function readForm(tab) {
+  if (tab === 'jobs') return readJobForm();
   if (tab === 'insights') {
     var title = document.getElementById('f-title').value.trim();
     if (!title) { showToast('Title is required.', 'error'); return null; }
@@ -2209,7 +2479,7 @@ function confirmDelete() {
 
 async function deleteRecord(tab, id, fromModal) {
   if (!fromModal && !confirm('Delete this record?')) return;
-  var table = tab === 'insights' ? 'insights' : 'social_posts';
+  var table = tableFor(tab);
   var { error } = await sb.from(table).delete().eq('id', id);
   if (error) { showToast('Error: ' + error.message, 'error'); return; }
   showToast('Record deleted.', 'success');
@@ -2219,14 +2489,14 @@ async function deleteRecord(tab, id, fromModal) {
 
 // ── TOGGLE ACTIVE (insights only) ──────────────────────────────────────────
 async function toggleActive(tab, id, active) {
-  var table = tab === 'insights' ? 'insights' : 'social_posts';
+  var table = tableFor(tab);
   var { error } = await sb.from(table).update({ active: active }).eq('id', id);
   if (error) {
     showToast('Failed to update.', 'error');
     loadTab(tab);
   } else {
     showToast(active ? 'Published.' : 'Unpublished.', 'success');
-    var rec = tableData[tab === 'insights' ? 'insights' : 'social'].find(function(r) { return r.id === id; });
+    var rec = tableData[dataKeyFor(tab)].find(function(r) { return r.id === id; });
     if (rec) rec.active = active;
   }
 }

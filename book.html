@@ -32,9 +32,14 @@
   };
 </script>
 <style>
+  :root { --daps-font: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, 'Noto Sans Ethiopic', sans-serif; }
+  body { font-family: var(--daps-font); }
+  /* Form controls don't inherit font-family from body — make them. */
+  button, input, select, textarea { font-family: inherit; }
+
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
   html { background: #0e141b; }
-  body { background: #0e141b; color: #dee2ed; font-family: Inter, sans-serif; min-height: 100vh; display: flex; flex-direction: column; }
+  body { background: #0e141b; color: #dee2ed; font-family: var(--daps-font); min-height: 100vh; display: flex; flex-direction: column; }
   main { flex: 1; }
 
   /* Noise overlay */

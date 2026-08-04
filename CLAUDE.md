@@ -356,6 +356,28 @@ All canonical URLs, OG tags, sitemap, and robots.txt already point to `dapsanaly
 
 ---
 
+## Careers & Job Postings
+
+**Public page:** `careers.html` — sells DAPS (Why join · What we offer · How we hire) and lists open roles live from Supabase.
+- Roles load from `job_postings` where `active = true`, ordered featured-first then by `posted_date`.
+- Department filter pills are derived from the data; free-text search matches title/department/location/summary.
+- Clicking a role opens a slide-out with the full description, responsibilities, requirements, nice-to-haves, and deadline.
+- Applying posts to `job_applications`; the resume uploads to the **private** `resumes` Storage bucket and only the object path is stored.
+- If Supabase is unreachable or no roles match, the page falls back to a "general application" flow — it never renders an empty dead end.
+- `assets/navbar.js` links Careers in the Company dropdown + mobile panel; every page footer links it under Company.
+
+**Admin:** `admin/dashboard.html` gains two tabs under a **Careers** sidebar group.
+- **Job Postings** — full CRUD, live/unlisted toggle, "featured" flag. Multi-line fields (responsibilities, requirements, nice-to-have) are **one bullet per line**.
+- **Applications** — read-only intake with status workflow (New → Screening → Interview → Offer → Hired / Rejected), detail modal, and resume download. "Add New" is hidden here by design: applications arrive from the site, they are never authored.
+
+**Runtime config:** `careers.html` gets the Supabase URL + anon key from **`/api/config`** (Vercel serverless), not from a literal in the page. Set `SUPABASE_URL` and `SUPABASE_ANON_KEY` in the Vercel project environment variables. Until they are set the endpoint returns 503 and the careers page falls back to the general-application flow instead of breaking. **Never expose `SUPABASE_SERVICE_ROLE_KEY` from this endpoint** — it bypasses RLS.
+
+**Schema:** run the Careers block at the bottom of `admin/schema.sql` in the Supabase SQL Editor, then create the private `resumes` bucket and its policies (commented at the end of that file).
+
+> **Security invariant:** `job_applications` has **public INSERT but no public SELECT** — applicant email, phone, cover letter, and resume must never be publicly readable. Resumes live in a private bucket and are served through short-lived signed URLs minted in the admin. Do not add a public read policy to either.
+
+---
+
 ## IP Notice
 
 This website is proprietary to **DAPS Analytics** and **Olink Technologies Inc.**  
