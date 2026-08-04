@@ -97,8 +97,8 @@ module.exports = async function handler(req, res) {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        // TODO: once hello@dapsanalytics.com is verified in Resend,
-        // change from to: 'DAPS Analytics <hello@dapsanalytics.com>'
+        // TODO: once support@dapsanalytics.com is verified in Resend,
+        // change from to: 'DAPS Analytics <support@dapsanalytics.com>'
         from: 'DAPS Analytics <onboarding@resend.dev>',
         to: [process.env.CONTACT_TO_EMAIL || 'olitamrat@gmail.com'],
         reply_to: email,

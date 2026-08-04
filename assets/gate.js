@@ -6,12 +6,12 @@
 
   var style = document.createElement('style');
   style.textContent = [
-    '#daps-gate{position:fixed;top:68px;left:0;right:0;bottom:0;z-index:9999;display:flex;align-items:center;justify-content:center;font-family:Inter,sans-serif;background:rgba(14,20,27,0.82);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);}',
+    '#daps-gate{position:fixed;top:68px;left:0;right:0;bottom:0;z-index:9999;display:flex;align-items:center;justify-content:center;font-family:var(--daps-font, Inter, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif);background:rgba(14,20,27,0.82);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);}',
     '#daps-gate .g-box{width:100%;max-width:400px;padding:44px 36px;border:1px solid rgba(255,255,255,0.08);background:rgba(255,255,255,0.03);margin:0 16px;}',
     '#daps-gate .g-logo{display:block;height:40px;width:auto;margin:0 auto 28px;}',
     '#daps-gate .g-title{font-size:12px;font-weight:700;letter-spacing:0.16em;text-transform:uppercase;color:#49fde3;text-align:center;margin-bottom:8px;}',
     '#daps-gate .g-sub{font-size:13px;color:#849490;text-align:center;margin-bottom:28px;line-height:1.6;}',
-    '#daps-gate .g-input{width:100%;box-sizing:border-box;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.12);color:#dee2ed;font-size:16px;font-family:Inter,sans-serif;letter-spacing:0.1em;text-align:center;padding:13px 16px;outline:none;margin-bottom:10px;transition:border-color 0.2s;}',
+    '#daps-gate .g-input{width:100%;box-sizing:border-box;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.12);color:#dee2ed;font-size:16px;font-family:var(--daps-font, Inter, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif);letter-spacing:0.1em;text-align:center;padding:13px 16px;outline:none;margin-bottom:10px;transition:border-color 0.2s;}',
     '#daps-gate .g-input:focus{border-color:#49fde3;}',
     '#daps-gate .g-input::placeholder{color:#849490;letter-spacing:0.04em;font-size:13px;}',
     '#daps-gate .g-btn{width:100%;padding:13px;background:#49fde3;color:#003730;font-size:11px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;border:none;cursor:pointer;transition:opacity 0.2s,box-shadow 0.2s;box-shadow:0 0 24px rgba(73,253,227,0.2);}',
@@ -25,13 +25,13 @@
   gate.id = 'daps-gate';
   gate.innerHTML = [
     '<div class="g-box">',
-    '  <img class="g-logo" src="/assets/images/daps-logo-full.svg" alt="DAPS Analytics"/>',
+    '  <img class="g-logo" src="/assets/images/daps-logo-full.svg" alt="DAPS"/>',
     '  <div class="g-title">Stakeholder Access</div>',
     '  <div class="g-sub">This section is restricted to authorized stakeholders.<br/>Enter your access code to continue.</div>',
     '  <input class="g-input" id="g-code" type="password" placeholder="Enter access code" autocomplete="off"/>',
     '  <button class="g-btn" id="g-submit">Verify &amp; Continue</button>',
     '  <div class="g-err" id="g-err"></div>',
-    '  <div class="g-footer">DAPS Analytics &mdash; Confidential Preview</div>',
+    '  <div class="g-footer">DAPS &mdash; Confidential Preview</div>',
     '</div>'
   ].join('');
 

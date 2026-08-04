@@ -30,6 +30,11 @@
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
 <script src="assets/articles-data.js"></script>
 <style>
+  :root { --daps-font: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, 'Noto Sans Ethiopic', sans-serif; }
+  body { font-family: var(--daps-font); }
+  /* Form controls don't inherit font-family from body — make them. */
+  button, input, select, textarea { font-family: inherit; }
+
   body { background-color: #0e141b; color: #dee2ed; }
   .reveal { opacity: 0; transform: translateY(20px); transition: opacity 0.7s ease, transform 0.7s ease; }
   .reveal.revealed { opacity: 1; transform: translateY(0); }
@@ -62,7 +67,7 @@
   .tts-play-btn {
     display:flex; align-items:center; gap:7px; padding:8px 18px;
     background:rgba(73,253,227,0.1); border:1px solid rgba(73,253,227,0.28);
-    border-radius:8px; color:#49fde3; font-family:'Inter',sans-serif;
+    border-radius:8px; color:#49fde3; font-family: var(--daps-font);
     font-size:13px; font-weight:600; cursor:pointer; transition:all 0.2s;
   }
   .tts-play-btn:hover { background:rgba(73,253,227,0.18); }
@@ -81,7 +86,7 @@
   .tts-speed-btn {
     padding:4px 9px; background:transparent;
     border:1px solid rgba(255,255,255,0.1); border-radius:5px;
-    color:#849490; font-family:'Inter',sans-serif; font-size:11px; font-weight:600;
+    color:#849490; font-family: var(--daps-font); font-size:11px; font-weight:600;
     cursor:pointer; transition:all 0.15s;
   }
   .tts-speed-btn:hover { border-color:rgba(73,253,227,0.3); color:#49fde3; }
@@ -110,7 +115,7 @@
   .toc-link { display:block; font-size:13px; color:#849490; padding:5px 0; border-left:2px solid rgba(255,255,255,0.07); padding-left:10px; transition:all 0.15s; text-decoration:none; line-height:1.35; }
   .toc-link:hover { color:#49fde3; border-left-color:#49fde3; }
   .toc-link.active { color:#49fde3; border-left-color:#49fde3; }
-  .share-btn { display:flex; align-items:center; gap:8px; width:100%; padding:9px 12px; border-radius:8px; border:1px solid rgba(255,255,255,0.09); background:transparent; color:#bacac5; font-family:'Inter',sans-serif; font-size:12px; font-weight:600; cursor:pointer; transition:all 0.15s; text-decoration:none; }
+  .share-btn { display:flex; align-items:center; gap:8px; width:100%; padding:9px 12px; border-radius:8px; border:1px solid rgba(255,255,255,0.09); background:transparent; color:#bacac5; font-family: var(--daps-font); font-size:12px; font-weight:600; cursor:pointer; transition:all 0.15s; text-decoration:none; }
   .share-btn:hover { border-color:rgba(73,253,227,0.3); color:#49fde3; background:rgba(73,253,227,0.04); }
   .share-btn svg { flex-shrink:0; }
   .pro-audio-controls {
@@ -131,7 +136,7 @@
   .pro-speed-btn {
     padding:4px 9px; background:transparent;
     border:1px solid rgba(255,255,255,0.1); border-radius:5px;
-    color:#849490; font-family:'Inter',sans-serif; font-size:11px; font-weight:600;
+    color:#849490; font-family: var(--daps-font); font-size:11px; font-weight:600;
     cursor:pointer; transition:all 0.15s;
   }
   .pro-speed-btn:hover { border-color:rgba(73,253,227,0.3); color:#49fde3; }
@@ -172,7 +177,7 @@
           <span class="material-symbols-outlined text-primary" style="font-size:18px;">analytics</span>
         </div>
         <div>
-          <div class="text-white font-semibold" style="font-size:14px;">DAPS Analytics Research Team</div>
+          <div class="text-white font-semibold" style="font-size:14px;">DAPS Research Team</div>
           <div class="text-on-surface-variant" style="font-size:12px;font-weight:600;letter-spacing:0.06em;" id="article-date-display">2025</div>
         </div>
       </div>
@@ -256,7 +261,7 @@
 <footer style="background:#050709;border-top:1px solid rgba(255,255,255,0.05);">
   <div class="max-w-[1440px] mx-auto px-6 md:px-12 py-14">
     <div class="flex flex-wrap justify-between items-center gap-8">
-      <a href="index.html" class="block"><img src="assets/images/daps-logo-full.svg" alt="DAPS Analytics" style="height:50px;width:auto;"/></a>
+      <a href="index.html" class="block"><img src="assets/images/daps-logo-nav.svg" alt="DAPS" style="height:50px;width:auto;"/></a>
       <div class="flex flex-wrap gap-6" style="font-size:12px;">
         <a href="insights.html" style="color:#49fde3;">Insights</a>
         <a href="projects.html" style="color:#bacac5;" class="hover:text-teal-400 transition-colors">Projects</a>
@@ -270,12 +275,11 @@
 </footer>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script src="assets/supabase-client.js"></script>
 <script src="assets/navbar.js"></script>
 <script src="assets/daps.js"></script>
 <script>
 (function(){
-  var SUPABASE_URL     = 'https://rveellaalzowncfsekwx.supabase.co';
-  var SUPABASE_ANON_KEY= 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJ2ZWVsbGFhbHpvd25jZnNla3d4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzkwMTMzMDQsImV4cCI6MjA5NDU4OTMwNH0.6U1gGmLW9CxTjagobfy_p0Xx5QpRrY6h1u944K2ZKcE';
 
   function getParam(n){ return new URLSearchParams(window.location.search).get(n); }
 
@@ -295,7 +299,7 @@
 
   // ── Load admin article from Supabase ──────────────────────────────
   async function loadFromSupabase(id) {
-    var sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+    var sb = await dapsSupabase();
     var { data, error } = await sb.from('insights').select('*').eq('id', id).single();
     if (error || !data) { showNotFound(); return; }
 
@@ -319,7 +323,7 @@
       excerpt:       data.excerpt   || '',
       date:          data.date      || '',
       readTime:      data.read_time || '5 min read',
-      author:        data.author    || 'DAPS Analytics Team',
+      author:        data.author    || 'DAPS Team',
       category:      data.category,
       categoryLabel: cat.label,
       catClass:      cat.cls,

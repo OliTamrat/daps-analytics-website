@@ -52,8 +52,8 @@
           "on-secondary": "#432c00","on-error": "#690005"
         },
         borderRadius: { DEFAULT: "0.25rem", lg:"0.5rem", xl: "0.75rem", full: "9999px" },
-        spacing: { lg:"4rem", xl: "8rem", xs: "0.5rem", "2rem", "2xl": "12rem", gutter: "24px", margin: "64px", unit: "4px", sm: "1rem" },
-        fontFamily: { "display-lg": ["Inter"], "label-caps": ["Inter"], "headline-md": ["Inter"], "display-2xl": ["Inter"], "body-md": ["Inter"], "display-xl": ["Inter"], "body-lg": ["Inter"] },
+        spacing: { lg:"4rem", xl: "8rem", xs: "0.5rem", md: "2rem", "2xl": "12rem", gutter: "24px", margin: "64px", unit: "4px", sm: "1rem" },
+        fontFamily: { "display-lg": ["Inter","system-ui","-apple-system","Segoe UI","Roboto","Helvetica","Arial","Noto Sans Ethiopic","sans-serif"], "label-caps": ["Inter","system-ui","-apple-system","Segoe UI","Roboto","Helvetica","Arial","Noto Sans Ethiopic","sans-serif"], "headline-md": ["Inter","system-ui","-apple-system","Segoe UI","Roboto","Helvetica","Arial","Noto Sans Ethiopic","sans-serif"], "display-2xl": ["Inter","system-ui","-apple-system","Segoe UI","Roboto","Helvetica","Arial","Noto Sans Ethiopic","sans-serif"], "body-md": ["Inter","system-ui","-apple-system","Segoe UI","Roboto","Helvetica","Arial","Noto Sans Ethiopic","sans-serif"], "display-xl": ["Inter","system-ui","-apple-system","Segoe UI","Roboto","Helvetica","Arial","Noto Sans Ethiopic","sans-serif"], "body-lg": ["Inter","system-ui","-apple-system","Segoe UI","Roboto","Helvetica","Arial","Noto Sans Ethiopic","sans-serif"] },
         fontSize: {
           "display-lg": ["56px", { lineHeight: "115%", letterSpacing: "-0.02em", fontWeight: "400" }],
           "label-caps": ["12px", { lineHeight: "100%", letterSpacing: "0.1em", fontWeight: "600" }],
@@ -68,6 +68,11 @@
   }
 </script>
 <style>
+  :root { --daps-font: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, 'Noto Sans Ethiopic', sans-serif; }
+  body { font-family: var(--daps-font); }
+  /* Form controls don't inherit font-family from body — make them. */
+  button, input, select, textarea { font-family: inherit; }
+
   body { background-color: #0e141b; color: #dee2ed; }
   .bg-secondary-surface { background-color: #111418; }
   .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.7s cubic-bezier(0.4,0,0.2,1), transform 0.7s cubic-bezier(0.4,0,0.2,1); }
@@ -75,6 +80,43 @@
   .reveal-delay-1 { transition-delay: 0.1s; }
   .reveal-delay-2 { transition-delay: 0.2s; }
   .reveal-delay-3 { transition-delay: 0.3s; }
+
+  /* ── Capability Explorer ─────────────────────────────────────── */
+  .cap-hint { font-size: 12px; letter-spacing: 0.04em; color: #849490; margin-bottom: 28px; }
+  .cap-list-wrap { display: flex; flex-direction: column; gap: 12px; }
+  .cap-item { background: #111418; border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; overflow: hidden; transition: border-color 0.4s; }
+  .cap-item:hover { border-color: rgba(var(--cap-acc-rgb), 0.35); }
+  .cap-item.open { border-color: rgba(var(--cap-acc-rgb), 0.4); }
+
+  .cap-head { width: 100%; display: flex; align-items: center; gap: 18px; padding: 20px 22px; background: transparent; border: 0; cursor: pointer; text-align: left; font-family: var(--daps-font); }
+  .cap-head:focus-visible { outline: 2px solid var(--cap-acc); outline-offset: -2px; }
+  .cap-icon { width: 44px; height: 44px; border-radius: 10px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .cap-head-text { display: flex; flex-direction: column; gap: 4px; flex: 1; min-width: 0; }
+  .cap-title { font-size: 17px; font-weight: 600; color: #ffffff; letter-spacing: -0.01em; }
+  .cap-teaser { font-size: 13.5px; line-height: 1.55; color: #849490; }
+  .cap-chevron { flex-shrink: 0; color: #849490; display: flex; transition: transform 0.4s cubic-bezier(0.4,0,0.2,1), color 0.3s; }
+  .cap-item.open .cap-chevron { transform: rotate(180deg); color: var(--cap-acc); }
+
+  .cap-body { display: grid; grid-template-rows: 0fr; transition: grid-template-rows 0.45s cubic-bezier(0.4,0,0.2,1); }
+  .cap-item.open .cap-body { grid-template-rows: 1fr; }
+  .cap-body-inner { overflow: hidden; padding: 0 22px; }
+  .cap-item.open .cap-body-inner { padding-bottom: 24px; }
+
+  .cap-cols { display: grid; grid-template-columns: 1fr; gap: 24px; padding-top: 4px; border-top: 1px solid rgba(255,255,255,0.06); }
+  @media (min-width: 768px) { .cap-cols { grid-template-columns: 1fr 1fr; gap: 40px; } .cap-head { padding: 22px 26px; } .cap-body-inner { padding: 0 26px; } }
+
+  .cap-sub { font-size: 10px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; margin: 20px 0 12px; }
+  .cap-sub-stack { color: #849490; margin-top: 24px; }
+  .cap-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 9px; }
+  .cap-list li { display: flex; gap: 10px; font-size: 14px; line-height: 1.6; color: #bacac5; }
+  .cap-tick { flex-shrink: 0; font-size: 11px; line-height: 1.9; }
+  .cap-chips { display: flex; flex-wrap: wrap; gap: 8px; }
+  .cap-chip { font-size: 11px; font-weight: 600; letter-spacing: 0.04em; padding: 5px 11px; border-radius: 5px; }
+  .cap-cta { display: inline-flex; align-items: center; gap: 8px; margin-top: 22px; padding: 10px 20px; border: 1px solid; border-radius: 7px; background: transparent; font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; text-decoration: none; transition: background 0.3s; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .cap-body, .cap-chevron, .cap-item { transition: none; }
+  }
 </style>
 
 <!-- SEO -->
@@ -101,73 +143,443 @@
     </p>
   </section>
 
-  <!-- Services Bento Grid -->
+  <!-- Capability Explorer -->
   <section class="mb-xl md:mb-2xl">
-    <h2 class="font-headline-md text-headline-md text-white mb-12 flex items-center gap-4 reveal">
+    <h2 class="font-headline-md text-headline-md text-white mb-4 flex items-center gap-4 reveal">
       <span class="w-8 h-px bg-primary"></span>Core Capabilities
     </h2>
-    <div class="grid grid-cols-1 md:grid-cols-12 gap-6">
+    <p class="font-body-md text-body-md text-on-surface-variant max-w-2xl mb-3 reveal">
+      Eight capability areas spanning the full data and software lifecycle — infrastructure, analytics, AI, governance, engineering, operations, architecture, and the teams we train along the way.
+    </p>
+    <p class="cap-hint reveal">Select any capability to see what we deliver, where it applies, and the methods behind it.</p>
 
-      <!-- Service 1: Predictive Analytics (large) -->
-      <div class="md:col-span-8 bg-secondary-surface border border-white/10 p-8 md:p-12 relative overflow-hidden group rounded-lg hover:border-primary/50 transition-colors duration-500 reveal">
-        <div class="absolute inset-0 opacity-10 bg-cover bg-center transition-transform duration-[30s] group-hover:scale-110"
-             style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAFB2xONZgBm-wOeEF_jqA0nvWF-oMHuhcs4duBI7wokDkIrIo-rTvXnFPJgKZGYZEXS_ED1uLUaph6vwMr33T8lGnSWghp3yUkOdZpOXJE1EJpmg3eOPUXNRTyNERzx5PIgEUEyO-BhxUa3Eh6lWiqTcVaHBgGbabruTGfQBb-dpOzN9qq-FOHpHo-pJu82tiHNL0tAYqSrnf-QYkEe0ewSQJVdMr-w3xx8-_qIPZ3fJT5eVVd0mVN3tUJYCG0hgyTFCe64wa6QZAa')">
-        </div>
-        <div class="relative z-10 flex flex-col h-full justify-between min-h-[280px]">
-          <div>
-            <span class="material-symbols-outlined text-primary text-4xl mb-6 block" style="font-variation-settings: 'FILL' 1;">analytics</span>
-            <h3 class="font-display-lg text-display-lg text-white mb-4" style="font-size: clamp(32px, 4vw, 56px);">Predictive Analytics</h3>
+    <div class="cap-list-wrap">
+
+      <div class="cap-item reveal  open" style="--cap-acc:#49fde3;--cap-acc-rgb:73,253,227;">
+        <button type="button" class="cap-head" aria-expanded="true" aria-controls="cap-panel-1" onclick="dapsCapToggle(this)">
+          <span class="cap-icon" style="background:rgba(73,253,227,0.08);border:1px solid rgba(73,253,227,0.2);">
+            <span class="material-symbols-outlined text-primary" style="font-size:22px;font-variation-settings:'FILL' 1;">dns</span>
+          </span>
+          <span class="cap-head-text">
+            <span class="cap-title">Data Infrastructure &amp; DevOps</span>
+            <span class="cap-teaser">Cloud data platforms and delivery pipelines engineered for resilience — from ingestion to production.</span>
+          </span>
+          <span class="cap-chevron" aria-hidden="true">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+          </span>
+        </button>
+        <div class="cap-body" id="cap-panel-1" role="region">
+          <div class="cap-body-inner">
+            <div class="cap-cols">
+              <div>
+                <p class="cap-sub" style="color:#49fde3;">What we deliver</p>
+                <ul class="cap-list">
+                <li><span class="cap-tick" style="color:#49fde3;">&#9656;</span>Cloud data platform design on Azure, GCP, and AWS</li>
+                <li><span class="cap-tick" style="color:#49fde3;">&#9656;</span>ETL/ELT pipeline engineering and orchestration</li>
+                <li><span class="cap-tick" style="color:#49fde3;">&#9656;</span>Data lake, warehouse, and lakehouse builds</li>
+                <li><span class="cap-tick" style="color:#49fde3;">&#9656;</span>CI/CD automation and infrastructure-as-code</li>
+                <li><span class="cap-tick" style="color:#49fde3;">&#9656;</span>Legacy and on-premise migration to cloud</li>
+                </ul>
+              </div>
+              <div>
+                <p class="cap-sub" style="color:#49fde3;">Where it applies</p>
+                <ul class="cap-list">
+                <li><span class="cap-tick" style="color:#49fde3;">&#9656;</span>Consolidating fragmented ministry data systems into a single governed platform</li>
+                <li><span class="cap-tick" style="color:#49fde3;">&#9656;</span>Migrating an ageing on-premise warehouse with zero reporting downtime</li>
+                <li><span class="cap-tick" style="color:#49fde3;">&#9656;</span>Real-time ingestion for distributed sensor and monitoring networks</li>
+                </ul>
+              </div>
+            </div>
+            <p class="cap-sub cap-sub-stack">Stack &amp; methods</p>
+            <div class="cap-chips">
+              <span class="cap-chip" style="background:rgba(73,253,227,0.07);color:#49fde3;border:1px solid rgba(73,253,227,0.18);">Azure</span>
+              <span class="cap-chip" style="background:rgba(73,253,227,0.07);color:#49fde3;border:1px solid rgba(73,253,227,0.18);">GCP</span>
+              <span class="cap-chip" style="background:rgba(73,253,227,0.07);color:#49fde3;border:1px solid rgba(73,253,227,0.18);">Terraform</span>
+              <span class="cap-chip" style="background:rgba(73,253,227,0.07);color:#49fde3;border:1px solid rgba(73,253,227,0.18);">Airflow</span>
+              <span class="cap-chip" style="background:rgba(73,253,227,0.07);color:#49fde3;border:1px solid rgba(73,253,227,0.18);">dbt</span>
+              <span class="cap-chip" style="background:rgba(73,253,227,0.07);color:#49fde3;border:1px solid rgba(73,253,227,0.18);">Kubernetes</span>
+              <span class="cap-chip" style="background:rgba(73,253,227,0.07);color:#49fde3;border:1px solid rgba(73,253,227,0.18);">PostgreSQL</span>
+            </div>
+            <a href="contact.html" class="cap-cta" style="color:#49fde3;border-color:rgba(73,253,227,0.35);"
+               onmouseover="this.style.background='rgba(73,253,227,0.08)'" onmouseout="this.style.background='transparent'">
+              Talk to us about data infrastructure
+              <span aria-hidden="true">&#8594;</span>
+            </a>
           </div>
-          <p class="font-body-md text-body-md text-on-surface-variant max-w-md mt-8">
-            Advanced ML models engineered to forecast market shifts, operational bottlenecks, and consumer behavior with forensic precision.
-          </p>
         </div>
       </div>
 
-      <!-- Service 2: Data Infrastructure -->
-      <div class="md:col-span-4 bg-secondary-surface border border-white/10 p-8 md:p-12 relative overflow-hidden group rounded-lg hover:border-primary/50 transition-colors duration-500 reveal reveal-delay-1">
-        <div class="relative z-10 flex flex-col h-full justify-between min-h-[280px]">
-          <div>
-            <span class="material-symbols-outlined text-secondary text-4xl mb-6 block" style="font-variation-settings: 'FILL' 1;">schema</span>
-            <h3 class="font-headline-md text-headline-md text-white mb-4">Data Infrastructure</h3>
+      <div class="cap-item reveal reveal-delay-1" style="--cap-acc:#efbf71;--cap-acc-rgb:239,191,113;">
+        <button type="button" class="cap-head" aria-expanded="false" aria-controls="cap-panel-2" onclick="dapsCapToggle(this)">
+          <span class="cap-icon" style="background:rgba(239,191,113,0.08);border:1px solid rgba(239,191,113,0.2);">
+            <span class="material-symbols-outlined text-secondary" style="font-size:22px;font-variation-settings:'FILL' 1;">insights</span>
+          </span>
+          <span class="cap-head-text">
+            <span class="cap-title">Advanced Analytics</span>
+            <span class="cap-teaser">Forecasting, decision intelligence, and executive reporting that turn raw data into foresight.</span>
+          </span>
+          <span class="cap-chevron" aria-hidden="true">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+          </span>
+        </button>
+        <div class="cap-body" id="cap-panel-2" role="region">
+          <div class="cap-body-inner">
+            <div class="cap-cols">
+              <div>
+                <p class="cap-sub" style="color:#efbf71;">What we deliver</p>
+                <ul class="cap-list">
+                <li><span class="cap-tick" style="color:#efbf71;">&#9656;</span>Forecasting and demand models tuned to local market conditions</li>
+                <li><span class="cap-tick" style="color:#efbf71;">&#9656;</span>KPI frameworks and executive dashboards</li>
+                <li><span class="cap-tick" style="color:#efbf71;">&#9656;</span>Statistical and causal analysis of programme outcomes</li>
+                <li><span class="cap-tick" style="color:#efbf71;">&#9656;</span>Scenario and what-if modelling for planning</li>
+                <li><span class="cap-tick" style="color:#efbf71;">&#9656;</span>Self-serve BI enablement so teams answer their own questions</li>
+                </ul>
+              </div>
+              <div>
+                <p class="cap-sub" style="color:#efbf71;">Where it applies</p>
+                <ul class="cap-list">
+                <li><span class="cap-tick" style="color:#efbf71;">&#9656;</span>Commodity price and supply forecasting across volatile markets</li>
+                <li><span class="cap-tick" style="color:#efbf71;">&#9656;</span>Monitoring and evaluation dashboards for national programmes</li>
+                <li><span class="cap-tick" style="color:#efbf71;">&#9656;</span>Market sizing and demographic analysis for expansion decisions</li>
+                </ul>
+              </div>
+            </div>
+            <p class="cap-sub cap-sub-stack">Stack &amp; methods</p>
+            <div class="cap-chips">
+              <span class="cap-chip" style="background:rgba(239,191,113,0.07);color:#efbf71;border:1px solid rgba(239,191,113,0.18);">Python</span>
+              <span class="cap-chip" style="background:rgba(239,191,113,0.07);color:#efbf71;border:1px solid rgba(239,191,113,0.18);">R</span>
+              <span class="cap-chip" style="background:rgba(239,191,113,0.07);color:#efbf71;border:1px solid rgba(239,191,113,0.18);">Power BI</span>
+              <span class="cap-chip" style="background:rgba(239,191,113,0.07);color:#efbf71;border:1px solid rgba(239,191,113,0.18);">Looker</span>
+              <span class="cap-chip" style="background:rgba(239,191,113,0.07);color:#efbf71;border:1px solid rgba(239,191,113,0.18);">SQL</span>
+              <span class="cap-chip" style="background:rgba(239,191,113,0.07);color:#efbf71;border:1px solid rgba(239,191,113,0.18);">Prophet</span>
+              <span class="cap-chip" style="background:rgba(239,191,113,0.07);color:#efbf71;border:1px solid rgba(239,191,113,0.18);">statsmodels</span>
+            </div>
+            <a href="contact.html" class="cap-cta" style="color:#efbf71;border-color:rgba(239,191,113,0.35);"
+               onmouseover="this.style.background='rgba(239,191,113,0.08)'" onmouseout="this.style.background='transparent'">
+              Talk to us about advanced analytics
+              <span aria-hidden="true">&#8594;</span>
+            </a>
           </div>
-          <p class="font-body-md text-body-md text-on-surface-variant mt-8">
-            Scalable, resilient architectures on modern cloud primitives. Data flows securely and seamlessly from ingestion to insight.
-          </p>
         </div>
       </div>
 
-      <!-- Service 3: Visual Intelligence -->
-      <div class="md:col-span-5 bg-secondary-surface border border-white/10 p-8 md:p-12 relative overflow-hidden group rounded-lg hover:border-primary/50 transition-colors duration-500 reveal reveal-delay-2">
-        <div class="relative z-10 flex flex-col h-full justify-between min-h-[260px]">
-          <div>
-            <span class="material-symbols-outlined text-white text-4xl mb-6 block" style="font-variation-settings: 'FILL' 1;">dashboard</span>
-            <h3 class="font-headline-md text-headline-md text-white mb-4">Visual Intelligence</h3>
+      <div class="cap-item reveal reveal-delay-2" style="--cap-acc:#49fde3;--cap-acc-rgb:73,253,227;">
+        <button type="button" class="cap-head" aria-expanded="false" aria-controls="cap-panel-3" onclick="dapsCapToggle(this)">
+          <span class="cap-icon" style="background:rgba(73,253,227,0.08);border:1px solid rgba(73,253,227,0.2);">
+            <span class="material-symbols-outlined text-primary" style="font-size:22px;font-variation-settings:'FILL' 1;">neurology</span>
+          </span>
+          <span class="cap-head-text">
+            <span class="cap-title">ML / AI</span>
+            <span class="cap-teaser">Custom models — from development through deployment and monitoring — tuned to your data and domain.</span>
+          </span>
+          <span class="cap-chevron" aria-hidden="true">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+          </span>
+        </button>
+        <div class="cap-body" id="cap-panel-3" role="region">
+          <div class="cap-body-inner">
+            <div class="cap-cols">
+              <div>
+                <p class="cap-sub" style="color:#49fde3;">What we deliver</p>
+                <ul class="cap-list">
+                <li><span class="cap-tick" style="color:#49fde3;">&#9656;</span>Custom model development, training, and evaluation</li>
+                <li><span class="cap-tick" style="color:#49fde3;">&#9656;</span>NLP for low-resource languages including Amharic, Afaan Oromoo, and Tigrinya</li>
+                <li><span class="cap-tick" style="color:#49fde3;">&#9656;</span>Computer vision and geospatial AI for imagery analysis</li>
+                <li><span class="cap-tick" style="color:#49fde3;">&#9656;</span>LLM assistants, RAG systems, and document intelligence</li>
+                <li><span class="cap-tick" style="color:#49fde3;">&#9656;</span>MLOps: deployment, drift monitoring, and retraining pipelines</li>
+                </ul>
+              </div>
+              <div>
+                <p class="cap-sub" style="color:#49fde3;">Where it applies</p>
+                <ul class="cap-list">
+                <li><span class="cap-tick" style="color:#49fde3;">&#9656;</span>Automated processing of Ethiopian-language government documents</li>
+                <li><span class="cap-tick" style="color:#49fde3;">&#9656;</span>Satellite imagery analysis for infrastructure and land-use monitoring</li>
+                <li><span class="cap-tick" style="color:#49fde3;">&#9656;</span>AI document intelligence embedded in live project management platforms</li>
+                </ul>
+              </div>
+            </div>
+            <p class="cap-sub cap-sub-stack">Stack &amp; methods</p>
+            <div class="cap-chips">
+              <span class="cap-chip" style="background:rgba(73,253,227,0.07);color:#49fde3;border:1px solid rgba(73,253,227,0.18);">PyTorch</span>
+              <span class="cap-chip" style="background:rgba(73,253,227,0.07);color:#49fde3;border:1px solid rgba(73,253,227,0.18);">TensorFlow</span>
+              <span class="cap-chip" style="background:rgba(73,253,227,0.07);color:#49fde3;border:1px solid rgba(73,253,227,0.18);">Hugging Face</span>
+              <span class="cap-chip" style="background:rgba(73,253,227,0.07);color:#49fde3;border:1px solid rgba(73,253,227,0.18);">scikit-learn</span>
+              <span class="cap-chip" style="background:rgba(73,253,227,0.07);color:#49fde3;border:1px solid rgba(73,253,227,0.18);">MLflow</span>
+              <span class="cap-chip" style="background:rgba(73,253,227,0.07);color:#49fde3;border:1px solid rgba(73,253,227,0.18);">Vector DBs</span>
+            </div>
+            <a href="contact.html" class="cap-cta" style="color:#49fde3;border-color:rgba(73,253,227,0.35);"
+               onmouseover="this.style.background='rgba(73,253,227,0.08)'" onmouseout="this.style.background='transparent'">
+              Talk to us about ml / ai
+              <span aria-hidden="true">&#8594;</span>
+            </a>
           </div>
-          <p class="font-body-md text-body-md text-on-surface-variant mt-8">
-            Bespoke dashboards and reporting interfaces designed with luxury automotive interface principles. Complex data, presented beautifully.
-          </p>
         </div>
       </div>
 
-      <!-- Service 4: Strategic Auditing (large) -->
-      <div class="md:col-span-7 bg-secondary-surface border border-white/10 p-8 md:p-12 relative overflow-hidden group rounded-lg hover:border-primary/50 transition-colors duration-500 reveal reveal-delay-3">
-        <div class="absolute inset-0 opacity-10 bg-cover bg-center transition-transform duration-[30s] group-hover:scale-110"
-             style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDk9zkV7uZqpbpjAMkwVJrHdBSAQv0DcTciCuDPssmTjklJWtQSaSHcXCF1D490kGn_NKOtYyhK_DxiIhOT2U7d1fmIveeBSoIfRGhpi3i3lPQnCIHi1YNV_z3vrwbELOECK4H_SslypEkMRUAO_YVVg0mpA6qtMyYdA33LaOniyjyVh92627SvUskf7yzU1k3yla-nZXifDntaXOvCS4M4WwTL055ZpmNoru9FOBCzbWdoi3yIZbL0_DFvc0Jyiw6PpdgCkd1sUJgk')">
-        </div>
-        <div class="relative z-10 flex flex-col h-full justify-between min-h-[260px]">
-          <div>
-            <span class="material-symbols-outlined text-primary text-4xl mb-6 block" style="font-variation-settings: 'FILL' 1;">tune</span>
-            <h3 class="font-display-lg text-display-lg text-white mb-4" style="font-size: clamp(32px, 4vw, 56px);">Strategic Auditing</h3>
+      <div class="cap-item reveal reveal-delay-3" style="--cap-acc:#efbf71;--cap-acc-rgb:239,191,113;">
+        <button type="button" class="cap-head" aria-expanded="false" aria-controls="cap-panel-4" onclick="dapsCapToggle(this)">
+          <span class="cap-icon" style="background:rgba(239,191,113,0.08);border:1px solid rgba(239,191,113,0.2);">
+            <span class="material-symbols-outlined text-secondary" style="font-size:22px;font-variation-settings:'FILL' 1;">encrypted</span>
+          </span>
+          <span class="cap-head-text">
+            <span class="cap-title">Data Governance &amp; Security</span>
+            <span class="cap-teaser">Frameworks, controls, and audit trails that keep sensitive data trusted, compliant, and defensible.</span>
+          </span>
+          <span class="cap-chevron" aria-hidden="true">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+          </span>
+        </button>
+        <div class="cap-body" id="cap-panel-4" role="region">
+          <div class="cap-body-inner">
+            <div class="cap-cols">
+              <div>
+                <p class="cap-sub" style="color:#efbf71;">What we deliver</p>
+                <ul class="cap-list">
+                <li><span class="cap-tick" style="color:#efbf71;">&#9656;</span>Governance frameworks and data ownership models</li>
+                <li><span class="cap-tick" style="color:#efbf71;">&#9656;</span>Data cataloguing, lineage tracking, and quality monitoring</li>
+                <li><span class="cap-tick" style="color:#efbf71;">&#9656;</span>Role-based access control and encryption in transit and at rest</li>
+                <li><span class="cap-tick" style="color:#efbf71;">&#9656;</span>Privacy and regulatory alignment, including GDPR and HIPAA-aligned controls</li>
+                <li><span class="cap-tick" style="color:#efbf71;">&#9656;</span>Audit logging and compliance reporting</li>
+                </ul>
+              </div>
+              <div>
+                <p class="cap-sub" style="color:#efbf71;">Where it applies</p>
+                <ul class="cap-list">
+                <li><span class="cap-tick" style="color:#efbf71;">&#9656;</span>Establishing data-sharing standards across government agencies</li>
+                <li><span class="cap-tick" style="color:#efbf71;">&#9656;</span>Protecting patient data across connected healthcare systems</li>
+                <li><span class="cap-tick" style="color:#efbf71;">&#9656;</span>Enterprise-wide data catalogue and stewardship rollout</li>
+                </ul>
+              </div>
+            </div>
+            <p class="cap-sub cap-sub-stack">Stack &amp; methods</p>
+            <div class="cap-chips">
+              <span class="cap-chip" style="background:rgba(239,191,113,0.07);color:#efbf71;border:1px solid rgba(239,191,113,0.18);">RBAC</span>
+              <span class="cap-chip" style="background:rgba(239,191,113,0.07);color:#efbf71;border:1px solid rgba(239,191,113,0.18);">Encryption</span>
+              <span class="cap-chip" style="background:rgba(239,191,113,0.07);color:#efbf71;border:1px solid rgba(239,191,113,0.18);">Data catalogues</span>
+              <span class="cap-chip" style="background:rgba(239,191,113,0.07);color:#efbf71;border:1px solid rgba(239,191,113,0.18);">Policy-as-code</span>
+              <span class="cap-chip" style="background:rgba(239,191,113,0.07);color:#efbf71;border:1px solid rgba(239,191,113,0.18);">Audit logging</span>
+            </div>
+            <a href="contact.html" class="cap-cta" style="color:#efbf71;border-color:rgba(239,191,113,0.35);"
+               onmouseover="this.style.background='rgba(239,191,113,0.08)'" onmouseout="this.style.background='transparent'">
+              Talk to us about data governance
+              <span aria-hidden="true">&#8594;</span>
+            </a>
           </div>
-          <p class="font-body-md text-body-md text-on-surface-variant max-w-md mt-8">
-            Comprehensive evaluation of your existing data ecosystems. We identify latency, security gaps, and architectural flaws — prescribing exact technical remedies.
-          </p>
+        </div>
+      </div>
+
+      <div class="cap-item reveal " style="--cap-acc:#49fde3;--cap-acc-rgb:73,253,227;">
+        <button type="button" class="cap-head" aria-expanded="false" aria-controls="cap-panel-5" onclick="dapsCapToggle(this)">
+          <span class="cap-icon" style="background:rgba(73,253,227,0.08);border:1px solid rgba(73,253,227,0.2);">
+            <span class="material-symbols-outlined text-primary" style="font-size:22px;font-variation-settings:'FILL' 1;">code_blocks</span>
+          </span>
+          <span class="cap-head-text">
+            <span class="cap-title">Application Development</span>
+            <span class="cap-teaser">Full-stack web, mobile, and platform engineering — production software built to scale and localise.</span>
+          </span>
+          <span class="cap-chevron" aria-hidden="true">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+          </span>
+        </button>
+        <div class="cap-body" id="cap-panel-5" role="region">
+          <div class="cap-body-inner">
+            <div class="cap-cols">
+              <div>
+                <p class="cap-sub" style="color:#49fde3;">What we deliver</p>
+                <ul class="cap-list">
+                <li><span class="cap-tick" style="color:#49fde3;">&#9656;</span>Full-stack web platforms and enterprise portals</li>
+                <li><span class="cap-tick" style="color:#49fde3;">&#9656;</span>Mobile and progressive web applications</li>
+                <li><span class="cap-tick" style="color:#49fde3;">&#9656;</span>API design and integration across existing systems</li>
+                <li><span class="cap-tick" style="color:#49fde3;">&#9656;</span>Localisation: multi-language, local calendars, and local currency</li>
+                <li><span class="cap-tick" style="color:#49fde3;">&#9656;</span>Production support, iteration, and handover</li>
+                </ul>
+              </div>
+              <div>
+                <p class="cap-sub" style="color:#49fde3;">Where it applies</p>
+                <ul class="cap-list">
+                <li><span class="cap-tick" style="color:#49fde3;">&#9656;</span>Enterprise project management with Ethiopian calendar, Amharic, and ETB budgeting</li>
+                <li><span class="cap-tick" style="color:#49fde3;">&#9656;</span>Public-facing environmental monitoring dashboards for city stakeholders</li>
+                <li><span class="cap-tick" style="color:#49fde3;">&#9656;</span>Sector platforms spanning telehealth, logistics, and field operations</li>
+                </ul>
+              </div>
+            </div>
+            <p class="cap-sub cap-sub-stack">Stack &amp; methods</p>
+            <div class="cap-chips">
+              <span class="cap-chip" style="background:rgba(73,253,227,0.07);color:#49fde3;border:1px solid rgba(73,253,227,0.18);">React</span>
+              <span class="cap-chip" style="background:rgba(73,253,227,0.07);color:#49fde3;border:1px solid rgba(73,253,227,0.18);">Next.js</span>
+              <span class="cap-chip" style="background:rgba(73,253,227,0.07);color:#49fde3;border:1px solid rgba(73,253,227,0.18);">TypeScript</span>
+              <span class="cap-chip" style="background:rgba(73,253,227,0.07);color:#49fde3;border:1px solid rgba(73,253,227,0.18);">Python</span>
+              <span class="cap-chip" style="background:rgba(73,253,227,0.07);color:#49fde3;border:1px solid rgba(73,253,227,0.18);">FastAPI</span>
+              <span class="cap-chip" style="background:rgba(73,253,227,0.07);color:#49fde3;border:1px solid rgba(73,253,227,0.18);">React Native</span>
+              <span class="cap-chip" style="background:rgba(73,253,227,0.07);color:#49fde3;border:1px solid rgba(73,253,227,0.18);">PostgreSQL</span>
+            </div>
+            <a href="contact.html" class="cap-cta" style="color:#49fde3;border-color:rgba(73,253,227,0.35);"
+               onmouseover="this.style.background='rgba(73,253,227,0.08)'" onmouseout="this.style.background='transparent'">
+              Talk to us about application development
+              <span aria-hidden="true">&#8594;</span>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div class="cap-item reveal reveal-delay-1" style="--cap-acc:#efbf71;--cap-acc-rgb:239,191,113;">
+        <button type="button" class="cap-head" aria-expanded="false" aria-controls="cap-panel-6" onclick="dapsCapToggle(this)">
+          <span class="cap-icon" style="background:rgba(239,191,113,0.08);border:1px solid rgba(239,191,113,0.2);">
+            <span class="material-symbols-outlined text-secondary" style="font-size:22px;font-variation-settings:'FILL' 1;">monitoring</span>
+          </span>
+          <span class="cap-head-text">
+            <span class="cap-title">Observability &amp; AIOps</span>
+            <span class="cap-teaser">Instrumentation, alerting, and AI-driven operations that keep systems healthy and incidents rare.</span>
+          </span>
+          <span class="cap-chevron" aria-hidden="true">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+          </span>
+        </button>
+        <div class="cap-body" id="cap-panel-6" role="region">
+          <div class="cap-body-inner">
+            <div class="cap-cols">
+              <div>
+                <p class="cap-sub" style="color:#efbf71;">What we deliver</p>
+                <ul class="cap-list">
+                <li><span class="cap-tick" style="color:#efbf71;">&#9656;</span>Monitoring, logging, and distributed tracing instrumentation</li>
+                <li><span class="cap-tick" style="color:#efbf71;">&#9656;</span>Service level objectives and alerting design</li>
+                <li><span class="cap-tick" style="color:#efbf71;">&#9656;</span>Anomaly detection across operational telemetry</li>
+                <li><span class="cap-tick" style="color:#efbf71;">&#9656;</span>Incident response processes and runbooks</li>
+                <li><span class="cap-tick" style="color:#efbf71;">&#9656;</span>Cloud cost and performance optimisation</li>
+                </ul>
+              </div>
+              <div>
+                <p class="cap-sub" style="color:#efbf71;">Where it applies</p>
+                <ul class="cap-list">
+                <li><span class="cap-tick" style="color:#efbf71;">&#9656;</span>Uptime assurance for public dashboards under unpredictable load</li>
+                <li><span class="cap-tick" style="color:#efbf71;">&#9656;</span>Reliability monitoring across long-running data pipelines</li>
+                <li><span class="cap-tick" style="color:#efbf71;">&#9656;</span>Reducing cloud spend without sacrificing performance headroom</li>
+                </ul>
+              </div>
+            </div>
+            <p class="cap-sub cap-sub-stack">Stack &amp; methods</p>
+            <div class="cap-chips">
+              <span class="cap-chip" style="background:rgba(239,191,113,0.07);color:#efbf71;border:1px solid rgba(239,191,113,0.18);">Prometheus</span>
+              <span class="cap-chip" style="background:rgba(239,191,113,0.07);color:#efbf71;border:1px solid rgba(239,191,113,0.18);">Grafana</span>
+              <span class="cap-chip" style="background:rgba(239,191,113,0.07);color:#efbf71;border:1px solid rgba(239,191,113,0.18);">OpenTelemetry</span>
+              <span class="cap-chip" style="background:rgba(239,191,113,0.07);color:#efbf71;border:1px solid rgba(239,191,113,0.18);">ELK</span>
+              <span class="cap-chip" style="background:rgba(239,191,113,0.07);color:#efbf71;border:1px solid rgba(239,191,113,0.18);">Sentry</span>
+            </div>
+            <a href="contact.html" class="cap-cta" style="color:#efbf71;border-color:rgba(239,191,113,0.35);"
+               onmouseover="this.style.background='rgba(239,191,113,0.08)'" onmouseout="this.style.background='transparent'">
+              Talk to us about observability
+              <span aria-hidden="true">&#8594;</span>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div class="cap-item reveal reveal-delay-2" style="--cap-acc:#49fde3;--cap-acc-rgb:73,253,227;">
+        <button type="button" class="cap-head" aria-expanded="false" aria-controls="cap-panel-7" onclick="dapsCapToggle(this)">
+          <span class="cap-icon" style="background:rgba(73,253,227,0.08);border:1px solid rgba(73,253,227,0.2);">
+            <span class="material-symbols-outlined text-primary" style="font-size:22px;font-variation-settings:'FILL' 1;">account_tree</span>
+          </span>
+          <span class="cap-head-text">
+            <span class="cap-title">Enterprise Architecture &amp; System Design</span>
+            <span class="cap-teaser">Target-state blueprints, integration strategy, and the technical decisions that hold up over years.</span>
+          </span>
+          <span class="cap-chevron" aria-hidden="true">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+          </span>
+        </button>
+        <div class="cap-body" id="cap-panel-7" role="region">
+          <div class="cap-body-inner">
+            <div class="cap-cols">
+              <div>
+                <p class="cap-sub" style="color:#49fde3;">What we deliver</p>
+                <ul class="cap-list">
+                <li><span class="cap-tick" style="color:#49fde3;">&#9656;</span>Target-state architecture and modernisation roadmaps</li>
+                <li><span class="cap-tick" style="color:#49fde3;">&#9656;</span>Integration and interoperability design across systems</li>
+                <li><span class="cap-tick" style="color:#49fde3;">&#9656;</span>Technology selection and independent vendor evaluation</li>
+                <li><span class="cap-tick" style="color:#49fde3;">&#9656;</span>Scalability, resilience, and disaster-recovery planning</li>
+                <li><span class="cap-tick" style="color:#49fde3;">&#9656;</span>Architecture review, standards, and decision records</li>
+                </ul>
+              </div>
+              <div>
+                <p class="cap-sub" style="color:#49fde3;">Where it applies</p>
+                <ul class="cap-list">
+                <li><span class="cap-tick" style="color:#49fde3;">&#9656;</span>Interoperability blueprint spanning multiple government institutions</li>
+                <li><span class="cap-tick" style="color:#49fde3;">&#9656;</span>Sequencing a multi-year modernisation without halting operations</li>
+                <li><span class="cap-tick" style="color:#49fde3;">&#9656;</span>Independent architecture review before major platform investment</li>
+                </ul>
+              </div>
+            </div>
+            <p class="cap-sub cap-sub-stack">Stack &amp; methods</p>
+            <div class="cap-chips">
+              <span class="cap-chip" style="background:rgba(73,253,227,0.07);color:#49fde3;border:1px solid rgba(73,253,227,0.18);">C4 modelling</span>
+              <span class="cap-chip" style="background:rgba(73,253,227,0.07);color:#49fde3;border:1px solid rgba(73,253,227,0.18);">Event-driven patterns</span>
+              <span class="cap-chip" style="background:rgba(73,253,227,0.07);color:#49fde3;border:1px solid rgba(73,253,227,0.18);">API strategy</span>
+              <span class="cap-chip" style="background:rgba(73,253,227,0.07);color:#49fde3;border:1px solid rgba(73,253,227,0.18);">ADRs</span>
+              <span class="cap-chip" style="background:rgba(73,253,227,0.07);color:#49fde3;border:1px solid rgba(73,253,227,0.18);">Reference architectures</span>
+            </div>
+            <a href="contact.html" class="cap-cta" style="color:#49fde3;border-color:rgba(73,253,227,0.35);"
+               onmouseover="this.style.background='rgba(73,253,227,0.08)'" onmouseout="this.style.background='transparent'">
+              Talk to us about enterprise architecture
+              <span aria-hidden="true">&#8594;</span>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div class="cap-item reveal reveal-delay-3" style="--cap-acc:#efbf71;--cap-acc-rgb:239,191,113;">
+        <button type="button" class="cap-head" aria-expanded="false" aria-controls="cap-panel-8" onclick="dapsCapToggle(this)">
+          <span class="cap-icon" style="background:rgba(239,191,113,0.08);border:1px solid rgba(239,191,113,0.2);">
+            <span class="material-symbols-outlined text-secondary" style="font-size:22px;font-variation-settings:'FILL' 1;">school</span>
+          </span>
+          <span class="cap-head-text">
+            <span class="cap-title">Innovative Research &amp; Training</span>
+            <span class="cap-teaser">Applied research, prototypes, and capability building that leave your teams able to carry the work.</span>
+          </span>
+          <span class="cap-chevron" aria-hidden="true">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+          </span>
+        </button>
+        <div class="cap-body" id="cap-panel-8" role="region">
+          <div class="cap-body-inner">
+            <div class="cap-cols">
+              <div>
+                <p class="cap-sub" style="color:#efbf71;">What we deliver</p>
+                <ul class="cap-list">
+                <li><span class="cap-tick" style="color:#efbf71;">&#9656;</span>Applied research and feasibility studies</li>
+                <li><span class="cap-tick" style="color:#efbf71;">&#9656;</span>Proofs of concept and working prototypes before full build</li>
+                <li><span class="cap-tick" style="color:#efbf71;">&#9656;</span>Hands-on capability building and technical training</li>
+                <li><span class="cap-tick" style="color:#efbf71;">&#9656;</span>Knowledge transfer, documentation, and reproducible methods</li>
+                <li><span class="cap-tick" style="color:#efbf71;">&#9656;</span>Curriculum design for institutions and public bodies</li>
+                </ul>
+              </div>
+              <div>
+                <p class="cap-sub" style="color:#efbf71;">Where it applies</p>
+                <ul class="cap-list">
+                <li><span class="cap-tick" style="color:#efbf71;">&#9656;</span>National technology development and transfer capability programmes</li>
+                <li><span class="cap-tick" style="color:#efbf71;">&#9656;</span>Data literacy training for ministry and enterprise analysts</li>
+                <li><span class="cap-tick" style="color:#efbf71;">&#9656;</span>De-risking an ambitious idea with a scoped proof of concept</li>
+                </ul>
+              </div>
+            </div>
+            <p class="cap-sub cap-sub-stack">Stack &amp; methods</p>
+            <div class="cap-chips">
+              <span class="cap-chip" style="background:rgba(239,191,113,0.07);color:#efbf71;border:1px solid rgba(239,191,113,0.18);">Workshops</span>
+              <span class="cap-chip" style="background:rgba(239,191,113,0.07);color:#efbf71;border:1px solid rgba(239,191,113,0.18);">Technical labs</span>
+              <span class="cap-chip" style="background:rgba(239,191,113,0.07);color:#efbf71;border:1px solid rgba(239,191,113,0.18);">Structured curricula</span>
+              <span class="cap-chip" style="background:rgba(239,191,113,0.07);color:#efbf71;border:1px solid rgba(239,191,113,0.18);">Reproducible notebooks</span>
+            </div>
+            <a href="contact.html" class="cap-cta" style="color:#efbf71;border-color:rgba(239,191,113,0.35);"
+               onmouseover="this.style.background='rgba(239,191,113,0.08)'" onmouseout="this.style.background='transparent'">
+              Talk to us about innovative research
+              <span aria-hidden="true">&#8594;</span>
+            </a>
+          </div>
         </div>
       </div>
 
     </div>
   </section>
+
 
   <!-- SaaS Products We've Built -->
   <section class="mb-xl md:mb-2xl">
@@ -176,7 +588,7 @@
     </h2>
     <p class="font-body-md text-body-md text-on-surface-variant max-w-2xl mb-10 reveal">Beyond consulting, we deploy production-grade software. These are the platforms running live for customers today.</p>
     <div style="position:relative;">
-    <div id="svc-products-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+    <div id="svc-products-grid" class="grid grid-cols-1 sm:grid-cols-2 gap-5">
 
       <a href="onekof-pm.html" class="group block bg-secondary-surface border border-white/10 rounded-lg p-6 hover:border-primary/40 transition-colors duration-400 reveal">
         <div class="w-10 h-10 rounded-lg flex items-center justify-center mb-5" style="background:rgba(73,253,227,0.1);border:1px solid rgba(73,253,227,0.2);">
@@ -196,26 +608,6 @@
         <h3 class="font-body-lg text-body-lg text-white mb-2 group-hover:text-secondary transition-colors" style="font-size:18px;">UDC-WQIS</h3>
         <p class="font-body-md text-body-md text-on-surface-variant" style="font-size:14px;">Real-time Anacostia watershed monitoring — 12 USGS stations, EPA integration, live dashboards for DC stakeholders.</p>
         <div class="mt-4 flex items-center gap-1 text-secondary" style="font-size:11px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;">Live in Washington DC <span class="material-symbols-outlined" style="font-size:14px;">arrow_forward</span></div>
-      </a>
-
-      <a href="products.html#hakimet" class="group block bg-secondary-surface border border-white/10 rounded-lg p-6 hover:border-primary/40 transition-colors duration-400 reveal reveal-delay-2">
-        <div class="w-10 h-10 rounded-lg flex items-center justify-center mb-5" style="background:rgba(73,253,227,0.1);border:1px solid rgba(73,253,227,0.2);">
-          <span class="material-symbols-outlined text-primary" style="font-size:20px;font-variation-settings:'FILL' 1;">ecg_heart</span>
-        </div>
-        <div style="font-size:10px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:#49fde3;margin-bottom:6px;">Telehealth Platform</div>
-        <h3 class="font-body-lg text-body-lg text-white mb-2 group-hover:text-primary transition-colors" style="font-size:18px;">Hakimet</h3>
-        <p class="font-body-md text-body-md text-on-surface-variant" style="font-size:14px;">Enterprise telehealth for African healthcare — low-bandwidth optimized, EMR-integrated, HIPAA-aligned for East Africa.</p>
-        <div class="mt-4 flex items-center gap-1 text-primary" style="font-size:11px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;">Live <span class="material-symbols-outlined" style="font-size:14px;">arrow_forward</span></div>
-      </a>
-
-      <a href="products.html#fleet" class="group block bg-secondary-surface border border-white/10 rounded-lg p-6 hover:border-secondary/40 transition-colors duration-400 reveal reveal-delay-3">
-        <div class="w-10 h-10 rounded-lg flex items-center justify-center mb-5" style="background:rgba(239,191,113,0.1);border:1px solid rgba(239,191,113,0.2);">
-          <span class="material-symbols-outlined text-secondary" style="font-size:20px;font-variation-settings:'FILL' 1;">local_shipping</span>
-        </div>
-        <div style="font-size:10px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:#efbf71;margin-bottom:6px;">Fleet Intelligence</div>
-        <h3 class="font-body-lg text-body-lg text-white mb-2 group-hover:text-secondary transition-colors" style="font-size:18px;">Olink Fleet</h3>
-        <p class="font-body-md text-body-md text-on-surface-variant" style="font-size:14px;">Smart fleet management for Ethiopia — GPS tracking, AI route optimization, driver analytics, and predictive maintenance.</p>
-        <div class="mt-4 flex items-center gap-1 text-secondary" style="font-size:11px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;">Live in Ethiopia <span class="material-symbols-outlined" style="font-size:14px;">arrow_forward</span></div>
       </a>
 
     </div>
@@ -318,8 +710,8 @@
   <div class="max-w-[1440px] mx-auto px-6 md:px-12">
     <div class="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
       <div class="md:col-span-2">
-        <a href="index.html" class="block mb-4"><img src="assets/images/daps-logo-full.svg" alt="DAPS Analytics" style="height:60px;width:auto;"/></a>
-        <p class="text-sm text-zinc-500 max-w-sm mt-2">DAPS Analytics is a data intelligence firm headquartered in Bethesda, MD. We engineer analytics infrastructure, AI-driven platforms, and data governance systems for governments, enterprises, and institutions across Africa and North America — turning complex data into clear, actionable decisions.</p>
+        <a href="index.html" class="block mb-4"><img src="assets/images/daps-logo-nav.svg" alt="DAPS" style="height:60px;width:auto;"/></a>
+        <p class="text-sm text-zinc-500 max-w-sm mt-2">DAPS is a data intelligence firm headquartered in Bethesda, MD. We engineer analytics infrastructure, AI-driven platforms, and data governance systems for governments, enterprises, and institutions across Africa and North America — turning complex data into clear, actionable decisions.</p>
       </div>
       <div>
         <h4 class="font-label-caps text-label-caps text-white mb-6">Platform</h4>
@@ -334,6 +726,7 @@
         <h4 class="font-label-caps text-label-caps text-white mb-6">Company</h4>
         <ul class="space-y-3 text-sm">
           <li><a href="company.html" class="text-zinc-500 hover:text-teal-400 transition-colors duration-400">About Us</a></li>
+          <li><a href="careers.html" class="text-zinc-500 hover:text-teal-400 transition-colors duration-400">Careers</a></li>
           <li><a href="contact.html" class="text-zinc-500 hover:text-teal-400 transition-colors duration-400">Contact</a></li>
           <li><a href="insights.html" class="text-zinc-500 hover:text-teal-400 transition-colors duration-400">Resources</a></li>
           <li><a href="linktree.html" class="text-zinc-500 hover:text-teal-400 transition-colors duration-400">All Links</a></li>
@@ -344,7 +737,7 @@
         <div style="display:flex;gap:14px;align-items:center;">
 
           <!-- LinkedIn -->
-          <a href="https://www.linkedin.com/company/116015383/" target="_blank" rel="noopener" title="LinkedIn — DAPS Analytics"
+          <a href="https://www.linkedin.com/company/116015383/" target="_blank" rel="noopener" title="LinkedIn — DAPS"
              style="color:#849490;transition:color 0.3s,transform 0.3s;display:inline-flex;"
              onmouseover="this.style.color='#0A66C2';this.style.transform='translateY(-2px)'"
              onmouseout="this.style.color='#849490';this.style.transform='translateY(0)'">
@@ -355,7 +748,7 @@
           </a>
 
           <!-- Facebook -->
-          <a href="https://www.facebook.com/profile.php?id=61589847723974" target="_blank" rel="noopener" title="Facebook — DAPS Analytics"
+          <a href="https://www.facebook.com/profile.php?id=61589847723974" target="_blank" rel="noopener" title="Facebook — DAPS"
              style="color:#849490;transition:color 0.3s,transform 0.3s;display:inline-flex;"
              onmouseover="this.style.color='#1877F2';this.style.transform='translateY(-2px)'"
              onmouseout="this.style.color='#849490';this.style.transform='translateY(0)'">
@@ -365,7 +758,7 @@
           </a>
 
           <!-- X (Twitter) -->
-          <a href="https://x.com/DapsAnalytics" target="_blank" rel="noopener" title="X — DAPS Analytics"
+          <a href="https://x.com/DapsAnalytics" target="_blank" rel="noopener" title="X — DAPS"
              style="color:#849490;transition:color 0.3s,transform 0.3s;display:inline-flex;"
              onmouseover="this.style.color='#ffffff';this.style.transform='translateY(-2px)'"
              onmouseout="this.style.color='#849490';this.style.transform='translateY(0)'">
@@ -375,7 +768,7 @@
           </a>
 
           <!-- Instagram -->
-          <a href="https://www.instagram.com/dapsanalytics/" target="_blank" rel="noopener" title="Instagram — DAPS Analytics"
+          <a href="https://www.instagram.com/dapsanalytics/" target="_blank" rel="noopener" title="Instagram — DAPS"
              style="color:#849490;transition:color 0.3s,transform 0.3s;display:inline-flex;"
              onmouseover="this.style.color='#E1306C';this.style.transform='translateY(-2px)'"
              onmouseout="this.style.color='#849490';this.style.transform='translateY(0)'">
@@ -387,7 +780,7 @@
           </a>
 
           <!-- TikTok -->
-          <a href="https://www.tiktok.com/@dapsanalytics" target="_blank" rel="noopener" title="TikTok — DAPS Analytics"
+          <a href="https://www.tiktok.com/@dapsanalytics" target="_blank" rel="noopener" title="TikTok — DAPS"
              style="color:#849490;transition:color 0.3s,transform 0.3s;display:inline-flex;"
              onmouseover="this.style.color='#49fde3';this.style.transform='translateY(-2px)'"
              onmouseout="this.style.color='#849490';this.style.transform='translateY(0)'">
@@ -397,7 +790,7 @@
           </a>
 
           <!-- YouTube -->
-          <a href="https://www.youtube.com/@DapsAnalytics" target="_blank" rel="noopener" title="YouTube — DAPS Analytics"
+          <a href="https://www.youtube.com/@DapsAnalytics" target="_blank" rel="noopener" title="YouTube — DAPS"
              style="color:#849490;transition:color 0.3s,transform 0.3s;display:inline-flex;"
              onmouseover="this.style.color='#FF0000';this.style.transform='translateY(-2px)'"
              onmouseout="this.style.color='#849490';this.style.transform='translateY(0)'">
@@ -405,6 +798,22 @@
               <path d="M22.54 6.42a2.78 2.78 0 0 0-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46A2.78 2.78 0 0 0 1.46 6.42 29 29 0 0 0 1 12a29 29 0 0 0 .46 5.58 2.78 2.78 0 0 0 1.95 1.96C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 0 0 1.96-1.96A29 29 0 0 0 23 12a29 29 0 0 0-.46-5.58z"/>
               <polygon fill="#050709" points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02"/>
             </svg>
+          </a>
+
+          <!-- WhatsApp -->
+          <a href="https://wa.me/251945886655" target="_blank" rel="noopener" title="WhatsApp — DAPS"
+             style="color:#849490;transition:color 0.3s,transform 0.3s;display:inline-flex;"
+             onmouseover="this.style.color='#25D366';this.style.transform='translateY(-2px)'"
+             onmouseout="this.style.color='#849490';this.style.transform='translateY(0)'">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+          </a>
+
+          <!-- Telegram -->
+          <a href="https://t.me/+251945886655" target="_blank" rel="noopener" title="Telegram — DAPS"
+             style="color:#849490;transition:color 0.3s,transform 0.3s;display:inline-flex;"
+             onmouseover="this.style.color='#229ED9';this.style.transform='translateY(-2px)'"
+             onmouseout="this.style.color='#849490';this.style.transform='translateY(0)'">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
           </a>
 
         </div>
@@ -417,6 +826,20 @@
   </div>
 </footer>
 
+<script>
+/* Capability explorer — independent expand/collapse, keyboard accessible */
+function dapsCapToggle(btn){
+  var item = btn.parentNode;
+  var open = item.className.indexOf('open') !== -1;
+  if (open) {
+    item.className = item.className.replace(/\s*\bopen\b/, '');
+    btn.setAttribute('aria-expanded', 'false');
+  } else {
+    item.className += ' open';
+    btn.setAttribute('aria-expanded', 'true');
+  }
+}
+</script>
 <script src="assets/navbar.js"></script>
 <script src="assets/daps.js"></script>
 </body>

@@ -32,9 +32,14 @@
   };
 </script>
 <style>
+  :root { --daps-font: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, 'Noto Sans Ethiopic', sans-serif; }
+  body { font-family: var(--daps-font); }
+  /* Form controls don't inherit font-family from body — make them. */
+  button, input, select, textarea { font-family: inherit; }
+
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
   html { background: #0e141b; }
-  body { background: #0e141b; color: #dee2ed; font-family: Inter, sans-serif; min-height: 100vh; display: flex; flex-direction: column; }
+  body { background: #0e141b; color: #dee2ed; font-family: var(--daps-font); min-height: 100vh; display: flex; flex-direction: column; }
   main { flex: 1; }
 
   /* Noise overlay */
@@ -99,7 +104,7 @@
     <div class="max-w-2xl mx-auto">
       <div class="eyebrow">Schedule a Session</div>
       <h1 style="font-size:clamp(28px,4vw,52px);font-weight:300;letter-spacing:-0.02em;color:#dee2ed;margin-bottom:16px;line-height:1.2;">
-        Book a call with<br/><span style="color:#49fde3;">DAPS Analytics</span>
+        Book a call with<br/><span style="color:#49fde3;">DAPS</span>
       </h1>
       <p style="font-size:16px;color:#849490;line-height:1.7;max-width:480px;margin:0 auto 32px;">
         Choose a time that works for you. We'll discuss your data challenges, explore solutions, and map a path forward.
@@ -135,7 +140,7 @@
           height="700"
           scrolling="yes"
           style="border:0;display:block;"
-          title="Book a call with DAPS Analytics"
+          title="Book a call with DAPS"
           onload="checkIframe(this)"
           onerror="showFallback()">
         </iframe>

@@ -16,7 +16,7 @@
     '#daps-nav .nit{position:relative;}',
 
     /* Nav link button */
-    '#daps-nav .nlk{display:inline-flex;align-items:center;gap:3px;padding:8px 13px;border-radius:8px;font-size:14px;font-weight:500;letter-spacing:-0.01em;color:rgba(255,255,255,0.62);cursor:pointer;transition:color 0.18s,background 0.18s;white-space:nowrap;text-decoration:none;background:transparent;border:none;font-family:Inter,sans-serif;line-height:1;}',
+    '#daps-nav .nlk{display:inline-flex;align-items:center;gap:3px;padding:8px 13px;border-radius:8px;font-size:14px;font-weight:500;letter-spacing:-0.01em;color:rgba(255,255,255,0.62);cursor:pointer;transition:color 0.18s,background 0.18s;white-space:nowrap;text-decoration:none;background:transparent;border:none;font-family:var(--daps-font, Inter, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif);line-height:1;}',
     '#daps-nav .nit:hover .nlk,#daps-nav .nlk.na-active{color:#fff;background:rgba(255,255,255,0.07);}',
     '#daps-nav .nlk.na-active{color:#49fde3;background:rgba(73,253,227,0.08);}',
     '#daps-nav .chv{font-size:14px;transition:transform 0.22s ease;opacity:0.45;font-variation-settings:"FILL" 0;}',
@@ -45,8 +45,8 @@
     '#daps-nav .ac .material-symbols-outlined{color:#efbf71;}',
     '#daps-nav .nc{background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);}',
     '#daps-nav .nc .material-symbols-outlined{color:#bacac5;}',
-    '#daps-nav .dt{font-size:12.5px;font-weight:600;color:#dee2ed;margin-bottom:2px;line-height:1.3;font-family:Inter,sans-serif;}',
-    '#daps-nav .dd2{font-size:11px;color:#849490;line-height:1.45;font-family:Inter,sans-serif;}',
+    '#daps-nav .dt{font-size:12.5px;font-weight:600;color:#dee2ed;margin-bottom:2px;line-height:1.3;font-family:var(--daps-font, Inter, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif);}',
+    '#daps-nav .dd2{font-size:11px;color:#849490;line-height:1.45;font-family:var(--daps-font, Inter, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif);}',
     '#daps-nav .db{display:inline-block;font-size:8.5px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;padding:2px 6px;border-radius:4px;margin-top:3px;}',
     '#daps-nav .dbl{background:rgba(73,253,227,0.12);color:#49fde3;}',
     '#daps-nav .dbd{background:rgba(239,191,113,0.12);color:#efbf71;}',
@@ -56,10 +56,10 @@
 
     /* Right actions */
     '#daps-nav .na{display:flex;align-items:center;gap:6px;}',
-    '#daps-nav .blng{display:flex;align-items:center;gap:5px;padding:7px 12px;border-radius:8px;font-size:13px;font-weight:500;letter-spacing:-0.01em;color:rgba(255,255,255,0.45);background:transparent;border:none;cursor:pointer;font-family:Inter,sans-serif;transition:color 0.18s,background 0.18s;position:relative;}',
+    '#daps-nav .blng{display:flex;align-items:center;gap:5px;padding:7px 12px;border-radius:8px;font-size:13px;font-weight:500;letter-spacing:-0.01em;color:rgba(255,255,255,0.45);background:transparent;border:none;cursor:pointer;font-family:var(--daps-font, Inter, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif);transition:color 0.18s,background 0.18s;position:relative;}',
     '#daps-nav .blng:hover{color:rgba(255,255,255,0.85);background:rgba(255,255,255,0.05);}',
     '#daps-nav .blng .material-symbols-outlined{font-size:16px;}',
-    '#daps-nav .bcta{padding:8px 20px;border:1px solid #49fde3;color:#49fde3;background:transparent;border-radius:7px;font-size:12.5px;font-weight:700;letter-spacing:0.02em;font-family:Inter,sans-serif;cursor:pointer;text-decoration:none;transition:background 0.2s,color 0.2s,box-shadow 0.2s;display:inline-flex;align-items:center;white-space:nowrap;}',
+    '#daps-nav .bcta{padding:8px 20px;border:1px solid #49fde3;color:#49fde3;background:transparent;border-radius:7px;font-size:12.5px;font-weight:700;letter-spacing:0.02em;font-family:var(--daps-font, Inter, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif);cursor:pointer;text-decoration:none;transition:background 0.2s,color 0.2s,box-shadow 0.2s;display:inline-flex;align-items:center;white-space:nowrap;}',
     '#daps-nav .bcta:hover{background:#49fde3;color:#003730;box-shadow:0 0 20px rgba(73,253,227,0.22);}',
 
     /* Mobile toggle */
@@ -69,11 +69,11 @@
     /* Mobile panel */
     '#daps-nav #mpanel{display:none;background:rgba(5,7,9,0.97);backdrop-filter:blur(20px);border-top:1px solid rgba(255,255,255,0.06);max-height:calc(100dvh - 70px);overflow-y:auto;padding:20px 24px 32px;}',
     '#daps-nav .msl{font-size:9.5px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:#2a3840;margin:0 0 8px;display:block;}',
-    '#daps-nav .mlk{display:flex;align-items:center;gap:10px;padding:11px 0;font-size:15px;font-weight:500;color:rgba(255,255,255,0.75);text-decoration:none;border-bottom:1px solid rgba(255,255,255,0.05);font-family:Inter,sans-serif;transition:color 0.18s;}',
+    '#daps-nav .mlk{display:flex;align-items:center;gap:10px;padding:11px 0;font-size:15px;font-weight:500;color:rgba(255,255,255,0.75);text-decoration:none;border-bottom:1px solid rgba(255,255,255,0.05);font-family:var(--daps-font, Inter, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif);transition:color 0.18s;}',
     '#daps-nav .mlk:hover,#daps-nav .mlk.na-active{color:#49fde3;}',
     '#daps-nav .mlk .material-symbols-outlined{font-size:17px;opacity:0.45;}',
     '#daps-nav .msec{margin-bottom:20px;}',
-    '#daps-nav .mctab{display:block;width:100%;margin-top:20px;padding:14px 20px;border:1px solid #49fde3;color:#49fde3;background:rgba(73,253,227,0.05);border-radius:8px;font-size:13px;font-weight:700;letter-spacing:0.04em;text-align:center;text-decoration:none;font-family:Inter,sans-serif;transition:background 0.2s,color 0.2s;}',
+    '#daps-nav .mctab{display:block;width:100%;margin-top:20px;padding:14px 20px;border:1px solid #49fde3;color:#49fde3;background:rgba(73,253,227,0.05);border-radius:8px;font-size:13px;font-weight:700;letter-spacing:0.04em;text-align:center;text-decoration:none;font-family:var(--daps-font, Inter, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif);transition:background 0.2s,color 0.2s;}',
     '#daps-nav .mctab:hover{background:#49fde3;color:#003730;}',
 
     /* Language dropdown */
@@ -82,8 +82,8 @@
     '#daps-nav .lhdr{font-size:9.5px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:#2a3840;padding:4px 10px 8px;border-bottom:1px solid rgba(255,255,255,0.06);margin-bottom:4px;}',
     '#daps-nav .litm{display:flex;justify-content:space-between;align-items:center;padding:9px 10px;border-radius:7px;cursor:pointer;transition:background 0.14s;}',
     '#daps-nav .litm:hover{background:rgba(255,255,255,0.05);}',
-    '#daps-nav .litm span:first-child{font-size:13px;color:#dee2ed;font-family:Inter,sans-serif;}',
-    '#daps-nav .litm span:last-child{font-size:10.5px;color:#849490;font-family:Inter,sans-serif;}',
+    '#daps-nav .litm span:first-child{font-size:13px;color:#dee2ed;font-family:var(--daps-font, Inter, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif);}',
+    '#daps-nav .litm span:last-child{font-size:10.5px;color:#849490;font-family:var(--daps-font, Inter, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif);}',
     '#daps-nav .litm.la span:first-child{color:#49fde3;}',
 
     /* Responsive */
@@ -164,12 +164,13 @@
     'r'),
 
     company: dd(
-      '<span class="dsl">About DAPS Analytics</span>'
+      '<span class="dsl">About DAPS</span>'
       + '<div class="dg">'
       + di('info','tc','About Us','Our story, mission, and trajectory','company.html')
-      + di('groups','nc','Leadership','Meet the DAPS Analytics team','company.html')
+      + di('groups','nc','Leadership','Meet the DAPS team','company.html')
       + di('timeline','ac','Our Journey','Ethiopia → East Africa → Global','company.html')
       + di('forum','tc','Contact Us','Initiate a project conversation','contact.html')
+      + di('work','ac','Careers','Open roles and life at DAPS','careers.html')
       + di('link','nc','All Links','Find DAPS across every platform','linktree.html')
       + '</div>'
       + '<div class="dfr"><a href="company.html">Company overview →</a></div>',
@@ -209,7 +210,7 @@
   var NAV = '<div class="ni">'
     /* Logo */
     + '<a href="index.html" style="display:flex;align-items:center;flex-shrink:0;text-decoration:none;">'
-    + '<img src="assets/images/daps-logo-nav.svg" alt="DAPS Analytics" style="height:36px;width:auto;"/></a>'
+    + '<img src="assets/images/daps-logo-nav.svg" alt="DAPS" style="height:36px;width:auto;"/></a>'
 
     /* Desktop nav */
     + '<ul class="nl">'
@@ -247,6 +248,7 @@
     + '<div class="msec"><span class="msl">Resources</span>'
     + mlink('article','Insights','insights.html')
     + mlink('info','Company','company.html')
+    + mlink('work','Careers','careers.html')
     + mlink('link','All Links','linktree.html')
     + '</div>'
     + '<a href="contact.html" class="mctab">Book a Call</a>'
@@ -342,7 +344,7 @@
     t = document.createElement('div');
     t.id = 'daps-toast';
     t.textContent = msg;
-    t.style.cssText = 'position:fixed;bottom:28px;left:50%;transform:translateX(-50%) translateY(10px);background:#111820;border:1px solid rgba(73,253,227,0.25);color:#49fde3;font-size:12px;font-weight:600;letter-spacing:0.05em;padding:10px 22px;border-radius:6px;z-index:9999;box-shadow:0 8px 28px rgba(0,0,0,0.5);opacity:0;transition:opacity 0.28s ease,transform 0.28s ease;pointer-events:none;white-space:nowrap;font-family:Inter,sans-serif;';
+    t.style.cssText = 'position:fixed;bottom:28px;left:50%;transform:translateX(-50%) translateY(10px);background:#111820;border:1px solid rgba(73,253,227,0.25);color:#49fde3;font-size:12px;font-weight:600;letter-spacing:0.05em;padding:10px 22px;border-radius:6px;z-index:9999;box-shadow:0 8px 28px rgba(0,0,0,0.5);opacity:0;transition:opacity 0.28s ease,transform 0.28s ease;pointer-events:none;white-space:nowrap;font-family:var(--daps-font, Inter, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif);';
     document.body.appendChild(t);
     requestAnimationFrame(function(){requestAnimationFrame(function(){t.style.opacity='1';t.style.transform='translateX(-50%) translateY(0)';});});
     setTimeout(function(){t.style.opacity='0';t.style.transform='translateX(-50%) translateY(6px)';setTimeout(function(){t.remove();},300);},3200);

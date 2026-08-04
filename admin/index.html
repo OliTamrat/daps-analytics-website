@@ -6,6 +6,11 @@
   <title>Admin Login — DAPS Analytics</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&display=swap" rel="stylesheet">
   <style>
+  :root { --daps-font: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, 'Noto Sans Ethiopic', sans-serif; }
+  body { font-family: var(--daps-font); }
+  /* Form controls don't inherit font-family from body — make them. */
+  button, input, select, textarea { font-family: inherit; }
+
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
@@ -22,7 +27,7 @@
     }
 
     body {
-      font-family: 'Inter', sans-serif;
+      font-family: var(--daps-font);
       background: var(--bg);
       color: var(--text);
       min-height: 100vh;
@@ -164,7 +169,7 @@
       border: 1px solid var(--border);
       border-radius: 8px;
       color: var(--text);
-      font-family: 'Inter', sans-serif;
+      font-family: var(--daps-font);
       font-size: 14px;
       outline: none;
       transition: border-color 0.2s;
@@ -184,7 +189,7 @@
       color: #0e141b;
       border: none;
       border-radius: 8px;
-      font-family: 'Inter', sans-serif;
+      font-family: var(--daps-font);
       font-size: 14px;
       font-weight: 700;
       letter-spacing: 0.04em;
@@ -265,25 +270,43 @@
   </div>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script src="../assets/supabase-client.js"></script>
   <script>
     // ── Supabase config ───────────────────────────────────────────────
-    // Replace these with your DAPS Analytics Supabase project credentials
-    var SUPABASE_URL = 'https://rveellaalzowncfsekwx.supabase.co';
-    var SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJ2ZWVsbGFhbHpvd25jZnNla3d4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzkwMTMzMDQsImV4cCI6MjA5NDU4OTMwNH0.6U1gGmLW9CxTjagobfy_p0Xx5QpRrY6h1u944K2ZKcE';
 
-    var sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+    var sb = null;
 
-    // Redirect if already logged in
-    (async function checkSession() {
+    // Resolve the client before enabling the form, and surface config problems
+    // instead of failing silently on submit.
+    var ready = (async function initClient() {
+      try {
+        sb = await dapsSupabase();
+      } catch (e) {
+        var err = document.getElementById('errorMsg');
+        if (err) { err.textContent = e.message; err.classList.add('show'); }
+        var btn = document.getElementById('loginBtn');
+        if (btn) btn.disabled = true;
+        throw e;
+      }
+      // Redirect if already logged in
       var { data: { session } } = await sb.auth.getSession();
       if (session) window.location.href = '/admin/dashboard.html';
     })();
+    ready.catch(function(){});
 
     async function handleLogin(e) {
       e.preventDefault();
       var btn = document.getElementById('loginBtn');
       var err = document.getElementById('errorMsg');
       err.classList.remove('show');
+
+      if (!sb) {
+        try { await ready; } catch (_) {
+          err.textContent = 'Sign-in is unavailable — Supabase is not configured.';
+          err.classList.add('show');
+          return;
+        }
+      }
 
       var email = document.getElementById('email').value.trim();
       var password = document.getElementById('password').value;
