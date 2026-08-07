@@ -120,7 +120,7 @@ gutter: 24px | margin: 64px
 - **Three.js WebGL Globe** — rotating sphere with 420 node particles, 75 animated arcs with traveling data-flow dots, atmosphere shader (GLSL), 2,800 background stars, orbiting key light, cinematic camera drift
 - Hero: `min-h-screen flex items-center` — split layout (text left, globe right)
 - Hero content wrapper: `pt-16 pb-8`, h1 `clamp(32px,3.5vw,56px)`, metric-num `clamp(18px,2vw,30px)`
-- Product suite 4-card grid (Onekof, UDC-WQIS, Hakimet, Olink Fleet)
+- Product suite 4-card grid (Onekof, WQIS, Hakimet, Olink Fleet)
 - Services preview (4 cards), Industries preview (6 icon tiles), CTA section
 
 ### 2. Products Page (`products.html`)
@@ -175,12 +175,33 @@ if (!isHero) { mainEl.style.paddingTop = '70px'; }
 
 ---
 
+## Product naming — WQIS (do not regress)
+
+**The product is WQIS** — Water Quality Information System. **UDC is a tenant**, not
+part of the name: the University of the District of Columbia is the client the
+platform is deployed for, alongside UDC CAUSES and WRRI. Write "WQIS", and mention
+UDC only where the relationship is the point ("WQIS for the University of the
+District of Columbia").
+
+Two things that were wrong until 2026-08-08 and must not come back:
+
+- **"Unified Data Collection"** was used as an expansion of UDC in the hero copy on
+  index, products, products-archive and the detail page. UDC has never stood for
+  that. The acronym expands to nothing beyond the university's name; the tagline is
+  simply "Water Quality Information System."
+- **The page was `udc-wqis.html`.** It is now **`wqis.html`**, with a permanent
+  redirect from the old path in `vercel.json`. Keep that redirect — the old URL was
+  indexed and shared.
+
+The **Azure hostname is still `udc-wqis.happycoast-….azurecontainerapps.io`** — that
+is the deployed app's real host and is intentionally untouched. Do not "fix" it.
+
 ## Live Product Integrations
 
 | Product | URL | Status |
 |---------|-----|--------|
 | Onekof PM | https://onekof.com | Live in Ethiopia |
-| UDC-WQIS | https://udc-wqis.happycoast-d9b0bcde.centralus.azurecontainerapps.io/ | Live — Washington DC |
+| WQIS | https://udc-wqis.happycoast-d9b0bcde.centralus.azurecontainerapps.io/ | Live — Washington DC |
 | Hakimet Telehealth | https://www.hakimet.com | Live |
 | Olink Fleet | https://olink-fleet.vercel.app/ | Live in Ethiopia |
 
@@ -309,7 +330,7 @@ All canonical URLs, OG tags, sitemap, and robots.txt already point to `dapsanaly
 ### Pages completed (as of 2026-05-04)
 - `index.html`, `products.html`, `services.html`, `industries.html`, `company.html`
 - `insights.html`, `article.html`, `projects.html`, `contact.html`, `onekof-pm.html`
-- `udc-wqis.html`, `hakimet.html`, `olink-fleet.html`, `privacy.html`
+- `wqis.html`, `hakimet.html`, `olink-fleet.html`, `privacy.html`
 
 ---
 
@@ -319,7 +340,7 @@ All canonical URLs, OG tags, sitemap, and robots.txt already point to `dapsanaly
 
 **Product visibility overhaul:**
 - Onekof PM: gate removed, flagship badge + "Certified Secure" badge, fully public
-- UDC-WQIS: visible with clean stakeholder access bar (no blur), detail page still gated
+- WQIS: visible with clean stakeholder access bar (no blur), detail page still gated
 - Hakimet + Olink Fleet: temporarily hidden (`display:none`) across all pages, pending EIPA/INSA
 - Products navbar dropdown: shows only Onekof + WQIS (Hakimet/Fleet hidden)
 - `products.html`: rebuilt as clean 2-product page (Onekof featured + WQIS gated)
@@ -363,7 +384,7 @@ All canonical URLs, OG tags, sitemap, and robots.txt already point to `dapsanaly
 - Onekof project card unhidden; others stay hidden
 
 **Navbar (`assets/navbar.js`):**
-- Products dropdown: only Onekof PM + UDC-WQIS shown
+- Products dropdown: only Onekof PM + WQIS shown
 - Hakimet + Olink Fleet commented out with "pending EIPA/INSA" note
 
 **All pages:**
@@ -374,7 +395,7 @@ All canonical URLs, OG tags, sitemap, and robots.txt already point to `dapsanaly
 | Task | Detail |
 |------|--------|
 | Department email aliases | `support@` is the single route today — split to `careers@` etc. once Workspace aliases exist |
-| Unlock WQIS | After EIPA/INSA: remove stakeholder bars from index.html + products.html, remove gate.js from udc-wqis.html |
+| Unlock WQIS | After EIPA/INSA: remove stakeholder bars from index.html + products.html, remove gate.js from wqis.html |
 | Unlock Hakimet/Fleet | After EIPA/INSA: remove display:none from all pages, uncomment in navbar.js, remove gate.js from detail pages |
 | sitemap.xml — hidden products | `hakimet.html` and `olink-fleet.html` are still listed even though both products are `display:none` sitewide and their detail pages sit behind `gate.js`, so search engines are pointed at gated pages. Removing them from the sitemap does **not** deindex — that needs `noindex`. Left as-is pending a call on whether to drop them until EIPA/INSA clears or keep them for SEO continuity. |
 

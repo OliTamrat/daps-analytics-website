@@ -41,7 +41,7 @@
 ### Pages with full gate (code required to view content):
 - `products.html`
 - `onekof-pm.html`
-- `udc-wqis.html`
+- `wqis.html`
 - `hakimet.html`
 - `olink-fleet.html`
 
@@ -62,7 +62,7 @@ Search for `hidden temporarily` to find all 4 hidden elements:
 
 ### `projects.html` — Product project cards hidden
 Search for `hidden temporarily (product)` to find all 4 hidden cards:
-1. UDC-WQIS project card
+1. WQIS project card
 2. Onekof PM project card
 3. Olink Fleet project card
 4. Hakimet Telehealth project card
@@ -89,7 +89,7 @@ In `assets/navbar.js`, search for `Products hidden temporarily` and uncomment th
 
 ### Step 2 — Remove the stakeholder gate entirely
 Delete `<script src="assets/gate.js"></script>` from the bottom of:
-- `products.html`, `onekof-pm.html`, `udc-wqis.html`, `hakimet.html`, `olink-fleet.html`
+- `products.html`, `onekof-pm.html`, `wqis.html`, `hakimet.html`, `olink-fleet.html`
 
 ### Step 3 — Remove the homepage product blur overlay
 In `index.html`, delete the entire `#home-products-lock` div block and the inline `<script>` above `assets/navbar.js` that checks sessionStorage.

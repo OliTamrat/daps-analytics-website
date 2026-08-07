@@ -17,7 +17,7 @@ Here is what we have built and deployed — running live, serving real users rig
 📋 **Onekof PM** — Ethiopia's first enterprise project management platform built natively for the 13-month Ethiopian calendar. Full support for Amharic, Afaan Oromoo, and Tigrinya. Ethiopian Birr budget tracking. AI document processing for Amharic contracts. No more manual date conversions.
 Live at: onekof.com
 
-💧 **UDC-WQIS** — A real-time water quality monitoring system across 12 USGS monitoring stations on Washington DC's Anacostia watershed, built in partnership with the University of the District of Columbia. Environmental intelligence that protects a community.
+💧 **WQIS** — A real-time water quality monitoring system across 12 USGS monitoring stations on Washington DC's Anacostia watershed, built in partnership with the University of the District of Columbia. Environmental intelligence that protects a community.
 
 🏥 **Hakimet** — Enterprise telehealth infrastructure for East African healthcare systems. Built to work reliably on 2G connections. Multi-language (Amharic, Oromoo, Tigrinya). EMR-integrated. HIPAA-aligned.
 Live at: hakimet.com

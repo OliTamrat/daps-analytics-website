@@ -57,12 +57,12 @@ Respond to all week's comments. Save/reshare any user engagement.
 | Platform | Content |
 |----------|---------|
 | LinkedIn | Post 04 — Team Introduction |
-| X | Post 03 — UDC-WQIS tweet |
+| X | Post 03 — WQIS tweet |
 
 ### Day 9
 | Platform | Content |
 |----------|---------|
-| Instagram | Post 03 — UDC-WQIS Visual/Reel |
+| Instagram | Post 03 — WQIS Visual/Reel |
 | TikTok | Video 04 — Olink Fleet Demo |
 
 ### Day 10

@@ -122,7 +122,7 @@
       '<span class="dsl">Live Products</span>'
       + '<div class="dg dg2">'
       + di('view_kanban','tc','Onekof PM','Project management built for Ethiopia','onekof-pm.html','live')
-      + di('water_drop','ac','UDC-WQIS','Water quality intelligence, Washington DC','udc-wqis.html','live')
+      + di('water_drop','ac','WQIS','Water quality intelligence, Washington DC','wqis.html','live')
       /* Hakimet + Olink Fleet hidden — pending EIPA/INSA */
       + '</div>'
       + '<div class="dfr"><a href="products.html">Explore full platform →</a></div>',

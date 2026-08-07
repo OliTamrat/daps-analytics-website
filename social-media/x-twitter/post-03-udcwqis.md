@@ -1,7 +1,7 @@
-# X Post 03 — UDC-WQIS
+# X Post 03 — WQIS
 
 **Type:** Single tweet with image
-**Visual:** Screenshot of live UDC-WQIS dashboard
+**Visual:** Screenshot of live WQIS dashboard
 
 ---
 
@@ -11,7 +11,7 @@
 Real-time water quality data.
 Washington DC.
 
-This is UDC-WQIS — our environmental intelligence platform built with @UDC_edu
+This is WQIS — our environmental intelligence platform built with @UDC_edu
 
 Every turbidity reading. Every dissolved oxygen level. Every EPA lab result.
 

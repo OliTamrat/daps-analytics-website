@@ -19,7 +19,7 @@ Here is what is live right now:
 📋 **Onekof PM** — Ethiopia's first enterprise project management platform natively built for the 13-month Ethiopian calendar, Amharic, Afaan Oromoo, Tigrinya, and Ethiopian Birr. No workarounds. No conversions. Built for Ethiopia.
 → onekof.com
 
-💧 **UDC-WQIS** — Real-time water quality monitoring across 12 USGS stations on the Anacostia River in Washington DC. Built in partnership with the University of the District of Columbia. Live environmental intelligence for DC's watershed.
+💧 **WQIS** — Real-time water quality monitoring across 12 USGS stations on the Anacostia River in Washington DC. Built in partnership with the University of the District of Columbia. Live environmental intelligence for DC's watershed.
 
 🏥 **Hakimet** — Enterprise telehealth infrastructure connecting patients, clinicians, and specialists across East Africa. Low-bandwidth optimized. Multi-language. EMR-integrated. HIPAA-aligned.
 → hakimet.com

@@ -86,7 +86,7 @@ Some product detail pages require an access code until IP registration (EIPA) an
 | Product | Public? | Gate Status |
 |---------|---------|-------------|
 | Onekof PM | Yes — fully public | Gate removed (EIPA + INSA complete) |
-| UDC-WQIS | Visible with access bar | Detail page gated (`udc-wqis.html`) |
+| WQIS | Visible with access bar | Detail page gated (`wqis.html`) |
 | Hakimet | Hidden | Detail page gated (`hakimet.html`) |
 | Olink Fleet | Hidden | Detail page gated (`olink-fleet.html`) |
 
@@ -120,7 +120,7 @@ Some product detail pages require an access code until IP registration (EIPA) an
 | Page | File | Purpose |
 |------|------|---------|
 | Homepage | `index.html` | Hero globe, Onekof flagship + WQIS (stakeholder access bar), Why DAPS section, services, industries, CTA |
-| Products | `products.html` | Clean 2-product page: Onekof PM featured + UDC-WQIS with stakeholder access bar |
+| Products | `products.html` | Clean 2-product page: Onekof PM featured + WQIS with stakeholder access bar |
 | Products Archive | `products-archive.html` | Backup of original 4-product gated page (access code: `SPAD2026`) |
 | Services | `services.html` | Service offerings in bento grid + SaaS products (visible) |
 | Industries | `industries.html` | Sector-specific hover-reveal cards |
@@ -131,7 +131,7 @@ Some product detail pages require an access code until IP registration (EIPA) an
 | Projects | `projects.html` | TDT×MINT flagship + Onekof project card visible, others hidden |
 | Contact | `contact.html` | Qualification form, dual locations (Bethesda + Addis Ababa), phone placeholders, WhatsApp + Telegram |
 | Onekof PM | `onekof-pm.html` | Onekof product detail — **PUBLIC** (gate removed) |
-| UDC-WQIS | `udc-wqis.html` | Water quality platform detail — gated |
+| WQIS | `wqis.html` | Water quality platform detail — gated |
 | Hakimet | `hakimet.html` | Telehealth platform detail — gated + hidden |
 | Olink Fleet | `olink-fleet.html` | Fleet management platform detail — gated + hidden |
 | Privacy Policy | `privacy.html` | 10-section legal privacy policy |
@@ -341,14 +341,14 @@ Onekof PM has completed EIPA registration (2026-05-26) and INSA security certifi
 | Product | Homepage | Products Page | Detail Page | Navbar | Footer | Projects | Insights |
 |---------|----------|--------------|-------------|--------|--------|----------|----------|
 | **Onekof PM** | Visible + flagship badge | Featured | PUBLIC | In dropdown | Linked | Visible | Article visible |
-| **UDC-WQIS** | Visible + access bar | Visible + access bar | Gated (`SPAD2026`) | In dropdown | Not linked | Hidden | N/A |
+| **WQIS** | Visible + access bar | Visible + access bar | Gated (`SPAD2026`) | In dropdown | Not linked | Hidden | N/A |
 | **Hakimet** | Hidden | Hidden | Gated | Hidden | Not linked | Hidden | Article hidden |
 | **Olink Fleet** | Hidden | Hidden | Gated | Hidden | Not linked | Hidden | N/A |
 
 ### What Is Still Locked
 | Location | What | How |
 |----------|------|-----|
-| `udc-wqis.html` | Full detail page | Stakeholder gate (`SPAD2026`) |
+| `wqis.html` | Full detail page | Stakeholder gate (`SPAD2026`) |
 | `hakimet.html` | Full detail page | Stakeholder gate + hidden from nav |
 | `olink-fleet.html` | Full detail page | Stakeholder gate + hidden from nav |
 | `index.html` | Hakimet + Olink Fleet cards | `display:none` |
@@ -370,7 +370,7 @@ Once EIPA/copyright receipt is in hand, run these steps in order:
 In `assets/navbar.js`, search for `Products hidden temporarily` → uncomment both lines (desktop + mobile).
 
 **Step 2 — Remove stakeholder gate**
-Delete `<script src="assets/gate.js"></script>` from: `products.html`, `onekof-pm.html`, `udc-wqis.html`, `hakimet.html`, `olink-fleet.html`
+Delete `<script src="assets/gate.js"></script>` from: `products.html`, `onekof-pm.html`, `wqis.html`, `hakimet.html`, `olink-fleet.html`
 
 **Step 3 — Remove homepage product blur**
 In `index.html` delete the `#home-products-lock` div block and the inline sessionStorage script above `navbar.js`.
@@ -406,7 +406,7 @@ Vercel auto-deploys in ~60 seconds.
 | WhatsApp number | ⏳ Pending | Oli | Update `href="#"` in `contact.html` with `href="https://wa.me/NUMBER"` |
 | OG preview image | ⏳ Pending | Oli | Open `og-generator.html` → save PNG to `assets/images/og-preview.png` → push |
 | Update `sitemap.xml` | ⏳ Pending | Oli | Add `careers.html` and `products-archive.html` |
-| Unlock UDC-WQIS | ⏳ Pending | — | After EIPA/INSA: remove access bars from homepage + products, remove gate.js from `udc-wqis.html` |
+| Unlock WQIS | ⏳ Pending | — | After EIPA/INSA: remove access bars from homepage + products, remove gate.js from `wqis.html` |
 | Unlock Hakimet | ⏳ Pending | — | After EIPA/INSA: remove `display:none` from all pages, uncomment in navbar.js, remove gate.js |
 | Unlock Olink Fleet | ⏳ Pending | — | After EIPA/INSA: remove `display:none` from all pages, uncomment in navbar.js, remove gate.js |
 | Month 3 content plan | ⏳ Pending | Marketing | Plan next 30 days → create content library |
@@ -460,7 +460,7 @@ daps-analytics-website/
 ├── projects.html           ← Portfolio + TDT×MINT
 ├── contact.html            ← Form + Teams booking
 ├── onekof-pm.html          ← Onekof detail — PUBLIC
-├── udc-wqis.html           ← WQIS detail — GATED
+├── wqis.html           ← WQIS detail — GATED
 ├── hakimet.html            ← Hakimet detail — GATED + HIDDEN
 ├── olink-fleet.html        ← Olink Fleet detail — GATED + HIDDEN
 ├── privacy.html            ← Privacy policy
@@ -527,9 +527,9 @@ daps-analytics-website/
 
 #### Product Visibility Overhaul
 - **Onekof PM:** Gate removed from `onekof-pm.html`, flagship badge + "Certified Secure" badge added to homepage card, fully public and accessible
-- **UDC-WQIS:** Visible on homepage and products page with clean stakeholder access bar (no blur), detail page still gated
+- **WQIS:** Visible on homepage and products page with clean stakeholder access bar (no blur), detail page still gated
 - **Hakimet + Olink Fleet:** Temporarily hidden (`display:none`) across all pages — pending EIPA/INSA
-- **Products navbar dropdown:** Now shows only Onekof PM + UDC-WQIS; Hakimet/Fleet commented out
+- **Products navbar dropdown:** Now shows only Onekof PM + WQIS; Hakimet/Fleet commented out
 - **`products.html`:** Rebuilt as clean 2-product page (Onekof featured + WQIS with access bar)
 - **`products-archive.html`:** Original 4-product gated page preserved as backup
 
@@ -541,7 +541,7 @@ daps-analytics-website/
 - Hero subtitle updated for US + Africa markets
 - Stats updated to real numbers: 4 Platforms, 2 Countries, 7 Capabilities, 8+ Sectors
 - Onekof card: flagship badge ("Flagship: Onekof PM — Now Public") + "Certified Secure" badge
-- UDC-WQIS card: clean stakeholder access bar at bottom (no blur overlay)
+- WQIS card: clean stakeholder access bar at bottom (no blur overlay)
 - New **"Why DAPS"** section with 4 differentiator cards (Proven Expertise, End-to-End, Local+Global, Cost-Saving)
 - Footer description updated to reflect both US + Ethiopia markets
 - Mobile fix: product card status badges use `flex-wrap` to prevent overlap on narrow screens (S21, iPhone)
@@ -573,7 +573,7 @@ daps-analytics-website/
 
 #### Navbar (`assets/navbar.js`)
 - Products link restored in both desktop and mobile nav
-- Products dropdown: only Onekof PM + UDC-WQIS shown (Hakimet/Fleet commented out)
+- Products dropdown: only Onekof PM + WQIS shown (Hakimet/Fleet commented out)
 
 #### All Pages
 - Copyright updated 2025 → 2026 across all HTML files

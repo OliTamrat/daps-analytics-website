@@ -471,7 +471,7 @@ async function drawXCover(img) {
   ctx.fillText('dapsanalytics.com', 740, H/2 + 82);
 
   // Product dots
-  const prods = ['Onekof PM','UDC-WQIS','Hakimet','Olink Fleet'];
+  const prods = ['Onekof PM','WQIS','Hakimet','Olink Fleet'];
   prods.forEach((p, i) => {
     const px = 740 + i * 148;
     ctx.fillStyle = hexToRgba(TEAL, 0.15);
@@ -618,7 +618,7 @@ async function drawLICover(img) {
   ctx.fillText('High-Fidelity Data Intelligence  ·  Ethiopia & Washington DC  ·  dapsanalytics.com', W/2, ly + logoH + 28);
 
   // Product pills
-  const prods = ['Onekof PM','UDC-WQIS','Hakimet','Olink Fleet'];
+  const prods = ['Onekof PM','WQIS','Hakimet','Olink Fleet'];
   const pillW = 120, pillH = 22, gap = 14;
   const totalW = prods.length * pillW + (prods.length-1)*gap;
   let px = (W - totalW) / 2;
@@ -770,7 +770,7 @@ async function drawTTCover(img) {
   // Products vertical list
   const prods = [
     {icon:'📋', name:'Onekof PM', desc:'Ethiopia Enterprise PM'},
-    {icon:'💧', name:'UDC-WQIS', desc:'DC Water Intelligence'},
+    {icon:'💧', name:'WQIS', desc:'DC Water Intelligence'},
     {icon:'🏥', name:'Hakimet', desc:'East Africa Telehealth'},
     {icon:'🚛', name:'Olink Fleet', desc:'Ethiopia Fleet Management'}
   ];
