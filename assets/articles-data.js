@@ -24,7 +24,7 @@ window.DAPS_ARTICLES = [
       <h3>How DAPS Builds These Models</h3>
       <p>The DAPS agricultural intelligence stack ingests data from three primary sources: ESA Sentinel-2 (10m resolution, 5-day revisit), NASA MODIS (daily surface reflectance), and commercial providers where sub-meter resolution is required for specific high-value crops. This is fused with CHIRPS precipitation data, FAO Aquastat irrigation records, and localized soil type maps from national agricultural ministries.</p>
 
-      <p>The output is a structured prediction layer integrated into our UDC-WQIS environmental analytics platform and, for private clients, into custom Onekof PM dashboards that track agricultural KPIs alongside broader project or supply chain metrics.</p>
+      <p>The output is a structured prediction layer integrated into our WQIS environmental analytics platform and, for private clients, into custom Onekof PM dashboards that track agricultural KPIs alongside broader project or supply chain metrics.</p>
 
       <h3>Where This Is Going</h3>
       <p>The next frontier is hyperspectral imaging — capturing 100+ spectral bands versus the 13 bands of current multispectral instruments. Early pilots indicate the ability to detect specific fungal pathogen signatures in wheat fields at scale, potentially enabling targeted intervention before disease spreads. DAPS is actively partnering with agricultural ministries across Ethiopia and Kenya to pilot hyperspectral surveillance on high-value export crops, including coffee and sesame.</p>
@@ -286,15 +286,15 @@ window.DAPS_ARTICLES = [
     catClass: 'cat-case',
     readTime: '11 Min Read',
     date: 'May 2025',
-    excerpt: 'UDC-WQIS delivers a comprehensive environmental picture of the Anacostia watershed — 12 active monitoring stations, 78% Water Quality Index, and E. coli at seasonal peak.',
+    excerpt: 'WQIS delivers a comprehensive environmental picture of the Anacostia watershed — 12 active monitoring stations, 78% Water Quality Index, and E. coli at seasonal peak.',
     image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuAizSvHMBlRAIdLzjXfgsweLPAGZKnN5r9rv812iunxl2vEcdRAgh3XwCbbiDNe3peK2V64r4PaMpIuVLpif8sIYxPu_z074tIfB4mGU-M3gX6Gfa1BOExmBqqoqlVp63O4UpWElftWe7bnEQ_dePLefAWNAP9CUc9gVaZICf0cIPCkHqkrl6qSPdg47uChUK7suwwKsR7QHb7IuTdxjZ9smqKZu8JTDBjk-xT-d8m8Fd2T_a-9GYsqTkyTa4Dh21Np_5Tv1cRtcgS_',
     body: `
-      <p>The University of the District of Columbia's Water Quality Information System — UDC-WQIS, built and operated by DAPS Analytics in partnership with UDC's College of Agriculture, Urban Sustainability, and Environmental Sciences (CAUSES) and the Water Resources Research Institute (WRRI) — has completed its first full year of operations. This report summarizes the system's performance and the environmental intelligence it has produced for the Anacostia watershed.</p>
+      <p>The University of the District of Columbia's Water Quality Information System — WQIS, built and operated by DAPS Analytics in partnership with UDC's College of Agriculture, Urban Sustainability, and Environmental Sciences (CAUSES) and the Water Resources Research Institute (WRRI) — has completed its first full year of operations. This report summarizes the system's performance and the environmental intelligence it has produced for the Anacostia watershed.</p>
 
       <h3>System Overview</h3>
-      <p>UDC-WQIS monitors water quality across 12 active stations distributed across the Anacostia watershed — from upstream tributaries in Prince George's County, Maryland, through the main stem to the confluence with the Potomac River. Each station measures: dissolved oxygen, pH, turbidity, conductivity, water temperature, and E. coli (via automated sampling and analysis). USGS real-time sensor data is integrated from 7 additional gauging stations to extend spatial coverage.</p>
+      <p>WQIS monitors water quality across 12 active stations distributed across the Anacostia watershed — from upstream tributaries in Prince George's County, Maryland, through the main stem to the confluence with the Potomac River. Each station measures: dissolved oxygen, pH, turbidity, conductivity, water temperature, and E. coli (via automated sampling and analysis). USGS real-time sensor data is integrated from 7 additional gauging stations to extend spatial coverage.</p>
 
-      <p>Data flows in real time to the UDC-WQIS dashboard, which is publicly accessible and used by UDC researchers, DC DOEE environmental regulators, watershed restoration practitioners, and community advocates across DC's Wards 7 and 8 — the communities most directly affected by the Anacostia's water quality.</p>
+      <p>Data flows in real time to the WQIS dashboard, which is publicly accessible and used by UDC researchers, DC DOEE environmental regulators, watershed restoration practitioners, and community advocates across DC's Wards 7 and 8 — the communities most directly affected by the Anacostia's water quality.</p>
 
       <h3>2025 Water Quality Findings</h3>
       <p><strong>Overall Water Quality Index:</strong> 78% (Moderate). This represents a 3-point improvement over the 2024 annual average, driven primarily by reduced combined sewer overflow (CSO) events following DC Water's Phase 2 tunnel completion in Northeast DC.</p>
@@ -304,9 +304,9 @@ window.DAPS_ARTICLES = [
       <p><strong>Dissolved Oxygen Compliance:</strong> 85% of measurements meet DC's 5.0 mg/L standard for aquatic life support. This is an improvement from 79% in 2023 and reflects both the CSO infrastructure improvements and the expansion of riparian buffer vegetation in upper watershed areas.</p>
 
       <h3>Environmental Justice Context</h3>
-      <p>The Anacostia watershed's water quality problems are not evenly distributed geographically or demographically. Wards 7 and 8 — the most economically disadvantaged wards in DC, with the highest proportion of Black residents — border the river and experience the greatest health exposure to water quality impairments. UDC-WQIS was specifically designed to make data legible and accessible to these communities, not just to technical regulators.</p>
+      <p>The Anacostia watershed's water quality problems are not evenly distributed geographically or demographically. Wards 7 and 8 — the most economically disadvantaged wards in DC, with the highest proportion of Black residents — border the river and experience the greatest health exposure to water quality impairments. WQIS was specifically designed to make data legible and accessible to these communities, not just to technical regulators.</p>
 
-      <p>In 2024–2025, UDC-WQIS data was cited in three DC DOEE enforcement actions, two Congressional testimonies on environmental justice in the Anacostia, and one successful community advocacy campaign that secured $2.3M in green infrastructure funding for Ward 8 stormwater management. This is what data for community benefit looks like in practice.</p>
+      <p>In 2024–2025, WQIS data was cited in three DC DOEE enforcement actions, two Congressional testimonies on environmental justice in the Anacostia, and one successful community advocacy campaign that secured $2.3M in green infrastructure funding for Ward 8 stormwater management. This is what data for community benefit looks like in practice.</p>
 
       <p><a href="https://udc-wqis.happycoast-d9b0bcde.centralus.azurecontainerapps.io/" target="_blank" style="color:#49fde3;">Access the live dashboard →</a></p>
     `

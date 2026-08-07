@@ -41,7 +41,7 @@ Ethiopia's #1 Enterprise PM Platform
 → onekof.com
 
 **Slide 3 — Product 2**
-💧 UDC-WQIS
+💧 WQIS
 Washington DC Water Quality Intelligence
 ✓ 12 live USGS monitoring stations
 ✓ Real-time Anacostia watershed data

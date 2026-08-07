@@ -20,8 +20,8 @@ OUR LIVE PRODUCTS:
 Ethiopia's first enterprise project management platform built natively for the 13-month Ethiopian calendar, Amharic, Afaan Oromoo, Tigrinya, and Ethiopian Birr. No workarounds. No conversions. Built for Ethiopia.
 Visit: onekof.com
 
-💧 UDC-WQIS
-Unified Data Collection – Water Quality Information System. Real-time monitoring across 12 USGS stations on Washington DC's Anacostia watershed, in partnership with the University of the District of Columbia.
+💧 WQIS
+Water Quality Information System. Real-time monitoring across 12 USGS stations on Washington DC's Anacostia watershed, in partnership with the University of the District of Columbia.
 
 🏥 Hakimet
 Enterprise telehealth infrastructure for East African healthcare systems. Low-bandwidth optimized, multi-language, EMR-integrated, and HIPAA-aligned.

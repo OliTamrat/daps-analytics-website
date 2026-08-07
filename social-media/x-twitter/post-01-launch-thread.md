@@ -33,7 +33,7 @@ No workarounds. No manual date conversions. Built for Ethiopia.
 ---
 
 **Tweet 3/7**
-💧 UDC-WQIS
+💧 WQIS
 
 12 USGS sensors. Anacostia River. Washington DC. Real-time.
 
