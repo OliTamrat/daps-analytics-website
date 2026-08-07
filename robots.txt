@@ -1,5 +1,9 @@
 User-agent: *
 Allow: /
 Disallow: /api/
+# Internal OG-image build tool, not a page.
+Disallow: /og-generator.html
+# Gated archive: reachable only behind an access code.
+Disallow: /products-archive.html
 
 Sitemap: https://dapsanalytics.com/sitemap.xml

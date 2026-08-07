@@ -17,14 +17,17 @@
 <link rel="icon" href="assets/images/daps-logo-nav.svg" type="image/svg+xml"/>
 <meta property="og:type" content="article"/>
 <meta property="og:site_name" content="DAPS Analytics"/>
-<meta property="og:title" content="DAPS Analytics Insights"/>
-<meta property="og:description" content="Research, case studies, and commentary from DAPS Analytics on data intelligence across Africa and global markets."/>
-<meta property="og:url" content="https://dapsanalytics.vercel.app/insights.html"/>
-<meta property="og:image" content="https://dapsanalytics.vercel.app/assets/images/og-preview.png"/>
+<meta property="og:title" id="page-og-title" content="DAPS Analytics Insights"/>
+<meta property="og:description" id="page-og-desc" content="Research, case studies, and commentary from DAPS Analytics on data intelligence across Africa and global markets."/>
+<meta property="og:url" id="page-url" content="https://dapsanalytics.com/insights.html"/>
+<meta property="og:image" content="https://dapsanalytics.com/assets/images/og-preview.png"/>
 <meta name="twitter:card" content="summary_large_image"/>
-<meta name="twitter:title" content="DAPS Analytics Insights"/>
-<meta name="twitter:description" content="Research, case studies, and commentary from DAPS Analytics on data intelligence across Africa and global markets."/>
-<meta name="twitter:image" content="https://dapsanalytics.vercel.app/assets/images/og-preview.png"/>
+<meta name="twitter:title" id="page-tw-title" content="DAPS Analytics Insights"/>
+<meta name="twitter:description" id="page-tw-desc" content="Research, case studies, and commentary from DAPS Analytics on data intelligence across Africa and global markets."/>
+<meta name="twitter:image" content="https://dapsanalytics.com/assets/images/og-preview.png"/>
+<!-- Set per-article by renderArticle(); the default points at Insights so an
+     id-less load still resolves to a real page rather than this bare template. -->
+<link rel="canonical" id="page-canonical" href="https://dapsanalytics.com/insights.html"/>
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;900&display=swap" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
@@ -312,10 +315,18 @@
   var staticId = parseInt(getParam('id'), 10) || 0;
   var adminId  = parseInt(getParam('aid'), 10) || 0;
 
+  /* Canonical query for the article actually rendered, which is not always
+     the one in the URL: a bare article.html falls back to id 1 below, so it
+     serves identical content to ?id=1 and must point there rather than
+     self-canonicalise as a second copy. Set before renderArticle runs. */
+  var canonicalQuery = '';
+
   if (adminId) {
+    canonicalQuery = '?aid=' + adminId;
     loadFromSupabase(adminId);
   } else {
     var id = staticId || 1;
+    canonicalQuery = '?id=' + id;
     var articles = window.DAPS_ARTICLES || [];
     var article = null;
     for (var i = 0; i < articles.length; i++) { if (articles[i].id === id) { article = articles[i]; break; } }
@@ -370,6 +381,23 @@
   function renderArticle(article, showAudio, allArticles) {
     document.getElementById('page-title').textContent  = article.title + ' — DAPS Analytics';
     document.getElementById('page-desc').content       = article.excerpt;
+
+    /* Share/canonical metadata. Without this every ?id= served the same
+       og:url, og:title and canonical, so all 12 articles looked like one
+       page to crawlers and every social share previewed as "DAPS Analytics
+       Insights" regardless of which article was linked. */
+    var canonical = 'https://dapsanalytics.com/article.html' + (canonicalQuery || window.location.search);
+    var setMeta = function (id, value) {
+      var el = document.getElementById(id);
+      if (el && value) el.content = value;
+    };
+    setMeta('page-url', canonical);
+    setMeta('page-og-title', article.title);
+    setMeta('page-og-desc', article.excerpt);
+    setMeta('page-tw-title', article.title);
+    setMeta('page-tw-desc', article.excerpt);
+    var canonicalEl = document.getElementById('page-canonical');
+    if (canonicalEl) canonicalEl.href = canonical;
     document.getElementById('article-title').textContent   = article.title;
     document.getElementById('article-excerpt').textContent = article.excerpt;
     document.getElementById('article-date-display').textContent = (article.date || '') + ' · ' + (article.readTime || '');
