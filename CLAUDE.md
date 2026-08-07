@@ -260,6 +260,7 @@ After pulling changes or editing files, do a **hard refresh** (`Ctrl+Shift+R`) �
 - [x] **Bing Webmaster Tools** — verified via GSC import, sitemap submitted (2026-05-17)
 - [x] **Google Analytics 4** — `G-F4MDXMW8KB` on all 15 pages (2026-05-17)
 - [x] **Sitemap completeness** (2026-08-04) — `careers.html` (live and uncrawled since 2026-07-16) and `linktree.html` added; the 12 static articles listed individually as `article.html?id=1..12`. `robots.txt` now disallows `og-generator.html` (internal tool) and `products-archive.html` (gated).
+- [x] **US phone number live** (2026-08-08) — `+1 (240) 744-7761` replaces the "Coming soon" placeholder in the `contact.html` phone card, and is now in the JSON-LD `Organization.telephone` + `contactPoint` on all 14 pages and in the `LocalBusiness` schema on `contact.html` (which had no telephone at all — that is the record Google uses for local/map results, and a 240 area code matches the Bethesda HQ). WhatsApp/Telegram deliberately stay on the Ethiopian number.
 - [x] **Per-article share metadata** (2026-08-04) — `article.html` set one `og:url`/`og:title` for every id and had no canonical, so all 12 articles looked like one page to crawlers and every social share previewed as "DAPS Analytics Insights". `renderArticle()` now sets `og:url`, `og:title`, `og:description`, `twitter:*` and `rel=canonical` per article. A bare `article.html` renders article 1, so it canonicalises to `?id=1` rather than self-canonicalising as a duplicate. Stale `dapsanalytics.vercel.app` URLs in `article.html` and `privacy.html` corrected to `dapsanalytics.com`.
 
 ### Environment — CONFIGURED ✅ (2026-08-04)
@@ -269,15 +270,15 @@ verified end to end: the contact form delivers, careers loads live roles from
 Supabase, applications write through with resume upload, and the admin dashboard
 authenticates. **Do not re-list these as pending.**
 
-Contact details are live too — `support@dapsanalytics.com`, WhatsApp, Telegram and
-`tel:` all point at **+251 94 588 6655**. The only open contact items are a **US
-number** and the **department aliases**.
+Contact details are live: `support@dapsanalytics.com`; **US +1 (240) 744-7761**
+(Maryland, matches the Bethesda HQ) and **Ethiopia +251 94 588 6655**. WhatsApp and
+Telegram stay on the Ethiopian number — they are tied to that SIM. The only open
+contact item is the **department aliases**.
 
 ### TODO — Pending your action
 
 | Task | What Claude needs / what you do | File to touch |
 |------|--------------------------------|---------------|
-| **US phone number** | Not yet acquired. `contact.html` carries the Ethiopia number only — there is no US placeholder to replace, so a number needs adding, not swapping | `contact.html` |
 | **Department email aliases** | Once Google Workspace aliases exist, route `careers@` (and per-department addresses) instead of the single `support@` | `contact.html`, `careers.html`, admin |
 | **OG preview image** | Open `og-generator.html` locally → click Download → save PNG to `assets/images/og-preview.png` → push | `assets/images/og-preview.png` |
 | **Founder photos** | 7 gradient placeholders on `company.html` — provide photo files, Claude wires them | `company.html` |
@@ -372,7 +373,6 @@ All canonical URLs, OG tags, sitemap, and robots.txt already point to `dapsanaly
 ### TODO — Updated pending tasks
 | Task | Detail |
 |------|--------|
-| US phone number | Ethiopia number is live everywhere; a US number still needs adding to contact.html |
 | Department email aliases | `support@` is the single route today — split to `careers@` etc. once Workspace aliases exist |
 | Unlock WQIS | After EIPA/INSA: remove stakeholder bars from index.html + products.html, remove gate.js from udc-wqis.html |
 | Unlock Hakimet/Fleet | After EIPA/INSA: remove display:none from all pages, uncomment in navbar.js, remove gate.js from detail pages |
