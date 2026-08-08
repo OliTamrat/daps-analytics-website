@@ -86,7 +86,7 @@ Some product detail pages require an access code until IP registration (EIPA) an
 | Product | Public? | Gate Status |
 |---------|---------|-------------|
 | Onekof PM | Yes — fully public | Gate removed (EIPA + INSA complete) |
-| WQIS | Visible with access bar | Detail page gated (`wqis.html`) |
+| WQIS | Visible with access bar | Detail page gated (`udc-wqis.html`) |
 | Hakimet | Hidden | Detail page gated (`hakimet.html`) |
 | Olink Fleet | Hidden | Detail page gated (`olink-fleet.html`) |
 
@@ -131,7 +131,7 @@ Some product detail pages require an access code until IP registration (EIPA) an
 | Projects | `projects.html` | TDT×MINT flagship + Onekof project card visible, others hidden |
 | Contact | `contact.html` | Qualification form, dual locations (Bethesda + Addis Ababa), phone placeholders, WhatsApp + Telegram |
 | Onekof PM | `onekof-pm.html` | Onekof product detail — **PUBLIC** (gate removed) |
-| WQIS | `wqis.html` | Water quality platform detail — gated |
+| WQIS | `udc-wqis.html` | Water quality platform detail — gated |
 | Hakimet | `hakimet.html` | Telehealth platform detail — gated + hidden |
 | Olink Fleet | `olink-fleet.html` | Fleet management platform detail — gated + hidden |
 | Privacy Policy | `privacy.html` | 10-section legal privacy policy |
@@ -348,7 +348,7 @@ Onekof PM has completed EIPA registration (2026-05-26) and INSA security certifi
 ### What Is Still Locked
 | Location | What | How |
 |----------|------|-----|
-| `wqis.html` | Full detail page | Stakeholder gate (`SPAD2026`) |
+| `udc-wqis.html` | Full detail page | Stakeholder gate (`SPAD2026`) |
 | `hakimet.html` | Full detail page | Stakeholder gate + hidden from nav |
 | `olink-fleet.html` | Full detail page | Stakeholder gate + hidden from nav |
 | `index.html` | Hakimet + Olink Fleet cards | `display:none` |
@@ -370,7 +370,7 @@ Once EIPA/copyright receipt is in hand, run these steps in order:
 In `assets/navbar.js`, search for `Products hidden temporarily` → uncomment both lines (desktop + mobile).
 
 **Step 2 — Remove stakeholder gate**
-Delete `<script src="assets/gate.js"></script>` from: `products.html`, `onekof-pm.html`, `wqis.html`, `hakimet.html`, `olink-fleet.html`
+Delete `<script src="assets/gate.js"></script>` from: `products.html`, `onekof-pm.html`, `udc-wqis.html`, `hakimet.html`, `olink-fleet.html`
 
 **Step 3 — Remove homepage product blur**
 In `index.html` delete the `#home-products-lock` div block and the inline sessionStorage script above `navbar.js`.
@@ -406,7 +406,7 @@ Vercel auto-deploys in ~60 seconds.
 | WhatsApp number | ⏳ Pending | Oli | Update `href="#"` in `contact.html` with `href="https://wa.me/NUMBER"` |
 | OG preview image | ⏳ Pending | Oli | Open `og-generator.html` → save PNG to `assets/images/og-preview.png` → push |
 | Update `sitemap.xml` | ⏳ Pending | Oli | Add `careers.html` and `products-archive.html` |
-| Unlock WQIS | ⏳ Pending | — | After EIPA/INSA: remove access bars from homepage + products, remove gate.js from `wqis.html` |
+| Unlock WQIS | ⏳ Pending | — | After EIPA/INSA: remove access bars from homepage + products, remove gate.js from `udc-wqis.html` |
 | Unlock Hakimet | ⏳ Pending | — | After EIPA/INSA: remove `display:none` from all pages, uncomment in navbar.js, remove gate.js |
 | Unlock Olink Fleet | ⏳ Pending | — | After EIPA/INSA: remove `display:none` from all pages, uncomment in navbar.js, remove gate.js |
 | Month 3 content plan | ⏳ Pending | Marketing | Plan next 30 days → create content library |
@@ -460,7 +460,7 @@ daps-analytics-website/
 ├── projects.html           ← Portfolio + TDT×MINT
 ├── contact.html            ← Form + Teams booking
 ├── onekof-pm.html          ← Onekof detail — PUBLIC
-├── wqis.html           ← WQIS detail — GATED
+├── udc-wqis.html           ← WQIS detail — GATED
 ├── hakimet.html            ← Hakimet detail — GATED + HIDDEN
 ├── olink-fleet.html        ← Olink Fleet detail — GATED + HIDDEN
 ├── privacy.html            ← Privacy policy
