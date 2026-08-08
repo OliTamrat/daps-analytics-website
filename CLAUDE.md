@@ -183,18 +183,25 @@ platform is deployed for, alongside UDC CAUSES and WRRI. Write "WQIS", and menti
 UDC only where the relationship is the point ("WQIS for the University of the
 District of Columbia").
 
-Two things that were wrong until 2026-08-08 and must not come back:
+**"Unified Data Collection"** was wrong and must not come back. It was used as an
+expansion of UDC in the hero copy on index, products, products-archive and the
+detail page. UDC has never stood for that. The acronym expands to nothing beyond
+the university's name; the tagline is simply "Water Quality Information System."
 
-- **"Unified Data Collection"** was used as an expansion of UDC in the hero copy on
-  index, products, products-archive and the detail page. UDC has never stood for
-  that. The acronym expands to nothing beyond the university's name; the tagline is
-  simply "Water Quality Information System."
-- **The page was `udc-wqis.html`.** It is now **`wqis.html`**, with a permanent
-  redirect from the old path in `vercel.json`. Keep that redirect — the old URL was
-  indexed and shared.
+### The name is WQIS, the URLs keep `udc-` — do not "tidy" this
 
-The **Azure hostname is still `udc-wqis.happycoast-….azurecontainerapps.io`** — that
-is the deployed app's real host and is intentionally untouched. Do not "fix" it.
+Renaming the *name* is not the same as renaming the *addresses*. Both of these are
+deliberate and were restored on 2026-08-08 after a rename broke them:
+
+- **The page is `udc-wqis.html`** and stays there. It is the dedicated URL handed
+  to the UDC stakeholders, so it has to resolve directly — not via a redirect.
+  It was briefly renamed to `wqis.html` with a `vercel.json` redirect; the old
+  path stopped resolving and it was reverted. There is now no redirect and no
+  `wqis.html`.
+- **The Azure hostname is `udc-wqis.happycoast-….azurecontainerapps.io`** — the
+  deployed app's real host, never touched by any of this.
+
+So: **"WQIS" in every piece of copy, `udc-wqis` in every URL.**
 
 ## Live Product Integrations
 
@@ -330,7 +337,7 @@ All canonical URLs, OG tags, sitemap, and robots.txt already point to `dapsanaly
 ### Pages completed (as of 2026-05-04)
 - `index.html`, `products.html`, `services.html`, `industries.html`, `company.html`
 - `insights.html`, `article.html`, `projects.html`, `contact.html`, `onekof-pm.html`
-- `wqis.html`, `hakimet.html`, `olink-fleet.html`, `privacy.html`
+- `udc-wqis.html`, `hakimet.html`, `olink-fleet.html`, `privacy.html`
 
 ---
 
@@ -395,7 +402,7 @@ All canonical URLs, OG tags, sitemap, and robots.txt already point to `dapsanaly
 | Task | Detail |
 |------|--------|
 | Department email aliases | `support@` is the single route today — split to `careers@` etc. once Workspace aliases exist |
-| Unlock WQIS | After EIPA/INSA: remove stakeholder bars from index.html + products.html, remove gate.js from wqis.html |
+| Unlock WQIS | After EIPA/INSA: remove stakeholder bars from index.html + products.html, remove gate.js from udc-wqis.html |
 | Unlock Hakimet/Fleet | After EIPA/INSA: remove display:none from all pages, uncomment in navbar.js, remove gate.js from detail pages |
 | sitemap.xml — hidden products | `hakimet.html` and `olink-fleet.html` are still listed even though both products are `display:none` sitewide and their detail pages sit behind `gate.js`, so search engines are pointed at gated pages. Removing them from the sitemap does **not** deindex — that needs `noindex`. Left as-is pending a call on whether to drop them until EIPA/INSA clears or keep them for SEO continuity. |
 

@@ -9,12 +9,5 @@
     "api/config.js": {
       "maxDuration": 10
     }
-  },
-  "redirects": [
-    {
-      "source": "/udc-wqis.html",
-      "destination": "/wqis.html",
-      "permanent": true
-    }
-  ]
+  }
 }

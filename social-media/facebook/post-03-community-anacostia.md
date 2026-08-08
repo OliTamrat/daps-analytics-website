@@ -25,6 +25,6 @@ This is what we mean when we talk about data for community impact. Not a nice-to
 
 Clean water starts with clean data.
 
-🌐 Learn more about WQIS: dapsanalytics.vercel.app/wqis.html
+🌐 Learn more about WQIS: dapsanalytics.vercel.app/udc-wqis.html
 
 Share this post if you care about environmental intelligence for DC. 💧🌿
