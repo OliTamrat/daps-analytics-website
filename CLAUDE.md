@@ -1,5 +1,16 @@
 # DAPS Analytics — Website Build Documentation
 
+## Durable knowledge — OKM
+
+**`docs/` follows the OKM taxonomy (see `docs/README.md`):** runbooks
+(including the deliberate multi-step unlock for the EIPA/INSA-gated
+products), integration pages, and `docs/decisions/` — ADRs for the choices
+that must not silently drift. Checkable claims (gated products absent from
+the navbar, no key literals anywhere, ADR numbering) are enforced by
+`scripts/docs-truth.mjs` via `.github/workflows/docs-truth.yml` — this
+repo's first CI workflow. When a session makes a real decision, end it by
+appending an ADR.
+
 ## Project Overview
 
 Full-stack frontend website for **DAPS Analytics** (Data Analytics Processing Solutions), a high-fidelity data intelligence firm operating across African and global markets.
