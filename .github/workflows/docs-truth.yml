@@ -1,0 +1,14 @@
+name: docs-truth
+# This repository's first CI workflow. Zero-install by design (ADR-0001).
+on:
+  push:
+    branches: [master]
+  pull_request: {}
+jobs:
+  docs-truth:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 22 }
+      - run: node scripts/docs-truth.mjs
