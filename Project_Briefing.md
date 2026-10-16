@@ -34,7 +34,7 @@
 ---
 
 ## Stakeholder Gate (`assets/gate.js`)
-**Access code:** `SPAD2026`
+**Access code:** held in the `STAKEHOLDER_ACCESS_CODE` Vercel env var (never written in the repo; shared with stakeholders on request). Checked server-side by `api/gate.js`; see ADR-0006.
 **How it works:** SessionStorage key `daps_access=1`. Clears when browser tab is closed.
 **Gate position:** Below navbar (`top:68px`) — navbar and footer remain visible.
 

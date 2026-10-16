@@ -8,6 +8,9 @@
     },
     "api/config.js": {
       "maxDuration": 10
+    },
+    "api/gate.js": {
+      "maxDuration": 10
     }
   }
 }
