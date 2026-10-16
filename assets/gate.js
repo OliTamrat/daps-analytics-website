@@ -1,6 +1,6 @@
 (function () {
   var SESSION_KEY = 'daps_access';
-  var CODE = 'SPAD2026';
+  // The code is checked server-side by /api/gate (ADR-0006); it is never in this file.
 
   if (sessionStorage.getItem(SESSION_KEY) === '1') return;
 
@@ -38,20 +38,40 @@
   document.body.appendChild(gate);
   setTimeout(function(){ document.getElementById('g-code').focus(); }, 100);
 
+  function fail(message) {
+    var err = document.getElementById('g-err');
+    err.textContent = message;
+    document.getElementById('g-code').value = '';
+    document.getElementById('g-code').focus();
+    setTimeout(function () { err.textContent = ''; }, 3000);
+  }
+
+  var busy = false;
   function attempt() {
-    var val = document.getElementById('g-code').value.trim().toUpperCase();
-    if (val === CODE) {
-      sessionStorage.setItem(SESSION_KEY, '1');
-      gate.style.opacity = '0';
-      gate.style.transition = 'opacity 0.35s';
-      setTimeout(function () { gate.remove(); }, 350);
-    } else {
-      var err = document.getElementById('g-err');
-      err.textContent = 'Incorrect access code. Please try again.';
-      document.getElementById('g-code').value = '';
-      document.getElementById('g-code').focus();
-      setTimeout(function () { err.textContent = ''; }, 3000);
-    }
+    if (busy) return;
+    var val = document.getElementById('g-code').value.trim();
+    if (!val) return fail('Enter your access code.');
+    busy = true;
+    fetch('/api/gate', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ code: val })
+    }).then(function (r) {
+      busy = false;
+      if (r.ok) {
+        sessionStorage.setItem(SESSION_KEY, '1');
+        gate.style.opacity = '0';
+        gate.style.transition = 'opacity 0.35s';
+        setTimeout(function () { gate.remove(); }, 350);
+      } else if (r.status === 401) {
+        fail('Incorrect access code. Please try again.');
+      } else {
+        fail('Access check is unavailable. Please contact DAPS.');
+      }
+    }).catch(function () {
+      busy = false;
+      fail('Could not reach the server. Please try again.');
+    });
   }
 
   document.getElementById('g-submit').addEventListener('click', attempt);

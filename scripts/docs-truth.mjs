@@ -39,6 +39,11 @@ for (const f of walk(".")) {
   if (read(f).includes("SERVICE_ROLE")) fail(`${f} references SERVICE_ROLE — that key bypasses RLS and belongs nowhere in this repo`);
 }
 
+// --- ADR-0006: the stakeholder code is checked server-side, never in gate.js
+if (!read("assets/gate.js").includes("/api/gate") || /var\s+CODE\s*=/.test(read("assets/gate.js"))) {
+  fail("assets/gate.js must check the code via /api/gate and hold no code literal (ADR-0006)");
+}
+
 // --- ADRs: sequential and indexed ---------------------------------------
 const adrs = readdirSync("docs/decisions").filter((f) => /^\d{4}-/.test(f)).sort();
 adrs.forEach((f, i) => { if (parseInt(f.slice(0, 4), 10) !== i + 1) fail(`ADR numbering broken at ${f}`); });

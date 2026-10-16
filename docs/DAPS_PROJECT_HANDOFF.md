@@ -43,7 +43,7 @@ Highlights:
 - **robots.txt + sitemap.xml** for search engine indexing
 - **Privacy Policy** page (10-section, legally structured)
 - **Responsive** — works on desktop, tablet, and mobile
-- **Stakeholder access gate** on product pages (code: `SPAD2026`) — active until IP registration completes
+- **Stakeholder access gate** on product pages (code held in the `STAKEHOLDER_ACCESS_CODE` Vercel env var) — active until IP registration completes
 
 ### Part 2 — Linktree (`dapsanalytics.com/linktree.html`)
 A single branded page that consolidates all social handles, website links, services, and contact options. Used as the link-in-bio across all social platforms.
@@ -81,7 +81,7 @@ A password-protected content management system (CMS) for managing the website's 
 
 ### Stakeholder Access Gate
 Some product detail pages require an access code until IP registration (EIPA) and security certification (INSA) are complete.
-**Code:** `SPAD2026`
+**Code:** held in the `STAKEHOLDER_ACCESS_CODE` Vercel env var (never written in the repo; shared with stakeholders on request). Checked server-side by `api/gate.js` (ADR-0006).
 
 | Product | Public? | Gate Status |
 |---------|---------|-------------|
@@ -90,7 +90,7 @@ Some product detail pages require an access code until IP registration (EIPA) an
 | Hakimet | Hidden | Detail page gated (`hakimet.html`) |
 | Olink Fleet | Hidden | Detail page gated (`olink-fleet.html`) |
 
-**Backup:** `products-archive.html` — original 4-product gated page (access code: `SPAD2026`)
+**Backup:** `products-archive.html` — original 4-product gated page (stakeholder access code)
 
 ---
 
@@ -121,7 +121,7 @@ Some product detail pages require an access code until IP registration (EIPA) an
 |------|------|---------|
 | Homepage | `index.html` | Hero globe, Onekof flagship + WQIS (stakeholder access bar), Why DAPS section, services, industries, CTA |
 | Products | `products.html` | Clean 2-product page: Onekof PM featured + WQIS with stakeholder access bar |
-| Products Archive | `products-archive.html` | Backup of original 4-product gated page (access code: `SPAD2026`) |
+| Products Archive | `products-archive.html` | Backup of original 4-product gated page (stakeholder access code) |
 | Services | `services.html` | Service offerings in bento grid + SaaS products (visible) |
 | Industries | `industries.html` | Sector-specific hover-reveal cards |
 | Company | `company.html` | Full-bleed Three.js globe hero, mission/vision, US-first trajectory, faceless team (8 role cards), careers section, values |
@@ -341,14 +341,14 @@ Onekof PM has completed EIPA registration (2026-05-26) and INSA security certifi
 | Product | Homepage | Products Page | Detail Page | Navbar | Footer | Projects | Insights |
 |---------|----------|--------------|-------------|--------|--------|----------|----------|
 | **Onekof PM** | Visible + flagship badge | Featured | PUBLIC | In dropdown | Linked | Visible | Article visible |
-| **WQIS** | Visible + access bar | Visible + access bar | Gated (`SPAD2026`) | In dropdown | Not linked | Hidden | N/A |
+| **WQIS** | Visible + access bar | Visible + access bar | Gated (access code) | In dropdown | Not linked | Hidden | N/A |
 | **Hakimet** | Hidden | Hidden | Gated | Hidden | Not linked | Hidden | Article hidden |
 | **Olink Fleet** | Hidden | Hidden | Gated | Hidden | Not linked | Hidden | N/A |
 
 ### What Is Still Locked
 | Location | What | How |
 |----------|------|-----|
-| `udc-wqis.html` | Full detail page | Stakeholder gate (`SPAD2026`) |
+| `udc-wqis.html` | Full detail page | Stakeholder gate (access code) |
 | `hakimet.html` | Full detail page | Stakeholder gate + hidden from nav |
 | `olink-fleet.html` | Full detail page | Stakeholder gate + hidden from nav |
 | `index.html` | Hakimet + Olink Fleet cards | `display:none` |
